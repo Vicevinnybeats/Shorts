@@ -5,3 +5,4 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 
 | Date (UTC) | Workflow | Episode | Job | Minutes | Month total | Result |
 |---|---|---|---|---|---|---|
+| 2026-11-13 20:41 | render-stills | _pipeline-test  | stills | 2 | 2 | running (run 43503657910) |
