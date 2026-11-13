@@ -1,0 +1,15 @@
+node_modules/
+out/
+.skill/
+src/vendor/
+vendor/
+src/episodes.generated.tsx
+public/bridge/
+episodes/*/build/
+*.mp4
+*.wav
+__pycache__/
+.venv/
+props.json
+chunks/
+final/

@@ -1,0 +1,157 @@
+name: render-final
+# voice -> music + SFX -> mix (ducking + loudness) -> Remotion render in parallel chunks (captions in the picture)
+# -> mux -> QA -> MP4 + metadata JSON to Drive /Shorts/Review. Never publishes anything.
+on:
+  workflow_dispatch:
+    inputs:
+      episode: { description: "Episode id (folder name under episodes/)", required: true, type: string }
+      chunks: { description: "Parallel render jobs (same total minutes, shorter wait)", required: false, default: "4", type: string }
+      scale: { description: "1 = 1080x1920", required: false, default: "1", type: string }
+  push:
+    paths: ["episodes/*/GO_FINAL"]
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: final-${{ inputs.episode || github.ref }}
+  cancel-in-progress: false
+
+env:
+  NARRATOR_ENGINE: ${{ vars.NARRATOR_ENGINE || 'kokoro' }}
+  NARRATOR_VOICE: ${{ vars.NARRATOR_VOICE || 'am_michael' }}
+
+jobs:
+  voice-and-mix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    outputs:
+      id: ${{ steps.ep.outputs.id }}
+      comp: ${{ steps.ep.outputs.comp }}
+      frames: ${{ steps.plan.outputs.frames }}
+      ranges: ${{ steps.plan.outputs.ranges }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Which episode
+        id: ep
+        run: |
+          id="${{ inputs.episode }}"
+          if [ -z "$id" ]; then id=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- 'episodes/*/GO_FINAL' 2>/dev/null | head -1 | cut -d/ -f2); fi
+          [ -z "$id" ] && id=$(ls episodes/*/GO_FINAL | head -1 | cut -d/ -f2)
+          test -f "episodes/$id/episode.json" || { echo "::error::no episode '$id'"; exit 1; }
+          test -f "episodes/$id/script.txt" || { echo "::error::episodes/$id/script.txt missing"; exit 1; }
+          echo "id=$id" >> "$GITHUB_OUTPUT"
+          echo "comp=$(node -p "require('./episodes/$id/episode.json').composition || 'Ep-$id'")" >> "$GITHUB_OUTPUT"
+      - uses: ./.github/actions/setup
+        with: { render: "false", audio: "true", voice: "true" }
+      - name: Voice (${{ env.NARRATOR_ENGINE }} / ${{ env.NARRATOR_VOICE }})
+        run: |
+          B=episodes/${{ steps.ep.outputs.id }}/build; mkdir -p $B/voice
+          if [ "$NARRATOR_ENGINE" = "voicestudio" ]; then
+            bash pipeline/voice/voicestudio_tts.sh episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice
+            python pipeline/voice/align_words.py $B/voice/voice.wav episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice/words.json
+          else
+            python pipeline/voice/kokoro_tts.py episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice --voice "$NARRATOR_VOICE"
+          fi
+          cp $B/voice/words.json $B/words.json
+      - name: Music + SFX + mix
+        run: |
+          id=${{ steps.ep.outputs.id }}; B=episodes/$id/build
+          snd=episodes/$id/sound.json; [ -f $snd ] || snd=-
+          python pipeline/audio/mixdown.py $B/voice/voice.wav $B/words.json $snd $B/audio
+      - name: Plan render chunks
+        id: plan
+        run: |
+          id=${{ steps.ep.outputs.id }}
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, math, os
+          words = json.load(open(f"episodes/{os.environ['ID']}/build/words.json"))
+          frames = max(90, math.ceil((words[-1]["e"] + 0.8) * 30))
+          n = max(1, min(20, int(os.environ.get("CHUNKS") or 4)))
+          step = math.ceil(frames / n)
+          ranges = [f"{a}-{min(frames, a + step) - 1}" for a in range(0, frames, step)]
+          print(f"frames={frames}")
+          print("ranges=" + json.dumps(ranges))
+          PY
+        env: { ID: "${{ steps.ep.outputs.id }}", CHUNKS: "${{ inputs.chunks }}" }
+      - uses: actions/upload-artifact@v4
+        with: { name: "build-${{ steps.ep.outputs.id }}", path: "episodes/${{ steps.ep.outputs.id }}/build", retention-days: 7 }
+
+  render:
+    needs: voice-and-mix
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    strategy:
+      fail-fast: true
+      matrix:
+        range: ${{ fromJSON(needs.voice-and-mix.outputs.ranges) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - uses: actions/download-artifact@v4
+        with: { name: "build-${{ needs.voice-and-mix.outputs.id }}", path: "episodes/${{ needs.voice-and-mix.outputs.id }}/build" }
+      - name: Render frames ${{ matrix.range }}
+        run: |
+          B=episodes/${{ needs.voice-and-mix.outputs.id }}/build
+          node -e "const w=require('./$B/words.json'); require('fs').writeFileSync('props.json', JSON.stringify({words:w}))"
+          npx remotion render src/index.ts "${{ needs.voice-and-mix.outputs.comp }}" "chunk_${{ matrix.range }}.mp4" \
+            --props=props.json --frames=${{ matrix.range }} --scale=${{ inputs.scale || '1' }} --codec=h264 --crf=17 \
+            --pixel-format=yuv420p --gl=swangle --timeout=600000 --log=info
+      - uses: actions/upload-artifact@v4
+        with: { name: "chunk-${{ matrix.range }}", path: "chunk_${{ matrix.range }}.mp4", retention-days: 3 }
+
+  assemble:
+    needs: [voice-and-mix, render]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+      GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
+      GDRIVE_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
+      GDRIVE_REFRESH_TOKEN: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: { render: "false", audio: "true" }
+      - uses: actions/download-artifact@v4
+        with: { pattern: "chunk-*", path: chunks, merge-multiple: true }
+      - uses: actions/download-artifact@v4
+        with: { name: "build-${{ needs.voice-and-mix.outputs.id }}", path: build }
+      - name: Join chunks + mux the mix (video copied, never re-encoded)
+        run: |
+          ls chunks | sort -t_ -k2 -n | sed "s#^#file 'chunks/#; s#\$#'#" > list.txt; cat list.txt
+          ffmpeg -v error -y -f concat -safe 0 -i list.txt -c copy video.mp4
+          id=${{ needs.voice-and-mix.outputs.id }}
+          mkdir -p final
+          ffmpeg -v error -y -i video.mp4 -i build/audio/mix.wav -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 192k -ar 48000 \
+            -shortest -movflags +faststart "final/$id.mp4"
+      - name: QA (frames, loudness)
+        run: |
+          id=${{ needs.voice-and-mix.outputs.id }}
+          ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate:format=duration -of compact final/$id.mp4 | tee final/$id.qa.txt
+          ffmpeg -hide_banner -nostats -i final/$id.mp4 -af ebur128=peak=true -f null - 2>&1 | grep -A12 "Summary" | tee -a final/$id.qa.txt
+      - name: Metadata JSON next to the MP4
+        run: |
+          id=${{ needs.voice-and-mix.outputs.id }}
+          if [ -f episodes/$id/metadata.json ]; then cp episodes/$id/metadata.json final/$id.json; else echo "::warning::episodes/$id/metadata.json missing"; fi
+          cp build/audio/mix_report.json final/$id.mix.json
+      - uses: actions/upload-artifact@v4
+        with: { name: "final-${{ needs.voice-and-mix.outputs.id }}", path: final, retention-days: 14 }
+      - name: Upload to Drive /Shorts/Review
+        run: bash scripts/drive.sh up final "Review/${{ needs.voice-and-mix.outputs.id }}"
+
+  log:
+    needs: [voice-and-mix, render, assemble]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env: { GITHUB_TOKEN: "${{ github.token }}" }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Log minutes
+        run: python3 pipeline/log_run.py render-final "${{ needs.voice-and-mix.outputs.id || '-' }}" "${{ needs.assemble.result }}"
+      - name: Commit render log
+        run: |
+          bash scripts/commit-push.sh "render-final log: ${{ needs.voice-and-mix.outputs.id }} (run ${{ github.run_id }})" brain

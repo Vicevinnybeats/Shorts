@@ -1,0 +1,6 @@
+{
+  "test": true,
+  "youtube": {"title": "Pipeline test - do not publish", "description": "Internal pipeline test.", "tags": [], "made_for_kids": false},
+  "instagram": {"caption": "Pipeline test - do not publish"},
+  "sources": []
+}

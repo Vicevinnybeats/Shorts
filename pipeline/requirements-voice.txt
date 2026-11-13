@@ -1,0 +1,5 @@
+# torch (CPU build) is installed first from the PyTorch CPU index, see .github/actions/setup
+kokoro==0.9.4
+misaki[en]==0.9.4
+soundfile==0.13.1
+faster-whisper==1.1.1

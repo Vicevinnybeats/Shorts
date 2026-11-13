@@ -1,0 +1,4 @@
+{"music": {"mood": "wonder", "bpm": 80, "key": 57, "level_lu": -10},
+ "sfx": [{"t": 0.05, "fn": "whoosh", "args": {"dur": 0.8, "peak": 0.15}, "gain_db": -6},
+         {"t": 14.0, "fn": "crickets", "args": {"dur": 6.0}, "gain_db": -12, "pan": -0.4},
+         {"t": 30.0, "fn": "breeze", "args": {"dur": 8.0}, "gain_db": -10}]}

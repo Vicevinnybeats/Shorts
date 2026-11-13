@@ -1,0 +1,9 @@
+{
+  "id": "_pipeline-test",
+  "series": "test",
+  "title": "Pipeline test (not for publishing)",
+  "composition": "HealthCard",
+  "stills": [15, 300, 900],
+  "publish": false,
+  "notes": "Exercises render-stills and render-final end to end with the cheap health scene and the sample narration."
+}

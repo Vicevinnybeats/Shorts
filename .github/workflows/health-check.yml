@@ -1,0 +1,171 @@
+name: health-check
+# Verifies every tool on a free GitHub runner and reports speed, so we can budget the free minutes.
+on:
+  workflow_dispatch:
+    inputs:
+      voicestudio:
+        description: Also test VoiceStudio (Docker, CPU). Slow; Kokoro is the fallback.
+        type: boolean
+        default: true
+  push:
+    paths: [".github/workflows/health-check.yml", ".github/actions/**", "pipeline/**", "scripts/**", "package-lock.json"]
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: health-check
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - name: Typecheck
+        run: npx tsc --noEmit
+      - name: Tool versions
+        run: |
+          mkdir -p out/health
+          { echo "node $(node -v)"; echo "remotion $(node -p 'require("remotion/package.json").version')";
+            echo "three $(node -p 'require("three/package.json").version')"; echo "skill $(cat vendor/SKILL_COMMIT)";
+            echo "cpus $(nproc)"; free -g | sed -n 2p; echo "kenney models $(ls public/bridge/kenney 2>/dev/null | wc -l)"; } | tee out/health/versions.txt
+      - name: Captions + simple 3D still (full 1080x1920)
+        run: node scripts/render-stills.mjs HealthCard out/health/caption_ 45 1
+      - name: Skill look engine stills (skill's own demo scene, never published)
+        run: node scripts/render-stills.mjs SkillReference out/health/skill_ 100,900,1500 0.5
+      - name: Benchmark simple scene, full resolution
+        env: { BENCH_JSON: out/health/bench_simple.json }
+        run: node scripts/bench-render.mjs HealthCard 0 29 1 out/health/bench_simple.mp4
+      - name: Benchmark skill look engine (6 frames, half resolution)
+        env: { BENCH_JSON: out/health/bench_skill.json }
+        run: node scripts/bench-render.mjs SkillReference 200 205 0.5 out/health/bench_skill.mp4
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: health-render, path: out/health, retention-days: 14 }
+
+  voice-kokoro:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: { render: "false", voice: "true" }
+      - name: Narrator candidates (same 145-word sample, timed)
+        run: |
+          for v in am_michael bm_george am_fenrir af_heart; do
+            python pipeline/voice/kokoro_tts.py pipeline/voice/sample.txt out/voice/kokoro_$v --voice $v
+          done
+      - name: Word-timing cross-check with faster-whisper
+        run: |
+          s=$(date +%s)
+          python pipeline/voice/align_words.py out/voice/kokoro_am_michael/voice.wav pipeline/voice/sample.txt out/voice/kokoro_am_michael/words_whisper.json
+          echo "{\"align_s\": $(( $(date +%s) - s ))}" > out/voice/align_timing.json
+      - name: Convert samples to MP3 for phone listening
+        run: for d in out/voice/kokoro_*; do ffmpeg -v error -y -i $d/voice.wav -b:a 128k $d/sample.mp3; done
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: health-voice-kokoro, path: out/voice, retention-days: 14 }
+
+  voice-voicestudio:
+    if: github.event_name == 'push' || inputs.voicestudio
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Free disk space for the VoiceStudio image
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL; df -h / | tail -1
+      - name: Pull image (timed)
+        run: |
+          s=$(date +%s); docker pull -q ghcr.io/debpalash/voicestudio:stable
+          mkdir -p out/voice/voicestudio; echo "{\"pull_s\": $(( $(date +%s) - s ))}" > out/voice/voicestudio/pull.json
+          docker image ls ghcr.io/debpalash/voicestudio
+      - name: Generate the same sample on CPU (10-minute limit)
+        env: { VS_TIMEOUT: "600" }
+        run: bash pipeline/voice/voicestudio_tts.sh pipeline/voice/sample.txt out/voice/voicestudio
+      - if: success()
+        run: ffmpeg -v error -y -i out/voice/voicestudio/voice.wav -b:a 128k out/voice/voicestudio/sample.mp3
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: health-voice-voicestudio, path: out/voice/voicestudio, retention-days: 14 }
+
+  audio-mix:
+    needs: voice-kokoro
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: { render: "false", audio: "true" }
+      - uses: actions/download-artifact@v4
+        with: { name: health-voice-kokoro, path: out/voice }
+      - name: Skill synth audio + ducking + loudness on a real narration
+        run: |
+          python pipeline/audio/mixdown.py out/voice/kokoro_am_michael/voice.wav out/voice/kokoro_am_michael/words.json \
+            pipeline/audio/health_sound.json out/mix
+          ffmpeg -v error -y -i out/mix/mix.wav -b:a 160k out/mix/mix_sample.mp3
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: health-audio, path: out/mix, retention-days: 14 }
+
+  drive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+      GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
+      GDRIVE_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
+      GDRIVE_REFRESH_TOKEN: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Connect and create /Shorts/Review, Approved, Published, Rejected
+        run: |
+          mkdir -p out/drive
+          bash scripts/drive.sh init 2>&1 | tee out/drive/drive.txt
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: health-drive, path: out/drive, retention-days: 14 }
+
+  report:
+    needs: [render, voice-kokoro, voice-voicestudio, audio-mix, drive]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+      GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
+      GDRIVE_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
+      GDRIVE_REFRESH_TOKEN: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { path: out/artifacts }
+      - name: Write report
+        env:
+          R_RENDER: ${{ needs.render.result }}
+          R_KOKORO: ${{ needs.voice-kokoro.result }}
+          R_VS: ${{ needs.voice-voicestudio.result }}
+          R_AUDIO: ${{ needs.audio-mix.result }}
+          R_DRIVE: ${{ needs.drive.result }}
+        run: python3 pipeline/health_report.py out/artifacts health/REPORT.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Small review copies (stills + voice samples) in the repo
+        run: |
+          mkdir -p health/stills health/voice
+          cp out/artifacts/health-render/*.jpg health/stills/ 2>/dev/null || true
+          for d in out/artifacts/health-voice-kokoro/kokoro_*; do [ -f $d/sample.mp3 ] && cp $d/sample.mp3 health/voice/$(basename $d).mp3; done
+          [ -f out/artifacts/health-voice-voicestudio/sample.mp3 ] && cp out/artifacts/health-voice-voicestudio/sample.mp3 health/voice/voicestudio.mp3 || true
+          [ -f out/artifacts/health-audio/mix_sample.mp3 ] && cp out/artifacts/health-audio/mix_sample.mp3 health/voice/mix_sample.mp3 || true
+      - name: Upload the report package to Drive /Shorts/Review/health
+        run: bash scripts/drive.sh up health "Review/health"
+      - name: Log minutes
+        if: always()
+        run: python3 pipeline/log_run.py health-check -
+      - name: Commit report + render log
+        if: always()
+        run: |
+          bash scripts/commit-push.sh "health-check report (run ${{ github.run_id }})" health brain

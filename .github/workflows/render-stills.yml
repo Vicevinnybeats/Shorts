@@ -1,0 +1,60 @@
+name: render-stills
+# Key stills for one episode -> small JPGs committed to episodes/<id>/stills/ + Drive /Shorts/Review/<id>/stills
+on:
+  workflow_dispatch:
+    inputs:
+      episode: { description: "Episode id (folder name under episodes/)", required: true, type: string }
+      frames: { description: "Frames, comma separated (blank = the episode's own list)", required: false, type: string }
+      scale: { description: "0.5 = 540x960 (fast), 1 = full 1080x1920", required: false, default: "0.5", type: string }
+  push:
+    paths: ["episodes/**", "!episodes/*/stills/**", "!episodes/*/build/**", "!episodes/*/GO_FINAL"]
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: stills-${{ inputs.episode || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  stills:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+      GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
+      GDRIVE_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
+      GDRIVE_REFRESH_TOKEN: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
+      GITHUB_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Which episodes
+        id: eps
+        run: |
+          if [ -n "${{ inputs.episode }}" ]; then ids="${{ inputs.episode }}"; else ids=$(bash scripts/changed-episodes.sh "${{ github.event.before }}" "${{ github.sha }}" | tr '\n' ' '); fi
+          echo "ids=$ids" >> "$GITHUB_OUTPUT"; echo "episodes: ${ids:-none}"
+      - if: steps.eps.outputs.ids != ''
+        uses: ./.github/actions/setup
+      - if: steps.eps.outputs.ids != ''
+        name: Render stills
+        run: |
+          for id in ${{ steps.eps.outputs.ids }}; do
+            comp=$(node -p "require('./episodes/$id/episode.json').composition || 'Ep-$id'")
+            frames="${{ inputs.frames }}"; [ -n "$frames" ] || frames=$(node -p "(require('./episodes/$id/episode.json').stills || [0]).join(',')")
+            props="{}"; [ -f "episodes/$id/build/words.json" ] && props=$(node -p "JSON.stringify({words: require('./episodes/$id/build/words.json')})")
+            rm -rf "episodes/$id/stills" && mkdir -p "episodes/$id/stills"
+            node scripts/render-stills.mjs "$comp" "episodes/$id/stills/f" "$frames" "${{ inputs.scale || '0.5' }}" "$props"
+            # keep the repo small: max 540 px wide, JPEG q80
+            for f in episodes/$id/stills/*.jpg; do ffmpeg -v error -y -i "$f" -vf "scale='min(540,iw)':-2" -q:v 4 "$f.tmp.jpg" && mv "$f.tmp.jpg" "$f"; done
+            du -sh "episodes/$id/stills"
+            bash scripts/drive.sh up "episodes/$id/stills" "Review/$id/stills"
+          done
+      - name: Log minutes
+        if: always()
+        run: python3 pipeline/log_run.py render-stills "${{ steps.eps.outputs.ids || '-' }}"
+      - name: Commit stills + render log
+        if: always()
+        run: |
+          bash scripts/commit-push.sh "stills: ${{ steps.eps.outputs.ids || 'none' }} (run ${{ github.run_id }})" episodes brain
