@@ -14,7 +14,14 @@ def main():
     a = ap.parse_args()
     from faster_whisper import WhisperModel
     m = WhisperModel(a.model, device="cpu", compute_type="int8")
-    segs, _ = m.transcribe(a.wav, word_timestamps=True, beam_size=5, language="en")
+    # decode ourselves (soundfile + scipy) so faster-whisper never needs PyAV
+    import numpy as np, soundfile as sf
+    from scipy.signal import resample_poly
+    x, sr = sf.read(a.wav, dtype="float32", always_2d=True)
+    x = x.mean(1)
+    if sr != 16000:
+        x = resample_poly(x, 16000, sr).astype(np.float32)
+    segs, _ = m.transcribe(x, word_timestamps=True, beam_size=5, language="en")
     heard = [{"w": w.word.strip(), "s": round(w.start, 3), "e": round(w.end, 3)} for s in segs for w in s.words]
     script = open(a.script, encoding="utf-8").read().split()
     out = map_script(script, heard)

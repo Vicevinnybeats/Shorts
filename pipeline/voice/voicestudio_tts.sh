@@ -17,6 +17,11 @@ BODY=$(python3 -c 'import json,sys; print(json.dumps({"model":"omnivoice","input
 code=$(curl -s -o "$OUT/voice.wav" -w "%{http_code}" --max-time "$TIMEOUT" -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" -d "$BODY" http://127.0.0.1:3900/v1/audio/speech || echo 000)
 t1=$(date +%s)
 docker logs vs 2>&1 | tail -40 > "$OUT/voicestudio.log" || true
+if [ "$code" != "200" ]; then
+  echo "--- response body ---"; head -c 800 "$OUT/voice.wav"; echo
+  echo "--- /v1/audio/voices ---"; curl -s -H "Authorization: Bearer $KEY" http://127.0.0.1:3900/v1/audio/voices | head -c 600; echo
+  echo "--- server log ---"; cat "$OUT/voicestudio.log"
+fi
 docker rm -f vs >/dev/null 2>&1 || true
 echo "{\"engine\":\"voicestudio\",\"http\":\"$code\",\"startup_s\":$((t_ready-t0)),\"generate_s\":$((t1-t_ready)),\"instruct\":\"$INSTRUCT\"}" | tee "$OUT/voice_info.json"
 [ "$code" = "200" ]
