@@ -54,11 +54,12 @@ runs:
       uses: actions/cache@v4
       with:
         path: public/bridge/kenney
-        key: kenney-cc0-v2
+        key: kenney-cc0-v3
 
     - if: inputs.render == 'true' && steps.kenney.outputs.cache-hit != 'true'
-      name: Fetch CC0 3D props (only when the cache is cold)
+      name: Fetch CC0 3D props from the kenney-assets release (only when the cache is cold)
       shell: bash
+      env: { GH_TOKEN: "${{ github.token }}" }
       run: bash scripts/fetch-assets.sh
 
     - if: inputs.render == 'true'
