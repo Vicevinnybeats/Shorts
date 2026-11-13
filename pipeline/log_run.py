@@ -40,6 +40,16 @@ def main():
         total += mins
         concl = j.get("conclusion") or result or "running"
         rows.append(f"| {now:%Y-%m-%d %H:%M} | {wf} | {ep} | {j['name']} | {mins} | {total} | {concl} (run {run}) |")
+    # recompute every running total, so rows written by parallel workflows (union-merged) stay consistent
+    run_tot = {}
+    for i, r in enumerate(rows):
+        m = ROW.match(r)
+        if m:
+            run_tot[m.group(1)] = run_tot.get(m.group(1), 0) + int(m.group(2))
+            cells = r.split("|")
+            cells[6] = f" {run_tot[m.group(1)]} "
+            rows[i] = "|".join(cells)
+    total = run_tot.get(month, 0)
     open(LOG, "w", encoding="utf-8").write("\n".join(rows) + "\n")
     msg = f"Actions minutes this month (logged): {total} of {FREE} free. This run: {this_run} min."
     print(msg)
