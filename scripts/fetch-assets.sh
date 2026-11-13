@@ -16,4 +16,6 @@ for kit in nature-kit fantasy-town-kit; do
   find "$work/$kit" -iname "*.glb" -exec cp -n {} "$DEST/" \;
 done
 rm -rf "$work"
+# never cache an empty folder (it would never be retried); the world builder runs without these props
+[ "$(ls "$DEST" | wc -l)" -gt 0 ] || rmdir "$DEST"
 echo "kenney models: $(ls "$DEST" | wc -l)"

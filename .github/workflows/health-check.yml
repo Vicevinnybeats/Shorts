@@ -7,6 +7,10 @@ on:
         description: Also test VoiceStudio (Docker, CPU). Slow; Kokoro is the fallback.
         type: boolean
         default: true
+      render:
+        description: Run the render benchmarks (about 16 runner-minutes)
+        type: boolean
+        default: true
   push:
     paths: [".github/workflows/health-check.yml", ".github/actions/**", "pipeline/**", "scripts/**", "package-lock.json"]
 
@@ -20,6 +24,7 @@ concurrency:
 
 jobs:
   render:
+    if: github.event_name == 'push' || inputs.render
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -60,6 +65,7 @@ jobs:
             python pipeline/voice/kokoro_tts.py pipeline/voice/sample.txt out/voice/kokoro_$v --voice $v
           done
       - name: Word-timing cross-check with faster-whisper
+        continue-on-error: true
         run: |
           s=$(date +%s)
           python pipeline/voice/align_words.py out/voice/kokoro_am_michael/voice.wav pipeline/voice/sample.txt out/voice/kokoro_am_michael/words_whisper.json

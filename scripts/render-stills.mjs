@@ -20,7 +20,12 @@ const serveUrl = await bundle({ entryPoint: path.resolve("src/index.ts"), public
 console.log(JSON.stringify({ bundle_s: (Date.now() - t0) / 1000 }));
 const composition = await selectComposition({ serveUrl, id, inputProps, browserExecutable, chromiumOptions });
 const onBrowserLog = (l) => { if (l.type === "error" || l.type === "warning") console.log(`[${l.type}]`, l.text.slice(0, 300)); };
-for (const f of frames.split(",").map(Number)) {
+const last = composition.durationInFrames - 1;
+const list = [...new Set(frames.split(",").map(Number).map((f) => {
+  if (f > last) console.log(`::warning::frame ${f} is past the end (${last}); rendering ${last} instead`);
+  return Math.min(Math.max(0, f), last);
+}))];
+for (const f of list) {
   const t = Date.now();
   await renderStill({ composition, serveUrl, frame: f, output: `${prefix}${String(f).padStart(4, "0")}.jpg`, imageFormat: "jpeg",
     jpegQuality: 85, scale: Number(scale), inputProps, browserExecutable, chromiumOptions, timeoutInMilliseconds: 300000, onBrowserLog });

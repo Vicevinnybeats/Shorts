@@ -54,7 +54,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: public/bridge/kenney
-        key: kenney-cc0-v1
+        key: kenney-cc0-v2
 
     - if: inputs.render == 'true' && steps.kenney.outputs.cache-hit != 'true'
       name: Fetch CC0 3D props (only when the cache is cold)

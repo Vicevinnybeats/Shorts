@@ -3,3 +3,4 @@ kokoro==0.9.4
 misaki[en]==0.9.4
 soundfile==0.13.1
 faster-whisper==1.1.1
+av==14.4.0

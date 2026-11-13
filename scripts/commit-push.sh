@@ -9,7 +9,8 @@ git add -A -- "$@"
 git diff --cached --quiet && { echo "nothing to commit"; exit 0; }
 git commit -q -m "$msg [skip ci]"
 for i in 1 2 3 4; do
-  git pull -q --rebase origin "${GITHUB_REF_NAME:-main}" && git push -q origin "HEAD:${GITHUB_REF_NAME:-main}" && { echo "pushed"; exit 0; }
+  git pull -q --rebase origin "${GITHUB_REF_NAME:-main}" || { git rebase --abort 2>/dev/null; git pull -q --no-rebase --no-edit origin "${GITHUB_REF_NAME:-main}"; }
+  git push -q origin "HEAD:${GITHUB_REF_NAME:-main}" && { echo "pushed"; exit 0; }
   sleep $((i * 5))
 done
 echo "::warning::could not push after 4 tries"
