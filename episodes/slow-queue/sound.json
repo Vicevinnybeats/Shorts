@@ -1,0 +1,16 @@
+{"music": {"mood": "playful", "bpm": 104, "key": 62, "level_lu": -12},
+ "sfx": [
+  {"cue": "Maya picked the", "offset": -0.1, "fn": "whoosh", "args": {"dur": 0.45, "peak": 0.08}, "gain_db": -8},
+  {"cue": "Saturday.", "fn": "crowd", "args": {"dur": 9.0, "voices": 14, "energy": 0.7}, "level_lu": -22},
+  {"cue": "A coupon.", "fn": "clink", "args": {"bright": 0.9}, "gain_db": -8},
+  {"cue": "A price check.", "fn": "clink", "args": {"bright": 0.4}, "gain_db": -8},
+  {"cue": "A price check.", "offset": 0.25, "fn": "clink", "args": {"bright": 0.4}, "gain_db": -8},
+  {"cue": "A card that", "offset": 0.3, "fn": "push_thump", "args": {}, "gain_db": -6},
+  {"cue": "Sam's line flows.", "fn": "whoosh", "args": {"dur": 0.5, "peak": 0.1}, "gain_db": -9},
+  {"cue": "It feels like", "fn": "breeze", "args": {"dur": 3.0, "level": 0.6}, "level_lu": -20},
+  {"cue": "It is just math.", "fn": "push_thump", "args": {}, "gain_db": -6},
+  {"cue": "Add more checkouts,", "fn": "whoosh", "args": {"dur": 0.4, "peak": 0.1}, "gain_db": -9},
+  {"cue": "That is why", "fn": "whoosh", "args": {"dur": 0.5, "peak": 0.1}, "gain_db": -9},
+  {"cue": "Maya switches lines.", "offset": 0.4, "fn": "whoosh", "args": {"dur": 0.4, "peak": 0.08}, "gain_db": -8},
+  {"cue": "Her old line", "fn": "whoosh", "args": {"dur": 0.7, "peak": 0.2}, "gain_db": -6}
+ ]}

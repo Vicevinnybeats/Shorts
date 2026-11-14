@@ -1,0 +1,10 @@
+{
+  "id": "slow-queue",
+  "title": "Why You Always Pick the Slow Queue",
+  "style": "2.5D",
+  "composition": "Ep-slow-queue",
+  "stills": [8, 100, 200, 300, 380, 470, 560, 650, 760, 900, 1050, 1200, 1350, 1500, 1650, 1800],
+  "chunks": 6,
+  "status": "test-render",
+  "publish": false
+}

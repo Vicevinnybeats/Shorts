@@ -1,0 +1,20 @@
+{
+  "episode": "slow-queue",
+  "test": true,
+  "youtube": {
+    "title": "Why You Always Pick the Slow Queue #Shorts",
+    "description": "Maya picked the shortest queue. She still lost.\n\nIt isn't a curse, it's math: with three checkout lines, the chance that yours is the fastest is only 1 in 3 - two times out of three, another line wins, and the more checkouts there are, the worse your odds. One slow customer (a coupon, a price check, a card that won't work) freezes a whole line while the others keep moving. That's why some shops use one long \"snake\" line that feeds every till: a slow customer only blocks one till, and the line flows to the others.\n\nHave you ever switched lines and instantly regretted it?\n\nSources:\n- Why the other line always moves faster (probability): https://www.theblaze.com/news/2014/07/16/why-you-always-seem-to-get-stuck-in-the-slowest-line\n- FlowingData on the 1-in-3 odds: https://flowingdata.com/?p=13484\n- Bill Hammack (Engineer Guy) on queues and the single line: https://engineerguy.com/comm/4022.htm\n- The most efficient checkout line: https://boingboing.net/2015/06/02/the-most-efficient-checkout-li.html\n\nMaya, Sam and the shop are fictional.\nAI disclosure: made with AI assistance (script drafting, synthetic narration voice, animation).\n\n#Shorts #math #psychology #queue #lifehacks #TheLittleEpic",
+    "tags": ["shorts", "queue", "checkout line", "math", "probability", "queueing theory", "supermarket", "life hacks", "animation", "TheLittleEpic"],
+    "category": "Education",
+    "made_for_kids": false,
+    "contains_synthetic_media": false
+  },
+  "instagram": {
+    "caption": "Maya picked the shortest queue. She still lost. 🛒\nWith 3 checkout lines, yours is the fastest only 1 time in 3 - it's not a curse, it's math.\n\nHave you ever switched lines and instantly regretted it? 👇\n\nMade with AI assistance. Sources on YouTube.\n\n#math #queue #supermarket #lifehacks #psychology #shorts #reels #animation #TheLittleEpic"
+  },
+  "sources": [
+    {"fact": "With 3 lines, yours is the fastest 1 in 3 times; more lines = lower odds", "url": "https://flowingdata.com/?p=13484"},
+    {"fact": "One slow customer holds up only their own line; a single shared line spreads the delay", "url": "https://engineerguy.com/comm/4022.htm"},
+    {"fact": "Single serpentine line feeding several tills", "url": "https://boingboing.net/2015/06/02/the-most-efficient-checkout-li.html"}
+  ]
+}
