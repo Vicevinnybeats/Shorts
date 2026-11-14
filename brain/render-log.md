@@ -74,3 +74,12 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-14 22:49 | render-final | slow-queue | render (0-352) | 22 | 1059 | success (run 43647779284) |
 | 2026-11-14 22:49 | render-final | slow-queue | assemble | 2 | 1061 | success (run 43647779284) |
 | 2026-11-14 22:49 | render-final | slow-queue | log | 1 | 1062 | success (run 43647779284) |
+| 2026-11-14 23:22 | render-final | coin-flip | voice-and-mix | 4 | 1066 | success (run 43650658138) |
+| 2026-11-14 23:22 | render-final | coin-flip | render (1083-1443) | 16 | 1082 | success (run 43650658138) |
+| 2026-11-14 23:22 | render-final | coin-flip | render (1805-2160) | 20 | 1102 | success (run 43650658138) |
+| 2026-11-14 23:22 | render-final | coin-flip | render (0-360) | 21 | 1123 | success (run 43650658138) |
+| 2026-11-14 23:22 | render-final | coin-flip | render (361-721) | 10 | 1133 | success (run 43650658138) |
+| 2026-11-14 23:22 | render-final | coin-flip | render (1444-1804) | 16 | 1149 | success (run 43650658138) |
+| 2026-11-14 23:22 | render-final | coin-flip | render (722-1082) | 18 | 1167 | success (run 43650658138) |
+| 2026-11-14 23:22 | render-final | coin-flip | assemble | 3 | 1170 | success (run 43650658138) |
+| 2026-11-14 23:22 | render-final | coin-flip | log | 1 | 1171 | success (run 43650658138) |
