@@ -31,13 +31,18 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-14 13:47 | health-check | - | render | 1 | 134 | cancelled (run 43601452804) |
 | 2026-11-14 13:47 | health-check | - | audio-mix | 1 | 135 | cancelled (run 43601452804) |
 | 2026-11-14 13:47 | health-check | - | report | 1 | 136 | running (run 43601452804) |
-| 2026-11-14 13:49 | render-stills | ant-kitchen  | stills | 3 | 133 | running (run 43601452778) |
-| 2026-11-14 15:36 | render-final | ant-kitchen | voice-and-mix | 3 | 133 | success (run 43601452782) |
-| 2026-11-14 15:36 | render-final | ant-kitchen | render (0-315) | 53 | 186 | success (run 43601452782) |
-| 2026-11-14 15:36 | render-final | ant-kitchen | render (632-947) | 89 | 275 | success (run 43601452782) |
-| 2026-11-14 15:36 | render-final | ant-kitchen | render (1580-1894) | 95 | 370 | success (run 43601452782) |
-| 2026-11-14 15:36 | render-final | ant-kitchen | render (1264-1579) | 48 | 418 | success (run 43601452782) |
-| 2026-11-14 15:36 | render-final | ant-kitchen | render (316-631) | 103 | 521 | success (run 43601452782) |
-| 2026-11-14 15:36 | render-final | ant-kitchen | render (948-1263) | 106 | 627 | success (run 43601452782) |
-| 2026-11-14 15:36 | render-final | ant-kitchen | assemble | 2 | 629 | success (run 43601452782) |
-| 2026-11-14 15:36 | render-final | ant-kitchen | log | 1 | 630 | success (run 43601452782) |
+| 2026-11-14 13:49 | render-stills | ant-kitchen  | stills | 3 | 139 | running (run 43601452778) |
+| 2026-11-14 15:36 | render-final | ant-kitchen | voice-and-mix | 3 | 142 | success (run 43601452782) |
+| 2026-11-14 15:36 | render-final | ant-kitchen | render (0-315) | 53 | 195 | success (run 43601452782) |
+| 2026-11-14 15:36 | render-final | ant-kitchen | render (632-947) | 89 | 284 | success (run 43601452782) |
+| 2026-11-14 15:36 | render-final | ant-kitchen | render (1580-1894) | 95 | 379 | success (run 43601452782) |
+| 2026-11-14 15:36 | render-final | ant-kitchen | render (1264-1579) | 48 | 427 | success (run 43601452782) |
+| 2026-11-14 15:36 | render-final | ant-kitchen | render (316-631) | 103 | 530 | success (run 43601452782) |
+| 2026-11-14 15:36 | render-final | ant-kitchen | render (948-1263) | 106 | 636 | success (run 43601452782) |
+| 2026-11-14 15:36 | render-final | ant-kitchen | assemble | 2 | 638 | success (run 43601452782) |
+| 2026-11-14 15:36 | render-final | ant-kitchen | log | 1 | 639 | success (run 43601452782) |
+| 2026-11-14 18:45 | render-final | goalkeeper-still | voice-and-mix | 5 | 644 | success (run 43623117897) |
+| 2026-11-14 18:45 | render-final | goalkeeper-still | render (1002-2002) | 52 | 696 | success (run 43623117897) |
+| 2026-11-14 18:45 | render-final | goalkeeper-still | render (0-1001) | 39 | 735 | success (run 43623117897) |
+| 2026-11-14 18:45 | render-final | goalkeeper-still | assemble | 2 | 737 | success (run 43623117897) |
+| 2026-11-14 18:45 | render-final | goalkeeper-still | log | 1 | 738 | success (run 43623117897) |
