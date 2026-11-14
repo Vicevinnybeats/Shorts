@@ -61,7 +61,7 @@ const CROSSED: Pose = { armL: [25, -120], armR: [25, -120], legL: [8, 0], legR: 
 const WAVE = (f: number): Pose => ({ armL: [12, -6], armR: [150 + Math.sin(f * 0.5) * 18, -20], legL: [8, 0], legR: [8, 0] });
 
 // ---------------------------------------------------------------- the three lanes (side view, stacked by depth)
-const LANES = [{ y: 960, s: 0.62 }, { y: 1330, s: 0.8 }, { y: 1760, s: 1.0 }];   // 1 back, 2 middle (Maya), 3 front (Sam)
+const LANES = [{ y: 830, s: 0.58 }, { y: 1130, s: 0.74 }, { y: 1450, s: 0.9 }];   // feet of the front lane end above the captions   // 1 back, 2 middle (Maya), 3 front (Sam)
 const TILL_X = 90, SLOT = 190;
 
 type Timing = { trouble: number; sam: number; switchF: number; end: number };
@@ -111,8 +111,8 @@ const Shop: React.FC<{ f: number; T: Timing; laneProps: (lane: number) => Partia
   const lanes = [0, 1, 2].map((l) => ({ ...LANE_PEOPLE(T)[l], ...laneProps(l) }));
   return (
     <>
-      <Layer p={0.2}><Svg><Ceiling y={260} /><ShelfWall y={250} h={520} /><WallClock x={880} y={160} r={70} minutes={10 * 60 + f / FPS * 4} /></Svg></Layer>
-      <Layer p={0.6}><Svg><Floor y={760} h={1400} /></Svg></Layer>
+      <Layer p={0.2}><Svg><Ceiling y={220} /><ShelfWall y={210} h={480} /><WallClock x={880} y={160} r={70} minutes={10 * 60 + f / FPS * 4} /></Svg></Layer>
+      <Layer p={0.6}><Svg><Floor y={690} h={1500} /></Svg></Layer>
       {lanes.map((lp, l) => <Layer key={l} p={0.75 + l * 0.15}><Svg><Lane {...(lp as React.ComponentProps<typeof Lane>)} lane={l} f={f} T={T} /></Svg></Layer>)}
     </>
   );
@@ -161,34 +161,64 @@ const LaneRace: React.FC<{ n: number; u: number; seed: number; y: number; w: num
   );
 };
 
-/** top-down: lanes of heads (circles) moving to tills; one red slow customer */
-const TopDown: React.FC<{ f: number; snake: boolean }> = ({ f, snake }) => {
-  const tills = [-280, 0, 280];
-  const items: React.ReactElement[] = [];
-  tills.forEach((tx, i) => items.push(<g key={"t" + i}><rect x={tx - 70} y={-520} width={140} height={90} rx={12} fill={SHOP.till} stroke={INK} strokeWidth={6} /><text x={tx} y={-458} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={44} fill="#fff">{i + 1}</text></g>));
-  if (!snake) {
-    tills.forEach((tx, i) => {
-      const blocked = i === 1, speed = blocked ? 0 : 0.9;
-      for (let j = 0; j < 7; j++) {
-        const yy = -380 + j * 95 - ((f * speed) % 95);
-        items.push(<circle key={`${i}-${j}`} cx={tx} cy={yy} r={30} fill={blocked && j === 0 ? "#ff5a4a" : "#f2f5ea"} stroke={INK} strokeWidth={5} />);
-      }
-    });
-  } else {
-    // one serpentine line (back and forth) feeding whichever till frees up; the red one only blocks till 2
-    const path: [number, number][] = [];
-    for (let row = 0; row < 5; row++) for (let c = 0; c <= 10; c++) path.push([(row % 2 ? 1 : -1) * (-300 + c * 60), 520 - row * 110]);
-    const n = path.length, step = (f * 0.18) % 1;
-    for (let j = 0; j < 40; j++) {
-      const pi = Math.min(n - 1, Math.floor(j * 1.3 + step * 1.3));
-      const [px, py] = path[n - 1 - pi];
-      items.push(<circle key={"s" + j} cx={px} cy={py - 60} r={24} fill="#f2f5ea" stroke={INK} strokeWidth={4} />);
+/** the snake line seen from a raised angle: one roped queue winding back and forth, feeding whichever till is free;
+ *  till 2 is held up by the slow customer, so people simply go to 1 or 3 */
+const SnakeLine: React.FC<{ f: number }> = ({ f }) => {
+  const rowsY = [1330, 1120, 910, 720], left = 150, right = 930;
+  const sc = (y: number) => 0.42 + (y - 720) / (1330 - 720) * 0.36;
+  const pts: [number, number][] = [];
+  rowsY.forEach((y, r) => { const a: [number, number] = [left, y], b: [number, number] = [right, y]; pts.push(...(r % 2 ? [b, a] : [a, b])); });
+  // row 0 walks left->right, row 1 right->left ... so the front (last row) ends at the right; exit up to the tills
+  const seg = pts.slice(1).map((p, i) => Math.hypot(p[0] - pts[i][0], p[1] - pts[i][1]));
+  const L = seg.reduce((x, y) => x + y, 0);
+  const at = (d: number): [number, number] => {
+    for (let i = 0; i < seg.length; i++) { if (d <= seg[i]) { const t = d / seg[i]; return [pts[i][0] + (pts[i + 1][0] - pts[i][0]) * t, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * t]; } d -= seg[i]; }
+    return pts[pts.length - 1];
+  };
+  const spacing = 230, speed = 3.0, n = Math.ceil(L / spacing) + 3;
+  const tills = [{ x: 90, n: 1 }, { x: 420, n: 2 }, { x: 750, n: 3 }];
+  const ppl: { y: number; el: React.ReactElement }[] = [];
+  for (let j = 0; j < n; j++) {
+    const d = (j * spacing + f * speed) % (L + spacing * 3);
+    const lk = SHOPPERS[j % SHOPPERS.length];
+    if (d <= L) {
+      const [x, y] = at(d), [x2] = at(Math.min(L, d + 4));
+      ppl.push({ y, el: <Person key={j} x={x} y={y} scale={sc(y)} facing={x2 < x ? -1 : 1} look={lk} pose={runPose(d * 0.05, 0.22)} expr="calm" t={f + j * 5} /> });
+      continue;
     }
-    [0, 2].forEach((ti) => { const yy = -300 + ((f * 3) % 120); items.push(<circle key={"go" + ti} cx={tills[ti]} cy={-yy - 80} r={26} fill="#7fe0b0" stroke={INK} strokeWidth={4} />); });
-    items.push(<circle key="red" cx={0} cy={-380} r={30} fill="#ff5a4a" stroke={INK} strokeWidth={5} />);
-    items.push(<path key="rope" d="M -340 420 L 340 420 M -340 300 L 340 300 M -340 190 L 340 190 M -340 80 L 340 80" stroke="#c9b48a" strokeWidth={6} strokeDasharray="20 12" opacity={0.7} />);
+    const q = Math.min(1, (d - L) / (spacing * 3)), tx = j % 2 ? 750 + 200 : 90 + 200, fx = right, fy = rowsY[3];
+    const x = fx + (tx - fx) * q, y = fy - 110 * q;
+    ppl.push({ y, el: <g key={j} opacity={1 - Math.max(0, q - 0.6) * 2.5}><Person x={x} y={y} scale={sc(fy) * 0.95} facing={tx < fx ? -1 : 1} look={lk} pose={runPose(d * 0.05, 0.22)} expr="smile" t={f + j * 5} /></g> });
   }
-  return <g>{items}</g>;
+  ppl.sort((p1, p2) => p1.y - p2.y);
+  return (
+    <g>
+      {tills.map((t) => <Till key={t.n} x={t.x} y={600} n={t.n} f={f} moving={t.n !== 2} light={t.n === 2 ? "blink" : "on"} scale={0.5} />)}
+      <Person x={500} y={600} scale={0.4} facing={-1} look={COUPON_LADY} pose={POSES.stand} expr="calm" t={f} />
+      <Coupon x={560} y={420} scale={0.4} rot={10} />
+      {rowsY.slice(0, 3).map((y, r) => {
+        const ry = (y + rowsY[r + 1]) / 2 + 30, gapLeft = r % 2 === 1;   // the turn is open on the side the line walks round
+        const x0 = gapLeft ? left + 120 : left - 40, x1 = gapLeft ? right + 40 : right - 120;
+        return <g key={r}><path d={`M ${x0} ${ry} L ${x1} ${ry}`} stroke="#c9a24a" strokeWidth={9} />
+          {[x0, (x0 + x1) / 2, x1].map((x) => <g key={x}><rect x={x - 7} y={ry - 10} width={14} height={70 * sc(ry)} fill="#8a8f9a" stroke={INK} strokeWidth={3} /><circle cx={x} cy={ry - 10} r={11} fill="#8a8f9a" stroke={INK} strokeWidth={3} /></g>)}</g>;
+      })}
+      {ppl.map((p) => p.el)}
+    </g>
+  );
+};
+
+/** a single roped queue seen from the side: everybody (Maya and Sam too) moves together, calmly */
+const OneLine: React.FC<{ f: number }> = ({ f }) => {
+  const cast = [SHOPPERS[0], MAYA, SHOPPERS[3], SAM, SHOPPERS[5], SHOPPERS[1], SHOPPERS[2]];
+  const shift = (f * 1.6) % 190;
+  return (
+    <g>
+      {[0, 1, 2].map((i) => <Till key={i} x={-60 + i * 40} y={1130 - i * 90} n={i + 1} f={f} moving scale={0.7} />)}
+      <path d="M 300 1150 L 1300 1150" stroke="#c9a24a" strokeWidth={12} />
+      {Array.from({ length: 6 }, (_, i) => <g key={i}><rect x={300 + i * 200 - 10} y={1070} width={20} height={200} fill="#8a8f9a" stroke={INK} strokeWidth={4} /></g>)}
+      {cast.map((lk, i) => <Person key={i} x={260 + i * 190 - shift} y={1400} scale={1.0} facing={-1} look={lk} pose={runPose(f * 0.25 + i, 0.25)} expr={lk === MAYA || lk === SAM ? "smile" : "calm"} t={f + i * 7} />)}
+    </g>
+  );
 };
 
 // ---------------------------------------------------------------- shots
@@ -275,23 +305,51 @@ const ShotView: React.FC<{ span: ShotSpan; words: SceneProps["words"]; T: Timing
       const content = span.id === "math" ? (<>
           <text x={0} y={160} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={84} fill={chalk.fill}>NOT A CURSE.</text>
           <text x={0} y={300} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={120} fill="#ffcf3a" opacity={k(u, 8, 16, 0, 1)}>MATH.</text>
-          <g transform="translate(0 420)"><LaneRace n={3} u={u} seed={5} y={0} w={640} mine={1} /></g></>)
-        : span.id === "odds" ? (<g transform="translate(0 330)"><LaneRace n={3} u={u} seed={11} y={0} w={700} mine={1} label="1 IN 3" /></g>)
-        : span.id === "twoof3" ? (<>{[0, 1, 2].map((race) => <g key={race} transform={`translate(0 ${90 + race * 290})`} opacity={k(u, race * 10, race * 10 + 6, 0, 1)}><LaneRace n={3} u={u - race * 10} seed={[3, 21, 8][race]} y={0} w={600} mine={race === 2 ? 0 : 1} /></g>)}
-            <text x={0} y={1000} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={64} fill="#ffcf3a" opacity={k(u, 34, 42, 0, 1)}>2 OUT OF 3: ANOTHER LINE WINS</text></>)
-        : (<g transform="translate(0 260)"><LaneRace n={5} u={u} seed={17} y={0} w={700} mine={2} label="1 IN 5" /></g>);
+          <text x={0} y={470} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={64} fill={chalk.fill} opacity={k(u, 16, 24, 0, 1)}><tspan x={0}>3 LINES,</tspan><tspan x={0} dy={80}>ONLY 1 IS FASTEST</tspan></text></>)
+        : span.id === "odds" ? (<g transform="translate(0 470)">
+            {[0, 1, 2].map((i) => { const a0 = -90 + i * 120, a1 = a0 + 120 * k(u, i * 5, i * 5 + 10, 0, 1), r = 250, rad = (d: number) => d * Math.PI / 180;
+              return <path key={i} d={`M 0 0 L ${r * Math.cos(rad(a0))} ${r * Math.sin(rad(a0))} A ${r} ${r} 0 0 1 ${r * Math.cos(rad(a1))} ${r * Math.sin(rad(a1))} Z`} fill={i === 0 ? "#b58cff" : "#f2f5ea"} opacity={i === 0 ? 1 : 0.55} stroke="#24443a" strokeWidth={10} />; })}
+            <text x={-90} y={-60} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={54} fill={INK} opacity={k(u, 10, 16, 0, 1)}>YOU</text>
+            <text x={0} y={390} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={120} fill="#ffcf3a" opacity={k(u, 16, 24, 0, 1)}>1 IN 3</text></g>)
+        : span.id === "twoof3" ? (<>{[0, 1, 2].map((race) => <g key={race} transform={`translate(0 ${250 + race * 215})`} opacity={k(u, race * 10, race * 10 + 6, 0, 1)}><LaneRace n={3} u={u - race * 10} seed={[3, 21, 8][race]} y={0} w={600} mine={race === 2 ? 0 : 1} /></g>)}
+            <text x={0} y={90} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={62} fill="#ffcf3a" opacity={k(u, 34, 42, 0, 1)}><tspan x={0}>2 OUT OF 3:</tspan><tspan x={0} dy={72}>ANOTHER LINE WINS</tspan></text></>)
+        : (<g transform="translate(0 380)">
+            {[0, 1, 2, 3, 4].map((i) => { const pop = k(u, i * 4, i * 4 + 8, 0, 1, Easing.out(Easing.back(2))); const mine = i === 2;
+              return <g key={i} transform={`translate(${-320 + i * 160} 0) scale(${pop})`}><rect x={-62} y={-110} width={124} height={170} rx={14} fill={mine ? "#b58cff" : "#3b6fd6"} stroke={INK} strokeWidth={7} />
+                <text y={-14} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={70} fill="#fff">{i + 1}</text>
+                {mine && <text y={110} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={40} fill="#f2f5ea">YOU</text>}</g>; })}
+            <text x={0} y={360} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={120} fill="#ffcf3a" opacity={k(u, 24, 32, 0, 1)}>1 IN 5</text></g>);
       body = (<><Layer p={0}><AbsoluteFill style={{ background: "#2a2018" }} /></Layer>
         <Layer p={1}><Svg><TacticsBoard x={540} y={330} w={860}>{content}</TacticsBoard></Svg></Layer></>);
       break;
     }
-    case "slow": case "snake": case "fair": {   // top-down diagrams
+    case "slow": {   // in the shop: the frozen line gets a STOP sign, the moving one green arrows
+      mood = MOODS.tense;
+      cam = { x: 0, y: 0, zoom: 1.0, rot: 0 };
+      const lady = posOf(1, 1, f, T), front3 = posOf(2, 0, f, T);
+      body = (<>{shop((l) => (l === 1 ? { exprs: { maya: "worried", lady: "calm" }, poses: { maya: CROSSED } } : {}))}
+        <Layer p={0.9}><Svg>
+          <g transform={`translate(${Math.min(920, Math.max(170, lady.x))} ${lady.y - 300}) scale(${k(u, 4, 10, 0, 1, Easing.out(Easing.back(2)))})`}><path d="M -60 -25 L -25 -60 L 25 -60 L 60 -25 L 60 25 L 25 60 L -25 60 L -60 25 Z" fill="#e8443a" stroke={INK} strokeWidth={7} /><text y={14} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={34} fill="#fff">STOP</text></g>
+          <g transform={`translate(880 ${LANES[2].y - 380}) scale(${k(u, 10, 16, 0, 1, Easing.out(Easing.back(2)))})`}><circle r={62} fill="#2fbf71" stroke={INK} strokeWidth={7} /><text y={14} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={42} fill="#fff">GO</text></g>
+        </Svg></Layer></>);
+      break;
+    }
+    case "snake": {  // top-down: one roped line feeding whichever till is free
       mood = MOODS.explain;
-      cam = { x: 0, y: 0, zoom: k(u, 0, len, 1.0, 1.08), rot: 0 };
+      cam = { x: 0, y: 0, zoom: k(u, 0, len, 1.0, 1.1), rot: 0 };
       body = (<><Layer p={0}><AbsoluteFill style={{ background: SHOP.floor }} /></Layer>
-        <Layer p={1}><Svg>
-          <g transform="translate(540 780)"><TopDown f={f} snake={span.id !== "slow"} /></g>
-          {span.id === "fair" && <text x={540} y={1300} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={60} fill={INK} opacity={k(u, 6, 14, 0, 1)}><tspan x={540}>EVERYONE WAITS</tspan><tspan x={540} dy={70}>ABOUT THE SAME</tspan></text>}
-          {span.id === "slow" && <text x={540} y={1300} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={60} fill="#e8443a" opacity={k(u, 10, 18, 0, 1)}><tspan x={540}>ONE SLOW CUSTOMER</tspan><tspan x={540} dy={70}>= ONE FROZEN LINE</tspan></text>}
+        <Layer p={0.2}><Svg><Ceiling y={220} /><ShelfWall y={210} h={300} seed={7} /></Svg></Layer>
+        <Layer p={0.6}><Svg><Floor y={510} h={1500} /></Svg></Layer>
+        <Layer p={1}><Svg><SnakeLine f={f} /></Svg></Layer></>);
+      break;
+    }
+    case "fair": {   // side view: everybody in one line, moving together, Maya and Sam calm
+      mood = MOODS.warm;
+      cam = { x: k(u, 0, len, 60, 0), y: 40, zoom: 1.05, rot: 0 };
+      body = (<>
+        <Layer p={0.2}><Svg><Ceiling y={220} /><ShelfWall y={210} h={480} seed={4} /></Svg></Layer>
+        <Layer p={0.6}><Svg><Floor y={690} h={1500} /></Svg></Layer>
+        <Layer p={1}><Svg><OneLine f={f} />
         </Svg></Layer></>);
       break;
     }
@@ -333,7 +391,7 @@ const ShotView: React.FC<{ span: ShotSpan; words: SceneProps["words"]; T: Timing
   );
 };
 
-const PLACE: Record<string, string> = { math: "board", odds: "board", twoof3: "board", more: "board", slow: "top", snake: "top", fair: "top" };
+const PLACE: Record<string, string> = { math: "board", odds: "board", twoof3: "board", more: "board", snake: "top", fair: "line" };
 const XF = 7;
 
 const Scene: React.FC<SceneProps> = ({ words, spans }) => {
