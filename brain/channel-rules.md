@@ -7,6 +7,10 @@
 - Never publish, upload to YouTube/Instagram or send anything without explicit approval.
 - No credentials in the repo. GitHub Actions secrets only.
 
+## Identity
+- Channel name: **TheLittleEpic** (YouTube, Instagram, Gmail/Drive). Same name everywhere.
+- Instagram must be a Professional account linked to a Facebook Page (needed for automatic Reel publishing).
+
 ## Format
 - One channel, YouTube Shorts + Instagram Reels. 55-70 s, 9:16, 1080x1920, 30 fps.
 - Same narrator, same visual style, same short intro sting on every video. Each series has its own look.

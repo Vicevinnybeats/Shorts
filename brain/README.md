@@ -14,5 +14,9 @@ Read every file here before planning a new video. Update the relevant file after
 | `render-log.md` | Every Actions run: workflow, minutes, month total (written by the workflows) |
 | `tools.md` | Tool choices, versions and health-check results |
 
-Why markdown and not MyBrain: MyBrain needs a paid OpenRouter key for embeddings and a PostgreSQL server
+Code map: the owner's own MyBrain (github.com/Vicevinnybeats/MyBrain, free, no AI) maps this repo into
+`mybrain-out/graph.json`; the `mybrain` MCP server in `.mcp.json` lets sessions query it, and the `mybrain-map`
+workflow refreshes it on every push. These markdown files stay the place for rules, topics and feedback.
+
+Why not the dnaidionov MyBrain plugin: MyBrain needs a paid OpenRouter key for embeddings and a PostgreSQL server
 (Docker or AWS RDS) that would not survive an ephemeral cloud session. Rule: free only. Decided 2026-11-13.

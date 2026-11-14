@@ -1,0 +1,31 @@
+name: mybrain-map
+# Rebuilds the MyBrain code map (free, no AI) when code or memory changes, so every Claude session
+# can query mybrain-out/graph.json through the "mybrain" MCP server in .mcp.json.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["src/**", "pipeline/**", "scripts/**", "library/**", "brain/**", "episodes/**", ".github/**", "!episodes/*/stills/**"]
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: mybrain-map
+  cancel-in-progress: true
+
+jobs:
+  map:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Install MyBrain
+        run: uv tool install "git+https://github.com/Vicevinnybeats/MyBrain"
+      - name: Build the map (code only, free)
+        run: mybrain update . && mybrain god-nodes --top 5
+      - name: Commit the map
+        run: |
+          bash scripts/commit-push.sh "mybrain: refresh code map (run ${{ github.run_id }})" mybrain-out/graph.json mybrain-out/GRAPH_REPORT.md mybrain-out/manifest.json

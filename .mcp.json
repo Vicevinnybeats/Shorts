@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "mybrain": {
+      "command": "mybrain-mcp",
+      "args": ["mybrain-out/graph.json"]
+    }
+  }
+}

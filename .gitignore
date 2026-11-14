@@ -13,3 +13,5 @@ __pycache__/
 props.json
 chunks/
 final/
+mybrain-out/cache/
+mybrain-out/graph.html
