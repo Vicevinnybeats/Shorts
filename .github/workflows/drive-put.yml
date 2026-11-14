@@ -1,0 +1,30 @@
+name: drive-put
+# Sends a rendered MP4 from a past run's artifact into a Google Drive resumable-upload session opened by Zapier
+# (the session URL authorises exactly one upload into the chosen Drive folder and expires after about a week).
+# Nothing is published anywhere: this only puts the file into Drive.
+on:
+  workflow_dispatch:
+    inputs:
+      session_url: { description: "Drive resumable upload session URL (from Zapier)", required: true, type: string }
+      run_id: { description: "Run that holds the final-<episode> artifact", required: true, type: string }
+      episode: { description: "Episode id", required: true, type: string }
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  put:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { name: "final-${{ inputs.episode }}", path: final, run-id: "${{ inputs.run_id }}", github-token: "${{ github.token }}" }
+      - name: Upload to Drive
+        env: { URL: "${{ inputs.session_url }}", ID: "${{ inputs.episode }}" }
+        run: |
+          echo "::add-mask::$URL"
+          ls -la final
+          code=$(curl -sS -o resp.json -w "%{http_code}" -X PUT -H "Content-Type: video/mp4" --upload-file "final/$ID.mp4" "$URL")
+          echo "HTTP $code"; head -c 400 resp.json; echo
+          [ "$code" = "200" ] || [ "$code" = "201" ]
