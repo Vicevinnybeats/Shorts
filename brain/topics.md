@@ -4,7 +4,7 @@
 | Title | Status | Episode |
 |---|---|---|
 | The Goalkeeper Who Did Nothing and Won | final approved 2026-11-14, in Drive Shorts/Review (not published) | goalkeeper-still |
-| Why You Always Pick the Slow Queue (was "Never Pick the Middle Queue": no evidence for middle) | script approved 2026-11-14 ("continue making the next one") | slow-queue |
+| Why You Always Pick the Slow Queue (was "Never Pick the Middle Queue": no evidence for middle) | remade, approved ("go") and in Drive Review 2026-11-14 | slow-queue |
 | This Coin Flip Isn't 50/50 | script approved, rendering | |
 | He Said the Price First and Still Won | backlog | |
 | Your Toast Isn't Unlucky, Your Table Is | backlog | |
