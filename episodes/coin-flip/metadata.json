@@ -1,0 +1,36 @@
+{
+  "episode": "coin-flip",
+  "test": true,
+  "youtube": {
+    "title": "This Coin Flip Isn't 50/50 #Shorts",
+    "description": "Last slice of pizza. One coin. Zoe knows something her brother doesn't.\n\nA coin flip isn't quite 50/50. In a study of 350,757 flips by 48 people (every session filmed), a flipped-and-caught coin landed on the same side it started on about 50.8% of the time. The reason: a flipped coin wobbles as it spins, so it spends a little more of its flight with the starting side facing up. Heads vs tails on its own made no difference, and some flippers showed no bias at all - but over a thousand bets, calling the side facing up comes out ahead.\n\nWould you call the side facing up?\n\nSources:\n- Bartos et al., Fair coins tend to land on the same side they started: Evidence from 350,757 flips (arXiv 2310.04153; Journal of the American Statistical Association, 2025): https://arxiv.org/abs/2310.04153\n- University of Amsterdam news: https://www.uva.nl/en/content/news/news/2023/10/heads-or-tails-pure-chance.html\n- Utrecht University research portal: https://research-portal.uu.nl/en/publications/fair-coins-tend-to-land-on-the-same-side-they-started-evidence-fr/\n\nZoe, Leo and the pizza night are fictional.\nAI disclosure: made with AI assistance (script drafting, synthetic narration voice, animation).\n\n#Shorts #science #probability #coinflip #physics #TheLittleEpic",
+    "tags": [
+      "shorts",
+      "coin flip",
+      "probability",
+      "science",
+      "physics",
+      "heads or tails",
+      "statistics",
+      "life hacks",
+      "animation",
+      "TheLittleEpic"
+    ],
+    "category": "Education",
+    "made_for_kids": false,
+    "contains_synthetic_media": false
+  },
+  "instagram": {
+    "caption": "Last slice of pizza. One coin. Zoe knows something her brother doesn't. 🍕🪙\nIn 350,757 flips, coins landed on the side they started on about 51% of the time.\n\nWould you call the side facing up? 👇\n\nMade with AI assistance. Sources on YouTube.\n\n#science #coinflip #probability #physics #shorts #reels #animation #TheLittleEpic"
+  },
+  "sources": [
+    {
+      "fact": "Same-side probability 0.508 in 350,757 flips by 48 people; no heads-tails bias; variation between flippers",
+      "url": "https://arxiv.org/abs/2310.04153"
+    },
+    {
+      "fact": "Wobble (precession) explanation, Diaconis model",
+      "url": "https://www.uva.nl/en/content/news/news/2023/10/heads-or-tails-pure-chance.html"
+    }
+  ]
+}

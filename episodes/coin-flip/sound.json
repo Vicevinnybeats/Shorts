@@ -1,0 +1,16 @@
+{"music": {"mood": "playful", "bpm": 96, "key": 60, "level_lu": -12},
+ "sfx": [
+  {"cue": "One coin.", "fn": "clink", "args": {"bright": 1.0}, "gain_db": -6},
+  {"cue": "One coin.", "offset": 0.12, "fn": "clink", "args": {"bright": 0.8}, "gain_db": -10},
+  {"cue": "Friday night.", "fn": "crickets", "args": {"dur": 6.0, "voices": 3}, "level_lu": -24},
+  {"cue": "Zoe and Leo", "offset": 0.3, "fn": "whoosh", "args": {"dur": 0.35, "peak": 0.1}, "gain_db": -9},
+  {"cue": "Leo pulls out", "offset": 0.5, "fn": "clink", "args": {"bright": 0.9}, "gain_db": -8},
+  {"cue": "Not quite.", "fn": "push_thump", "args": {}, "gain_db": -6},
+  {"cue": "Scientists filmed", "fn": "whoosh", "args": {"dur": 0.4, "peak": 0.1}, "gain_db": -9},
+  {"cue": "Why? A flipped", "fn": "whoosh", "args": {"dur": 0.9, "peak": 0.12}, "gain_db": -9},
+  {"cue": "It wobbles.", "fn": "whoosh", "args": {"dur": 0.6, "peak": 0.08}, "gain_db": -10},
+  {"cue": "The coin spins.", "fn": "whoosh", "args": {"dur": 1.0, "peak": 0.15}, "gain_db": -8},
+  {"cue": "Leo catches it.", "fn": "push_thump", "args": {}, "gain_db": -5},
+  {"cue": "Heads. Zoe takes", "fn": "clink", "args": {"bright": 1.0}, "gain_db": -7},
+  {"cue": "Would you call", "fn": "whoosh", "args": {"dur": 0.5, "peak": 0.08}, "gain_db": -10}
+ ]}
