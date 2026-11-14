@@ -1,5 +1,23 @@
 # Topics
 
+## Channel theme: everyday face-offs decided by a surprising rule (active)
+| Title | Status | Episode |
+|---|---|---|
+| The Goalkeeper Who Did Nothing and Won | script (awaiting approval) | goalkeeper-still |
+| Never Pick the Middle Queue | backlog | |
+| This Coin Flip Isn't 50/50 | backlog | |
+| He Said the Price First and Still Won | backlog | |
+| Your Toast Isn't Unlucky, Your Table Is | backlog | |
+| The Lift Button That Was Never Connected | backlog | |
+| Why the Silent Player Took Everything | backlog | |
+| Stop Looking at the Pole | backlog | |
+| The Winner Paid the Most and Lost | backlog | |
+| Two Pizzas or One? Everyone Gets It Wrong | backlog | |
+| The Punch He Never Saw Coming | backlog | |
+| You Can't Tickle Yourself. Here's Why | backlog | |
+
+## Retired series (2026-11-14) - kept so nothing repeats
+
 Status: `backlog` -> `scripted` -> `stills` -> `final` -> `published` (or `rejected`). Never repeat a topic.
 Add 10 new topics per series over time (mark them `added`).
 

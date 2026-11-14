@@ -17,7 +17,15 @@
 - Bold word-by-word captions, readable on a phone.
 - English.
 
-## Five rotating series
+## Channel theme (decided 2026-11-14, replaces the five series below and the 'What If' series)
+ONE theme for the whole channel: a tense everyday moment or face-off, decided by a surprising rule of science or
+psychology (the "Why the Second Draw Always Wins" kind of video, but NOT history). Varied, hooky titles.
+Style: 2.5D (flat illustrated layers + parallax camera, plain Remotion, no WebGL except rare special shots).
+Format: paradox hook in 2 s -> face-off/tension -> "wait, why?" -> the real rule via an everyday comparison -> ironic
+twist -> a last-line question. Every fact verified; drop a title if the science does not hold up.
+No Zapier/auto-upload until the owner says so. Show test videos in the chat.
+
+## Five rotating series (retired 2026-11-14, kept for reference)
 1. **Tiny World**: cinematic stories at insect/drop/seed/crumb scale, real nature facts.
 2. **Made of Time**: one place or object across decades; fixed or slow camera, time passing around it.
 3. **Inside Out**: the camera flies where humans can't go. Educational, accurate, stunning.
