@@ -4,7 +4,7 @@ usage: python pipeline/audio/mixdown.py <voice.wav> <words.json> <sound.json|-> 
 sound.json (per episode, optional):
   {"music": {"mood": "warm", "bpm": 84, "key": 57, "level_lu": -10},
    "sfx": [{"t": 1.2, "fn": "whoosh", "args": {"dur": 0.6}, "gain_db": -6, "pan": 0.3}, ...]}
-Mix rules (skill standard, adapted for Shorts): voice unchanged, music bed ~10 LU under the voice and ducked a further
+Mix rules (skill standard, adapted for Shorts; the narration must always be clearly on top): voice unchanged, music bed ~10 LU under the voice and ducked a further
 -3 dB while words are spoken (keyed from words.json), SFX -6 dB, master -14 LUFS integrated, true peak <= -1 dBTP,
 48 kHz / 24-bit stereo. Writes mix.wav, stem_*.wav and mix_report.json.
 """
@@ -14,11 +14,14 @@ from scipy import ndimage, signal
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.join(ROOT, "vendor", "audio"))
-from dsp import SR, ns, st, dbg, rng, read_wav, write_wav, integrated, true_peak, lra, place, pan  # noqa: E402
+from dsp import SR, ns, st, dbg, rng, read_wav, write_wav, integrated, true_peak, lra, place, pan, momentary_max  # noqa: E402
 import instruments as I  # noqa: E402
 import sfx_gen as G  # noqa: E402
 
 TARGET_LUFS, CEIL_DBTP = -14.0, -1.0
+HOOK_S = 3.0             # no background beds in the first 3 s: the hook is voice first
+BED_UNDER_VOICE = 16.0   # beds sit at least 16 LU under the narration
+BED_DUCK_DB = -10.0      # and dip a further 10 dB while a word is spoken
 CHORDS = {"warm": [[0, 4, 7, 11], [9, 12, 16, 19], [5, 9, 12, 16], [7, 11, 14, 17]],
           "wonder": [[0, 7, 14, 16], [5, 12, 16, 19], [9, 16, 19, 23], [7, 14, 17, 21]],
           "tense": [[0, 3, 7, 10], [1, 5, 8, 12], [0, 3, 7, 10], [-2, 2, 5, 8]],
@@ -131,11 +134,36 @@ def main():
     music *= duck_curve(N, words)[None, :]
     music[:, -ns(1.2):] *= np.linspace(1, 0, ns(1.2))[None, :]  # fade out with the last word
 
-    sfx = np.zeros((2, N))
+    # SFX in two kinds. HITS (< 1.5 s: kicks, whooshes, thumps) keep their gain_db and dip only -3 dB under words.
+    # BEDS (>= 1.5 s or "bed": true: crowds, breeze, murmur) are levelled against the VOICE: at most
+    # BED_UNDER_VOICE LU under it, ducked a further BED_DUCK_DB while words are spoken, and never inside the hook.
+    hits, beds = np.zeros((2, N)), np.zeros((2, N))
+    hook_end = HOOK_S
     for k, ev in enumerate(sound.get("sfx", [])):
         t = ev["t"] if "t" in ev else cue_time(words, ev["cue"]) + ev.get("offset", 0.0)
-        x = call_sfx(ev, rng(100 + k))
-        place(sfx, pan(st(x).mean(0), ev.get("pan", 0.0)), max(0.0, t), dbg(ev.get("gain_db", -6.0)))
+        x = pan(st(call_sfx(ev, rng(100 + k))).mean(0), ev.get("pan", 0.0))
+        is_bed = ev.get("bed", x.shape[1] / SR >= 1.5)
+        if is_bed:
+            if t < hook_end:                               # the hook belongs to the voice alone
+                cut = ns(hook_end - t)
+                if cut >= x.shape[1]:
+                    continue
+                x, t = x[:, cut:], hook_end
+                x[:, : ns(0.4)] *= np.linspace(0, 1, ns(0.4))[None, :]
+            lvl = integrated(x)
+            if np.isfinite(lvl):
+                target = v_lufs + min(ev.get("level_lu", -BED_UNDER_VOICE), -BED_UNDER_VOICE)
+                x = x * dbg(target - lvl)
+            place(beds, x, max(0.0, t))
+        else:
+            # hits are levelled against the voice too: loudest moment = voice + gain_db, never above voice - 4 LU
+            pk = momentary_max(x)
+            if np.isfinite(pk):
+                x = x * dbg(v_lufs + min(ev.get("gain_db", -6.0), -4.0) - pk)
+            place(hits, x, max(0.0, t))
+    hits *= duck_curve(N, words, depth_db=-3.0)[None, :]
+    beds *= duck_curve(N, words, depth_db=BED_DUCK_DB, pad=0.2, smooth=0.12)[None, :]
+    sfx = hits + beds
 
     stems = {"voice": voice, "music": music, "sfx": sfx}
     mix = voice + music + sfx
@@ -150,7 +178,8 @@ def main():
     write_wav(os.path.join(a.out, "mix.wav"), mix)
     for k, s in stems.items():
         write_wav(os.path.join(a.out, f"stem_{k}.wav"), s * gain)
-    rep = {"duration_s": round(dur, 3), "integrated_lufs": round(integrated(mix), 2), "true_peak_dbtp": round(true_peak(mix), 2),
+    vo, rest = integrated(voice * gain), integrated((music + sfx) * gain)
+    rep = {"voice_over_rest_lu": round(vo - rest, 1) if np.isfinite(rest) else None, "duration_s": round(dur, 3), "integrated_lufs": round(integrated(mix), 2), "true_peak_dbtp": round(true_peak(mix), 2),
            "lra_lu": round(lra(mix), 2), "voice_lufs_pre": round(v_lufs, 2), "sfx_events": len(sound.get("sfx", []))}
     json.dump(rep, open(os.path.join(a.out, "mix_report.json"), "w"), indent=1)
     print(json.dumps(rep))

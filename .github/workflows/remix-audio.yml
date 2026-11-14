@@ -1,0 +1,45 @@
+name: remix-audio
+# Re-mix only the sound of an already rendered episode (no new video render): reuses that run's voice + words and
+# its rendered picture, applies the current sound.json + mixer, and replaces the audio. ~5 minutes instead of ~110.
+on:
+  workflow_dispatch:
+    inputs:
+      episode: { description: "Episode id", required: true, type: string }
+      run_id: { description: "The render-final run to reuse (its artifacts last 7-14 days)", required: true, type: string }
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  remix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env: { GITHUB_TOKEN: "${{ github.token }}" }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: { render: "false", audio: "true" }
+      - uses: actions/download-artifact@v4
+        with: { name: "build-${{ inputs.episode }}", path: build, run-id: "${{ inputs.run_id }}", github-token: "${{ github.token }}" }
+      - uses: actions/download-artifact@v4
+        with: { name: "final-${{ inputs.episode }}", path: old, run-id: "${{ inputs.run_id }}", github-token: "${{ github.token }}" }
+      - name: New mix
+        run: |
+          id=${{ inputs.episode }}
+          snd=episodes/$id/sound.json; [ -f $snd ] || snd=-
+          python pipeline/audio/mixdown.py build/voice/voice.wav build/words.json $snd build/audio
+      - name: Replace the audio (picture copied, not re-encoded) + preview
+        run: |
+          id=${{ inputs.episode }}; mkdir -p final
+          ffmpeg -v error -y -i old/$id.mp4 -i build/audio/mix.wav -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 192k -ar 48000 -shortest -movflags +faststart final/$id.mp4
+          cp build/audio/mix_report.json final/$id.mix.json; [ -f episodes/$id/metadata.json ] && cp episodes/$id/metadata.json final/$id.json || true
+          ffmpeg -v error -y -i final/$id.mp4 -vf scale=720:-2 -c:v libx264 -crf 30 -preset slow -c:a aac -b:a 96k -movflags +faststart episodes/$id/preview.mp4
+          cat build/audio/mix_report.json
+      - uses: actions/upload-artifact@v4
+        with: { name: "final-${{ inputs.episode }}", path: final, retention-days: 14 }
+      - name: Log minutes + commit preview
+        if: always()
+        run: |
+          python3 pipeline/log_run.py remix-audio "${{ inputs.episode }}"
+          bash scripts/commit-push.sh "remix: ${{ inputs.episode }} (run ${{ github.run_id }})" episodes/${{ inputs.episode }}/preview.mp4 brain

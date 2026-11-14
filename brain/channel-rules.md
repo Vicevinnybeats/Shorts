@@ -11,6 +11,11 @@
 - Channel name: **TheLittleEpic** (YouTube, Instagram, Gmail/Drive). Same name everywhere.
 - Instagram must be a Professional account linked to a Facebook Page (needed for automatic Reel publishing).
 
+## Sound rule (owner feedback 2026-11-14: "I don't hear any voice at the start")
+- The narration is always clearly on top: background beds (crowd, breeze, murmur) are levelled 16+ LU under the voice
+  and dip a further 10 dB on every word; hits (kicks, whooshes) peak at least 4 LU under the voice.
+- No background bed in the first 3 seconds: the hook is voice first. Enforced in pipeline/audio/mixdown.py for every video.
+
 ## Format
 - One channel, YouTube Shorts + Instagram Reels. 55-70 s, 9:16, 1080x1920, 30 fps.
 - Same narrator, same visual style, same short intro sting on every video. Each series has its own look.

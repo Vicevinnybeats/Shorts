@@ -1,17 +1,130 @@
-{"music": {"mood": "tense", "bpm": 96, "key": 57, "level_lu": -11},
+{
+ "music": {
+  "mood": "tense",
+  "bpm": 96,
+  "key": 57,
+  "level_lu": -11
+ },
  "sfx": [
-  {"cue": "Leo saved the", "offset": -0.1, "fn": "whoosh", "args": {"dur": 0.5, "peak": 0.08}, "gain_db": -6},
-  {"cue": "Leo saved the", "fn": "crowd", "args": {"dur": 4.5, "voices": 20, "cheer": 0.3}, "gain_db": -16},
-  {"cue": "Final minute.", "fn": "crowd", "args": {"dur": 7.0, "voices": 24, "energy": 0.8}, "gain_db": -19},
-  {"cue": "Final minute.", "offset": 0.35, "fn": "clink", "args": {"bright": 0.6}, "gain_db": -8},
-  {"cue": "Last kick.", "fn": "clink", "args": {"bright": 0.6}, "gain_db": -8},
-  {"cue": "every goalkeeper on Earth", "offset": 0.2, "fn": "whoosh", "args": {"dur": 0.4, "peak": 0.1}, "gain_db": -9, "pan": -0.4},
-  {"cue": "They dive.", "fn": "whoosh", "args": {"dur": 0.4, "peak": 0.1}, "gain_db": -9, "pan": 0.4},
-  {"cue": "The ball comes", "offset": -0.15, "fn": "push_thump", "args": {}, "gain_db": -3},
-  {"cue": "Saved.", "fn": "push_thump", "args": {}, "gain_db": 0},
-  {"cue": "Saved.", "offset": 0.1, "fn": "crowd", "args": {"dur": 3.5, "voices": 28, "cheer": 1.0, "energy": 1.3}, "gain_db": -10},
-  {"cue": "The crowd laughs.", "fn": "crowd", "args": {"dur": 3.0, "voices": 30, "energy": 1.5}, "gain_db": -13},
-  {"cue": "call it action bias.", "offset": 0.4, "fn": "push_thump", "args": {}, "gain_db": -4},
-  {"cue": "There is a catch,", "offset": -0.1, "fn": "whoosh", "args": {"dur": 0.45, "peak": 0.12}, "gain_db": -6},
-  {"cue": "Would you have", "fn": "crowd", "args": {"dur": 4.0, "voices": 24, "cheer": 0.6}, "gain_db": -15}
- ]}
+  {
+   "cue": "Leo saved the",
+   "offset": -0.1,
+   "fn": "whoosh",
+   "args": {
+    "dur": 0.5,
+    "peak": 0.08
+   },
+   "gain_db": -6
+  },
+  {
+   "cue": "Final minute.",
+   "fn": "crowd",
+   "args": {
+    "dur": 7.0,
+    "voices": 24,
+    "energy": 0.8
+   },
+   "level_lu": -20
+  },
+  {
+   "cue": "Final minute.",
+   "offset": 0.35,
+   "fn": "clink",
+   "args": {
+    "bright": 0.6
+   },
+   "gain_db": -8
+  },
+  {
+   "cue": "Last kick.",
+   "fn": "clink",
+   "args": {
+    "bright": 0.6
+   },
+   "gain_db": -8
+  },
+  {
+   "cue": "every goalkeeper on Earth",
+   "offset": 0.2,
+   "fn": "whoosh",
+   "args": {
+    "dur": 0.4,
+    "peak": 0.1
+   },
+   "gain_db": -9,
+   "pan": -0.4
+  },
+  {
+   "cue": "They dive.",
+   "fn": "whoosh",
+   "args": {
+    "dur": 0.4,
+    "peak": 0.1
+   },
+   "gain_db": -9,
+   "pan": 0.4
+  },
+  {
+   "cue": "The ball comes",
+   "offset": -0.15,
+   "fn": "push_thump",
+   "args": {},
+   "gain_db": -3
+  },
+  {
+   "cue": "Saved.",
+   "fn": "push_thump",
+   "args": {},
+   "gain_db": 0
+  },
+  {
+   "cue": "Saved.",
+   "offset": 0.1,
+   "fn": "crowd",
+   "args": {
+    "dur": 3.5,
+    "voices": 28,
+    "cheer": 1.0,
+    "energy": 1.3
+   },
+   "level_lu": -16
+  },
+  {
+   "cue": "The crowd laughs.",
+   "fn": "crowd",
+   "args": {
+    "dur": 3.0,
+    "voices": 30,
+    "energy": 1.5
+   },
+   "level_lu": -20
+  },
+  {
+   "cue": "call it action bias.",
+   "offset": 0.4,
+   "fn": "push_thump",
+   "args": {},
+   "gain_db": -4
+  },
+  {
+   "cue": "There is a catch,",
+   "offset": -0.1,
+   "fn": "whoosh",
+   "args": {
+    "dur": 0.45,
+    "peak": 0.12
+   },
+   "gain_db": -6
+  },
+  {
+   "cue": "Would you have",
+   "fn": "crowd",
+   "args": {
+    "dur": 4.0,
+    "voices": 24,
+    "cheer": 0.6
+   },
+   "level_lu": -20
+  }
+ ]
+}
