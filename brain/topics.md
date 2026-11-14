@@ -3,8 +3,8 @@
 ## Channel theme: everyday face-offs decided by a surprising rule (active)
 | Title | Status | Episode |
 |---|---|---|
-| The Goalkeeper Who Did Nothing and Won | script approved, rendering (2.5D) | goalkeeper-still |
-| Never Pick the Middle Queue | backlog | |
+| The Goalkeeper Who Did Nothing and Won | final approved by owner 2026-11-14 (Drive upload pending Zapier permission) | goalkeeper-still |
+| Why You Always Pick the Slow Queue (was "Never Pick the Middle Queue": no evidence for middle) | script (awaiting approval) | slow-queue |
 | This Coin Flip Isn't 50/50 | backlog | |
 | He Said the Price First and Still Won | backlog | |
 | Your Toast Isn't Unlucky, Your Table Is | backlog | |
