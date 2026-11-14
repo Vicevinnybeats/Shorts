@@ -56,3 +56,12 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-14 19:24 | render-final | goalkeeper-still | assemble | 2 | 848 | success (run 43629337758) |
 | 2026-11-14 19:24 | render-final | goalkeeper-still | log | 1 | 849 | success (run 43629337758) |
 | 2026-11-14 19:56 | remix-audio | goalkeeper-still | remix | 3 | 852 | running (run 43634619138) |
+| 2026-11-14 21:14 | render-final | slow-queue | voice-and-mix | 3 | 855 | success (run 43639471014) |
+| 2026-11-14 21:14 | render-final | slow-queue | render (706-1058) | 17 | 872 | success (run 43639471014) |
+| 2026-11-14 21:14 | render-final | slow-queue | render (1412-1764) | 14 | 886 | success (run 43639471014) |
+| 2026-11-14 21:14 | render-final | slow-queue | render (353-705) | 20 | 906 | success (run 43639471014) |
+| 2026-11-14 21:14 | render-final | slow-queue | render (1059-1411) | 18 | 924 | success (run 43639471014) |
+| 2026-11-14 21:14 | render-final | slow-queue | render (1765-2112) | 19 | 943 | success (run 43639471014) |
+| 2026-11-14 21:14 | render-final | slow-queue | render (0-352) | 21 | 964 | success (run 43639471014) |
+| 2026-11-14 21:14 | render-final | slow-queue | assemble | 2 | 966 | success (run 43639471014) |
+| 2026-11-14 21:14 | render-final | slow-queue | log | 1 | 967 | success (run 43639471014) |
