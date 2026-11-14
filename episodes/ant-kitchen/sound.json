@@ -1,0 +1,6 @@
+{"music": {"mood": "playful", "bpm": 92, "key": 60, "level_lu": -10},
+ "sfx": [{"cue": "Day one.", "offset": -0.05, "fn": "whoosh", "args": {"dur": 0.7, "peak": 0.12}, "gain_db": -8},
+         {"cue": "No map.", "fn": "breeze", "args": {"dur": 4.0, "level": 0.6}, "gain_db": -14},
+         {"cue": "lands", "offset": -0.35, "fn": "whoosh", "args": {"dur": 0.45, "peak": 0.3, "f_lo": 120, "f_hi": 900}, "gain_db": -4},
+         {"cue": "lands", "fn": "push_thump", "args": {}, "gain_db": 0},
+         {"cue": "By morning,", "offset": -0.3, "fn": "bird_chirps", "args": {"dur": 5.0, "density": 0.5}, "gain_db": -12, "pan": 0.4}]}

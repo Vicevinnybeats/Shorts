@@ -20,3 +20,14 @@
 | Skill look engine (bridge demo: 74 cards, 4096 shadows, ink + lens blur + bloom) | 540x960 | 66.9 | ~2,230 |
 | Trivial 3D object + captions (pipeline test) | 1080x1920 | ~3.8 (1,506 frames = 95 min over 4 jobs) | ~125 |
 render-final `_pipeline-test`: voice 74 s, mix 16 s, 4 parallel chunks 20-28 min each, assemble 1 min. End to end OK.
+
+## Budget render profile (2026-11-14, local 4-CPU sandbox, 1080x1920 output)
+| Setup | s/frame |
+|---|---|
+| Full look, 1080x1920 WebGL buffer, MSAA 4 + skill lens blur | 46 |
+| Scene only (buffer 1080x1920) | 2.9 at "--scale 0.5" (R3F ignores scale < 1) |
+| **Budget: buffer 540x960, ink + 1-pass lens, no bloom** | **5.8** |
+| Same, buffer 720x1280 | 10.1 |
+Lessons: R3F clamps dpr >= 1 (set ThreeCanvas dpr explicitly); the lens blur needs a depth texture (MSAA 4 or the ink pass depth);
+memoise EffectComposer children (it rebuilds passes when they change); keep camera near/far fixed (effects read them once);
+Remotion serialises composition props to JSON (episode stories are wrapped in a component, not passed as props).

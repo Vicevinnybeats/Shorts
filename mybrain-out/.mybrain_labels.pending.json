@@ -2,8 +2,8 @@
   "0": "kokoro_tts.py",
   "1": "package.json",
   "2": "bench-render.mjs",
-  "3": "HealthCard.tsx",
-  "4": "mixdown.py",
+  "3": "EpisodeShort.tsx",
+  "4": "story.tsx",
   "5": "dependencies",
   "6": "compilerOptions",
   "7": "Channel rules",
@@ -28,5 +28,10 @@
   "26": "fetch-assets.sh",
   "27": "fetch-skill.sh",
   "28": "assets.d.ts",
-  "29": "mybrain"
+  "29": "mybrain",
+  "30": "look.ts",
+  "31": "kitchen.ts",
+  "32": "Post.tsx",
+  "33": "scripts",
+  "34": "CLAUDE.md"
 }

@@ -67,6 +67,17 @@ def limiter(x, ceil_db=CEIL_DBTP, look=0.005, rel=0.08):
     return x * g[None, :]
 
 
+def cue_time(words, phrase):
+    """start (s) of the first occurrence of `phrase` in the narration (same rule as src/engine/timeline.ts)"""
+    import re
+    n = lambda w: re.sub(r"[^a-z0-9]", "", w.lower())
+    p = [n(x) for x in phrase.split() if n(x)]
+    for i in range(len(words) - len(p) + 1):
+        if all(n(words[i + j]["w"]) == p[j] for j in range(len(p))):
+            return words[i]["s"]
+    raise ValueError(f"cue not found in narration: {phrase!r}")
+
+
 def call_sfx(ev, r):
     fn = getattr(G, ev["fn"])
     args = dict(ev.get("args", {}))
@@ -101,8 +112,9 @@ def main():
 
     sfx = np.zeros((2, N))
     for k, ev in enumerate(sound.get("sfx", [])):
+        t = ev["t"] if "t" in ev else cue_time(words, ev["cue"]) + ev.get("offset", 0.0)
         x = call_sfx(ev, rng(100 + k))
-        place(sfx, pan(st(x).mean(0), ev.get("pan", 0.0)), ev["t"], dbg(ev.get("gain_db", -6.0)))
+        place(sfx, pan(st(x).mean(0), ev.get("pan", 0.0)), max(0.0, t), dbg(ev.get("gain_db", -6.0)))
 
     stems = {"voice": voice, "music": music, "sfx": sfx}
     mix = voice + music + sfx

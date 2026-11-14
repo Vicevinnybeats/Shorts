@@ -6,7 +6,7 @@ Add 10 new topics per series over time (mark them `added`).
 ## Series 1: Tiny World
 | Topic | Status | Episode |
 |---|---|---|
-| An ant crossing a kitchen | backlog | |
+| An ant crossing a kitchen | test-render | ant-kitchen ("The Sugar Road") |
 | A raindrop from cloud to ocean | backlog | |
 | A seed's first year | backlog | |
 | A bee's last day of work | backlog | |

@@ -40,11 +40,12 @@ export const Captions: React.FC<{ words: Word[]; yFrac?: number }> = ({ words, y
   const g = groups.find((x) => t >= x.s - 0.03 && t < x.e + 0.03);
   if (!g) return null;
   const pop = interpolate(t - g.s, [0, 0.12], [0.82, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.back(2)) });
-  const size = (g.words.map((w) => w.w).join(" ").length > 16 ? 92 : 108) * k;
+  const n = g.words.map((w) => w.w).join(" ").length;
+  const size = (n > 18 ? 78 : n > 13 ? 90 : 108) * k;
   return (
     <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", pointerEvents: "none" }}>
       <div style={{
-        position: "absolute", top: `${yFrac * 100}%`, transform: `translateY(-50%) scale(${pop})`, width: "88%",
+        position: "absolute", top: `${yFrac * 100}%`, left: "6%", transform: `translateY(-50%) scale(${pop})`, width: "88%",
         textAlign: "center", fontFamily, fontWeight: 900, fontSize: size, lineHeight: 1.08, letterSpacing: -0.5 * k,
         textTransform: "uppercase", color: "#ffffff", WebkitTextStroke: `${14 * k}px #120c16`, paintOrder: "stroke fill",
         textShadow: `0 ${6 * k}px ${14 * k}px rgba(0,0,0,0.45)`,
@@ -52,10 +53,12 @@ export const Captions: React.FC<{ words: Word[]; yFrac?: number }> = ({ words, y
         {g.words.map((w, i) => {
           const on = t >= w.s - 0.03;
           const active = on && t < w.e + 0.05;
+          // a real space between words, so long phrases can wrap onto a second line
           return (
-            <span key={i} style={{ color: active ? "#ffd93b" : "#ffffff", opacity: on ? 1 : 0.0, marginRight: i < g.words.length - 1 ? 22 * k : 0 }}>
-              {w.w}
-            </span>
+            <React.Fragment key={i}>
+              {i > 0 ? " " : null}
+              <span style={{ color: active ? "#ffd93b" : "#ffffff", opacity: on ? 1 : 0.0 }}>{w.w}</span>
+            </React.Fragment>
           );
         })}
       </div>

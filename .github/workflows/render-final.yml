@@ -5,8 +5,8 @@ on:
   workflow_dispatch:
     inputs:
       episode: { description: "Episode id (folder name under episodes/)", required: true, type: string }
-      chunks: { description: "Parallel render jobs (same total minutes, shorter wait)", required: false, default: "4", type: string }
-      scale: { description: "1 = 1080x1920", required: false, default: "1", type: string }
+      chunks: { description: "Parallel render jobs (same total minutes, shorter wait)", required: false, default: "6", type: string }
+      dpr: { description: "3D buffer scale (0.5 = 540x960 stretched to 1080x1920; captions stay sharp)", required: false, default: "0.5", type: string }
   push:
     paths: ["episodes/*/GO_FINAL"]
 
@@ -69,7 +69,7 @@ jobs:
           import json, math, os
           words = json.load(open(f"episodes/{os.environ['ID']}/build/words.json"))
           frames = max(90, math.ceil((words[-1]["e"] + 0.8) * 30))
-          n = max(1, min(20, int(os.environ.get("CHUNKS") or 4)))
+          n = max(1, min(20, int(os.environ.get("CHUNKS") or 6)))
           step = math.ceil(frames / n)
           ranges = [f"{a}-{min(frames, a + step) - 1}" for a in range(0, frames, step)]
           print(f"frames={frames}")
@@ -93,11 +93,12 @@ jobs:
       - uses: actions/download-artifact@v4
         with: { name: "build-${{ needs.voice-and-mix.outputs.id }}", path: "episodes/${{ needs.voice-and-mix.outputs.id }}/build" }
       - name: Render frames ${{ matrix.range }}
+        env: { DPR: "${{ inputs.dpr || '0.5' }}" }
         run: |
           B=episodes/${{ needs.voice-and-mix.outputs.id }}/build
-          node -e "const w=require('./$B/words.json'); require('fs').writeFileSync('props.json', JSON.stringify({words:w}))"
+          node -e "const w=require('./$B/words.json'); require('fs').writeFileSync('props.json', JSON.stringify({words:w, dpr:Number(process.env.DPR)}))"
           npx remotion render src/index.ts "${{ needs.voice-and-mix.outputs.comp }}" "chunk_${{ matrix.range }}.mp4" \
-            --props=props.json --frames=${{ matrix.range }} --scale=${{ inputs.scale || '1' }} --codec=h264 --crf=17 \
+            --props=props.json --frames=${{ matrix.range }} --scale=1 --codec=h264 --crf=17 \
             --pixel-format=yuv420p --gl=swangle --timeout=600000 --log=info
       - uses: actions/upload-artifact@v4
         with: { name: "chunk-${{ matrix.range }}", path: "chunk_${{ matrix.range }}.mp4", retention-days: 3 }
@@ -139,6 +140,13 @@ jobs:
           cp build/audio/mix_report.json final/$id.mix.json
       - uses: actions/upload-artifact@v4
         with: { name: "final-${{ needs.voice-and-mix.outputs.id }}", path: final, retention-days: 14 }
+      - name: Small preview in the repo (720x1280, for review on the phone and in Claude)
+        env: { GITHUB_TOKEN: "${{ github.token }}" }
+        run: |
+          id=${{ needs.voice-and-mix.outputs.id }}
+          ffmpeg -v error -y -i final/$id.mp4 -vf scale=720:-2 -c:v libx264 -crf 30 -preset slow -c:a aac -b:a 96k -movflags +faststart episodes/$id/preview.mp4
+          du -h episodes/$id/preview.mp4
+          bash scripts/commit-push.sh "preview: $id (run ${{ github.run_id }})" episodes/$id/preview.mp4
       - name: Upload to Drive /Shorts/Review
         run: bash scripts/drive.sh up final "Review/${{ needs.voice-and-mix.outputs.id }}"
 

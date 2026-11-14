@@ -1,0 +1,23 @@
+{
+  "episode": "ant-kitchen",
+  "series": "Tiny World",
+  "test": true,
+  "youtube": {
+    "title": "Day 1: This Kitchen Is 1,300x Longer Than Her #Shorts",
+    "description": "Day one. For a 3 mm ant, a 4 m kitchen floor is about 1,300 times her own length. Pip crosses it for one grain of sugar - and leaves behind the road her whole colony follows.\n\nWhat tiny thing in your house would make the best adventure? Tell me below.\n\nReal facts in this story:\n- Odorous house ant workers are about 2.4-3.3 mm long and favour sugary food in kitchens (Penn State Extension).\n- Ants can lift and carry many times their own body weight (Ask A Biologist, Arizona State University).\n- A scout that finds food lays a chemical (pheromone) trail on the way home; nestmates follow it and reinforce it (research on trail recruitment, e.g. University of Regensburg).\n- 1,300x: our own estimate, a 4 m kitchen divided by a 3 mm ant.\n\nSources:\nhttps://extension.psu.edu/odorous-house-ant\nhttps://askabiologist.asu.edu/content/ant-factoids\nhttps://epub.uni-regensburg.de/59034/1/s00040-024-00995-y.pdf\n\nAI disclosure: this animation was made with AI assistance (script drafting, synthetic narration voice, procedurally rendered 3D animation). The story is illustrative; the facts above are real.\n\n#Shorts #TinyWorld #ants #nature #animation #TheLittleEpic",
+    "tags": ["shorts", "ants", "ant facts", "tiny world", "nature facts", "animation", "3d animation", "insects", "kitchen", "pheromone trail", "TheLittleEpic"],
+    "category": "Education",
+    "made_for_kids": false,
+    "contains_synthetic_media": false
+  },
+  "instagram": {
+    "caption": "Day 1. The kitchen floor is 1,300x longer than Pip. 🐜\nShe crosses it for one grain of sugar - and paints the road her sisters follow.\n\nWhat tiny thing in your house would make the best adventure? 👇\n\nMade with AI assistance (script, synthetic voice, 3D animation). Facts + sources on YouTube.\n\n#ants #tinyworld #naturefacts #animation #3danimation #insects #shorts #reels #TheLittleEpic"
+  },
+  "sources": [
+    {"fact": "Odorous house ant workers are about 2.4-3.3 mm long; they favour sweets and are common in kitchens", "url": "https://extension.psu.edu/odorous-house-ant"},
+    {"fact": "Ants can carry many times their own body weight (often quoted 10-50x; an estimate)", "url": "https://askabiologist.asu.edu/content/ant-factoids"},
+    {"fact": "Foragers lay a pheromone trail back to the nest; recruits follow and reinforce it", "url": "https://epub.uni-regensburg.de/59034/1/s00040-024-00995-y.pdf"},
+    {"fact": "1,300x = 4 m kitchen / 3 mm ant (own calculation)", "url": null}
+  ],
+  "notes": "contains_synthetic_media=false: YouTube's altered/synthetic flag is for realistic-looking content; this is a stylised cartoon. The AI note stays in the description."
+}
