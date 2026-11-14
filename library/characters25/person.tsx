@@ -23,11 +23,15 @@ export const POSES: Record<string, Pose> = {
   kick: { armL: [-40, 20], armR: [70, 30], legL: [-8, 0], legR: [75, -15], lean: -10, profile: true },
 };
 /** run cycle at phase ph (radians) */
-export const runPose = (ph: number, amt = 1): Pose => ({
-  armL: [Math.sin(ph) * 50 * amt, 60], armR: [-Math.sin(ph) * 50 * amt, 60],
-  legL: [-Math.sin(ph) * 38 * amt, -Math.max(0, Math.cos(ph)) * 60 * amt], legR: [Math.sin(ph) * 38 * amt, -Math.max(0, -Math.cos(ph)) * 60 * amt],
-  lean: 10 * amt, crouch: 0.04 + Math.abs(Math.sin(ph)) * 0.03, profile: true,
-});
+export const runPose = (ph: number, amt = 1): Pose => {
+  const sL = Math.sin(ph), sR = Math.sin(ph + Math.PI);
+  const knee = (s: number, c: number) => -(25 + Math.max(0, c) * 85) * amt;   // shin folds back most on the recovery swing
+  return {
+    armL: [-sL * 55 * amt, 85], armR: [-sR * 55 * amt, 85],                    // arms opposite the legs, elbows bent
+    legL: [sL * 48 * amt, knee(sL, -Math.cos(ph))], legR: [sR * 48 * amt, knee(sR, Math.cos(ph))],
+    lean: 12 * amt, crouch: 0.06 + Math.abs(Math.cos(ph)) * 0.07 * amt, profile: true,
+  };
+};
 /** dive pose (the keepers who guess) */
 export const DIVE: Pose = { armL: [170, 0], armR: [150, 10], legL: [-30, -20], legR: [10, -40], lean: 70, profile: true };
 
@@ -81,7 +85,11 @@ const Face: React.FC<{ w: number; expr: Expr; blink: boolean; lookX: number }> =
 };
 
 export const Person: React.FC<{ x: number; y: number; scale?: number; facing?: 1 | -1; look: Look; pose: Pose; expr?: Expr;
-  blink?: boolean; rot?: number; shadow?: number; rim?: string }> = ({ x, y, scale = 1, facing = 1, look, pose, expr = "neutral", blink = false, rot = 0, shadow = 0.35, rim }) => {
+  blink?: boolean; rot?: number; shadow?: number; rim?: string; t?: number; squash?: number; ghost?: number }> = ({ x, y, scale = 1, facing = 1, look, pose: pose0, expr = "neutral", blink = false, rot = 0, shadow = 0.35, rim, t, squash = 0, ghost }) => {
+  // secondary motion (t = frame): breathing bob and a slow arm sway, so a held pose never looks frozen
+  const br = t === undefined || pose0.profile ? 0 : Math.sin(t * 0.11);
+  const sway = t === undefined || pose0.profile ? 0 : Math.sin(t * 0.07) * 4;
+  const pose: Pose = { ...pose0, armL: [pose0.armL[0] + sway, pose0.armL[1]], armR: [pose0.armR[0] - sway, pose0.armR[1]], crouch: (pose0.crouch ?? 0) + br * 0.012 };
   const W = 120, H = W * 0.93;
   const crouch = (pose.crouch ?? 0) * 140;
   const hipY = -150 + crouch, shY = -285 + crouch * 0.9, legL = 82, legL2 = 78, armL = 70, armL2 = 64;
@@ -103,7 +111,7 @@ export const Person: React.FC<{ x: number; y: number; scale?: number; facing?: 1
   const torso = `M ${-48} ${shY} C ${-58} ${shY + 40} ${-50} ${hipY - 10} ${-40} ${hipY + 8} L ${40} ${hipY + 8} C ${50} ${hipY - 10} ${58} ${shY + 40} ${48} ${shY} C ${30} ${shY - 14} ${-30} ${shY - 14} ${-48} ${shY} Z`;
   const hand = look.gloves ?? look.skin;
   return (
-    <g transform={`translate(${x} ${y}) scale(${scale})`}>
+    <g transform={`translate(${x} ${y}) scale(${scale * (1 + squash * 0.5)} ${scale * (1 - squash)})`} opacity={ghost ?? 1}>
       {shadow > 0 && <ellipse cx={0} cy={4} rx={70} ry={14} fill="#05040c" opacity={shadow} />}
       <g transform={`rotate(${lean + rot} 0 ${hipY})`}>
         {/* far limbs first */}
@@ -114,7 +122,7 @@ export const Person: React.FC<{ x: number; y: number; scale?: number; facing?: 1
         <path d={torso} fill={look.jersey} stroke={INK} strokeWidth={ink * 1.2} strokeLinejoin="round" />
         <path d={`M ${-30} ${shY + 6} C ${-44} ${shY + 50} ${-36} ${hipY - 20} ${-28} ${hipY}`} stroke={look.jersey2 ?? "#000"} strokeOpacity={look.jersey2 ? 1 : 0.18} strokeWidth={14} fill="none" />
         {look.number && <text x={0} y={shY + 82} textAnchor="middle" fontFamily="CaptionSans, sans-serif" fontWeight={900} fontSize={46} fill={look.jersey2 ?? "#fff"} stroke={INK} strokeWidth={2}>{look.number}</text>}
-        {rim && <path d={torso} fill="none" stroke={rim} strokeWidth={5} opacity={0.6} transform="translate(-3 -2)" style={{ mixBlendMode: "screen" }} />}
+        {rim && <path d={torso} fill="none" stroke={rim} strokeWidth={5} opacity={0.45} transform="translate(-3 -2)" />}
         {limbEl(facing > 0 ? L2 : L1, look.socks, look.boots ?? INK, limbW * 0.75, "l2")}
         {limbEl(facing > 0 ? A2 : A1, look.skin, hand, look.gloves ? limbW * 1.1 : limbW * 0.6, "a2")}
         {/* head */}

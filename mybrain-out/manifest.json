@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "src/assets.d.ts": {
-    "mtime": 1794600353.0,
-    "seen": 1794663983.567418,
-    "ast_hash": "4580aed6c6f5af37b827b1fdcbae3c81",
+    "mtime": 1794682212.110183,
+    "seen": 1794682568.3570282,
+    "ast_hash": "040b859d5d30eda1157c22763ed4dc4a",
     "semantic_hash": ""
   },
   "src/captions/Captions.tsx": {
@@ -174,9 +174,9 @@
     "semantic_hash": ""
   },
   ".github/workflows/render-final.yml": {
-    "mtime": 1794678417.9432878,
-    "seen": 1794678516.0979443,
-    "ast_hash": "0db3634909a2b6625f220fb05406d710",
+    "mtime": 1794682563.925625,
+    "seen": 1794682568.3570647,
+    "ast_hash": "2e77da16fc4e491cb5d72d93fd67d842",
     "semantic_hash": ""
   },
   ".github/workflows/render-stills.yml": {
@@ -222,9 +222,9 @@
     "semantic_hash": ""
   },
   "brain/render-log.md": {
-    "mtime": 1794671237.223769,
-    "seen": 1794678516.0979545,
-    "ast_hash": "4ca545f6b3244f32feaf695efdd99fac",
+    "mtime": 1794682004.5861707,
+    "seen": 1794682568.3570805,
+    "ast_hash": "2ced187f35a92b42c93dc17ecd40e8d0",
     "semantic_hash": ""
   },
   "brain/series-parts.md": {
@@ -234,9 +234,9 @@
     "semantic_hash": ""
   },
   "brain/style-decisions.md": {
-    "mtime": 1794678513.0138228,
-    "seen": 1794678516.0979607,
-    "ast_hash": "8deacffa46c5ccac76f889466cc308d5",
+    "mtime": 1794682563.9279876,
+    "seen": 1794682568.3570848,
+    "ast_hash": "5973afdf908d9a6415eb334d8c8daa0c",
     "semantic_hash": ""
   },
   "brain/tools.md": {
@@ -384,9 +384,9 @@
     "semantic_hash": ""
   },
   "src/engine/EpisodeShort.tsx": {
-    "mtime": 1794678104.4959798,
-    "seen": 1794678516.0979264,
-    "ast_hash": "28c9cc8a2f3f7863bc4cb6c84440a112",
+    "mtime": 1794682231.049762,
+    "seen": 1794682568.3570325,
+    "ast_hash": "478ee8d113b8a6af75a4e3902e67354e",
     "semantic_hash": ""
   },
   "src/engine/Post.tsx": {
@@ -432,9 +432,9 @@
     "semantic_hash": ""
   },
   "episodes/goalkeeper-still/episode.json": {
-    "mtime": 1794678417.9425316,
-    "seen": 1794678516.097876,
-    "ast_hash": "f8d3d4736a40f0110fba515894209b05",
+    "mtime": 1794682563.9263825,
+    "seen": 1794682568.356962,
+    "ast_hash": "979825f206ef179e5b96499291f9c9f1",
     "semantic_hash": ""
   },
   "episodes/goalkeeper-still/metadata.json": {
@@ -450,15 +450,15 @@
     "semantic_hash": ""
   },
   "episodes/goalkeeper-still/story.tsx": {
-    "mtime": 1794678191.9979439,
-    "seen": 1794678516.09788,
-    "ast_hash": "73c56c0671bd7843804cbb9051e93af2",
+    "mtime": 1794682406.9119236,
+    "seen": 1794682568.3569694,
+    "ast_hash": "6b3d8a161a1b78a26c51680d00970e0f",
     "semantic_hash": ""
   },
   "library/characters25/person.tsx": {
-    "mtime": 1794678298.702463,
-    "seen": 1794678516.0978863,
-    "ast_hash": "f77c4315af953ad967dfd4420cb2faaf",
+    "mtime": 1794682563.8954945,
+    "seen": 1794682568.3569775,
+    "ast_hash": "f52720aaa2e3f7489e073ae7ed1fdff2",
     "semantic_hash": ""
   },
   "library/environments25/stadium.tsx": {
@@ -468,9 +468,9 @@
     "semantic_hash": ""
   },
   "src/engine25/light.tsx": {
-    "mtime": 1794677985.9179318,
-    "seen": 1794678516.0979345,
-    "ast_hash": "dbceaa8d31e679e11a4849294eb0cbbb",
+    "mtime": 1794682472.5220985,
+    "seen": 1794682568.357049,
+    "ast_hash": "9918bca477a010a9afaff7b9bf0fa5cb",
     "semantic_hash": ""
   },
   "src/engine25/stage.tsx": {
@@ -549,6 +549,18 @@
     "mtime": 1794671237.2465413,
     "seen": 1794678516.0979896,
     "ast_hash": "f88f0551b1e5bc22646b074b9cd66ea8",
+    "semantic_hash": ""
+  },
+  "library/characters25/crowdimg.tsx": {
+    "mtime": 1794682171.8861806,
+    "seen": 1794682568.3569748,
+    "ast_hash": "7808e6da61fd9421f366880182eaea34",
+    "semantic_hash": ""
+  },
+  "episodes/goalkeeper-still/preview.mp4": {
+    "mtime": 1794682004.6141706,
+    "seen": 1794682568.3571317,
+    "ast_hash": "83aeb8d82b52c87c72b78bf7c66d6d52",
     "semantic_hash": ""
   }
 }

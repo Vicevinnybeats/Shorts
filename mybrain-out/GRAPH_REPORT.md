@@ -1,17 +1,17 @@
 # Brain Scan - shorts  (2026-11-14)
 
 ## Corpus Check
-- 65 files · ~37,465 words
+- 66 files · ~38,641 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 5 file(s) not represented in the graph (top: (none) 5)
 
 ## Summary
-- 419 neurons · 681 synapses · 37 lobes (18 shown, 19 thin omitted)
+- 431 neurons · 706 synapses · 34 lobes (15 shown, 19 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3dc45c1b`
+- Built from commit: `057fb05d`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `mybrain update .` after code changes (no API cost).
 
@@ -46,25 +46,22 @@
 - fetch-skill.sh
 - assets.d.ts
 - mybrain
-- package.json
 - kitchen.ts
-- Post.tsx
-- scripts
+- package.json
 - CLAUDE.md
-- devDependencies
 - RESEARCH.md
 
 ## Core Neurons (most connected - your core abstractions)
-1. `Scene()` - 27 synapses
+1. `ShotView()` - 28 synapses
 2. `AntScene()` - 15 synapses
-3. `react` - 12 synapses
-4. `remotion` - 11 synapses
+3. `react` - 13 synapses
+4. `remotion` - 12 synapses
 5. `compilerOptions` - 11 synapses
 6. `shot()` - 10 synapses
 7. `main()` - 10 synapses
 8. `Channel rules` - 10 synapses
 9. `Stadium()` - 9 synapses
-10. `buildKitchen()` - 9 synapses
+10. `Person()` - 9 synapses
 
 ## Surprising Connections (you probably didn't know these)
 - `shot()` --indirect_call--> `easeOut()`  [INFERRED]
@@ -81,7 +78,7 @@
 ## Import Cycles
 - None detected.
 
-## Lobes (37 total, 19 thin omitted)
+## Lobes (34 total, 19 thin omitted)
 
 ### Lobe 0 - "kokoro_tts.py"
 Cohesion: 0.08
@@ -96,8 +93,8 @@ Cohesion: 0.09
 Neurons (17): chromiumOptions, frameRange, [id, from, to, scale, out, conc, props = "{}"], inputProps, res, t0, t1, t2 (+9 more)
 
 ### Lobe 3 - "goalkeeper-still/story.tsx"
-Cohesion: 0.06
-Neurons (63): ease, k(), LAMPS, Leo(), OTHER_KEEPERS, Scene(), SHOTS, Stadium() (+55 more)
+Cohesion: 0.05
+Neurons (74): Burst(), Diver(), ease, k(), LAMPS, Leo(), OTHER_KEEPERS, PLACE (+66 more)
 
 ### Lobe 4 - "story.tsx"
 Cohesion: 0.06
@@ -135,45 +132,33 @@ Neurons (3): Shorts, Visual style, Workflows (start them from the GitHub app: Ac
 Cohesion: 0.50
 Neurons (3): Budget render profile (2026-11-14, local 4-CPU sandbox, 1080x1920 output), Render cost on the free private runner (2 CPUs), measured 2026-11-13, Tools
 
-### Lobe 30 - "package.json"
-Cohesion: 0.14
-Neurons (12): description, name, private, type, version, react-dom, @remotion/bundler, @remotion/cli (+4 more)
-
 ### Lobe 31 - "kitchen.ts"
 Cohesion: 0.18
 Neurons (10): buildKitchen(), cabinet(), crumb(), crumbTex(), Kitchen, lam(), TILE, tiles() (+2 more)
 
-### Lobe 32 - "Post.tsx"
-Cohesion: 0.13
-Neurons (6): postprocessing, @react-three/fiber, @react-three/postprocessing, msaa(), PostChain(), PostState
-
-### Lobe 33 - "scripts"
-Cohesion: 0.40
-Neurons (5): scripts, skill, stills, studio, typecheck
-
-### Lobe 35 - "devDependencies"
-Cohesion: 0.50
-Neurons (4): devDependencies, @types/react, @types/three, typescript
+### Lobe 32 - "package.json"
+Cohesion: 0.06
+Neurons (26): description, devDependencies, @types/react, @types/three, typescript, name, private, scripts (+18 more)
 
 ## Knowledge Gaps
-- **7 isolated node(s):** `mybrain-mcp`, `@remotion/bundler`, `@remotion/renderer`, `react-dom`, `@types/react` (+2 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 209 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **6 isolated node(s):** `mybrain-mcp`, `@remotion/bundler`, `@remotion/renderer`, `@types/react`, `@types/three` (+1 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 213 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **19 thin communities (<3 nodes) omitted from report** — run `mybrain query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `react` connect `goalkeeper-still/story.tsx` to `Post.tsx`, `package.json`, `story.tsx`, `package.json`?**
-  _High betweenness centrality (0.083) - this node is a cross-community bridge._
+- **Why does `react` connect `goalkeeper-still/story.tsx` to `package.json`, `package.json`, `story.tsx`?**
+  _High betweenness centrality (0.086) - this node is a cross-community bridge._
 - **Are the 3 inferred relationships involving `AntScene()` (e.g. with `ant-kitchen/story.tsx` and `buildWorld()`) actually correct?**
   _`AntScene()` has 3 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `mybrain-mcp`, `@remotion/bundler`, `@remotion/renderer` to the rest of the system?**
-  _7 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _6 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `kokoro_tts.py` be split into smaller, more focused modules?**
   _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
-- **Why does `remotion` connect `package.json` to `Post.tsx`, `goalkeeper-still/story.tsx`, `story.tsx`, `package.json`?**
-  _High betweenness centrality (0.054) - this node is a cross-community bridge._
+- **Why does `remotion` connect `package.json` to `package.json`, `goalkeeper-still/story.tsx`, `story.tsx`?**
+  _High betweenness centrality (0.058) - this node is a cross-community bridge._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.08943089430894309 - nodes in this community are weakly interconnected._
 - **Why does `dependencies` connect `dependencies` to `package.json`?**
-  _High betweenness centrality (0.036) - this node is a cross-community bridge._
+  _High betweenness centrality (0.035) - this node is a cross-community bridge._

@@ -46,7 +46,7 @@ export const EpisodeShort: React.FC<EpisodeProps> = (props) => {
         </ThreeCanvas>
       )}
       {flash > 0 && <AbsoluteFill style={{ background: "#ffffff", opacity: flash }} />}
-      {props.captions !== false && <Captions words={words} yFrac={0.76} />}
+      {props.captions !== false && <Captions words={words} yFrac={0.8} />}
     </AbsoluteFill>
   );
 };

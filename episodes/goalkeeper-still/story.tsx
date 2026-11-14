@@ -1,12 +1,13 @@
 // "The Goalkeeper Who Did Nothing and Won" - 2.5D. Leo stays in the middle on the last penalty of a final.
 // Facts: Bar-Eli et al. 2007 (286 kicks, keepers dived ~94 %, staying central was optimal; action bias).
 import React from "react";
-import { AbsoluteFill, useCurrentFrame, interpolate, Easing } from "remotion";
+import { AbsoluteFill, useCurrentFrame, interpolate, Easing, getInputProps } from "remotion";
 import type { Story, SceneProps } from "../../src/engine/EpisodeShort";
-import { shotAt, cueTime, FPS } from "../../src/engine/timeline";
+import { shotAt, cueTime, FPS, ShotSpan } from "../../src/engine/timeline";
 import { Stage, Layer, Svg, Cam, drift, kickCam } from "../../src/engine25/stage";
 import { Grade, MOODS, Beams, Pool, Flash, SpeedLines } from "../../src/engine25/light";
-import { Person, POSES, runPose, DIVE, KEEPER, STRIKER, Crowd, CrowdMood, blinkAt, Look, INK, Expr } from "../../library/characters25/person";
+import { Person, POSES, runPose, DIVE, KEEPER, STRIKER, CrowdMood, blinkAt, Look, INK, Expr } from "../../library/characters25/person";
+import { CrowdImg as Crowd } from "../../library/characters25/crowdimg";
 import { Sky, Floodlight, HaloDefs, Stands, Pitch, GoalFront, Ball, StadiumClock, TacticsBoard, chalk, NIGHT } from "../../library/environments25/stadium";
 
 const SHOTS = [
@@ -48,9 +49,32 @@ const Stadium: React.FC<{ f: number; crowd: CrowdMood; horizon?: number; lampsOn
   </>
 );
 
-const Leo: React.FC<{ x: number; y: number; s: number; f: number; pose?: keyof typeof POSES; expr?: Expr; facing?: 1 | -1 }> = ({ x, y, s, f, pose = "ready", expr = "calm", facing = 1 }) => (
-  <Person x={x} y={y} scale={s} facing={facing} look={KEEPER} pose={POSES[pose]} expr={expr} blink={blinkAt(f, 1)} rim="#fff1c9" />
+const Leo: React.FC<{ x: number; y: number; s: number; f: number; pose?: keyof typeof POSES; expr?: Expr; facing?: 1 | -1; squash?: number }> = ({ x, y, s, f, pose = "ready", expr = "calm", facing = 1, squash = 0 }) => (
+  <Person x={x} y={y} scale={s} facing={facing} look={KEEPER} pose={POSES[pose]} expr={expr} blink={blinkAt(f, 1)} rim="#fff1c9" t={f} squash={squash} />
 );
+
+/** grass + dust burst where a diving keeper lands */
+const Burst: React.FC<{ x: number; y: number; t: number }> = ({ x, y, t }) => {
+  if (t <= 0 || t > 1) return null;
+  return (<g opacity={1 - t}>
+    {Array.from({ length: 9 }, (_, i) => {
+      const a = (-160 + i * 17) * Math.PI / 180, d = 30 + t * 140 * (0.6 + (i % 3) * 0.25);
+      return <path key={i} d={`M ${x + Math.cos(a) * d} ${y + Math.sin(a) * d * 0.6} l ${Math.cos(a) * 18} ${Math.sin(a) * 10}`} stroke={i % 2 ? "#5fcf6f" : "#c9b48a"} strokeWidth={8} strokeLinecap="round" />;
+    })}
+    <ellipse cx={x} cy={y} rx={60 + t * 120} ry={14 + t * 20} fill="#d9cdb0" opacity={0.35} />
+  </g>);
+};
+
+/** a keeper diving along an arc, with two fading trail copies behind (motion without blur) */
+const Diver: React.FC<{ look: Look; x0: number; y0: number; dir: 1 | -1; p: number; scale: number }> = ({ look, x0, y0, dir, p, scale }) => {
+  const at = (q: number) => ({ x: x0 + dir * q * 300, y: y0 - Math.sin(q * Math.PI) * 140 - q * 40, r: dir * q * 28 });
+  const pose = p > 0.15 ? DIVE : POSES.ready;
+  return (<g>
+    {p > 0.15 && p < 0.95 && [0.16, 0.08].map((back, i) => { const g = at(Math.max(0, p - back)); return <Person key={i} x={g.x} y={g.y} scale={scale} facing={dir} look={look} pose={pose} rot={g.r} shadow={0} ghost={0.18 + i * 0.12} />; })}
+    {(() => { const g = at(p); return <Person x={g.x} y={g.y} scale={scale} facing={dir} look={look} pose={pose} expr={p > 0.15 ? "determined" : "focused"} rot={g.r} />; })()}
+    <Burst x={x0 + dir * 300} y={y0} t={(p - 0.9) * 6} />
+  </g>);
+};
 
 const OTHER_KEEPERS: Look[] = [
   { ...KEEPER, jersey: "#f2c230", jersey2: "#9c7a0c", socks: "#f2c230", skin: "#ffd9b8", hair: "#c9862e", number: "1" },
@@ -58,9 +82,8 @@ const OTHER_KEEPERS: Look[] = [
   { ...KEEPER, jersey: "#ff7a2f", jersey2: "#b24c12", socks: "#ff7a2f", skin: "#d99c6c", hair: "#3b2416", hairStyle: "bun", number: "23" },
 ];
 
-const Scene: React.FC<SceneProps> = ({ words, spans }) => {
+const ShotView: React.FC<{ span: ShotSpan; words: SceneProps["words"] }> = ({ span, words }) => {
   const f = useCurrentFrame();
-  const span = shotAt(spans, f);
   const u = f - span.a, len = span.b - span.a, t = u / FPS;
   const savedF = Math.round(cueTime(words, "Saved.") * FPS);
   let cam: Cam = { x: 0, y: 0, zoom: 1, rot: 0 };
@@ -111,13 +134,20 @@ const Scene: React.FC<SceneProps> = ({ words, spans }) => {
     }
     case "runup": {  // tracking the striker's run-up, parallax crowd rushing behind
       mood = MOODS.tension;
-      const sx = k(u, 0, len, 1250, 640, Easing.linear);
-      cam = drift({ x: (sx - 540) * 0.6, y: -40, zoom: 1.1, rot: 0 }, f, 5, 1.6);
+      const kickAt = len - 12;                                     // last ~0.4 s: plant and strike
+      const sx = k(u, 0, kickAt, 1250, 560, Easing.linear);
+      const kicking = u >= kickAt, kp = k(u, kickAt, kickAt + 6, 0, 1, Easing.out(Easing.cubic));
+      const ballX = kicking ? 470 - kp * 900 : 470;
+      cam = drift({ x: (sx - 540) * 0.6, y: -40, zoom: 1.1 + kp * 0.1, rot: -kp * 3 }, f, 5, 1.6);
       body = (<>
         <Stadium f={f} crowd="tense" horizon={1000} />
-        <Layer p={1}><Svg><Ball x={470} y={1330} r={36} shadowY={1366} /><Person x={sx} y={1360} scale={1.05} facing={-1} look={STRIKER} pose={runPose(f * 0.55)} expr="determined" blink={blinkAt(f, 2)} /></Svg></Layer>
+        <Layer p={1}><Svg>
+          <Ball x={ballX} y={1330 - kp * 120} r={36} shadowY={1366} spin={kp * 400} />
+          <Person x={sx} y={1360 - (kicking ? 0 : Math.abs(Math.sin(f * 0.55)) * 14)} scale={1.05} facing={-1} look={STRIKER}
+            pose={kicking ? { ...POSES.kick, legR: [75 * kp - 20 * (1 - kp), -15], lean: -10 * kp } : runPose(f * 0.55)} expr="determined" blink={blinkAt(f, 2)} />
+        </Svg></Layer>
       </>);
-      overlay = <SpeedLines amount={0.35} />;
+      overlay = <SpeedLines amount={kicking ? 0.7 * (1 - kp) + 0.3 : 0.35} />;
       break;
     }
     case "dive3": {  // three keepers, three guesses: panels slide in with the dives
@@ -126,12 +156,12 @@ const Scene: React.FC<SceneProps> = ({ words, spans }) => {
         <Layer p={0}><Sky f={f} top="#0b1430" bottom="#22336e" /></Layer>
         {OTHER_KEEPERS.map((lk, i) => {
           const a = i * 9, slide = k(u, a, a + 8, 1, 0, Easing.out(Easing.cubic));
-          const dir = i % 2 ? -1 : 1, dive = k(u, a + 4, a + 16, 0, 1, Easing.out(Easing.quad));
+          const dir = (i % 2 ? -1 : 1) as 1 | -1, dive = k(u, a + 4, a + 18, 0, 1, Easing.out(Easing.quad));
           return (
             <AbsoluteFill key={i} style={{ top: i * 640, height: 640, transform: `translateX(${slide * 1100 * dir}px)`, overflow: "hidden", borderBottom: `10px solid ${INK}` }}>
               <svg width={1080} height={640} style={{ background: `linear-gradient(${NIGHT.sky1}, ${NIGHT.grass2} 70%)` }}>
                 <GoalFront cx={540} baseY={560} w={760} />
-                <Person x={540 + dir * dive * 260} y={560 - dive * 90} scale={0.95} facing={dir as 1 | -1} look={lk} pose={dive > 0.3 ? DIVE : POSES.ready} expr={dive > 0.3 ? "determined" : "focused"} rot={dir * dive * 25} />
+                <Diver look={lk} x0={540 - dir * 60} y0={560} dir={dir} p={dive} scale={0.95} />
               </svg>
             </AbsoluteFill>
           );
@@ -181,7 +211,7 @@ const Scene: React.FC<SceneProps> = ({ words, spans }) => {
         <Stadium f={f} crowd={caught ? "cheer" : "tense"} />
         <Layer p={0.8}><Svg><GoalFront cx={540} baseY={1260} w={980} netShake={caught ? 0 : 0} /></Svg></Layer>
         <Layer p={1}><Svg>
-          <Leo x={540} y={1300} s={1.35} f={f} pose={caught ? "hug" : "stand"} expr={caught ? "determined" : "focused"} />
+          <Leo x={540} y={1300} s={1.35} f={f} pose={caught ? "hug" : "stand"} expr={caught ? "determined" : "focused"} squash={caught ? Math.max(0, 0.12 - fs * 0.02) : 0} />
           <Ball x={caught ? 548 : 540 + (1 - fly) * 120} y={caught ? 980 : 1500 - fly * 520} r={caught ? 46 : 20 + fly * 120} spin={f * 25} />
         </Svg></Layer>
       </>);
@@ -237,7 +267,7 @@ const Scene: React.FC<SceneProps> = ({ words, spans }) => {
             <Crowd f={f} rows={3} width={1080} y0={150} rowH={70} size={48} mood={left ? "idle" : "tense"} fog={0.2} fogColor={left ? "#1a2a63" : "#3a1424"} seed={left ? 3 : 9} />
             <rect y={420} width={1080} height={540} fill={NIGHT.grass2} />
             <GoalFront cx={540} baseY={860} w={700} netShake={go > 0.9 ? f : 0} />
-            <Person x={540 + (dived ? go * 240 : 0)} y={870 - (dived ? go * 60 : 0)} scale={0.85} facing={1} look={lk} pose={dived ? DIVE : POSES.stand} expr={left ? "worried" : "shock"} rot={dived ? go * 25 : 0} />
+            {left ? <Diver look={lk} x0={540} y0={870} dir={1} p={go} scale={0.85} /> : <Person x={540} y={870} scale={0.85} facing={1} look={lk} pose={POSES.stand} expr="shock" t={f} />}
             <Ball x={540 - go * 280} y={760 - go * 80} r={24} />
             <text x={540} y={110} textAnchor="middle" fontFamily="CaptionSans" fontWeight={900} fontSize={64} fill={left ? "#9cc4ff" : "#ff8a8a"} opacity={k(u, 22, 30, 0, 1)}>{left ? "BAD LUCK" : "YOUR FAULT!"}</text>
           </svg>
@@ -294,9 +324,29 @@ const Scene: React.FC<SceneProps> = ({ words, spans }) => {
     <AbsoluteFill>
       <HaloDefs />
       <Stage cam={cam} bg={NIGHT.sky0}>{body}</Stage>
-      {mood !== MOODS.explain && span.id !== "split" && span.id !== "dive3" && <Beams from={LAMPS} opacity={0.12} />}
-      <Grade mood={mood} />
+      {!(getInputProps() as { noLight?: boolean }).noLight && <>
+        {mood !== MOODS.explain && span.id !== "split" && span.id !== "dive3" && <Beams from={LAMPS} opacity={0.12} />}
+        <Grade mood={mood} />
+      </>}
       {overlay}
+    </AbsoluteFill>
+  );
+};
+
+// places: a crossfade (the skill's 6-8 frame dissolve) only where the place changes; same-place shots hard cut
+const PLACE: Record<string, string> = { clock: "clock", dive3: "panels", study: "board", best: "board", bias: "board", split: "panels" };
+const XF = 7;
+
+const Scene: React.FC<SceneProps> = ({ words, spans }) => {
+  const f = useCurrentFrame();
+  const span = shotAt(spans, f);
+  const prev = span.i > 0 ? spans[span.i - 1] : null;
+  const u = f - span.a;
+  const fade = prev && u < XF && (PLACE[prev.id] ?? "stadium") !== (PLACE[span.id] ?? "stadium");
+  return (
+    <AbsoluteFill>
+      <ShotView span={span} words={words} />
+      {fade && prev && <AbsoluteFill style={{ opacity: 1 - u / XF }}><ShotView span={prev} words={words} /></AbsoluteFill>}
     </AbsoluteFill>
   );
 };

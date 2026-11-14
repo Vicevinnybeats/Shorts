@@ -100,7 +100,7 @@ jobs:
           node -e "const w=require('./$B/words.json'); require('fs').writeFileSync('props.json', JSON.stringify({words:w, dpr:Number(process.env.DPR)}))"
           npx remotion render src/index.ts "${{ needs.voice-and-mix.outputs.comp }}" "chunk_${{ matrix.range }}.mp4" \
             --props=props.json --frames=${{ matrix.range }} --scale=1 --codec=h264 --crf=17 \
-            --pixel-format=yuv420p --gl=swangle --timeout=600000 --log=info
+            --pixel-format=yuv420p --gl=swangle --concurrency=2 --timeout=600000 --log=info
       - uses: actions/upload-artifact@v4
         with: { name: "chunk-${{ matrix.range }}", path: "chunk_${{ matrix.range }}.mp4", retention-days: 3 }
 
