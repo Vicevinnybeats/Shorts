@@ -1,0 +1,27 @@
+{
+  "id": "goalkeeper-still",
+  "title": "The Goalkeeper Who Did Nothing and Won",
+  "style": "2.5D",
+  "composition": "Ep-goalkeeper-still",
+  "stills": [
+    8,
+    120,
+    230,
+    330,
+    430,
+    520,
+    650,
+    820,
+    900,
+    1000,
+    1150,
+    1300,
+    1420,
+    1560,
+    1680,
+    1820
+  ],
+  "status": "test-render",
+  "publish": false,
+  "chunks": 2
+}

@@ -2,7 +2,7 @@
   "0": "kokoro_tts.py",
   "1": "package.json",
   "2": "bench-render.mjs",
-  "3": "EpisodeShort.tsx",
+  "3": "goalkeeper-still/story.tsx",
   "4": "story.tsx",
   "5": "dependencies",
   "6": "compilerOptions",
@@ -29,9 +29,11 @@
   "27": "fetch-skill.sh",
   "28": "assets.d.ts",
   "29": "mybrain",
-  "30": "look.ts",
+  "30": "package.json",
   "31": "kitchen.ts",
   "32": "Post.tsx",
   "33": "scripts",
-  "34": "CLAUDE.md"
+  "34": "CLAUDE.md",
+  "35": "devDependencies",
+  "36": "RESEARCH.md"
 }

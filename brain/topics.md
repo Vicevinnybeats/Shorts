@@ -3,7 +3,7 @@
 ## Channel theme: everyday face-offs decided by a surprising rule (active)
 | Title | Status | Episode |
 |---|---|---|
-| The Goalkeeper Who Did Nothing and Won | script (awaiting approval) | goalkeeper-still |
+| The Goalkeeper Who Did Nothing and Won | script approved, rendering (2.5D) | goalkeeper-still |
 | Never Pick the Middle Queue | backlog | |
 | This Coin Flip Isn't 50/50 | backlog | |
 | He Said the Price First and Still Won | backlog | |

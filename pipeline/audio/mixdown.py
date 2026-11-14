@@ -78,7 +78,28 @@ def cue_time(words, phrase):
     raise ValueError(f"cue not found in narration: {phrase!r}")
 
 
+def crowd(dur, r, voices=24, cheer=0.0, energy=1.0):
+    """stadium crowd from the skill's synth voices: many distant babblers (+ applause and hurrahs when cheer > 0)"""
+    out = np.zeros(ns(dur))
+    for _ in range(voices):
+        v = G.babble(dur, r, r.uniform(95, 240), r.uniform(0.9, 1.2), r.uniform(3.6, 5.2) * energy, r.uniform(0.5, 0.85), fmax=3200)
+        out[: len(v)] += v[: len(out)] * r.uniform(0.4, 1.0)
+    if cheer > 0:
+        a = G.applause(dur, r, 60)
+        a = a.mean(0) if a.ndim == 2 else a
+        out[: len(a)] += a[: len(out)] * cheer * 1.6
+        for _ in range(int(10 * cheer)):
+            h = G.hurrah(r, r.uniform(110, 230), r.uniform(1.0, 1.18))
+            h = h.mean(0) if np.ndim(h) == 2 else h
+            i = ns(r.uniform(0, max(0.01, dur - 1.0)))
+            seg = out[i: i + len(h)]
+            seg += h[: len(seg)] * r.uniform(0.3, 0.7)
+    return out / max(1e-9, np.abs(out).max())
+
+
 def call_sfx(ev, r):
+    if ev["fn"] == "crowd":
+        return crowd(r=r, **ev.get("args", {}))
     fn = getattr(G, ev["fn"])
     args = dict(ev.get("args", {}))
     try:

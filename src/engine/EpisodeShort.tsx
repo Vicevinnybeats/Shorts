@@ -16,6 +16,8 @@ export type Story = {
   /** frames of white flash right after the hook shot (the skill's 4-frame flash), 0 = none */
   hookFlash?: number;
   background?: string;
+  /** 2.5D episode: the Scene is plain DOM/SVG layers (no WebGL canvas) - fast on CPU */
+  flat?: boolean;
 };
 export type EpisodeProps = { story: Story; episode: string; words?: Word[]; captions?: boolean };
 
@@ -37,10 +39,12 @@ export const EpisodeShort: React.FC<EpisodeProps> = (props) => {
   const flash = fl && f >= flashAt && f < flashAt + fl ? [1, 0.75, 0.45, 0.2, 0.1, 0.05][f - flashAt] ?? 0 : 0;
   return (
     <AbsoluteFill style={{ background: props.story.background ?? "#e9dcc8" }}>
-      <ThreeCanvas width={1080} height={1920} dpr={renderDpr()} shadows gl={{ antialias: false, stencil: false, powerPreference: "high-performance" }}
-        camera={{ fov: 40, near: 0.3, far: 12000 }}>
-        <Scene words={words} spans={spans} />
-      </ThreeCanvas>
+      {props.story.flat ? <Scene words={words} spans={spans} /> : (
+        <ThreeCanvas width={1080} height={1920} dpr={renderDpr()} shadows gl={{ antialias: false, stencil: false, powerPreference: "high-performance" }}
+          camera={{ fov: 40, near: 0.3, far: 12000 }}>
+          <Scene words={words} spans={spans} />
+        </ThreeCanvas>
+      )}
       {flash > 0 && <AbsoluteFill style={{ background: "#ffffff", opacity: flash }} />}
       {props.captions !== false && <Captions words={words} yFrac={0.76} />}
     </AbsoluteFill>

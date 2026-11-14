@@ -1,0 +1,20 @@
+{
+  "episode": "goalkeeper-still",
+  "test": true,
+  "youtube": {
+    "title": "The Goalkeeper Who Did Nothing and Won #Shorts",
+    "description": "Last kick of the final. Every keeper dives. Leo doesn't.\n\nA study of 286 penalty kicks in top leagues found keepers dived left or right about 94% of the time - yet, given where strikers actually aim, staying in the middle was the best bet. Psychologists call it action bias: a goal after a dive feels like bad luck, a goal while you stood still feels like your fault.\n\nThe catch: a later study argues that if every keeper stayed, strikers would simply aim for the middle.\n\nWould you have had the nerve to stand still?\n\nSources:\n- Bar-Eli, Azar, Ritov, Keidar-Levin & Schein (2007), Action bias among elite soccer goalkeepers: The case of penalty kicks, Journal of Economic Psychology 28(5): https://ideas.repec.org/a/eee/joepsy/v28y2007i5p606-621.html\n- Study record: https://cris.huji.ac.il/en/publications/action-bias-among-elite-soccer-goalkeepers-the-case-of-penalty-ki-2/\n- Press coverage (94%): https://www.jpost.com/health-and-sci-tech/science-and-environment/article-124988\n- Reanalysis (strategic interaction, 1,043 Bundesliga kicks): https://lida.sport-iat.de/twm/Record/4019956?lng=en\n\nLeo and the match are fictional; the numbers come from the study.\nAI disclosure: made with AI assistance (script drafting, synthetic narration voice, animation).\n\n#Shorts #football #psychology #penalty #goalkeeper #TheLittleEpic",
+    "tags": ["shorts", "goalkeeper", "penalty kick", "football", "soccer", "psychology", "action bias", "science", "animation", "TheLittleEpic"],
+    "category": "Education",
+    "made_for_kids": false,
+    "contains_synthetic_media": false
+  },
+  "instagram": {
+    "caption": "Last kick of the final. Every keeper dives. Leo doesn't. ⚽\nA study of 286 penalties says staying in the middle was the best bet - so why does nobody do it?\n\nWould you have had the nerve to stand still? 👇\n\nMade with AI assistance. Sources on YouTube.\n\n#football #soccer #goalkeeper #penalty #psychology #shorts #reels #animation #TheLittleEpic"
+  },
+  "sources": [
+    {"fact": "286 penalty kicks analysed; staying in the centre was the optimal strategy given kick directions; action bias via norm theory", "url": "https://ideas.repec.org/a/eee/joepsy/v28y2007i5p606-621.html"},
+    {"fact": "Keepers dived left or right in about 94% of kicks", "url": "https://www.jpost.com/health-and-sci-tech/science-and-environment/article-124988"},
+    {"fact": "Reanalysis: penalties as a strategic game; keepers close to optimal (1,043 Bundesliga kicks)", "url": "https://lida.sport-iat.de/twm/Record/4019956?lng=en"}
+  ]
+}

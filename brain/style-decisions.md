@@ -9,3 +9,5 @@
 | 2026-11-14 | Captions at 76 % height, wrap to two lines, 78-108 px | Clear of the subject and of the YouTube/IG buttons |
 | 2026-11-14 | Push-in = lens narrowing (creep), never camera travel | Camera travel toward a far look point flew through the subject |
 | 2026-11-14 | First episode: Tiny World "The Sugar Road" (ant-kitchen), narrator Kokoro am_michael (owner has not picked a voice yet) | Owner asked for one video to see the look |
+| 2026-11-14 | 2.5D engine (src/engine25): DOM/SVG depth layers + parallax camera (snap zoom, pans, push-ins, whip, pull-out, impact kick), overlay lighting (grade, floodlight beams, key-light pool, vignette, flash), speed lines instead of motion blur | 0.49 s/frame at 1080x1920 on 4 CPUs (vs 5.8 s budget 3D, 46 s full 3D); owner wants fast renders and better camera/light |
+| 2026-11-14 | 2.5D characters (library/characters25): skill-style bean heads, plum ink, stick limbs; front-view poses symmetric, profile flag for runs/dives; crowd from simplified figures with distance fade | Skill look adapted to 2.5D |

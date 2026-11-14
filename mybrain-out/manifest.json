@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "pipeline/audio/mixdown.py": {
-    "mtime": 1794661377.3992522,
-    "seen": 1794663983.567383,
-    "ast_hash": "f14162683d7915e0b93522ff1f2e55b5",
+    "mtime": 1794678417.9201949,
+    "seen": 1794678516.0978956,
+    "ast_hash": "d7ca93be6a8fe95afea49905e914b51e",
     "semantic_hash": ""
   },
   "pipeline/health_report.py": {
@@ -174,9 +174,9 @@
     "semantic_hash": ""
   },
   ".github/workflows/render-final.yml": {
-    "mtime": 1794663909.7269497,
-    "seen": 1794663983.5674434,
-    "ast_hash": "5b853eaae22b0d563912fef451f9916b",
+    "mtime": 1794678417.9432878,
+    "seen": 1794678516.0979443,
+    "ast_hash": "0db3634909a2b6625f220fb05406d710",
     "semantic_hash": ""
   },
   ".github/workflows/render-stills.yml": {
@@ -204,15 +204,15 @@
     "semantic_hash": ""
   },
   "brain/channel-rules.md": {
-    "mtime": 1794659967.3656347,
-    "seen": 1794663983.5674553,
-    "ast_hash": "e0ab41564a62073951a2d67af08c6119",
+    "mtime": 1794677572.6770697,
+    "seen": 1794678516.0979507,
+    "ast_hash": "38a7db8403b8fab215f618a2cdcdccba",
     "semantic_hash": ""
   },
   "brain/feedback.md": {
-    "mtime": 1794601308.0,
-    "seen": 1794663983.5674572,
-    "ast_hash": "86ee6ddfd575c2722bfc56cb1b97a8ae",
+    "mtime": 1794677572.733652,
+    "seen": 1794678516.0979517,
+    "ast_hash": "b17880d746282f1b0a2bb2169104b57a",
     "semantic_hash": ""
   },
   "brain/performance.md": {
@@ -222,9 +222,9 @@
     "semantic_hash": ""
   },
   "brain/render-log.md": {
-    "mtime": 1794604774.4176435,
-    "seen": 1794663983.5674608,
-    "ast_hash": "fe146373c4cf91fe8ae3485a6e25376f",
+    "mtime": 1794671237.223769,
+    "seen": 1794678516.0979545,
+    "ast_hash": "4ca545f6b3244f32feaf695efdd99fac",
     "semantic_hash": ""
   },
   "brain/series-parts.md": {
@@ -234,9 +234,9 @@
     "semantic_hash": ""
   },
   "brain/style-decisions.md": {
-    "mtime": 1794663947.7865489,
-    "seen": 1794663983.567465,
-    "ast_hash": "2e355d9e4cb89fa3a805abb2d1a69fdf",
+    "mtime": 1794678513.0138228,
+    "seen": 1794678516.0979607,
+    "ast_hash": "8deacffa46c5ccac76f889466cc308d5",
     "semantic_hash": ""
   },
   "brain/tools.md": {
@@ -246,9 +246,9 @@
     "semantic_hash": ""
   },
   "brain/topics.md": {
-    "mtime": 1794663947.7853506,
-    "seen": 1794663983.5674686,
-    "ast_hash": "45c093f144b4aa7a02e3b9f5c809aa9e",
+    "mtime": 1794678513.013198,
+    "seen": 1794678516.097963,
+    "ast_hash": "8a431c8005106f7d683d136be429a121",
     "semantic_hash": ""
   },
   "docs/SETUP-ASSETS.md": {
@@ -270,9 +270,9 @@
     "semantic_hash": ""
   },
   "health/REPORT.md": {
-    "mtime": 1794604754.1774406,
-    "seen": 1794663983.5675113,
-    "ast_hash": "b12a22396d45492f1f5bba3282a4c8b8",
+    "mtime": 1794664445.517685,
+    "seen": 1794678516.097972,
+    "ast_hash": "cf931ca2f6a8576887611e54867cea1e",
     "semantic_hash": ""
   },
   "library/README.md": {
@@ -384,9 +384,9 @@
     "semantic_hash": ""
   },
   "src/engine/EpisodeShort.tsx": {
-    "mtime": 1794663622.4870615,
-    "seen": 1794663983.5674222,
-    "ast_hash": "899c7436f91bd06d4cb6998be3bdebb4",
+    "mtime": 1794678104.4959798,
+    "seen": 1794678516.0979264,
+    "ast_hash": "28c9cc8a2f3f7863bc4cb6c84440a112",
     "semantic_hash": ""
   },
   "src/engine/Post.tsx": {
@@ -429,6 +429,126 @@
     "mtime": 1794661028.4350066,
     "seen": 1794663983.5675082,
     "ast_hash": "884a0fa712d5b5efb0b6faa85ec1cccc",
+    "semantic_hash": ""
+  },
+  "episodes/goalkeeper-still/episode.json": {
+    "mtime": 1794678417.9425316,
+    "seen": 1794678516.097876,
+    "ast_hash": "f8d3d4736a40f0110fba515894209b05",
+    "semantic_hash": ""
+  },
+  "episodes/goalkeeper-still/metadata.json": {
+    "mtime": 1794678512.9953701,
+    "seen": 1794678516.0978777,
+    "ast_hash": "cdfec32615d79cd3b27b7f0533109527",
+    "semantic_hash": ""
+  },
+  "episodes/goalkeeper-still/sound.json": {
+    "mtime": 1794678417.9219575,
+    "seen": 1794678516.0978787,
+    "ast_hash": "977e3cec5a4989acba68c1cdf8f10ab4",
+    "semantic_hash": ""
+  },
+  "episodes/goalkeeper-still/story.tsx": {
+    "mtime": 1794678191.9979439,
+    "seen": 1794678516.09788,
+    "ast_hash": "73c56c0671bd7843804cbb9051e93af2",
+    "semantic_hash": ""
+  },
+  "library/characters25/person.tsx": {
+    "mtime": 1794678298.702463,
+    "seen": 1794678516.0978863,
+    "ast_hash": "f77c4315af953ad967dfd4420cb2faaf",
+    "semantic_hash": ""
+  },
+  "library/environments25/stadium.tsx": {
+    "mtime": 1794678096.6859384,
+    "seen": 1794678516.0978894,
+    "ast_hash": "6bbf5a55c8261a3cb7eff35ece9da9ee",
+    "semantic_hash": ""
+  },
+  "src/engine25/light.tsx": {
+    "mtime": 1794677985.9179318,
+    "seen": 1794678516.0979345,
+    "ast_hash": "dbceaa8d31e679e11a4849294eb0cbbb",
+    "semantic_hash": ""
+  },
+  "src/engine25/stage.tsx": {
+    "mtime": 1794677968.9139307,
+    "seen": 1794678516.0979362,
+    "ast_hash": "3fa15b69ae033431c78c86c39900be36",
+    "semantic_hash": ""
+  },
+  "episodes/goalkeeper-still/RESEARCH.md": {
+    "mtime": 1794677572.657271,
+    "seen": 1794678516.0979698,
+    "ast_hash": "3ba13dc1adedfc501f3fcfa4b6008259",
+    "semantic_hash": ""
+  },
+  "episodes/goalkeeper-still/script.txt": {
+    "mtime": 1794677572.653694,
+    "seen": 1794678516.097971,
+    "ast_hash": "abd785060a0ea7d7fbab8f36824a9134",
+    "semantic_hash": ""
+  },
+  "episodes/ant-kitchen/stills/f0010.jpg": {
+    "mtime": 1794664445.5101376,
+    "seen": 1794678516.09798,
+    "ast_hash": "4a5cab852884c852316993429a225c0c",
+    "semantic_hash": ""
+  },
+  "episodes/ant-kitchen/stills/f0200.jpg": {
+    "mtime": 1794664445.5158527,
+    "seen": 1794678516.097981,
+    "ast_hash": "46b096752cc2957d214badb6a65b6a51",
+    "semantic_hash": ""
+  },
+  "episodes/ant-kitchen/stills/f0420.jpg": {
+    "mtime": 1794664445.5160985,
+    "seen": 1794678516.097982,
+    "ast_hash": "725dc07a7c7955bee251c57fb41c766d",
+    "semantic_hash": ""
+  },
+  "episodes/ant-kitchen/stills/f0700.jpg": {
+    "mtime": 1794664445.5160985,
+    "seen": 1794678516.097983,
+    "ast_hash": "57085ac5337dcca6c6c191f6dcc532dc",
+    "semantic_hash": ""
+  },
+  "episodes/ant-kitchen/stills/f0950.jpg": {
+    "mtime": 1794664445.5167377,
+    "seen": 1794678516.0979853,
+    "ast_hash": "3d697e6104ec4981faa4269a71347596",
+    "semantic_hash": ""
+  },
+  "episodes/ant-kitchen/stills/f1150.jpg": {
+    "mtime": 1794664445.5170462,
+    "seen": 1794678516.0979862,
+    "ast_hash": "cb50df908b94001f88384288a8376bdc",
+    "semantic_hash": ""
+  },
+  "episodes/ant-kitchen/stills/f1300.jpg": {
+    "mtime": 1794664445.5172696,
+    "seen": 1794678516.0979874,
+    "ast_hash": "8d6ba7b807947089b47c1b6c3bfd14c3",
+    "semantic_hash": ""
+  },
+  "episodes/ant-kitchen/stills/f1500.jpg": {
+    "mtime": 1794664445.5174782,
+    "seen": 1794678516.0979881,
+    "ast_hash": "3f4d4aa2cc0d2d147d37a8fea162393c",
+    "semantic_hash": ""
+  },
+  "episodes/ant-kitchen/stills/f1700.jpg": {
+    "mtime": 1794664445.517685,
+    "seen": 1794678516.0979888,
+    "ast_hash": "ed5156b1e92f1bc2febce3498c18e670",
+    "semantic_hash": ""
+  },
+  "episodes/ant-kitchen/preview.mp4": {
+    "mtime": 1794671237.2465413,
+    "seen": 1794678516.0979896,
+    "ast_hash": "f88f0551b1e5bc22646b074b9cd66ea8",
     "semantic_hash": ""
   }
 }
