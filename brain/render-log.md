@@ -31,3 +31,4 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-14 13:47 | health-check | - | render | 1 | 134 | cancelled (run 43601452804) |
 | 2026-11-14 13:47 | health-check | - | audio-mix | 1 | 135 | cancelled (run 43601452804) |
 | 2026-11-14 13:47 | health-check | - | report | 1 | 136 | running (run 43601452804) |
+| 2026-11-14 13:49 | render-stills | ant-kitchen  | stills | 3 | 133 | running (run 43601452778) |
