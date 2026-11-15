@@ -14,7 +14,7 @@
 | The Winner Paid the Most and Lost | backlog | |
 | Two Pizzas or One? Everyone Gets It Wrong | backlog | |
 | The Punch He Never Saw Coming | backlog | |
-| You Can't Tickle Yourself. Here's Why | backlog | |
+| You Can't Tickle Yourself. Here's Why | rendered 2026-11-15 (team build), shown to owner | tickle |
 
 ## Retired series (2026-11-14) - kept so nothing repeats
 
