@@ -21,3 +21,4 @@ How a finished video gets into Drive (no rclone secrets needed):
 |---|---|---|
 | 2026-11-14 | goalkeeper-still | goalkeeper-still - The Goalkeeper Who Did Nothing and Won.mp4 (42.8 MB) + metadata txt |
 | 2026-11-14 | slow-queue (remake) | slow-queue - Why You Always Pick the Slow Queue.mp4 + metadata txt |
+| 2026-11-15 | coin-flip | coin-flip - This Coin Flip Isn't 50-50.mp4 + metadata txt |

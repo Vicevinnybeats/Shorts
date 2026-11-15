@@ -5,10 +5,10 @@
 |---|---|---|
 | The Goalkeeper Who Did Nothing and Won | final approved 2026-11-14, in Drive Shorts/Review (not published) | goalkeeper-still |
 | Why You Always Pick the Slow Queue (was "Never Pick the Middle Queue": no evidence for middle) | remade, approved ("go") and in Drive Review 2026-11-14 | slow-queue |
-| This Coin Flip Isn't 50/50 | script approved, rendering | |
+| This Coin Flip Isn't 50/50 | approved, in Drive Review 2026-11-15 | coin-flip |
 | He Said the Price First and Still Won | backlog | |
 | Your Toast Isn't Unlucky, Your Table Is | backlog | |
-| The Lift Button That Was Never Connected | backlog | |
+| The Lift Button That Was Never Connected | script drafted, awaiting approval | lift-button |
 | Why the Silent Player Took Everything | backlog | |
 | Stop Looking at the Pole | backlog | |
 | The Winner Paid the Most and Lost | backlog | |
