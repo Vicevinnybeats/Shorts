@@ -1,0 +1,108 @@
+{
+  "id": "pole",
+  "title": "Stop Looking at the Pole",
+  "words": 157,
+  "cast": {
+    "mila": "mila",
+    "grandpa": "grandpa"
+  },
+  "shots": [
+    {
+      "id": "hook",
+      "cue": "Mila has a",
+      "place": "square",
+      "narration": "Mila has a whole empty square. She's about to hit the only pole."
+    },
+    {
+      "id": "learn",
+      "cue": "Grandpa jogs behind",
+      "place": "square",
+      "narration": "Grandpa jogs behind, holding the seat. She wobbles."
+    },
+    {
+      "id": "letgo",
+      "cue": "Then he lets",
+      "place": "square",
+      "narration": "Then he lets go. She's riding alone!"
+    },
+    {
+      "id": "spot",
+      "cue": "Then she sees",
+      "place": "square",
+      "narration": "Then she sees the pole."
+    },
+    {
+      "id": "drift",
+      "cue": "The bike curves",
+      "place": "square",
+      "narration": "The bike curves toward it, like a magnet."
+    },
+    {
+      "id": "bonk",
+      "cue": "Bonk. Pigeons everywhere",
+      "place": "square",
+      "narration": "Bonk. Pigeons everywhere."
+    },
+    {
+      "id": "why",
+      "cue": "All that space",
+      "place": "square",
+      "narration": "All that space. Wait. Why the pole?"
+    },
+    {
+      "id": "eyes",
+      "cue": "Your hands tend",
+      "place": "lab",
+      "narration": "Your hands tend to follow your eyes. In a driving simulator, people told to look off to one side drifted that way, while trying to drive straight.",
+      "onScreenText": [
+        "HANDS FOLLOW EYES"
+      ]
+    },
+    {
+      "id": "drivers",
+      "cue": "Studies of drivers",
+      "place": "lab",
+      "narration": "Studies of drivers on twisty roads show their eyes reach each bend a second or two early.",
+      "onScreenText": [
+        "EYES LEAD THE WHEEL"
+      ]
+    },
+    {
+      "id": "magnet",
+      "cue": "Motorcycle trainers call",
+      "place": "lab2",
+      "narration": "Motorcycle trainers call it target fixation. Stare at danger, and you tend to drift toward it.",
+      "onScreenText": [
+        "TARGET FIXATION"
+      ]
+    },
+    {
+      "id": "rule",
+      "cue": "So look at",
+      "place": "lab3",
+      "narration": "So look at the gap, not the pole. Like a doorway: you watch the opening, not the frame.",
+      "onScreenText": [
+        "LOOK AT THE GAP",
+        "NOT THE POLE"
+      ]
+    },
+    {
+      "id": "retry",
+      "cue": "Mila tries again",
+      "place": "square",
+      "narration": "Mila tries again. Eyes on the gap. She sails through."
+    },
+    {
+      "id": "twist",
+      "cue": "Grandpa wants a",
+      "place": "square",
+      "narration": "Grandpa wants a turn. He stares straight at the pole."
+    },
+    {
+      "id": "ask",
+      "cue": "What's the pole",
+      "place": "square",
+      "narration": "What's the pole you can't stop staring at?"
+    }
+  ]
+}

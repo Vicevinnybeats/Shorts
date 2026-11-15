@@ -1,0 +1,32 @@
+{
+  "episode": "pole",
+  "test": true,
+  "youtube": {
+    "title": "Stop Looking at the Pole #Shorts",
+    "description": "Mila has a whole empty square. She's about to hit the only pole.\n\nYour steering tends to follow your eyes. In a driving simulator, drivers told to keep to the middle of the road while looking off to one side drifted toward where they looked (Readinger et al., 2002). On winding roads, drivers' eyes find each bend a second or two before they reach it (Land & Lee, 1994, Nature). Motorcycle trainers call staring at the thing you want to avoid 'target fixation' and teach riders to look where they want to go. So look at the gap, not the pole.\n\nWhat's the pole you can't stop staring at?\n\nSources:\n- Land & Lee (1994), Where we look when we steer, Nature 369: https://www.nature.com/articles/369742a0\n- Readinger et al. (2002), Gaze-eccentricity effects on road position and steering, J. Exp. Psychol.: Applied: https://pure.mpg.de/pubman/item/item_1793077_3/component/file_3193624/pdf1012.pdf\n- Wilkie & Wann (2003), Controlling steering and judging heading: https://centaur.reading.ac.uk/13818\n- MSF, Looking where you want to go: https://magazine.americanmotorcyclist.com/?p=9661\n\nMila, Grandpa and the square are fictional.\nAI disclosure: made with AI assistance (script drafting, synthetic narration voice, animation).\n\n#Shorts #science #psychology #cycling #driving #targetfixation #TheLittleEpic",
+    "tags": [
+      "shorts",
+      "target fixation",
+      "look where you want to go",
+      "learning to ride a bike",
+      "steering",
+      "eye tracking",
+      "psychology",
+      "science",
+      "animation",
+      "TheLittleEpic"
+    ],
+    "category": "Education",
+    "made_for_kids": false,
+    "contains_synthetic_media": false
+  },
+  "instagram": {
+    "caption": "A whole empty square, and she hits the only pole. 🚲\nYour steering tends to follow your eyes. Riders call it target fixation. Look at the gap, not the pole.\n\nWhat's the pole you can't stop staring at? 👇\n\nMade with AI assistance. Sources on YouTube.\n\n#science #psychology #cycling #targetfixation #shorts #reels #animation #TheLittleEpic"
+  },
+  "sources": [
+    {"fact": "Drivers look into each bend (tangent point) 1-2 s before it; gaze and steering recorded together", "url": "https://www.nature.com/articles/369742a0"},
+    {"fact": "Simulator: drivers looking off to one side drift toward where they look", "url": "https://pure.mpg.de/pubman/item/item_1793077_3/component/file_3193624/pdf1012.pdf"},
+    {"fact": "Gaze direction is one of the signals used to steer", "url": "https://centaur.reading.ac.uk/13818"},
+    {"fact": "Rider training: look where you want to go, avoid target fixation", "url": "https://magazine.americanmotorcyclist.com/?p=9661"}
+  ]
+}
