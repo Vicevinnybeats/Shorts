@@ -8,7 +8,8 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame, interpolate, Easing } from "remotion";
 import type { Story, SceneProps } from "../../src/engine/EpisodeShort";
-import { shotAt, ShotSpan } from "../../src/engine/timeline";
+import { shotAt, ShotSpan, cueTime, FPS } from "../../src/engine/timeline";
+import type { Word } from "../../src/captions/Captions";
 import { Stage, Layer, Svg, Cam, drift, kickCam } from "../../src/engine25/stage";
 import { Grade, Mood, Pool, Flash, SpeedLines } from "../../src/engine25/light";
 import { Person, Look, INK, Expr, Pose } from "../../library/characters25/person";
@@ -22,6 +23,12 @@ const SHOTS = scenes.shots.map((s) => ({ id: s.id, cue: s.cue }));
 
 /** inside the outgoing half of a crossfade every on-screen label is dropped, so text never lies over another picture */
 const NoText = React.createContext(false);
+/** the narration words (real voice or estimate), so a beat inside a shot can sit exactly on a spoken cue */
+const Words = React.createContext<Word[]>([]);
+/** frame (relative to the shot start) where `phrase` is spoken inside this shot; fallback if not found */
+const cueAt = (words: Word[], phrase: string, span: ShotSpan, fallback: number) => {
+  try { return Math.round(cueTime(words, phrase, span.a / FPS - 0.3) * FPS) - span.a; } catch { return fallback; }
+};
 const T: React.FC<React.ComponentProps<typeof LabT>> = (p) => (React.useContext(NoText) ? null : <LabT {...p} />);
 /** hides a prop that carries text (counter digits, paper title) while a crossfade is running */
 const Gate: React.FC<{ children: React.ReactNode }> = ({ children }) => (React.useContext(NoText) ? null : <>{children}</>);
@@ -198,6 +205,7 @@ const LabTable: React.FC<{ edge: number; top: number; floor: number; w?: number;
 // ---------------------------------------------------------------- shots
 const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
   const f = useCurrentFrame();
+  const words = React.useContext(Words);
   const u = f - span.a, len = span.b - span.a;
   let cam: Cam = { x: 0, y: 0, zoom: 1, rot: 0 };
   let mood = MOODS.cafe;
@@ -292,8 +300,8 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
       cam = drift(on({ x: 450, y: why ? k(u, len * 0.48, len, 930, 990) : 920 }, why ? k(u, len * 0.48, len, 1.72, 1.85) : k(u, 0, len * 0.48, 1.62, 1.7)), f, 2);
       const drop = k(u, 0, 9, -260, 0, Easing.out(Easing.back(1.4)));
       body = <Cafe f={f} omar={{ pose: slump, expr: why ? "focused" : "worried" }} plateX={PLATE1} toast={fallState(EX, TT, FLOOR, TS, 1)} splat={1}
-        extra={<StormCloud x={head.x + 10} y={head.y - 240 + drop} scale={0.82} f={f} />} />;
-      overlay = <Badge x={835} y={k(u, 4, 10, 740, 700)} lines={["MURPHY'S", "LAW"]} s={74} c={CREAM} o={k(u, 4, 10, 0, 1)} />;
+        extra={<StormCloud x={head.x - 30} y={head.y - 240 + drop} scale={0.82} f={f} />} />;
+      overlay = <Badge x={800} y={k(u, 4, 10, 740, 700)} lines={["MURPHY'S", "LAW"]} s={62} c={CREAM} o={k(u, 4, 10, 0, 1)} />;
       break;
     }
     case "physicist": { // the 1995 paper drops in
@@ -316,8 +324,8 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
       cam = drift({ x: 30, y: 0, zoom: k(u, 0, len, 1.0, 1.06), rot: 0 }, f, 2);
       body = <Lab>
         <T x={540} y={420} s={72} c={GOLD} o={k(u, 3, 9, 0, 1)}>PIVOT ON THE EDGE</T>
-        <LabTable edge={E} top={TOP} floor={1500} w={900} />
         <Toast x={st.x} y={st.y} scale={S} rot={st.rot} />
+        <LabTable edge={E} top={TOP} floor={1500} w={900} />
         {(tip > 0 || fall > 0) && <RotationArrow x={E} y={TOP} r={250} from={-20} to={-20 + Math.min(130, st.rot * 1.4 + 10)} />}
         <circle cx={E} cy={TOP} r={16} fill={GOLD} stroke={INK} strokeWidth={5} />
         <circle cx={cm.x} cy={cm.y} r={13} fill={RED} stroke={INK} strokeWidth={4} />
@@ -399,12 +407,15 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
       break;
     }
     case "fix": {    // Lena swipes the toast forward off the edge: it barely spins and lands butter up
-      const SW = Math.round(len * 0.3), rel = SW + 5, FT = 13;
+      // timed to the voice: wind-up on "Lena tries it", the toast lands (and the check pops) on "Butter up."
+      const LT = cueAt(words, "Lena tries it", span, Math.round(len * 0.55)), BU = cueAt(words, "Butter up", span, Math.round(len * 0.75));
+      const SW = Math.max(LT + 4, BU - 18), rel = SW + 5, FT = Math.max(6, BU - rel);
       const lx = 700;
       const lp0: Pose = { armL: [22, -30], armR: [30, -30], legL: [8, 0], legR: [8, 0] };
       const lRig: Rig = { x: lx, y: FLOOR, s: LS, facing: 1, pose: lp0, t: f + 23 };
-      const sw = k(u, SW, rel, 0, 1, Easing.in(Easing.quad));
-      const handT = u < SW ? { x: EX - 150 + Math.sin(u * 0.2) * 4, y: TT - 30 } : { x: EX - 150 + sw * 230 + k(u, rel, rel + 8, 0, 60), y: TT - 30 - k(u, rel, rel + 10, 0, 90) };
+      const sw = k(u, SW, rel, 0, 1, Easing.in(Easing.quad)), wind = k(u, LT, SW, 0, 1, Easing.inOut(Easing.sin));
+      const handT = u < SW ? { x: EX - 150 - wind * 40 + Math.sin(u * 0.2) * 4 * (1 - wind), y: TT - 30 - wind * 10 }
+        : { x: EX - 190 + sw * 270 + k(u, rel, rel + 8, 0, 60), y: TT - 40 - k(u, rel, rel + 10, 0, 80) };
       const lPose: Pose = { ...lp0, armR: reach(lRig, "R", handT.x, handT.y, 1) };
       const tf = (u - rel) / FT;
       let t: TS_;
@@ -412,11 +423,14 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
       else if (u < rel) t = { x: EX - 50 + sw * 70, y: REST, rot: sw * 6 };
       else if (tf < 1) t = { x: EX + 20 + tf * 130, y: REST + (LAND - REST) * tf * tf, rot: 6 + tf * 22 };
       else { const sF = k(u - rel - FT, 0, 4, 0, 1, Easing.out(Easing.cubic)); t = { x: EX + 150 + sF * 8, y: LAND - 8 * Math.sin(sF * Math.PI), rot: 28 * (1 - sF) }; }
+      const arrowO = k(u, 6, 12, 0, 1) * (1 - k(u, SW - 4, SW, 0, 1));
       const landed = u >= rel + FT;
       cam = drift(on({ x: 640, y: 1110 }, k(u, 0, len, 1.2, 1.26)), f, 2);
       body = <Cafe f={f} omar={{ pose: omarPose(0, MUGX + 20, TT - 40), expr: landed ? "shock" : "focused" }} plateX={PLATE0}
-        lena={{ pose: lPose, expr: landed ? "cheer" : "determined", x: lx }} toast={t}
-        extra={<>{u >= SW && u < rel + 4 && <path d={`M ${EX - 200} ${TT - 60} Q ${EX - 60} ${TT - 90} ${EX + 40} ${TT - 70}`} stroke="#ffffff" strokeWidth={8} fill="none" strokeLinecap="round" opacity={0.8} />}
+        lena={{ pose: lPose, expr: landed ? "cheer" : u >= LT ? "determined" : "smile", x: lx }} toast={t}
+        extra={<>{arrowO > 0.01 && <g opacity={arrowO}><path d={`M ${EX - 120} ${TT - 80} L ${EX + 110} ${TT - 80}`} stroke={GOLD} strokeWidth={10} strokeDasharray="22 14" strokeDashoffset={-u * 3} strokeLinecap="round" />
+            <path d={`M ${EX + 104} ${TT - 104} L ${EX + 146} ${TT - 80} L ${EX + 104} ${TT - 56} Z`} fill={GOLD} stroke={INK} strokeWidth={4} strokeLinejoin="round" /></g>}
+          {u >= SW && u < rel + 4 && <path d={`M ${EX - 200} ${TT - 60} Q ${EX - 60} ${TT - 90} ${EX + 40} ${TT - 70}`} stroke="#ffffff" strokeWidth={8} fill="none" strokeLinecap="round" opacity={0.8} />}
           {landed && <Check x={EX + 158} y={LAND - 120} ok s={k(u, rel + FT + 2, rel + FT + 8, 0, 1, Easing.out(Easing.back(2)))} />}</>} />;
       overlay = <><Badge x={540} y={k(u, 0, 6, 410, 385)} lines={["SWIPE FORWARD"]} s={66} o={k(u, 0, 6, 0, 1)} />
         <SpeedLines amount={u >= SW && u < rel + 6 ? 0.18 : 0} angle={0} seed={5} /></>;
@@ -446,9 +460,9 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
       const pull = k(u, 0, len, 0, 1, Easing.inOut(Easing.cubic));
       const CX2 = 900, CH = 330, ox = 880;
       const op: Pose = { armL: [30, -40], armR: [44, -120], legL: [6, 0], legR: [6, 0] };
-      cam = { x: interpolate(pull, [0, 1], [330, 0]), y: interpolate(pull, [0, 1], [-30, 10]), zoom: interpolate(pull, [0, 1], [1.4, 1.0]), rot: interpolate(pull, [0, 1], [-1.5, 0]) };
+      cam = { x: interpolate(pull, [0, 1], [280, 0]), y: interpolate(pull, [0, 1], [55, 10]), zoom: interpolate(pull, [0, 1], [1.2, 1.0]), rot: interpolate(pull, [0, 1], [-1.5, 0]) };
       const lp: Pose = { armL: [18, -20], armR: [40, -100], legL: [6, 0], legR: [6, 0] };
-      body = <Cafe f={f} omar={null} lena={{ pose: lp, expr: "laugh", x: 620 }} plateX={PLATE0} toast={{ x: EX + 140, y: LAND, rot: 0 }}
+      body = <Cafe f={f} omar={null} lena={{ pose: lp, expr: "laugh", x: 520 }} plateX={PLATE0} toast={{ x: EX + 140, y: LAND, rot: 0 }}
         tall={<>
           <Person x={ox} y={FLOOR} scale={OS} facing={1} look={OMAR} pose={op} expr="smile" t={f} blink={f % 97 < 4} />
           <TallCounter x={CX2} y={FLOOR} h={CH} w={340} />
@@ -472,17 +486,17 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
 const PLACE: Record<string, string> = Object.fromEntries(scenes.shots.map((s) => [s.id, s.place]));
 const XF = 5;
 
-const Scene: React.FC<SceneProps> = ({ spans }) => {
+const Scene: React.FC<SceneProps> = ({ spans, words }) => {
   const f = useCurrentFrame();
   const span = shotAt(spans, f);
   const prev = span.i > 0 ? spans[span.i - 1] : null;
   const u = f - span.a;
   const fade = prev && u < XF && (PLACE[prev.id] ?? "cafe") !== (PLACE[span.id] ?? "cafe");
   return (
-    <AbsoluteFill>
+    <Words.Provider value={words}><AbsoluteFill>
       <NoText.Provider value={!!fade}><ShotView span={span} /></NoText.Provider>
       {fade && prev && <NoText.Provider value><AbsoluteFill style={{ opacity: 1 - (u + 1) / (XF + 1) }}><ShotView span={prev} /></AbsoluteFill></NoText.Provider>}
-    </AbsoluteFill>
+    </AbsoluteFill></Words.Provider>
   );
 };
 
