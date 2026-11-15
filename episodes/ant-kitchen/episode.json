@@ -4,7 +4,18 @@
   "title": "The Sugar Road",
   "topic": "An ant crossing a kitchen",
   "composition": "Ep-ant-kitchen",
-  "stills": [10, 200, 420, 700, 950, 1150, 1300, 1500, 1700],
+  "stills": [
+    10,
+    200,
+    420,
+    700,
+    950,
+    1150,
+    1300,
+    1500,
+    1700
+  ],
   "status": "test-render",
-  "publish": false
+  "publish": false,
+  "gl": "swangle"
 }

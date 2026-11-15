@@ -31,6 +31,7 @@ jobs:
       comp: ${{ steps.ep.outputs.comp }}
       frames: ${{ steps.plan.outputs.frames }}
       ranges: ${{ steps.plan.outputs.ranges }}
+      gl: ${{ steps.plan.outputs.gl }}
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
@@ -70,10 +71,12 @@ jobs:
           words = json.load(open(f"episodes/{os.environ['ID']}/build/words.json"))
           frames = max(90, math.ceil((words[-1]["e"] + 0.8) * 30))
           meta = json.load(open(f"episodes/{os.environ['ID']}/episode.json"))
-          n = max(1, min(20, int(os.environ.get("CHUNKS") or meta.get("chunks") or 6)))
+          n = max(1, min(20, int(os.environ.get("CHUNKS") or meta.get("chunks") or 3)))
           step = math.ceil(frames / n)
           ranges = [f"{a}-{min(frames, a + step) - 1}" for a in range(0, frames, step)]
           print(f"frames={frames}")
+          # 2.5D (flat SVG) episodes render ~7x faster with CPU compositing (swiftshader); 3D episodes need swangle (WebGL)
+          print("gl=" + str(meta.get("gl") or "swiftshader"))
           print("ranges=" + json.dumps(ranges))
           PY
         env: { ID: "${{ steps.ep.outputs.id }}", CHUNKS: "${{ inputs.chunks }}" }
@@ -100,7 +103,7 @@ jobs:
           node -e "const w=require('./$B/words.json'); require('fs').writeFileSync('props.json', JSON.stringify({words:w, dpr:Number(process.env.DPR)}))"
           npx remotion render src/index.ts "${{ needs.voice-and-mix.outputs.comp }}" "chunk_${{ matrix.range }}.mp4" \
             --props=props.json --frames=${{ matrix.range }} --scale=1 --codec=h264 --crf=17 \
-            --pixel-format=yuv420p --gl=swangle --concurrency=2 --timeout=600000 --log=info
+            --pixel-format=yuv420p --gl=${{ needs.voice-and-mix.outputs.gl }} --concurrency=2 --timeout=600000 --log=info
       - uses: actions/upload-artifact@v4
         with: { name: "chunk-${{ matrix.range }}", path: "chunk_${{ matrix.range }}.mp4", retention-days: 3 }
 

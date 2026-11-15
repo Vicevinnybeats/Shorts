@@ -12,7 +12,7 @@ const { renderStill, selectComposition } = await import("@remotion/renderer");
 const [id, prefix, frames, scale = "0.5", props = "{}"] = process.argv.slice(2);
 if (!id || !prefix || !frames) { console.error("usage: render-stills.mjs <comp> <outPrefix> <frames> [scale] [props]"); process.exit(2); }
 const browserExecutable = process.env.CHROME_PATH || null;
-const chromiumOptions = { gl: process.env.REMOTION_GL || "swangle" };
+const chromiumOptions = { gl: process.env.REMOTION_GL || "swiftshader" };
 const inputProps = JSON.parse(props);
 fs.mkdirSync(path.dirname(path.resolve(prefix)), { recursive: true });
 const t0 = Date.now();

@@ -11,7 +11,7 @@ const { renderMedia, selectComposition } = await import("@remotion/renderer");
 const [id, from, to, scale, out, conc, props = "{}"] = process.argv.slice(2);
 const inputProps = JSON.parse(props);
 const browserExecutable = process.env.CHROME_PATH || null;
-const chromiumOptions = { gl: process.env.REMOTION_GL || "swangle" };
+const chromiumOptions = { gl: process.env.REMOTION_GL || "swiftshader" };
 const t0 = Date.now();
 const serveUrl = await bundle({ entryPoint: path.resolve("src/index.ts"), publicDir: path.resolve("public") });
 const composition = await selectComposition({ serveUrl, id, inputProps, browserExecutable, chromiumOptions });
