@@ -16,7 +16,7 @@ import { Person, Look, INK, Expr, Pose, POSES, runPose } from "../../library/cha
 import { CAST } from "../../library/style/channel";
 import { Lab, T as LabT, LAB } from "../../library/environments25/lab";
 import { SQUARE, SquareBackdrop, Paving, LampPost, bonkWobble, Bench, Fountain, Pigeon, Bicycle, BikeProps, bikePoints, rideOn,
-  reachLimb, facepalmPose, FacepalmHand, Helmet, FlatCap, Beard, GazeLine, EyeCloseUp, PullArrows, SteeringWheel, TopRoad, topRoadPoint,
+  reachLimb, facepalmPose, FacepalmHand, Helmet, FlatCap, Beard, GazeLine, EyeCloseUp, SteeringWheel, TopRoad, topRoadPoint,
   PerspectiveRoad, perspectiveTangent, GazeCone, PathLine, BonkStars, KID_SCALE } from "../../library/environments25/square";
 import scenes from "../../content/scripts/pole.json";
 
@@ -112,7 +112,10 @@ const MilaFoot: React.FC<{ x: number; y: number; pose: Pose; expr: Expr; f: numb
 const holdSaddle = (bike: BikeProps, x: number, y: number, s: number, ph: number, amt = 1): Pose => {
   const base = runPose(ph, amt);
   const pose: Pose = { ...base, crouch: Math.min(0.12, base.crouch ?? 0) };
-  return reachLimb({ x, y, scale: s, facing: 1, pose }, "armR", bikePoints(bike).saddleBack, -1, true);
+  const r = reachLimb({ x, y, scale: s, facing: 1, pose }, "armR", bikePoints(bike).saddleBack, -1, true);
+  // the whole rig rotates with the lean: swing the legs forward by the same amount so they stay under him
+  const L = (r.lean ?? 0) * 0.85;
+  return { ...r, legL: [r.legL[0] + L, r.legL[1]], legR: [r.legR[0] + L, r.legR[1]] };
 };
 
 // ---------------------------------------------------------------- pigeons
@@ -176,7 +179,7 @@ const rideAt = (spans: ShotSpan[], f: number) => {
 };
 
 /** a ground tyre track from x0 to the bike, along the same curve */
-const Track: React.FC<{ pts: Pt[]; o?: number }> = ({ pts, o = 0.7 }) => pts.length < 2 ? null : (
+const Track: React.FC<{ pts: Pt[]; o?: number }> = ({ pts, o = 0.95 }) => pts.length < 2 ? null : (
   <g opacity={o}><PathLine points={pts} color="#fff4de" dashed width={7} arrow={false} /></g>
 );
 
@@ -263,7 +266,7 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
       const r = rideAt(spans, f);
       const amp = 1.5 + k(u, WOB - 4, WOB + 6, 0, 3.5);
       const bike: BikeProps = { x: r.x, y: LANE, scale: BS, facing: 1, size: "kid", wheelAngle: wheelAt(r.x), lean: Math.sin(u * 0.45) * amp };
-      const gx = r.x - 250, ph = u * 0.32;
+      const gx = r.x - 215, ph = u * 0.32;
       const gp = holdSaddle(bike, gx, LANE, 1.0, ph, 0.6);
       cam = drift(on({ x: r.x - 60, y: 1150 }, k(u, 0, len, 1.4, 1.48)), f, 2.5);
       body = <Square f={f} items={[{ y: LANE, el: <g>
@@ -277,9 +280,9 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
       const r = rideAt(spans, f);
       const bike: BikeProps = { x: r.x, y: LANE, scale: BS, facing: 1, size: "kid", wheelAngle: wheelAt(r.x), lean: Math.sin(u * 0.45) * (u < LG ? 2.5 : 1.2) };
       const held = u < LG;
-      const relX = rideAt(spans, span.a + LG).x - 250;
+      const relX = rideAt(spans, span.a + LG).x - 215;
       const slow = k(u, LG, LG + 18, 0, 1, Easing.out(Easing.quad));
-      const gx = held ? r.x - 250 : relX + 50 * slow;
+      const gx = held ? r.x - 215 : relX + 50 * slow;
       const gp: Pose = held ? holdSaddle(bike, gx, LANE, 1.0, u * 0.32, 0.6)
         : u < LG + 16 ? { ...runPose(u * 0.3, 0.7 * (1 - slow)), armR: [70 - slow * 30, 10] }
           : { ...POSES.arms_up, headTilt: -4 };
@@ -332,7 +335,6 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
         over={<>
           <Track pts={pts} />
           <GazeLine x1={eye.x} y1={eye.y} x2={POLE_MID.x} y2={POLE_MID.y} progress={1} color={RED} />
-          <g opacity={k(u, 6, 14, 0, 1)}><PullArrows x={bp.front.x + 20} y={bp.ground.y - 50} toX={PX - 30} toY={PY - 60} f={f * 2} count={3} /></g>
         </>} />;
       overlay = <SpeedLines amount={k(u, MAG, len, 0, 0.12)} angle={-6} seed={2} />;
       break;
@@ -363,12 +365,12 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
       const head = headPt(rider, 0, -120);
       const fp = facepalmPose({ armL: [14, -8], armR: [14, -8], legL: [7, 0], legR: [7, 0] }, "armL");
       mood = frozen ? MOODS.freeze : MOODS.sun;
-      cam = frozen ? on({ x: k(u, W, len, 770, 790), y: k(u, W, len, 1030, 1040) }, k(u, W, len, 1.75, 1.95, Easing.out(Easing.cubic)))
-        : drift({ x: 0, y: -40, zoom: k(u, 0, W, 1.0, 1.04), rot: 0 }, f, 1.5);
+      cam = frozen ? on({ x: k(u, W, len, 770, 790), y: k(u, W, len, 1140, 1150) }, k(u, W, len, 1.75, 1.95, Easing.out(Easing.cubic)))
+        : drift({ x: 0, y: 10, zoom: k(u, 0, W, 1.0, 1.03), rot: 0 }, f, 1.5);
       body = <Square f={ff} birds={<Pigeons f={ff} circle />}
         items={[
           { y: PY + 0.5, el: <Rider bike={bike} who="mila" expr={frozen ? "shock" : "worried"} f={ff} lookX={0} tilt={-6} /> },
-          { y: 1405, el: <Gramps x={250} y={1405} pose={fp} expr="worried" f={ff} s={1.12} palm={-1} /> },
+          { y: 1380, el: <Gramps x={250} y={1380} pose={fp} expr="worried" f={ff} s={1.12} palm={-1} /> },
         ]}
         over={<BonkStars x={head.x} y={head.y - 10} f={20 + (fu % 30)} r={62} />} />;
       overlay = frozen ? <Flash framesSince={u - W} len={3} /> : null;
@@ -401,7 +403,7 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
         {b > 0.01 && <g opacity={b}>
           <TopRoad {...road} />
           <defs><linearGradient id="roadfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor={LAB.bg} stopOpacity={1} /><stop offset="1" stopColor={LAB.bg} stopOpacity={0} /></linearGradient></defs>
-          <rect x={380} y={520} width={320} height={200} fill="url(#roadfade)" />
+          <rect x={405} y={530} width={270} height={190} fill="url(#roadfade)" />
           <path d={`M 540 ${car.y - 60} L 540 600`} stroke={CREAM} strokeWidth={8} strokeDasharray="6 22" strokeLinecap="round" opacity={0.5 + 0.5 * k(u, ST, ST + 6, 0, 1) * (0.6 + 0.4 * Math.sin(u * 0.4))} />
           <PathLine points={pathPts} color={RED} width={9} arrow={false} progress={u > DR ? 1 : 0} />
           {gaze > 0 && <GazeCone x={car.x} y={car.y - 20} angle={-62 + carRot} len={360 * gaze} spread={18} />}
@@ -444,7 +446,7 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
       const ST = cueAt(words, "Stare at", span, Math.round(len * 0.4)), DR = cueAt(words, "drift toward", span, Math.round(len * 0.8));
       const FL = 1290;
       const pole = { x: 860, y: 1130 };
-      const path = (s: number): Pt => ({ x: 230 + s * (pole.x - 14 * 0.7 - 172 - 230), y: FL + 20 - (FL + 20 - pole.y) * Math.pow(s, 1.8) });
+      const path = (s: number): Pt => ({ x: 230 + s * (pole.x - 14 * 0.7 - 172 - 230), y: FL + 20 - (FL + 20 - pole.y) * Math.pow(s, 1.25) });
       const s = k(u, 6, len - 8, 0, 1, Easing.inOut(Easing.sin));
       const p = path(s);
       const bike: BikeProps = { x: p.x, y: p.y, scale: 1.15, facing: 1, size: "kid", wheelAngle: wheelAt(p.x, 1.15), lean: -s * 3 };
@@ -460,7 +462,6 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
         <PathLine points={Array.from({ length: 12 }, (_, i) => path((i / 11) * Math.max(0.02, k(u, DR - 30, DR + 6, 0.05, 1))))} color={RED} dashed width={10} />
         {fear > 0 && <circle cx={pole.x} cy={pole.y - 260} r={160 + Math.sin(u * 0.35) * 14} fill={RED} opacity={0.18 * fear} />}
         <LampPost x={pole.x} y={pole.y} scale={0.7} />
-        <g opacity={fear}><PullArrows x={p.x + 190} y={p.y - 40} toX={pole.x - 40} toY={pole.y - 40} f={f * 2} count={3} color={ORANGE} /></g>
         <Rider bike={bike} who="mila" expr={s > 0.6 ? "shock" : "worried"} f={f} lookX={1} />
         <GazeLine x1={eye.x} y1={eye.y} x2={lantern.x} y2={lantern.y + 60} progress={k(u, 4, 14, 0, 1)} color={GOLD} />
       </Lab>;
@@ -506,7 +507,7 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
     }
     case "retry": {  // Mila tries again on the gap row: eyes on the gap (green gaze), she sails between pole and bench
       const EY = cueAt(words, "Eyes on the gap", span, Math.round(len * 0.33)), SA = cueAt(words, "sails through", span, Math.round(len * 0.72));
-      const x = interpolate(u, [0, EY, SA + 4, len], [380, 600, 1000, 1100], { easing: Easing.linear });
+      const x = interpolate(u, [0, EY, SA - 4, SA + 2, len], [440, 620, 900, 1080, 1120]);
       const bike: BikeProps = { x, y: RY, scale: BS, facing: 1, size: "kid", wheelAngle: wheelAt(x), lean: Math.sin(u * 0.4) * 0.8 };
       const rider = riderOf({ bike, who: "mila", expr: "determined", f, lookX: 1 });
       const eye = eyeOf(rider);
@@ -514,7 +515,7 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
       const through = x > PX - 40;
       const gz = through ? 0 : k(u, EY - 2, EY + 10, 0, 1);
       const cheer = u >= SA;
-      cam = drift(on({ x: interpolate(x, [380, 1150], [640, 880], { extrapolateRight: "clamp" }), y: 1090 }, k(u, 0, len, 1.4, 1.36)), f, 2);
+      cam = drift(on({ x: interpolate(x, [440, 1120], [660, 860], { extrapolateRight: "clamp" }), y: 1090 }, k(u, 0, len, 1.4, 1.36)), f, 2);
       body = <Square f={f}
         items={[
           { y: RY, el: <Rider bike={bike} who="mila" expr={cheer ? "cheer" : "determined"} f={f} lookX={1} /> },
@@ -553,12 +554,12 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
       const rider = riderOf({ bike, who: "grandpa", expr: "shock", f, riderScale: GS * 0.95, lookX: 0 });
       const head = headPt(rider, 0, -120);
       const pull = k(u, 8, len, 0, 1, Easing.inOut(Easing.cubic));
-      cam = kickCam({ x: interpolate(pull, [0, 1], [300, 0]), y: interpolate(pull, [0, 1], [90, -30]), zoom: interpolate(pull, [0, 1], [1.9, 1.0]), rot: interpolate(pull, [0, 1], [-1.5, 0]) }, h, 20);
+      cam = kickCam({ x: interpolate(pull, [0, 1], [300, 0]), y: interpolate(pull, [0, 1], [90, 20]), zoom: interpolate(pull, [0, 1], [1.9, 1.0]), rot: interpolate(pull, [0, 1], [-1.5, 0]) }, h, 20);
       const lp: Pose = { armL: [40, -110], armR: [40, -110], legL: [8, 0], legR: [8, 0], headTilt: Math.sin(u * 0.5) * 5 };
       body = <Square f={f} wobble={bonkWobble(h, 8)} birds={<Pigeons f={f} since={h + 2} />}
         items={[
           { y: PY + 0.5, el: <Rider bike={bike} who="grandpa" expr="shock" f={f} riderScale={GS * 0.95} lookX={0} tilt={h < 0 ? 0 : -8} /> },
-          { y: 1402, el: <MilaFoot x={470} y={1402} pose={lp} expr="laugh" f={f} t={f} s={KID_SCALE * 1.1} /> },
+          { y: 1385, el: <MilaFoot x={470} y={1385} pose={lp} expr="laugh" f={f} t={f} s={KID_SCALE * 1.1} /> },
         ]}
         over={<BonkStars x={head.x} y={head.y - 10} f={Math.min(40, h - 2)} r={70} />} />;
       overlay = <Flash framesSince={h} len={4} />;
