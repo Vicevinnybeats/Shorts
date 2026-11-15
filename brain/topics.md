@@ -8,7 +8,7 @@
 | This Coin Flip Isn't 50/50 | approved, in Drive Review 2026-11-15 | coin-flip |
 | He Said the Price First and Still Won | backlog | |
 | Your Toast Isn't Unlucky, Your Table Is | backlog | |
-| The Lift Button That Was Never Connected | script drafted, awaiting approval | lift-button |
+| The Lift Button That Was Never Connected | script approved 2026-11-15, rendering | lift-button |
 | Why the Silent Player Took Everything | backlog | |
 | Stop Looking at the Pole | backlog | |
 | The Winner Paid the Most and Lost | backlog | |

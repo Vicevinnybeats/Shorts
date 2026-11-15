@@ -1,0 +1,40 @@
+{
+  "episode": "lift-button",
+  "test": true,
+  "youtube": {
+    "title": "The Lift Button That Was Never Connected #Shorts",
+    "description": "Ava is late for the most important interview of her life. She hits the close button. Again. And again.\n\nIn many lifts, that button does nothing. In the US, the 1990 disability law (the ADA) means doors must stay open long enough for someone on crutches or in a wheelchair, so in many lifts the close-door button was simply switched off in normal use - it only works for firefighters in key-operated fire service mode. And it's not just lifts: in 2004, New York City figures showed more than 2,500 of its 3,250 crosswalk buttons did nothing. Why keep them? Pressing a button feels like control - psychologists call it the illusion of control.\n\nHow many times have you pressed it today?\n\nSources:\n- 'Door close' buttons on most elevators don't actually work (CBS, citing the NYT and the National Elevator Industry): https://www.cbsnews.com/boston/news/door-close-elevator-button-dont-work-placebo\n- Firefighters' Phase II operation and the door-close button (IUEC code alert, ASME A17.1): https://iuec.org/wp-content/uploads/IUEC-Codes-Standards-Alert-Phase-II-Operation-1-1.pdf\n- NYC crosswalk buttons, 2004 figures: https://designobserver.com/information-design-and-the-placebo-effect\n- Langer (1975), The illusion of control, Journal of Personality and Social Psychology 32(2)\n\nAva and the interview are fictional. Lift buttons vary by building and country.\nAI disclosure: made with AI assistance (script drafting, synthetic narration voice, animation).\n\n#Shorts #psychology #elevator #placebo #science #TheLittleEpic",
+    "tags": [
+      "shorts",
+      "elevator",
+      "lift",
+      "close door button",
+      "placebo button",
+      "illusion of control",
+      "psychology",
+      "crosswalk button",
+      "animation",
+      "TheLittleEpic"
+    ],
+    "category": "Education",
+    "made_for_kids": false,
+    "contains_synthetic_media": false
+  },
+  "instagram": {
+    "caption": "Ava is late. She smashes the close button. It does nothing. 🛗\nIn many lifts that button was switched off years ago - and in 2004 most of New York's crosswalk buttons did nothing too.\n\nHow many times have you pressed it today? 👇\n\nMade with AI assistance. Sources on YouTube.\n\n#psychology #elevator #placebo #science #shorts #reels #animation #TheLittleEpic"
+  },
+  "sources": [
+    {
+      "fact": "Close-door buttons disabled in many US lifts; ADA door timing",
+      "url": "https://www.cbsnews.com/boston/news/door-close-elevator-button-dont-work-placebo"
+    },
+    {
+      "fact": "Firefighters' Phase II uses the door-close button",
+      "url": "https://iuec.org/wp-content/uploads/IUEC-Codes-Standards-Alert-Phase-II-Operation-1-1.pdf"
+    },
+    {
+      "fact": "NYC 2004: 2,500+ of 3,250 walk buttons did nothing",
+      "url": "https://designobserver.com/information-design-and-the-placebo-effect"
+    }
+  ]
+}
