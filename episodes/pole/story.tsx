@@ -109,10 +109,12 @@ const MilaFoot: React.FC<{ x: number; y: number; pose: Pose; expr: Expr; f: numb
 };
 
 /** jogging alongside a bike, near hand on the back of the saddle */
-const holdSaddle = (bike: BikeProps, x: number, y: number, s: number, ph: number, amt = 1): Pose => {
+const holdSaddle = (bike: BikeProps, x: number, y: number, s: number, ph: number, amt = 1, maxLean = 90): Pose => {
   const base = runPose(ph, amt);
   const pose: Pose = { ...base, crouch: Math.min(0.12, base.crouch ?? 0) };
-  const r = reachLimb({ x, y, scale: s, facing: 1, pose }, "armR", bikePoints(bike).saddleBack, -1, true);
+  const tgt = bikePoints(bike).saddleBack;
+  let r = reachLimb({ x, y, scale: s, facing: 1, pose }, "armR", tgt, -1, true);
+  if ((r.lean ?? 0) > maxLean) r = reachLimb({ x, y, scale: s, facing: 1, pose: { ...pose, lean: maxLean, crouch: 0.12 } }, "armR", tgt, -1);
   // the whole rig rotates with the lean: swing the legs forward by the same amount so they stay under him
   const L = (r.lean ?? 0) * 0.85;
   return { ...r, legL: [r.legL[0] + L, r.legL[1]], legR: [r.legR[0] + L, r.legR[1]] };
@@ -121,7 +123,7 @@ const holdSaddle = (bike: BikeProps, x: number, y: number, s: number, ph: number
 // ---------------------------------------------------------------- pigeons
 const BIRDS = [
   { x: 1010, y: 1372, f: 1 as const }, { x: 1065, y: 1394, f: -1 as const }, { x: 1135, y: 1366, f: -1 as const },
-  { x: 892, y: 1390, f: 1 as const }, { x: 1180, y: 1398, f: 1 as const },
+  { x: 905, y: 1392, f: 1 as const }, { x: 1180, y: 1398, f: 1 as const },
 ];
 /** pigeons pecking, or scattering since `since` frames (each flies off on its own line) */
 const Pigeons: React.FC<{ f: number; since?: number; circle?: boolean }> = ({ f, since = -1, circle = false }) => (
@@ -133,7 +135,7 @@ const Pigeons: React.FC<{ f: number; since?: number; circle?: boolean }> = ({ f,
       }
       const t = since - i * 1.5;
       if (t <= 0) return <Pigeon key={i} x={b.x} y={b.y} scale={0.75} f={f + i * 9} facing={b.f} seed={i} />;
-      const dir = i % 2 ? 1 : -1, vx = dir * (9 + i * 2.2), x = b.x + vx * t, y = b.y - 40 - t * (14 + i * 2) + t * t * 0.05;
+      const dir = i === 1 ? -1 : 1, vx = dir > 0 ? 9 + i * 2.2 : -2.5, x = b.x + vx * t, y = b.y - 40 - t * (dir > 0 ? 12 + i * 2 : 26) + t * t * 0.05;
       return <Pigeon key={i} x={x} y={y} scale={0.75} f={f * 1.6 + i * 3} flying facing={dir > 0 ? 1 : -1} seed={i} />;
     })}
   </g>
@@ -142,10 +144,10 @@ const Pigeons: React.FC<{ f: number; since?: number; circle?: boolean }> = ({ f,
 // ---------------------------------------------------------------- the square
 type Item = { y: number; el: React.ReactNode };
 /** backdrop (p 0.6) + paving, fountain, bench and the lamp post; `items` are depth-sorted with them by ground y */
-const Square: React.FC<{ f: number; items?: Item[]; wobble?: number; front?: React.ReactNode; over?: React.ReactNode; birds?: React.ReactNode }> = ({ f, items = [], wobble = 0, front, over, birds }) => {
+const Square: React.FC<{ f: number; items?: Item[]; wobble?: number; front?: React.ReactNode; over?: React.ReactNode; birds?: React.ReactNode; bench?: { x: number; y: number; s: number } }> = ({ f, items = [], wobble = 0, front, over, birds, bench = BENCH }) => {
   const all: Item[] = [
     { y: FOUNT.y, el: <Fountain x={FOUNT.x} y={FOUNT.y} scale={FOUNT.s} f={f} /> },
-    { y: BENCH.y, el: <Bench x={BENCH.x} y={BENCH.y} scale={BENCH.s} /> },
+    { y: bench.y, el: <Bench x={bench.x} y={bench.y} scale={bench.s} /> },
     { y: PY, el: <LampPost x={PX} y={PY} scale={PSC} wobble={wobble} /> },
     ...items,
   ].sort((a, b) => a.y - b.y);
@@ -266,8 +268,8 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
       const r = rideAt(spans, f);
       const amp = 1.5 + k(u, WOB - 4, WOB + 6, 0, 3.5);
       const bike: BikeProps = { x: r.x, y: LANE, scale: BS, facing: 1, size: "kid", wheelAngle: wheelAt(r.x), lean: Math.sin(u * 0.45) * amp };
-      const gx = r.x - 215, ph = u * 0.32;
-      const gp = holdSaddle(bike, gx, LANE, 1.0, ph, 0.6);
+      const gx = r.x - 255, ph = u * 0.32;
+      const gp = holdSaddle(bike, gx, LANE, 1.0, ph, 0.45, 31);
       cam = drift(on({ x: r.x - 60, y: 1150 }, k(u, 0, len, 1.4, 1.48)), f, 2.5);
       body = <Square f={f} items={[{ y: LANE, el: <g>
         <Rider bike={bike} who="mila" expr={u < WOB - 2 ? "determined" : "worried"} f={f} lookX={u < WOB ? 1 : 0.4} tilt={u < WOB ? 0 : Math.sin(u * 0.45) * 6} />
@@ -280,10 +282,10 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
       const r = rideAt(spans, f);
       const bike: BikeProps = { x: r.x, y: LANE, scale: BS, facing: 1, size: "kid", wheelAngle: wheelAt(r.x), lean: Math.sin(u * 0.45) * (u < LG ? 2.5 : 1.2) };
       const held = u < LG;
-      const relX = rideAt(spans, span.a + LG).x - 215;
+      const relX = rideAt(spans, span.a + LG).x - 255;
       const slow = k(u, LG, LG + 18, 0, 1, Easing.out(Easing.quad));
-      const gx = held ? r.x - 215 : relX + 50 * slow;
-      const gp: Pose = held ? holdSaddle(bike, gx, LANE, 1.0, u * 0.32, 0.6)
+      const gx = held ? r.x - 255 : relX + 50 * slow;
+      const gp: Pose = held ? holdSaddle(bike, gx, LANE, 1.0, u * 0.32, 0.45, 31)
         : u < LG + 16 ? { ...runPose(u * 0.3, 0.7 * (1 - slow)), armR: [70 - slow * 30, 10] }
           : { ...POSES.arms_up, headTilt: -4 };
       const mExpr: Expr = u < LG + 4 ? "focused" : u < AL ? "shock" : "cheer";
@@ -295,31 +297,20 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
       overlay = <SpeedLines amount={u >= AL ? 0.08 : 0} angle={0} seed={4} />;
       break;
     }
-    case "spot": {   // extreme close-up on her eye: it wanders, then on "sees" it snaps onto the pole (pole in her iris);
-      // on "pole" a hard cut to the pole itself with her dotted gaze line locking on
-      const SEE = cueAt(words, "sees", span, Math.round(len * 0.4)), POLE = cueAt(words, "the pole", span, Math.round(len * 0.7)) + 2;
-      if (u < POLE) {
-        mood = MOODS.close;
-        const lock = k(u, SEE, SEE + 5, 0, 1, Easing.out(Easing.cubic));
-        const lookX = interpolate(lock, [0, 1], [Math.sin(u * 0.18) * 0.45 - 0.15, 0.95]);
-        cam = drift({ x: 0, y: 0, zoom: k(u, 0, POLE, 1.0, 1.1) + lock * 0.08, rot: 0 }, f, 1.5);
-        bg = MILA.skin;
-        body = <Layer p={1}><Svg>
-          <rect x={-200} y={-200} width={1480} height={2320} fill={MILA.skin} />
-          <path d="M -200 -200 L 1280 -200 L 1280 120 Q 540 330 -200 120 Z" fill={SQUARE.helmet} stroke={INK} strokeWidth={16} />
-          <path d="M -200 190 Q 540 380 1280 190" stroke={SQUARE.helmet2} strokeWidth={22} fill="none" />
-          <EyeCloseUp x={540} y={980} s={1.4} lookX={lookX} lookY={-0.1 * lock} pupil={1 - 0.4 * lock} brow={lock * 0.9 - 0.2} lid={(f % 97) < 3 && lock < 0.5 ? 0.9 : 0.16 + lock * 0.08}
-            skin={MILA.skin} iris="#5a3a22" reflection={lock > 0.5 ? "pole" : undefined} />
-        </Svg></Layer>;
-      } else {
-        const r = rideAt(spans, f);
-        const bike: BikeProps = { x: r.x, y: LANE, scale: BS, facing: 1, size: "kid", wheelAngle: wheelAt(r.x), lean: Math.sin(u * 0.45) * 1.2 };
-        const rider = riderOf({ bike, who: "mila", expr: "shock", f, lookX: 1 });
-        const eye = eyeOf(rider);
-        cam = drift(on({ x: 760, y: 1060 }, k(u, POLE, len, 1.4, 1.46)), f, 2);
-        body = <Square f={f} items={[{ y: LANE, el: <Rider bike={bike} who="mila" expr="shock" f={f} lookX={1} /> }]}
-          over={<GazeLine x1={eye.x} y1={eye.y} x2={POLE_MID.x} y2={POLE_MID.y} progress={k(u, POLE, POLE + 10, 0, 1)} color={RED} />} />;
-      }
+    case "spot": {   // extreme close-up on her eye: it wanders, then on "sees" it snaps aside and locks on (the pole in her iris)
+      const SEE = cueAt(words, "sees", span, Math.round(len * 0.4));
+      mood = MOODS.close;
+      const lock = k(u, SEE, SEE + 5, 0, 1, Easing.out(Easing.cubic));
+      const lookX = interpolate(lock, [0, 1], [Math.sin(u * 0.18) * 0.45 - 0.15, 0.95]);
+      cam = drift({ x: lock * 30, y: 0, zoom: k(u, 0, len, 1.0, 1.08) + lock * 0.12, rot: 0 }, f, 1.5);
+      bg = MILA.skin;
+      body = <Layer p={1}><Svg>
+        <rect x={-200} y={-200} width={1480} height={2320} fill={MILA.skin} />
+        <path d="M -200 -200 L 1280 -200 L 1280 120 Q 540 330 -200 120 Z" fill={SQUARE.helmet} stroke={INK} strokeWidth={16} />
+        <path d="M -200 190 Q 540 380 1280 190" stroke={SQUARE.helmet2} strokeWidth={22} fill="none" />
+        <EyeCloseUp x={540} y={980} s={1.4} lookX={lookX} lookY={-0.1 * lock} pupil={1 - 0.4 * lock} brow={lock * 0.9 - 0.2} lid={(f % 97) < 3 && lock < 0.5 ? 0.9 : 0.16 + lock * 0.08}
+          skin={MILA.skin} iris="#5a3a22" reflection={lock > 0.5 ? "pole" : undefined} />
+      </Svg></Layer>;
       break;
     }
     case "drift": {  // the bike curves off its line toward the pole as if magnetised: locked gaze, pull chevrons, tyre track
@@ -394,7 +385,7 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
       const gaze = k(u, LOOK - 2, LOOK + 6, 0, 1);
       cam = drift({ x: 0, y: 0, zoom: k(u, 0, len, 1.0, 1.05), rot: 0 }, f, 1.5);
       body = <Lab>
-        <T x={540} y={400} s={74} c={GOLD} o={k(u, 2, 8, 0, 1)}>HANDS FOLLOW EYES</T>
+        <T x={540} y={400} s={74} c={GOLD} o={k(u, 2, 8, 0, 1)}>EYES PULL THE HANDS</T>
         {a > 0.01 && <g opacity={a}>
           <LabEye x={540} y={780} s={0.5} lookX={lx} lookY={0} skin={MILA.skin} lid={(f % 97) < 3 ? 0.9 : 0.16} />
           <path d={`M ${540 + lx * 60} 850 L ${540 + lagX * 120} 990`} stroke={MUTED} strokeWidth={7} strokeDasharray="4 18" strokeLinecap="round" />
@@ -505,22 +496,25 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
       </Lab>;
       break;
     }
-    case "retry": {  // Mila tries again on the gap row: eyes on the gap (green gaze), she sails between pole and bench
+    case "retry": {  // Mila tries again: the bench now stands in front of the pole's row with a clear strip between them (the gap).
+      // She rides along that strip IN FRONT of the pole, eyes on the gap (green gaze + glow), and sails through
       const EY = cueAt(words, "Eyes on the gap", span, Math.round(len * 0.33)), SA = cueAt(words, "sails through", span, Math.round(len * 0.72));
-      const x = interpolate(u, [0, EY, SA - 4, SA + 2, len], [440, 620, 900, 1080, 1120]);
-      const bike: BikeProps = { x, y: RY, scale: BS, facing: 1, size: "kid", wheelAngle: wheelAt(x), lean: Math.sin(u * 0.4) * 0.8 };
+      const GY = 1388, BEN = { x: 1300, y: 1452, s: 0.72 };
+      const x = interpolate(u, [0, EY, SA, len], [430, 600, 960, 1150]);
+      const bike: BikeProps = { x, y: GY, scale: BS, facing: 1, size: "kid", wheelAngle: wheelAt(x), lean: Math.sin(u * 0.4) * 0.8 };
       const rider = riderOf({ bike, who: "mila", expr: "determined", f, lookX: 1 });
       const eye = eyeOf(rider);
-      const gapPt = { x: PX + 110, y: RY - 6 };
-      const through = x > PX - 40;
-      const gz = through ? 0 : k(u, EY - 2, EY + 10, 0, 1);
+      const gapPt = { x: 1075, y: GY - 2 };
+      const gz = k(u, EY - 2, EY + 10, 0, 1) * (1 - k(u, SA - 2, SA + 6, 0, 1));
+      const glow = k(u, EY, EY + 8, 0, 1);
       const cheer = u >= SA;
-      cam = drift(on({ x: interpolate(x, [440, 1120], [660, 860], { extrapolateRight: "clamp" }), y: 1090 }, k(u, 0, len, 1.4, 1.36)), f, 2);
-      body = <Square f={f}
+      cam = drift(on({ x: interpolate(x, [430, 1150], [680, 1000], { extrapolateRight: "clamp" }), y: 1110 }, k(u, 0, len, 1.36, 1.3)), f, 2);
+      body = <Square f={f} bench={BEN} birds={<Pigeons f={f} since={u - (SA - 10)} />}
         items={[
-          { y: RY, el: <Rider bike={bike} who="mila" expr={cheer ? "cheer" : "determined"} f={f} lookX={1} /> },
+          { y: GY - 1, el: <ellipse cx={gapPt.x} cy={GY} rx={120} ry={26} fill={GREEN} opacity={0.35 * glow} /> },
+          { y: GY, el: <Rider bike={bike} who="mila" expr={cheer ? "cheer" : "determined"} f={f} lookX={1} /> },
         ]}
-        over={gz > 0 && <GazeLine x1={eye.x} y1={eye.y} x2={gapPt.x} y2={gapPt.y} progress={gz} color={GREEN} />} />;
+        over={gz > 0.01 && <g opacity={Math.min(1, gz * 3)}><GazeLine x1={eye.x} y1={eye.y} x2={gapPt.x} y2={gapPt.y} progress={Math.min(1, k(u, EY - 2, EY + 10, 0, 1))} color={GREEN} /></g>} />;
       overlay = <SpeedLines amount={u >= SA - 4 && u < SA + 16 ? 0.12 : 0} angle={0} seed={9} />;
       break;
     }
