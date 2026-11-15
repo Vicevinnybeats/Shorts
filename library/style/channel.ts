@@ -44,4 +44,8 @@ export const CAST: Record<string, Look> = {
   // toast (cafe). Omar = the guest (blue shirt), Lena = the waiter (cream shirt + Apron from environments25/cafe.tsx).
   omar: { skin: SKIN.tan, hair: HAIR.black, hairStyle: "short", jersey: "#3a7bd5", jersey2: "#2a5aa8", shorts: "#3b3346", socks: "#3b3346" },
   lena: { skin: SKIN.light, hair: HAIR.blond, hairStyle: "bun", jersey: "#f6f1e7", jersey2: "#ddd3c2", shorts: "#2a2f3d", socks: "#2a2f3d" },
+  // pole (town square). Mila = the kid on the bike (draw at KID_SCALE ~0.74x, with Helmet from environments25/square.tsx);
+  // Grandpa = rust cardigan, grey trousers, FlatCap + Beard (square.tsx).
+  mila: { skin: SKIN.fair, hair: HAIR.brown, hairStyle: "curly", jersey: "#8cc63f", jersey2: "#6a9a2c", shorts: "#3a4fb8", socks: "#3a4fb8", boots: "#e8443a" },
+  grandpa: { skin: SKIN.fair, hair: HAIR.grey, hairStyle: "short", jersey: "#b5523b", jersey2: "#8f3c2a", shorts: "#6b6f7d", socks: "#6b6f7d", boots: "#5a3a24" },
 };

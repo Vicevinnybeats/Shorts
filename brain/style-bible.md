@@ -36,3 +36,6 @@ same voice". Code source of truth: `library/style/channel.ts` (new episodes impo
 | slow-queue | bright supermarket | environments25/supermarket.tsx |
 | coin-flip | warm night kitchen | environments25/kitchen.tsx |
 | lift-button | morning office lobby + lift, city street | environments25/office.tsx |
+| tickle | evening living room | environments25/livingroom.tsx |
+| toast | bright morning cafe | environments25/cafe.tsx |
+| pole | sunny town square | environments25/square.tsx |
