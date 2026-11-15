@@ -1,0 +1,23 @@
+{"music": {"mood": "playful", "bpm": 100, "key": 60, "level_lu": -12},
+ "sfx": [
+  {"cue": "butter side down.", "fn": "whoosh", "args": {"dur": 0.4, "peak": 0.08}, "gain_db": -10},
+  {"cue": "It's not bad luck.", "fn": "push_thump", "args": {}, "gain_db": -8},
+  {"cue": "Monday morning.", "offset": 0.4, "fn": "crowd", "args": {"dur": 4.0, "voices": 3, "energy": 0.8}, "level_lu": -23},
+  {"cue": "Lena pours coffee.", "fn": "clink", "args": {"bright": 0.6}, "gain_db": -10},
+  {"cue": "His elbow nudges", "offset": 0.3, "fn": "clink", "args": {"bright": 0.9}, "gain_db": -10},
+  {"cue": "The toast slides.", "fn": "whoosh", "args": {"dur": 0.5, "peak": 0.06}, "gain_db": -11},
+  {"cue": "It tips. It spins.", "fn": "whoosh", "args": {"dur": 0.8, "peak": 0.1}, "gain_db": -9},
+  {"cue": "Splat.", "fn": "splash_big", "args": {}, "gain_db": -9},
+  {"cue": "Butter side down. Murphy's", "fn": "push_thump", "args": {}, "gain_db": -8},
+  {"cue": "Wait. Why the", "fn": "push_thump", "args": {}, "gain_db": -6},
+  {"cue": "In nineteen ninety", "fn": "whoosh", "args": {"dur": 0.7, "peak": 0.1}, "gain_db": -9},
+  {"cue": "Toast tips over", "fn": "whoosh", "args": {"dur": 0.5, "peak": 0.08}, "gain_db": -10},
+  {"cue": "half a turn", "fn": "clink", "args": {"bright": 0.4}, "gain_db": -9},
+  {"cue": "three metres tall.", "fn": "clink", "args": {"bright": 1.0}, "gain_db": -8},
+  {"cue": "In two thousand", "fn": "rattle", "args": {"dur": 1.2, "density": 18.0}, "gain_db": -13},
+  {"cue": "Sixty two percent", "fn": "push_thump", "args": {}, "gain_db": -7},
+  {"cue": "Swipe the falling", "offset": 0.2, "fn": "whoosh", "args": {"dur": 0.4, "peak": 0.1}, "gain_db": -9},
+  {"cue": "Butter up.", "fn": "applause", "args": {"dur": 1.5}, "level_lu": -23},
+  {"cue": "Omar has his", "fn": "bird_chirps", "args": {"dur": 3.0}, "level_lu": -23},
+  {"cue": "Would you buy", "fn": "whoosh", "args": {"dur": 0.5, "peak": 0.08}, "gain_db": -10}
+ ]}
