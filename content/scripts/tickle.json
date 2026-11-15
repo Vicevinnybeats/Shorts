@@ -1,0 +1,126 @@
+{
+  "id": "tickle",
+  "title": "You Can't Tickle Yourself. Here's Why",
+  "words": 164,
+  "cast": {
+    "theo": "theo",
+    "nia": "nia",
+    "dad": "dad"
+  },
+  "shots": [
+    {
+      "id": "hook",
+      "cue": "Theo can tickle",
+      "place": "home",
+      "narration": "Theo can tickle anyone into tears. Except himself."
+    },
+    {
+      "id": "champion",
+      "cue": "Saturday night",
+      "place": "home",
+      "narration": "Saturday night. Theo attacks the sofa. Nia shrieks. Dad begs for mercy."
+    },
+    {
+      "id": "self",
+      "cue": "Then he tries",
+      "place": "home",
+      "narration": "Then he tries his own ribs. Nothing."
+    },
+    {
+      "id": "harder",
+      "cue": "A feather. Harder",
+      "place": "home",
+      "narration": "A feather. Harder. Still nothing."
+    },
+    {
+      "id": "why",
+      "cue": "Wait. Why?",
+      "place": "home",
+      "narration": "Wait. Why?"
+    },
+    {
+      "id": "brain",
+      "cue": "When you move",
+      "place": "lab",
+      "narration": "When you move, your brain sends the order to your hand, and a copy to itself.",
+      "onScreenText": [
+        "MOVE!",
+        "COPY"
+      ]
+    },
+    {
+      "id": "forecast",
+      "cue": "That copy is",
+      "place": "lab",
+      "narration": "That copy is a forecast. The real touch matches it, so your brain turns it down.",
+      "onScreenText": [
+        "FORECAST",
+        "REAL TOUCH"
+      ]
+    },
+    {
+      "id": "other",
+      "cue": "Fingers from someone",
+      "place": "lab",
+      "narration": "Fingers from someone else come with no forecast. Every poke is a surprise.",
+      "onScreenText": [
+        "NO FORECAST"
+      ]
+    },
+    {
+      "id": "cerebellum",
+      "cue": "Brain scans point",
+      "place": "lab",
+      "narration": "Brain scans point to the cerebellum, at the back of your head, as the forecaster.",
+      "onScreenText": [
+        "CEREBELLUM"
+      ]
+    },
+    {
+      "id": "robot",
+      "cue": "In nineteen ninety",
+      "place": "lab2",
+      "narration": "In nineteen ninety nine, people tickled their own palm through a robot.",
+      "onScreenText": [
+        "1999 TICKLE ROBOT"
+      ]
+    },
+    {
+      "id": "delay",
+      "cue": "Add a delay",
+      "place": "lab2",
+      "narration": "Add a delay of a fifth of a second, and the forecast misses. It tickled more.",
+      "onScreenText": [
+        "+0.2 s DELAY"
+      ]
+    },
+    {
+      "id": "useful",
+      "cue": "Why bother?",
+      "place": "lab3",
+      "narration": "Why bother? Muting your own touch makes everyone else's stand out.",
+      "onScreenText": [
+        "YOU: QUIET",
+        "THE WORLD: LOUD"
+      ]
+    },
+    {
+      "id": "plan",
+      "cue": "So Theo builds",
+      "place": "home",
+      "narration": "So Theo builds a machine. String, a feather, and a delay crank."
+    },
+    {
+      "id": "giggle",
+      "cue": "It works. A",
+      "place": "home",
+      "narration": "It works. A tiny giggle. Nia rolls her eyes."
+    },
+    {
+      "id": "ask",
+      "cue": "Would you build",
+      "place": "home",
+      "narration": "Would you build one, or let your sister do it?"
+    }
+  ]
+}

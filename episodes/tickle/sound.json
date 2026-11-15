@@ -1,0 +1,21 @@
+{"music": {"mood": "playful", "bpm": 104, "key": 62, "level_lu": -12},
+ "sfx": [
+  {"cue": "Except himself.", "fn": "push_thump", "args": {}, "gain_db": -8},
+  {"cue": "Saturday night.", "fn": "crowd", "args": {"dur": 4.0, "voices": 3, "energy": 1.2}, "level_lu": -23},
+  {"cue": "Theo attacks the", "offset": 0.2, "fn": "whoosh", "args": {"dur": 0.4, "peak": 0.1}, "gain_db": -9},
+  {"cue": "Nia shrieks.", "fn": "clink", "args": {"bright": 1.0}, "gain_db": -10},
+  {"cue": "ribs. Nothing.", "offset": 0.2, "fn": "push_thump", "args": {}, "gain_db": -9},
+  {"cue": "A feather. Harder.", "fn": "whoosh", "args": {"dur": 0.6, "peak": 0.06}, "gain_db": -11},
+  {"cue": "Wait. Why?", "fn": "push_thump", "args": {}, "gain_db": -6},
+  {"cue": "When you move,", "fn": "whoosh", "args": {"dur": 0.8, "peak": 0.1}, "gain_db": -9},
+  {"cue": "turns it down.", "fn": "clink", "args": {"bright": 0.3}, "gain_db": -9},
+  {"cue": "Every poke is", "fn": "clink", "args": {"bright": 1.0}, "gain_db": -7},
+  {"cue": "Brain scans point", "fn": "whoosh", "args": {"dur": 0.5, "peak": 0.08}, "gain_db": -10},
+  {"cue": "In nineteen ninety", "fn": "whoosh", "args": {"dur": 0.7, "peak": 0.1}, "gain_db": -9},
+  {"cue": "forecast misses.", "fn": "clink", "args": {"bright": 0.8}, "gain_db": -8},
+  {"cue": "It tickled more.", "fn": "push_thump", "args": {}, "gain_db": -7},
+  {"cue": "Why bother?", "fn": "whoosh", "args": {"dur": 0.5, "peak": 0.08}, "gain_db": -10},
+  {"cue": "So Theo builds", "offset": 0.4, "fn": "rattle", "args": {"dur": 0.8, "density": 20.0}, "gain_db": -12},
+  {"cue": "It works.", "fn": "clink", "args": {"bright": 0.9}, "gain_db": -8},
+  {"cue": "Would you build", "fn": "whoosh", "args": {"dur": 0.5, "peak": 0.08}, "gain_db": -10}
+ ]}

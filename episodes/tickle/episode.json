@@ -1,0 +1,10 @@
+{
+  "id": "tickle",
+  "title": "You Can't Tickle Yourself. Here's Why",
+  "style": "2.5D",
+  "composition": "Ep-tickle",
+  "stills": [10, 120, 260, 420, 560, 700, 840, 980, 1120, 1260, 1400, 1540, 1680, 1820],
+  "chunks": 6,
+  "status": "test-render",
+  "publish": false
+}

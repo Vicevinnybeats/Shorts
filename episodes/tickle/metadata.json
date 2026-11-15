@@ -1,0 +1,40 @@
+{
+  "episode": "tickle",
+  "test": true,
+  "youtube": {
+    "title": "You Can't Tickle Yourself. Here's Why #Shorts",
+    "description": "Theo can tickle anyone into tears. Except himself.\n\nWhen you move, your brain predicts what the touch will feel like and turns the feeling down, so your own fingers barely register. Someone else's touch comes with no prediction, so it tickles. Brain scans point to the cerebellum as the predictor. In a 1999 experiment, people tickled their own palm through a robot: adding a delay of up to a fifth of a second (200 ms) made the touch feel more ticklish. Why bother? Muting your own touch makes everyone else's stand out.\n\nWould you build one, or let your sister do it?\n\nSources:\n- Blakemore, Wolpert & Frith (1998), Central cancellation of self-produced tickle sensation, Nature Neuroscience 1(7): https://link.springer.com/article/10.1038/2870\n- Blakemore, Frith & Wolpert (1999), Spatio-temporal prediction modulates the perception of self-produced stimuli, Journal of Cognitive Neuroscience 11(5): https://columbia.demo.elsevierpure.com/en/publications/spatio-temporal-prediction-modulates-the-perception-of-self-produ-3\n- Full text of the 1999 study: https://Gwern.net/doc/psychology/neuroscience/1999-blakemore.pdf\n\nTheo, Nia, Dad and the living-room evening are fictional.\nAI disclosure: made with AI assistance (script drafting, synthetic narration voice, animation).\n\n#Shorts #science #brain #tickle #neuroscience #TheLittleEpic",
+    "tags": [
+      "shorts",
+      "tickle",
+      "why can't you tickle yourself",
+      "brain",
+      "neuroscience",
+      "cerebellum",
+      "science",
+      "psychology",
+      "animation",
+      "TheLittleEpic"
+    ],
+    "category": "Education",
+    "made_for_kids": false,
+    "contains_synthetic_media": false
+  },
+  "instagram": {
+    "caption": "Theo can tickle anyone into tears. Except himself. 🪶\nYour brain predicts your own touch and turns it down. Add a fifth of a second of delay and it tickles more.\n\nWould you build one, or let your sister do it? 👇\n\nMade with AI assistance. Sources on YouTube.\n\n#science #brain #tickle #neuroscience #shorts #reels #animation #TheLittleEpic"
+  },
+  "sources": [
+    {
+      "fact": "Self-produced touch feels less ticklish; cerebellum predicts and attenuates it",
+      "url": "https://link.springer.com/article/10.1038/2870"
+    },
+    {
+      "fact": "Robot study: delays up to 200 ms and trajectory changes increase tickliness",
+      "url": "https://columbia.demo.elsevierpure.com/en/publications/spatio-temporal-prediction-modulates-the-perception-of-self-produ-3"
+    },
+    {
+      "fact": "Full text of the 1999 robot-delay study",
+      "url": "https://Gwern.net/doc/psychology/neuroscience/1999-blakemore.pdf"
+    }
+  ]
+}
