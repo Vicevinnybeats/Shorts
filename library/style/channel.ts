@@ -37,4 +37,8 @@ export const CAST: Record<string, Look> = {
   zoe: { skin: "#c98a5e", hair: "#1e1410", hairStyle: "bun", jersey: "#2fa89a", jersey2: "#1f7a70", shorts: "#2d3a5a", socks: "#2d3a5a" },
   leo_kitchen: { skin: "#c98a5e", hair: "#1e1410", hairStyle: "curly", jersey: "#e8643a", jersey2: "#b8462a", shorts: "#2d3a5a", socks: "#2d3a5a" },
   ava: { skin: "#8d5a3b", hair: "#1a1010", hairStyle: "bun", jersey: "#2d3a5a", jersey2: "#1f2a44", shorts: "#2d3a5a", socks: "#2d3a5a" },
+  // tickle (one family; Theo is the small one: draw him at ~0.75x the adults' scale). Dad wears Glasses (livingroom.tsx).
+  theo: { skin: SKIN.brown, hair: HAIR.black, hairStyle: "curly", jersey: "#ffb02e", jersey2: "#e0861a", shorts: "#3a6fd0", socks: "#3a6fd0" },
+  nia: { skin: SKIN.brown, hair: HAIR.black, hairStyle: "bun", jersey: "#e85a8a", jersey2: "#b83e68", shorts: "#2d3a5a", socks: "#2d3a5a" },
+  dad: { skin: SKIN.brown, hair: HAIR.black, hairStyle: "buzz", jersey: "#6f8a3c", jersey2: "#556b2c", shorts: "#6a5a4a", socks: "#6a5a4a" },
 };
