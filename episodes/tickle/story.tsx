@@ -11,11 +11,15 @@ import { Stage, Layer, Svg, Cam, drift, kickCam } from "../../src/engine25/stage
 import { Grade, Mood, Pool, Flash, SpeedLines } from "../../src/engine25/light";
 import { Person, POSES, Look, INK, Expr, Pose } from "../../library/characters25/person";
 import { CAST, EXTRAS } from "../../library/style/channel";
-import { Lab, T, LAB } from "../../library/environments25/lab";
+import { Lab, T as LabT, LAB } from "../../library/environments25/lab";
 import { LIVING, LivingWall, LivingFloor, Sofa, FloorLamp, Rug, Cushion, Feather, Glasses, Brain, ForecastBubble, Wave, Meter, RobotArm, Lever, DelayClock, Contraption, Footsteps, VoiceIcon, Doorbell } from "../../library/environments25/livingroom";
 import scenes from "../../content/scripts/tickle.json";
 
 const SHOTS = scenes.shots.map((s) => ({ id: s.id, cue: s.cue }));
+
+/** inside the outgoing half of a crossfade every on-screen label is dropped, so text never lies over another picture */
+const NoText = React.createContext(false);
+const T: React.FC<React.ComponentProps<typeof LabT>> = (p) => (React.useContext(NoText) ? null : <LabT {...p} />);
 
 const MOODS: Record<string, Mood> = {
   home: { grade: "#ff9d3c", gradeOp: 0.07, vignette: 0.42, glow: "#ffd9a0" },      // lamp-lit evening
@@ -43,14 +47,15 @@ const SIT: Pose = { armL: [22, -40], armR: [22, -40], legL: [6, 0], legR: [6, 0]
 const SQUIRM = (u: number, o = 0): Pose => ({ armL: [62 + Math.sin(u * 0.6 + o) * 16, -118], armR: [62 + Math.cos(u * 0.6 + o) * 16, -118], legL: [6, 0], legR: [6, 0],
   lean: Math.sin(u * 0.5 + o) * 7, headTilt: Math.sin(u * 0.4 + o) * 9 });
 const BEG: Pose = { armL: [28, -150], armR: [28, -150], legL: [6, 0], legR: [6, 0], headTilt: -6 };
-const TICKLE = (u: number): Pose => ({ armL: [80 + Math.sin(u * 0.9) * 8, -28 + Math.sin(u * 1.3) * 16], armR: [80 + Math.cos(u * 0.9) * 8, -28 + Math.cos(u * 1.3) * 16], legL: [16, -10], legR: [16, -10], crouch: 0.07 });
+const TICKLE = (u: number): Pose => ({ armL: [92 + Math.sin(u * 0.9) * 6, -40 + Math.sin(u * 1.3) * 14], armR: [92 + Math.cos(u * 0.9) * 6, -40 + Math.cos(u * 1.3) * 14], legL: [16, -10], legR: [16, -10], crouch: 0.07 });
+const HOOK = (u: number): Pose => ({ armL: [150 + Math.sin(u * 0.9) * 5, -130 + Math.sin(u * 1.4) * 12], armR: [150 + Math.cos(u * 0.9) * 5, -130 + Math.cos(u * 1.4) * 12], legL: [8, 0], legR: [8, 0], headTilt: Math.sin(u * 0.2) * 4 });
 const SELF = (u: number): Pose => ({ armL: [30 + Math.sin(u * 1.2) * 5, -108 + Math.sin(u * 1.9) * 12], armR: [30 + Math.cos(u * 1.2) * 5, -108 + Math.cos(u * 1.9) * 12], legL: [8, 0], legR: [8, 0] });
 const FEATHER = (u: number, amp: number): Pose => ({ armL: [150, 10], armR: [22 + Math.sin(u * 1.3) * 8 * amp, -150 + Math.cos(u * 1.3) * 10 * amp], legL: [8, 0], legR: [8, 0], headTilt: -5 });
 const MACHINE = (u: number): Pose => ({ armL: [20, -24], armR: [68 + Math.sin(u * 0.5) * 6, -10], legL: [8, 0], legR: [8, 0] });
-const CX = 800, CS = 1.1;                                              // the contraption stands on Theo's right; its feather hangs at his side
+const TX2 = 420, CX = 680, CS = 1.0;                                   // machine scenes: Theo steps left, the box stands on his right, its feather at his hip
 /** Theo's machine plus the pull-string from his right hand to the crank handle */
 const Machine: React.FC<{ u: number; pose: Pose }> = ({ u, pose }) => {
-  const c = ((u * 9) * Math.PI) / 180, h = handAt(TX, TFEET, TS, pose, "R");
+  const c = ((u * 9) * Math.PI) / 180, h = handAt(TX2, TFEET, TS, pose, "R");
   const hx = CX + CS * (170 + Math.cos(c) * 50), hy = TFEET + CS * (-150 + Math.sin(c) * 50);
   return <>
     <Contraption x={CX} y={TFEET + 4} scale={CS} crank={u * 9} />
@@ -79,8 +84,9 @@ const Wiggle: React.FC<{ x: number; y: number; f: number; s?: number; o?: number
 
 type Act = [Pose, Expr];
 /** the living room: wall, lamp, sofa with Nia + Dad, Theo standing in front of it */
-const Living: React.FC<{ f: number; theo?: Act | null; nia?: Act; dad?: Act; extra?: React.ReactNode; front?: React.ReactNode; cushions?: boolean }> =
-  ({ f, theo = [POSES.stand, "smile"], nia = [SIT, "neutral"], dad = [SIT, "calm"], extra, front, cushions = true }) => {
+const Living: React.FC<{ f: number; theo?: Act | null; nia?: Act | null; dad?: Act; extra?: React.ReactNode; front?: React.ReactNode; cushions?: boolean;
+  tx?: number; ty?: number; family?: boolean }> =
+  ({ f, theo = [POSES.stand, "smile"], nia = [SIT, "neutral"], dad = [SIT, "calm"], extra, front, cushions = true, tx = TX, ty = TFEET, family = true }) => {
   const dadPose: Pose = { ...dad[0] };
   return (
     <>
@@ -91,12 +97,12 @@ const Living: React.FC<{ f: number; theo?: Act | null; nia?: Act; dad?: Act; ext
         <FloorLamp x={10} y={1330} scale={0.95} />
         <Rug x={540} y={1470} w={1100} />
         <Sofa x={540} y={FLOOR} scale={SOFA_S} />
-        <Person x={NX} y={SIT_Y(NS)} scale={NS} facing={1} look={NIA} pose={nia[0]} expr={nia[1]} t={f + 11} blink={(f + 40) % 113 < 4} shadow={0} />
+        {family && <>{nia && <Person x={NX} y={SIT_Y(NS)} scale={NS} facing={1} look={NIA} pose={nia[0]} expr={nia[1]} t={f + 11} blink={(f + 40) % 113 < 4} shadow={0} />}
         <Person x={DX} y={SIT_Y(DS)} scale={DS} facing={-1} look={DAD} pose={dadPose} expr={dad[1]} t={f + 29} blink={(f + 70) % 127 < 4} shadow={0} />
-        <Glasses x={DX} y={SIT_Y(DS)} scale={DS} facing={-1} pose={dadPose} />
+        <Glasses x={DX} y={SIT_Y(DS)} scale={DS} facing={-1} pose={dadPose} /></>}
         <Sofa x={540} y={FLOOR} scale={SOFA_S} front />
         {cushions && <><Cushion x={150} y={1150} rot={-12} scale={0.8} /><Cushion x={930} y={1150} rot={10} scale={0.8} color="#e85a8a" /></>}
-        {theo && <Person x={TX} y={TFEET} scale={TS} facing={1} look={THEO} pose={theo[0]} expr={theo[1]} t={f} blink={f % 97 < 4} />}
+        {theo && <Person x={tx} y={ty} scale={TS} facing={1} look={THEO} pose={theo[0]} expr={theo[1]} t={f} blink={f % 97 < 4} />}
         {extra}
       </Svg></Layer>
       {front && <Layer p={1.3}><Svg>{front}</Svg></Layer>}
@@ -116,17 +122,20 @@ const Signal: React.FC<{ x1: number; y1: number; x2: number; y2: number; c: stri
   </g>;
 };
 
-/** big cartoon hand: wrist at (x, y), fingers up at rot 0; `poke` pushes the index finger out */
-const BigHand: React.FC<{ x: number; y: number; s?: number; skin: string; sleeve: string; rot?: number; poke?: number }> = ({ x, y, s = 1, skin, sleeve, rot = 0, poke = 0 }) => (
-  <g transform={`translate(${x} ${y}) rotate(${rot}) scale(${s})`}>
-    <rect x={-50} y={-6} width={100} height={220} rx={24} fill={sleeve} stroke={INK} strokeWidth={8} />
-    <rect x={-14} y={-196 - poke * 26} width={30} height={120} rx={15} fill={skin} stroke={INK} strokeWidth={7} />
-    <path d="M -54 6 C -64 -50 -50 -100 -8 -104 C 40 -108 62 -60 54 6 Z" fill={skin} stroke={INK} strokeWidth={8} strokeLinejoin="round" />
-    {[-36, 30].map((fx) => <path key={fx} d={`M ${fx} -96 L ${fx} -70`} stroke={INK} strokeWidth={6} strokeLinecap="round" />)}
-    <path d="M -54 -30 C -86 -48 -92 -76 -78 -90" stroke={INK} strokeWidth={30} strokeLinecap="round" fill="none" />
-    <path d="M -54 -30 C -86 -48 -92 -76 -78 -90" stroke={skin} strokeWidth={16} strokeLinecap="round" fill="none" />
-  </g>
-);
+/** clear cartoon hand: wrist at (x, y), fingers up at rot 0. `point` curls all but the index finger; `poke` pushes it out. */
+const OpenHand: React.FC<{ x: number; y: number; s?: number; skin: string; sleeve: string; rot?: number; point?: boolean; poke?: number }> = ({ x, y, s = 1, skin, sleeve, rot = 0, point = false, poke = 0 }) => {
+  const fingers = [[-43, 96], [-15, 116], [13, 110], [41, 88]] as const;
+  return (
+    <g transform={`translate(${x} ${y}) rotate(${rot}) scale(${s})`}>
+      <rect x={-64} y={-6} width={128} height={190} rx={28} fill={sleeve} stroke={INK} strokeWidth={8} />
+      <rect x={-14} y={-76} width={28} height={84} rx={14} fill={skin} stroke={INK} strokeWidth={7} transform="translate(-58 -36) rotate(-48)" />
+      {fingers.map(([fx, L], i) => { const len = point ? (i === 0 ? 124 + poke * 30 : 36) : L;
+        return <rect key={i} x={fx - 14} y={-130 - len} width={28} height={len + 30} rx={14} fill={skin} stroke={INK} strokeWidth={7} />; })}
+      <path d="M -60 4 L -60 -104 Q -60 -138 -28 -138 L 28 -138 Q 60 -138 60 -104 L 60 4 Z" fill={skin} stroke={INK} strokeWidth={8} strokeLinejoin="round" />
+      <path d="M -30 -40 Q 0 -24 30 -44" stroke={INK} strokeWidth={5} fill="none" strokeLinecap="round" opacity={0.5} />
+    </g>
+  );
+};
 
 // ---------------------------------------------------------------- shots
 const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
@@ -139,33 +148,33 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
   const on = (p: { x: number; y: number }, zoom: number, rot = 0): Cam => ({ x: p.x - 540, y: p.y - 960, zoom, rot });
 
   switch (span.id) {
-    case "hook": {   // snap zoom onto Theo: wiggling fingers, smug grin
+    case "hook": {   // snap zoom to a tight close-up: smug grin, fingers wiggling by his face
       mood = MOODS.close;
-      const pose = TICKLE(u);
-      cam = drift(on({ x: tHead.x, y: tHead.y + 110 }, k(u, 0, 8, 1.3, 2.35, Easing.out(Easing.cubic))), f, 3);
+      const pose = HOOK(u);
+      cam = drift(on({ x: 540, y: 1010 }, k(u, 0, 7, 1.4, 3.3, Easing.out(Easing.cubic))), f, 3);
       const hl = handAt(TX, TFEET, TS, pose, "L"), hr = handAt(TX, TFEET, TS, pose, "R");
-      body = <Living f={f} theo={[pose, "smirk"]} nia={[SIT, "worried"]} dad={[SIT, "worried"]} extra={<><Wiggle x={hl.x} y={hl.y} f={f} s={0.8} /><Wiggle x={hr.x} y={hr.y} f={f + 5} s={0.8} /></>} />;
+      body = <Living f={f} family={false} theo={[pose, "smirk"]} extra={<><Wiggle x={hl.x} y={hl.y} f={f} s={0.5} /><Wiggle x={hr.x} y={hr.y} f={f + 5} s={0.5} /></>} />;
       overlay = <Flash framesSince={u - 6} len={4} />;
       break;
     }
-    case "champion": { // wide: Theo attacks the sofa, Nia shrieks, Dad begs, cushions fly
-      cam = drift({ x: k(u, 0, len, -30, 20), y: k(u, 0, len, 70, 40), zoom: k(u, 0, len, 1.1, 1.03), rot: 0 }, f, 3);
-      const pose = TICKLE(u);
-      const hl = handAt(TX, TFEET, TS, pose, "L"), hr = handAt(TX, TFEET, TS, pose, "R");
-      const fly = (i: number) => { const t = ((u + i * 19) % 40) / 40; const dir = i === 1 ? 1 : -1;
-        return { x: (i === 1 ? 930 : 150) + dir * 340 * t, y: 1120 - Math.sin(t * Math.PI) * 640, r: t * 600 * dir, o: t < 0.92 ? 1 : 0 }; };
+    case "champion": { // wide: Theo attacks the sofa from the middle seat, Nia shrieks, Dad begs, cushions fly
+      cam = drift({ x: k(u, 0, len, -30, 20), y: k(u, 0, len, 40, 10), zoom: k(u, 0, len, 1.1, 1.03), rot: 0 }, f, 3);
+      const pose = TICKLE(u), ty = SEAT_TOP + 22;
+      const hl = handAt(TX, ty, TS, pose, "L"), hr = handAt(TX, ty, TS, pose, "R");
+      const pop = (i: number) => { const t = ((u + i * 17) % 34) / 34;
+        return { x: (i ? 992 : 88) + Math.sin(t * Math.PI) * (i ? -10 : 10), y: 1130 - Math.sin(t * Math.PI) * 560, r: t * 420 * (i ? 1 : -1) }; };
       const begging = u > len * 0.55;
-      body = <Living f={f} cushions={false} theo={[pose, "laugh"]} nia={[SQUIRM(u), u % 30 < 15 ? "laugh" : "shock"]} dad={[begging ? { ...BEG, lean: Math.sin(u * 0.5) * 4 } : SQUIRM(u, 2), begging ? "worried" : "laugh"]}
+      body = <Living f={f} cushions={false} ty={ty} theo={[pose, "laugh"]} nia={[SQUIRM(u), u % 30 < 15 ? "laugh" : "shock"]} dad={[begging ? { ...BEG, lean: Math.sin(u * 0.5) * 4 } : SQUIRM(u, 2), begging ? "worried" : "laugh"]}
         extra={<><Wiggle x={hl.x} y={hl.y} f={f} /><Wiggle x={hr.x} y={hr.y} f={f + 5} />
-          {[0, 1].map((i) => { const c = fly(i); return <g key={i} opacity={c.o}><Cushion x={c.x} y={c.y} rot={c.r} scale={0.8} color={i ? "#e85a8a" : "#3fb8c9"} /></g>; })}</>} />;
+          {[0, 1].map((i) => { const c = pop(i); return <Cushion key={i} x={c.x} y={c.y} rot={c.r} scale={0.95} color={i ? "#e85a8a" : "#3fb8c9"} />; })}</>} />;
       overlay = <SpeedLines amount={0.12} angle={-70} seed={u % 4} />;
       break;
     }
     case "self": {   // Theo tickles his own ribs: blank face, nothing
       const pose = SELF(u);
-      cam = drift(on({ x: tHead.x, y: tHead.y + 250 }, k(u, 0, len, 1.65, 1.8)), f, 2);
+      cam = drift(on({ x: tHead.x + 10, y: k(u, 4, len * 0.7, 1190, 1020, Easing.inOut(Easing.cubic)) }, 2.3, k(u, 0, len, 6, 3)), f, 2);
       const hl = handAt(TX, TFEET, TS, pose, "L"), hr = handAt(TX, TFEET, TS, pose, "R");
-      body = <Living f={f} theo={[pose, u > 14 ? "neutral" : "smirk"]} nia={[SIT, "smirk"]} dad={[SIT, "calm"]}
+      body = <Living f={f} family={false} theo={[pose, u > 14 ? "neutral" : "smirk"]}
         extra={<><Wiggle x={hl.x} y={hl.y} f={f} s={0.6} o={0.7} /><Wiggle x={hr.x} y={hr.y} f={f + 4} s={0.6} o={0.7} /></>} />;
       break;
     }
@@ -174,23 +183,23 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
       const amp = k(u, 0, len, 0.5, 2.2);
       const pose = FEATHER(u, amp);
       const h = handAt(TX, TFEET, TS, pose, "R");
-      cam = drift(on({ x: tHead.x - 20, y: tHead.y + 160 }, k(u, 0, len, 1.75, 2.45, Easing.inOut(Easing.cubic))), f, 2 + amp);
-      body = <Living f={f} theo={[pose, u > len * 0.45 ? "determined" : "focused"]} nia={[SIT, "smirk"]}
+      cam = drift(on({ x: 515, y: 1080 }, k(u, 0, len, 2.9, 3.4, Easing.inOut(Easing.cubic))), f, 2 + amp);
+      body = <Living f={f} family={false} theo={[pose, u > len * 0.45 ? "determined" : "focused"]}
         extra={<Feather x={h.x} y={h.y} scale={0.42} rot={-118 + Math.sin(u * 1.3) * 14 * amp} />} />;
       overlay = <SpeedLines amount={k(u, len * 0.4, len, 0, 0.2)} angle={-25} />;
       break;
     }
-    case "why": {    // freeze-frame, cold grade, a question mark pops over Theo
+    case "why": {    // freeze-frame: the whole family frozen, tilted, drained of colour, a big question mark
       mood = MOODS.freeze;
       const pose = { ...FEATHER(0, 0), headTilt: 12 };
       const h = handAt(TX, TFEET, TS, pose, "R");
-      cam = { ...on({ x: tHead.x + 40, y: tHead.y + 90 }, k(u, 0, 6, 2.3, 2.0, Easing.out(Easing.cubic))), rot: k(u, 0, 6, -3, 0) };
-      const pop = k(u, 5, 11, 0, 1, Easing.out(Easing.back(2.2)));
-      body = <Living f={span.a} theo={[pose, "worried"]} nia={[SIT, "smirk"]} extra={<>
+      cam = { ...on({ x: 540, y: 1010 }, k(u, 0, 6, 1.55, 1.38, Easing.out(Easing.cubic))), rot: k(u, 0, 6, -1, -5) };
+      const pop = k(u, 4, 10, 0, 1, Easing.out(Easing.back(2.2)));
+      body = <Living f={span.a} theo={[pose, "worried"]} nia={[SIT, "smirk"]} dad={[SIT, "neutral"]} extra={<>
         <Feather x={h.x} y={h.y} scale={0.42} rot={-118} />
-        <g transform={`translate(${tHead.x + 110} ${tHead.y - 150}) scale(${pop})`}><T x={0} y={0} s={120} c="#ffffff">?</T></g>
+        <g transform={`translate(650 880) scale(${pop})`}><T x={0} y={0} s={200} c="#ffffff">?</T></g>
       </>} />;
-      overlay = <Flash framesSince={u} len={3} />;
+      overlay = <><AbsoluteFill style={{ background: "#7d8597", opacity: 0.3 }} /><Flash framesSince={u} len={3} /></>;
       break;
     }
     case "brain": {  // the brain sends the order to the hand AND a copy to a forecast bubble
@@ -200,13 +209,13 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
       const wig = a1 >= 1 ? Math.sin(u * 0.8) * 6 : 0;
       body = <Lab>
         <Brain x={540} y={540} r={190} />
-        <Signal x1={420} y1={760} x2={290} y2={950} c={GOLD} prog={a1} u={u} />
+        <Signal x1={420} y1={760} x2={300} y2={880} c={GOLD} prog={a1} u={u} />
         <T x={190} y={800} s={64} c={GOLD} o={a1}>MOVE!</T>
-        <BigHand x={250} y={1200} s={0.8} skin={THEO.skin} sleeve={THEO.jersey} rot={-8 + wig} />
+        <OpenHand x={250} y={1190} s={1.1} skin={THEO.skin} sleeve={THEO.jersey} rot={-8 + wig} />
         <Signal x1={660} y1={760} x2={770} y2={930} c={MUTED} prog={a2} u={u} dash />
         <T x={900} y={830} s={64} c={MUTED} o={a2}>COPY</T>
         <g opacity={k(u, len * 0.45 + 10, len * 0.45 + 18, 0, 1)}><ForecastBubble x={800} y={1110} w={380} h={240}>
-          <BigHand x={800} y={1150} s={0.32} skin={THEO.skin} sleeve={THEO.jersey} rot={-8 + wig} />
+          <OpenHand x={800} y={1160} s={0.36} skin={THEO.skin} sleeve={THEO.jersey} rot={-8 + wig} />
         </ForecastBubble></g>
       </Lab>;
       break;
@@ -236,7 +245,7 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
           <path d="M 270 460 L 390 580 M 390 460 L 270 580" stroke={RED} strokeWidth={20} strokeLinecap="round" />
         </ForecastBubble>
         <T x={330} y={790} s={64} c={RED}>NO FORECAST</T>
-        <BigHand x={800} y={500} s={1.0} skin={NIA.skin} sleeve={NIA.jersey} rot={200} poke={poke} />
+        <OpenHand x={790} y={440} s={1.15} skin={NIA.skin} sleeve={NIA.jersey} rot={200} point poke={poke} />
         <path d={spikes} stroke={RED} strokeWidth={12} fill="none" strokeLinecap="round" strokeLinejoin="round" />
         <Meter x={540} y={1270} value={0.45 + poke * 0.5} />
       </Lab>;
@@ -257,19 +266,20 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
     }
     case "robot": {  // a volunteer moves a lever; a robot arm strokes their palm with a foam tip
       mood = MOODS.lab;
-      cam = drift({ x: -30, y: 120, zoom: k(u, 0, len, 1.2, 1.12), rot: 0 }, f, 2);
+      cam = drift({ x: 0, y: 60, zoom: k(u, 0, len, 1.04, 1.0), rot: 0 }, f, 1.5);
       const a = Math.sin(u * 0.16);
       const vol: Pose = { armL: [40 + a * 12, -46], armR: [70, -12], legL: [6, 0], legR: [6, 0] };
-      const palm = handAt(360, 1330, 1.25, vol, "R"), grip = handAt(360, 1330, 1.25, vol, "L");
-      const lever = (Math.asin(Math.max(-0.9, Math.min(0.9, (grip.x - 170) / 200))) * 180) / Math.PI;
-      const r = 0.6, bx = palm.x + 14 + Math.sin(u * 0.16 + 0.6) * 22 + (180 + 300 * r) * 0.9;   // the foam tip strokes the palm, lagging the lever
+      const PX = 390, LX = 210, RS = 0.75;
+      const palm = handAt(PX, 1330, 1.25, vol, "R"), grip = handAt(PX, 1330, 1.25, vol, "L");
+      const lever = (Math.asin(Math.max(-0.9, Math.min(0.9, (grip.x - LX) / 200))) * 180) / Math.PI;
+      const r = 0.6, bx = palm.x + 14 + Math.sin(u * 0.16 + 0.6) * 18 + (180 + 300 * r) * RS;   // the foam tip strokes the palm, lagging the lever
       body = <Lab>
-        <T x={560} y={760} s={66} c={GOLD} o={k(u, 2, 8, 0, 1)}>1999 TICKLE ROBOT</T>
-        <path d="M 170 1340 C 300 1380 700 1380 860 1340" stroke={ORANGE} strokeWidth={8} fill="none" strokeDasharray="18 14" strokeDashoffset={-u * 3} />
-        <Lever x={170} y={1340} angle={lever} />
-        <Person x={360} y={1330} scale={1.25} facing={1} look={VOL} pose={vol} expr={a > 0.6 ? "smile" : "focused"} t={f} blink={f % 101 < 4} />
+        <T x={540} y={760} s={66} c={GOLD} o={k(u, 2, 8, 0, 1)}>1999 TICKLE ROBOT</T>
+        <path d={`M ${LX} 1340 C 400 1385 ${bx - 200} 1385 ${bx} 1312`} stroke={ORANGE} strokeWidth={8} fill="none" strokeDasharray="18 14" strokeDashoffset={-u * 3} />
+        <Lever x={LX} y={1340} angle={lever} />
+        <Person x={PX} y={1330} scale={1.25} facing={1} look={VOL} pose={vol} expr={a > 0.6 ? "smile" : "focused"} t={f} blink={f % 101 < 4} />
         <g transform={`translate(${bx} 0) scale(-1 1) translate(${-bx} 0)`}>
-          <RobotArm x={bx} y={1340} scale={0.9} reach={r} tip="foam" />
+          <RobotArm x={bx} y={1312} scale={RS} reach={r} tip="foam" />
         </g>
       </Lab>;
       break;
@@ -304,28 +314,31 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
       </Lab>;
       break;
     }
-    case "plan": {   // Theo builds a machine: string, a feather and a delay crank
+    case "plan": {   // close on the new machine: box, string, feather, crank - Theo pulls the string, Dad watches
       const pose = MACHINE(u);
-      cam = drift(on({ x: 640, y: 1110 }, k(u, 0, len, 1.45, 1.62)), f, 2);
-      body = <Living f={f} theo={[pose, "determined"]} nia={[SIT, "neutral"]} dad={[SIT, "calm"]}
+      cam = drift(on({ x: 640, y: 1150 }, k(u, 0, len, 1.55, 1.65)), f, 2);
+      body = <Living f={f} tx={TX2} theo={[pose, "determined"]} nia={null} dad={[SIT, "calm"]}
         extra={<Machine u={u} pose={pose} />} />;
       break;
     }
-    case "giggle": { // it works a little: Theo giggles, Nia rolls her eyes
+    case "giggle": { // it works: Theo's face in a giggle close-up, then Nia's eye-roll beside him
       mood = MOODS.close;
       const pose = { ...MACHINE(u), lean: Math.sin(u * 0.8) * 4 };
-      cam = drift(on({ x: TX - 40, y: tHead.y + 90 }, k(u, 0, len, 1.6, 1.75)), f, 2);
-      body = <Living f={f} theo={[pose, "laugh"]} nia={[{ ...SIT, headTilt: -14, lookX: 1, armL: [30, -130], armR: [30, -130] }, "smirk"]} dad={[SIT, "smile"]}
+      const cut = Math.round(len * 0.55), second = u >= cut;
+      const tH2 = { x: TX2, y: TFEET - 360 * TS };
+      cam = second ? drift(on({ x: 340, y: 950 }, k(u, cut, len, 2.0, 2.1)), f, 2)
+        : drift(on({ x: TX2 + 10, y: tH2.y + 40 }, k(u, 0, cut, 2.6, 2.75)), f, 2);
+      body = <Living f={f} tx={TX2} family={second} theo={[pose, "laugh"]} nia={[{ ...SIT, headTilt: -14, lookX: 1, armL: [30, -130], armR: [30, -130] }, "smirk"]} dad={[SIT, "smile"]}
         extra={<><Machine u={u} pose={pose} />
-          <Wiggle x={tHead.x + 70} y={tHead.y - 30} f={f} s={0.8} c={GOLD} />
-          <path d={`M ${NX - 40} ${SIT_Y(NS) - 420 * NS} a 40 26 0 1 1 80 0`} stroke="#fff4d6" strokeWidth={7} fill="none" strokeLinecap="round" opacity={k(u, 8, 12, 0, 1)} />
+          <Wiggle x={tH2.x + 75} y={tH2.y - 40} f={f} s={0.8} c={GOLD} />
+          {second && <path d={`M ${NX - 40} ${SIT_Y(NS) - 420 * NS} a 40 26 0 1 1 80 0`} stroke="#fff4d6" strokeWidth={7} fill="none" strokeLinecap="round" opacity={k(u, cut + 4, cut + 8, 0, 1)} />}
         </>} />;
       break;
     }
     default: {       // ask: pull out wide over the family on the sofa
       cam = { x: 0, y: k(u, 0, len, 60, 30), zoom: k(u, 0, len, 1.55, 1.0, Easing.inOut(Easing.cubic)), rot: k(u, 0, len, 2, 0) };
       const pose = MACHINE(u);
-      body = <Living f={f} theo={[pose, "smile"]} nia={[SIT, "smirk"]} dad={[SIT, "laugh"]}
+      body = <Living f={f} tx={TX2} theo={[pose, "smile"]} nia={[SIT, "smirk"]} dad={[SIT, "laugh"]}
         extra={<Machine u={u} pose={pose} />} />;
     }
   }
@@ -345,7 +358,7 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
 };
 
 const PLACE: Record<string, string> = Object.fromEntries(scenes.shots.map((s) => [s.id, s.place]));
-const XF = 7;
+const XF = 5;
 
 const Scene: React.FC<SceneProps> = ({ spans }) => {
   const f = useCurrentFrame();
@@ -355,8 +368,8 @@ const Scene: React.FC<SceneProps> = ({ spans }) => {
   const fade = prev && u < XF && (PLACE[prev.id] ?? "home") !== (PLACE[span.id] ?? "home");
   return (
     <AbsoluteFill>
-      <ShotView span={span} />
-      {fade && prev && <AbsoluteFill style={{ opacity: 1 - u / XF }}><ShotView span={prev} /></AbsoluteFill>}
+      <NoText.Provider value={!!fade}><ShotView span={span} /></NoText.Provider>
+      {fade && prev && <NoText.Provider value><AbsoluteFill style={{ opacity: 1 - (u + 1) / (XF + 1) }}><ShotView span={prev} /></AbsoluteFill></NoText.Provider>}
     </AbsoluteFill>
   );
 };
