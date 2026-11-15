@@ -7,7 +7,7 @@
 | Why You Always Pick the Slow Queue (was "Never Pick the Middle Queue": no evidence for middle) | remade, approved ("go") and in Drive Review 2026-11-14 | slow-queue |
 | This Coin Flip Isn't 50/50 | approved, in Drive Review 2026-11-15 | coin-flip |
 | He Said the Price First and Still Won | backlog | |
-| Your Toast Isn't Unlucky, Your Table Is | backlog | |
+| Your Toast Isn't Unlucky, Your Table Is | done, in TheLittleEpic Drive 2026-11-15 (team build) | toast |
 | The Lift Button That Was Never Connected | rendered 2026-11-15, shown to owner; label fix in code (not re-rendered) | lift-button |
 | Why the Silent Player Took Everything | backlog | |
 | Stop Looking at the Pole | backlog | |
