@@ -1,5 +1,11 @@
 # Google Drive (via Zapier)
 
+## MAIN folder (owner, 2026-11-15): TheLittleEpic Drive, folder "Shorts" id 1-uCqfGVyoJBbyNCT8zVw0PvM1xXqFMlh
+(owned by thelittleepic@gmail.com). Every approved video + its metadata txt goes HERE, named "<n> - <title>.mp4".
+How: (1) Zapier resumable session + drive-put -> staging folder Review on vicevinnybeats Drive (shared read-only with
+thelittleepic), (2) claude.ai Google Drive connector (signed in as thelittleepic) copy_file into the main folder,
+(3) metadata txt created directly in the main folder with the connector. The vicevinnybeats folders below are staging only.
+
 Uploads go through the owner's Zapier Google Drive connection (the newer connection is the default; the first one had
 no file permission). Nothing is ever published from here: files only go into Drive.
 
@@ -22,3 +28,4 @@ How a finished video gets into Drive (no rclone secrets needed):
 | 2026-11-14 | goalkeeper-still | goalkeeper-still - The Goalkeeper Who Did Nothing and Won.mp4 (42.8 MB) + metadata txt |
 | 2026-11-14 | slow-queue (remake) | slow-queue - Why You Always Pick the Slow Queue.mp4 + metadata txt |
 | 2026-11-15 | coin-flip | coin-flip - This Coin Flip Isn't 50-50.mp4 + metadata txt |
+| 2026-11-15 | ALL 4 copied to TheLittleEpic/Shorts | 1 Goalkeeper, 2 Slow Queue, 3 Coin Flip, 4 Lift Button (mp4 + txt each) |
