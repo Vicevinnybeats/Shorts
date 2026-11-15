@@ -10,7 +10,7 @@ export const VOICE = { engine: "kokoro", voice: "am_michael", speed: 1.0 } as co
 export const CAPTIONS = { yFrac: 0.8, font: "CaptionSans", active: "#ffd93b", text: "#ffffff" } as const;
 
 /** safe areas (design px, 1080x1920): no on-screen text below TEXT_MAX_Y; no character feet/bodies in the caption band */
-export const SAFE = { TEXT_MAX_Y: 1350, CAPTION_BAND: [1440, 1640], SIDE: 60 } as const;
+export const SAFE = { TEXT_MIN_Y: 300, TEXT_MAX_Y: 1350, CAPTION_BAND: [1440, 1640], SIDE: 60 } as const;
 
 /** the "explain" look shared by every fact shot: navy backdrop, faint grid, soft spotlight */
 export const LAB = { bg: "#121a36", grid: "#1e2a52", text: "#f6efe0", muted: "#9fb0d8", gold: "#f2c230", red: "#e8443a", green: "#2fbf71", orange: "#ff9a3a" } as const;

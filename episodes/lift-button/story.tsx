@@ -153,13 +153,13 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
     case "nothing": { // cut-away: behind the button, its wire ends in a loose plug
       mood = MOODS.lab;
       cam = drift({ x: 0, y: 0, zoom: k(u, 0, len, 1.0, 1.08), rot: 0 }, f, 2);
-      const sway = Math.sin(u * 0.12) * 14, d = k(u, 4, 20, 0, 1);
+      const sway = Math.sin(u * 0.12) * 14, d = k(u, 4, 20, 0, 0.65);
       body = <Lab>
         <BigButton x={540} y={560} r={150} />
         <path d={`M 540 780 C 540 ${900} ${620} ${980} ${600 + sway} ${1000 + 220 * d}`} stroke="#ff9a3a" strokeWidth={14} fill="none" strokeLinecap="round" />
         <g transform={`translate(${600 + sway} ${1000 + 220 * d}) rotate(${sway})`}><rect x={-30} y={0} width={60} height={70} rx={10} fill="#2a2f3a" stroke={INK} strokeWidth={6} />
           <path d="M -14 70 L -14 100 M 14 70 L 14 100" stroke="#c9ccd2" strokeWidth={10} /></g>
-        <T x={540} y={290} s={64} c="#ff9a3a" o={k(u, 10, 18, 0, 1)}>NOT CONNECTED</T>
+        <T x={540} y={1340} s={64} c="#ff9a3a" o={k(u, 10, 18, 0, 1)}>NOT CONNECTED</T>
       </Lab>;
       break;
     }

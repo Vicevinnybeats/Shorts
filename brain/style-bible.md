@@ -26,7 +26,7 @@ same voice". Code source of truth: `library/style/channel.ts` (new episodes impo
 
 ## Text and captions
 - Captions: Montserrat 900 uppercase, white + active word yellow #ffd93b, at 80 % height, 1-3 words.
-- On-screen text: CaptionSans 900, only above y 1350 and inside 60 px side margins; split long lines.
+- On-screen text: CaptionSans 900, only between y 300 and y 1350 (top 300 px is covered by the phone UI and can be cut off by camera zoom) and inside 60 px side margins; split long lines.
 - Never put text over animation or over other text; nobody stands in the caption band in wide shots.
 
 ## Settings used so far (each new video gets a new setting in the same style)
