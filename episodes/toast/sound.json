@@ -16,7 +16,7 @@
   {"cue": "three metres tall.", "fn": "clink", "args": {"bright": 1.0}, "gain_db": -8},
   {"cue": "In two thousand", "fn": "rattle", "args": {"dur": 1.2, "density": 18.0}, "gain_db": -13},
   {"cue": "Sixty two percent", "fn": "push_thump", "args": {}, "gain_db": -7},
-  {"cue": "Swipe the falling", "offset": 0.2, "fn": "whoosh", "args": {"dur": 0.4, "peak": 0.1}, "gain_db": -9},
+  {"cue": "Lena tries it.", "offset": 0.3, "fn": "whoosh", "args": {"dur": 0.4, "peak": 0.1}, "gain_db": -9},
   {"cue": "Butter up.", "fn": "applause", "args": {"dur": 1.5}, "level_lu": -23},
   {"cue": "Omar has his", "fn": "bird_chirps", "args": {"dur": 3.0}, "level_lu": -23},
   {"cue": "Would you buy", "fn": "whoosh", "args": {"dur": 0.5, "peak": 0.08}, "gain_db": -10}
