@@ -6,12 +6,12 @@
 | The Goalkeeper Who Did Nothing and Won | final approved 2026-11-14, in Drive Shorts/Review (not published) | goalkeeper-still |
 | Why You Always Pick the Slow Queue (was "Never Pick the Middle Queue": no evidence for middle) | REJECTED by owner 2026-11-16 (removed from Drive; slot 2 to be replaced) | slow-queue |
 | This Coin Flip Isn't 50/50 | approved, in Drive Review 2026-11-15 | coin-flip |
-| He Said the Price First and Still Won | backlog | |
+| He Said the Price First and Still Won | done, in TheLittleEpic Drive as video 2 (replaces slow-queue) 2026-11-16 | first-offer |
 | Your Toast Isn't Unlucky, Your Table Is | done, in TheLittleEpic Drive 2026-11-15 (team build) | toast |
 | The Lift Button That Was Never Connected | rendered 2026-11-15, shown to owner; label fix in code (not re-rendered) | lift-button |
 | Why the Silent Player Took Everything | done, in TheLittleEpic Drive 2026-11-16 (team build) | silent |
 | Stop Looking at the Pole | done, in TheLittleEpic Drive 2026-11-16 (team build) | pole |
-| The Winner Paid the Most and Lost | backlog | |
+| The Winner Paid the Most and Lost | in production 2026-11-16 (team build) | winner |
 | Two Pizzas or One? Everyone Gets It Wrong | backlog | |
 | The Punch He Never Saw Coming | backlog | |
 | You Can't Tickle Yourself. Here's Why | approved, in TheLittleEpic Drive 2026-11-15 | tickle |

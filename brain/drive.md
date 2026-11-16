@@ -34,3 +34,4 @@ How a finished video gets into Drive (no rclone secrets needed):
 | 2026-11-16 | pole -> TheLittleEpic/Shorts | 7 - Stop Looking at the Pole.mp4 (66.5 MB) + 7 - Pole txt |
 | 2026-11-16 | silent -> TheLittleEpic/Shorts | 8 - Why the Silent Player Took Everything.mp4 + 8 - Silent Player txt |
 | 2026-11-16 | slow-queue removed from TheLittleEpic/Shorts (owner: "I don't like it"); mp4 + txt moved to Drive trash; slot 2 waits for a replacement |
+| 2026-11-16 | first-offer -> TheLittleEpic/Shorts as video 2 | 2 - He Said the Price First and Still Won.mp4 + 2 - Price First txt |
