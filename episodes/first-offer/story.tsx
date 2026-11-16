@@ -2,7 +2,7 @@
 // it. Kai breaks the "never name the price first" rule ($200), Rosa counters ($100), they meet at $160 - near his
 // anchor. Facts (see RESEARCH.md): in negotiation experiments the first offer tended to win the better deal and to
 // predict the final price (Galinsky & Mussweiler 2001); anchoring with a random wheel: saw 10 -> guessed 25 %, saw 65
-// -> guessed 45 % (Tversky & Kahneman 1974). Caveat: know the real value - an absurd anchor makes buyers walk.
+// -> guessed 45 % (Tversky & Kahneman 1974). Caveat: know the real value - an absurd anchor may make buyers walk.
 // Market layout (front view): Kai's stall centred at x 540 (ground y 1300, table top 1120), Kai behind it; his guitar
 // on a stand on the table's right end; Rosa stands in front of the stall at (760, 1400) - above the caption band.
 // Motion rules (src/engine25/motion.tsx): arrivals EASE.arrive, exits shorter EASE.exit, camera EASE.camera; every
@@ -176,7 +176,12 @@ const KaiTable: React.FC<{ guitar?: GuitarPos | null; tag?: React.ReactNode }> =
   </g>
 );
 /** the guitar's price tag hanging from its headstock */
+/** false while a crossfade runs: then in-scene text (tags, wheel numbers, bar labels) is blanked too. Set by ShotView right
+ *  before it builds the shot (rendering is synchronous), read by the helpers below. */
+let SCENE_TEXT = true;
+const txt = <V,>(v: V, blank: V): V => (SCENE_TEXT ? v : blank);
 const tagOn = (g: GuitarPos, text: string | number, flip: number, rot = 0, scale = 0.52) => {
+  text = txt(text, "");
   const h = guitarPoint(g, "head");
   return <PriceTag x={h.x} y={h.y + 4} text={text} flip={flip} rot={rot} scale={scale} />;
 };
@@ -234,7 +239,9 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
   const noText = React.useContext(NoText);
   const u = f - span.a, len = span.b - span.a;
   const C = (phrase: string, fb: number) => cueAt(words, phrase, span, fb);
+  SCENE_TEXT = !noText;
   const v = build(span.id, f, u, len, C);
+  SCENE_TEXT = true;
   const lab = v.mood === MOODS.lab;
   return (
     <AbsoluteFill>
@@ -286,8 +293,8 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         ]} />;
       return { cam, mood, body };
     }
-    case "guitar": { // Rosa eyes the guitar; on "blank tag" the camera pushes in on the guitar and its blank tag; on "picks it up"
-      // she lifts it off the stand and the camera eases back
+    case "guitar": { // low close-up on the guitar and its blank tag (Kai out of frame), pushing in on "blank tag"; Rosa steps in
+      // and lifts it off the stand on "picks it up" while the camera eases back to the two-shot
       const BT = C("blank tag", 30), PK = C("Rosa picks", Math.round(len * 0.55));
       const step = k(u, PK - 18, PK - 7, 0, 1, EASE.arrive);          // she steps in from the right, straight to it
       const rx = 1180 + (RX - 1180) * step, walking = u >= PK - 18 && u < PK - 9;
@@ -308,9 +315,9 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       }
       const swing = Math.sin(u * 0.09) * 3 + (lift > 0 && lift < 1 ? Math.sin(u * 0.5) * 10 * (1 - lift) : 0);
       const front = lift > 0.4;
-      const pull = k(u, PK - 6, PK + 26, 0, 1);
+      const pull = k(u, PK - 22, PK + 14, 0, 1);
       const pin = camMove(u, BT - 4, BT + 22, 0, 1);
-      cam = drift(on({ x: 690 + 10 * pin - 0 * pull, y: interpolate(pull, [0, 1], [1000 - 40 * pin, 1080]) }, interpolate(pull, [0, 1], [1.72 + 0.38 * pin, 1.85])), f, 1.5);
+      cam = drift(on({ x: interpolate(pull, [0, 1], [800, 690]), y: interpolate(pull, [0, 1], [1000 - 20 * pin, 1080]) }, interpolate(pull, [0, 1], [2.85 + 0.2 * pin, 1.85])), f, 1.2);
       const body = <Market f={f}
         seller={<KaiP x={KB.x} y={KB.y} pose={{ ...KREST, lookX: 0.8 }} expr={u >= PK ? "smirk" : "calm"} f={f} t={f} />}
         onTable={<KaiTable guitar={front ? null : g} tag={front ? null : tagOn(g, "", 0, swing)} />}
@@ -347,11 +354,11 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const DR = Math.max(2, C("nearly drops", 3)), TH = C("Two hundred", 45);
       const h = u - DR;
       const slip = h < 0 ? 0 : Math.sin(Math.min(1, h / 16) * Math.PI) * Math.exp(-Math.max(0, h - 8) / 10);
-      const g: GuitarPos = { ...HELD2, y: HELD.y + 60 * slip, rot: HELD.rot - 22 * slip };
+      const g: GuitarPos = { ...HELD2, y: HELD.y + 25 * slip, rot: HELD.rot - 10 * slip };
       const lean = h < 0 ? 0 : -6 * Math.min(1, h / 4);
       const base: Pose = { ...STAND_POSE, lean };
       const hold = rosaWithGuitar(g, f, RX + BACK, RY, base);
-      cam = kickCam(drift(on({ x: 862, y: 1060 }, k(u, 0, len, 2.2, 2.32)), f, 1.2), h, 22);
+      cam = kickCam(drift(on({ x: 836, y: 1110 }, k(u, 0, len, 2.2, 2.3)), f, 1.0), h, 18);
       const body = <Market f={f}
         seller={<KaiP x={KB.x} y={KB.y} pose={{ ...KREST, lookX: 0.8 }} expr="calm" f={f} t={f} />}
         onTable={<KaiTable guitar={null} />}
@@ -388,9 +395,9 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       return { cam, mood, body, labels: card };
     }
     case "study": {  // lab: two negotiators at a table; the left one slides the first-offer card across on "first offer";
-      // on "better deal" coins stack up on her side, she cheers, the other shrugs
+      // on "tended to (get the better deal)" coins stack up on her side, she cheers, the other shrugs
       mood = MOODS.lab;
-      const FO = C("first offer", 40), BD = C("usually got", 95);
+      const FO = C("first offer", 40), BD = C("tended to", 95);
       const T0 = 1250, S = 1.15;
       const seats = negotiationSeats(540, T0, S, { left: u >= FO - 6 && u < FO + 12, right: false });
       const topY = negotiationTopY(T0, S);
@@ -403,8 +410,8 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <NegotiationTable x={540} y={T0} scale={S} />
         <Person {...seats.left} shadow={0} pose={lp} look={EXTRAS[1]} expr={win ? "cheer" : u >= FO ? "smirk" : "calm"} t={f} blink={blinkOf(f, 3)} />
         <Person {...seats.right} shadow={0} look={EXTRAS[0]} expr={win ? "worried" : u >= FO + 10 ? "focused" : "calm"} t={f} blink={blinkOf(f, 4)} />
-        {u >= FO - 3 && <g opacity={k(u, FO - 3, FO + 1, 0, 1)}><OfferCard x={600} y={topY + 4} text={"$"} slide={slide} from={-200} scale={0.9} title="OFFER" /></g>}
-        {coins > 0 && <Coins x={380} y={topY + 2} scale={1.0} count={coins} />}
+        {u >= FO - 3 && <g opacity={k(u, FO - 3, FO + 1, 0, 1)}><OfferCard x={600} y={topY + 4} text={txt("$", "")} slide={slide} from={-200} scale={1.2} title={txt<string | undefined>("OFFER", undefined)} /></g>}
+        {coins > 0 && <Coins x={360} y={topY + 2} scale={1.5} count={coins} />}
         {win && <Check x={seats.left.x - 10} y={seats.left.y - 470 * S} s={pop(u, BD + 4)} />}
       </Lab>;
       const labels = <>
@@ -416,7 +423,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
     case "anchor": { // lab: an anchor drops onto the gold first-number mark of a price line; on "dragged toward it" the haggling
       // range bends over toward it and the counteroffer chips slide after it
       mood = MOODS.lab;
-      const AN = C("an anchor", 30), CO = C("Every counteroffer", 75), DG = C("dragged toward", 95);
+      const AN = C("an anchor", 30), CO = C("Counteroffers get", 75), DG = C("dragged toward", 95);
       const PL = { x: 215, y: 1100, w: 650 }, AT = 0.86;
       const ax = priceLineX(PL, AT);
       const drop = k(u, AN - 12, AN, 0, 1, Easing.in(Easing.quad));
@@ -436,7 +443,13 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         {drop > 0 && <Anchor x={ax} y={interpolate(drop, [0, 1], [-200, PL.y - 6])} scale={0.72} rot={h < 0 ? 0 : Math.sin(h * 0.6) * 6 * Math.exp(-h / 8)} />}
         {h >= 0 && h < 14 && <ellipse cx={ax} cy={PL.y} rx={60 + h * 9} ry={14 + h * 2} fill="none" stroke={GOLD} strokeWidth={6} opacity={1 - h / 14} />}
       </Lab>;
-      const labels = <Label f={u} x={540} y={430} size={110} color={GOLD} enter="scale" enterAt={AN + 6} exitAt={len - 8}>ANCHOR</Label>;
+      const ly = toS(cam, { x: 0, y: PL.y }).y + 120;
+      const labels = <>
+        <Label f={u} x={540} y={430} size={110} color={GOLD} enter="scale" enterAt={AN + 6} exitAt={len - 8}>ANCHOR</Label>
+        <Label f={u} x={790} y={ly} size={46} color={GOLD} enter="rise" enterAt={FN + 4} exitAt={len - 8}>FIRST OFFER</Label>
+        <Label f={u} x={300} y={ly} size={40} color={RED} enter="rise" enterAt={CO + 4} exitAt={DG + 2}>COUNTEROFFERS</Label>
+        <Label f={u} x={300} y={ly} size={46} color={GREEN} enter="scale" enterAt={DG + 14} exitAt={len - 8}>RANGE</Label>
+      </>;
       return { cam, mood, body, labels };
     }
     case "wheel": {  // lab: a wheel of fortune idles, spins and stops on 10 -> the first guess bar grows to 25 %; then spins to 65
@@ -460,17 +473,23 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         return <g transform={`translate(${x} ${ty}) scale(${sc})`}><text x={0} y={0} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={66} fill={col}>{n}%</text></g>;
       })();
       const body = <Lab>
-        <Wheel x={285} y={770} r={205} angle={angle} labels={LBL} highlight={stopA ? 0 : stopB ? 2 : undefined} />
+        <Wheel x={285} y={770} r={205} angle={angle} labels={LBL.map((l) => txt(l, ""))} highlight={stopA ? 0 : stopB ? 2 : undefined} />
+        {SCENE_TEXT && (stopA || stopB) && <g transform={`translate(285 770) scale(${pop(u, stopA ? S10 + 2 : S65 + 34)})`}>
+          <circle r={70} fill={GOLD} stroke={INK} strokeWidth={9} />
+          <text x={0} y={27} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={76} fill={INK}>{stopA ? "10" : "65"}</text>
+        </g>}
         <GuessBar x={XA} y={BY} w={BW} h={BH} value={vA} colour={"#2d6fd8"} />
         <GuessBar x={XB} y={BY} w={BW} h={BH} value={vB} colour={ORANGE} />
-        {[[XA, "10", "#7fb2ff"], [XB, "65", ORANGE]].map(([x, n, c]) => <g key={n}>
-          <text x={x} y={BY + 48} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={36} fill={MUTED}>SAW</text>
-          <text x={x} y={BY + 112} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={64} fill={c as string}>{n}</text>
+        {SCENE_TEXT && [[XA, "10", "#7fb2ff"], [XB, "65", ORANGE]].map(([x, n, c]) => <g key={n}>
+          <text x={x} y={BY + 52} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={44} fill={MUTED}>SAW</text>
+          <text x={x} y={BY + 126} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={74} fill={c as string}>{n}</text>
         </g>)}
-        {vt(XA, vA, nA, G25, "#7fb2ff")}
-        {vt(XB, vB, nB, G45, ORANGE)}
+        {SCENE_TEXT && vt(XA, vA, nA, G25, "#7fb2ff")}
+        {SCENE_TEXT && vt(XB, vB, nB, G45, ORANGE)}
       </Lab>;
+      const Q = C("In one test", 50);
       const labels = <>
+        <Label f={u} x={510} y={352} size={48} color={CREAM} enter="rise" enterAt={Q} exitAt={len - 8}>AFRICA'S SHARE OF THE UN?</Label>
         <ArrowLabel f={u} y={420} left="SAW 10" right="GUESSED 25%" color="#7fb2ff" enterAt={G25} exitAt={S65 - 6} />
         <ArrowLabel f={u} y={420} left="SAW 65" right="GUESSED 45%" color={ORANGE} enterAt={G45} exitAt={len - 8} />
       </>;
@@ -479,14 +498,14 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
     case "pull": {   // lab: the final-price dot slides toward the anchor mark; "know the real value" lights a green zone;
       // "go too wild": the anchor leaps off the end, the dot turns red, and the buyer turns and walks away
       mood = MOODS.lab;
-      const KV = C("know the real", Math.round(len * 0.35)), GW = C("Go too wild", Math.round(len * 0.68)), BW = C("buyers walk", Math.round(len * 0.85));
+      const KV = C("know the real", Math.round(len * 0.35)), GW = C("Go too wild", Math.round(len * 0.68)), BW = C("buyers may walk", Math.round(len * 0.85));
       const SL = { x: 200, y: 780, w: 640 };
       const wild = k(u, GW, GW + 14, 0, 1, EASE.arrive);
       const markAt = 0.72 + 0.26 * wild;
       const val = k(u, 4, 40, 0.18, 0.66, EASE.arrive) + 0.3 * k(u, GW + 4, GW + 20, 0, 1, EASE.arrive);
       const zone = k(u, KV, KV + 10, 0, 1, EASE.arrive) * (1 - 0.6 * wild);
-      const walkT = u - Math.min(BW - 8, GW + 18);
-      const bx = walkT < 0 ? 760 : 760 + walkT * 14;
+      const walkT = u - (BW - 8);
+      const bx = walkT < 0 ? 650 : 650 + walkT * 3;
       const walking = walkT >= 0;
       const bExpr: Expr = u >= GW + 6 ? (walking ? "worried" : "shock") : u >= KV ? "smile" : "calm";
       const ax = SL.x + SL.w * markAt;
@@ -496,20 +515,24 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <rect x={SL.x + SL.w * 0.5} y={SL.y - 40} width={SL.w * 0.3} height={80} rx={18} fill={GREEN} opacity={0.32 * zone} />
         <PriceSlider {...SL} value={val} markAt={markAt} color={tooFar ? RED : GOLD} />
         <Anchor x={ax} y={SL.y - 34} scale={0.26} rot={wild > 0 && wild < 1 ? Math.sin(u) * 8 : 0} />
-        {zone > 0.01 && <Check x={SL.x + SL.w * 0.65} y={SL.y + 110} s={pop(u, KV + 6) * (1 - wild)} />}
-        {tooFar && <Check x={SL.x + SL.w * 0.98} y={SL.y + 110} s={pop(u, GW + 14)} ok={false} />}
-        {bx < 1300 && <Person x={bx} y={1250} scale={1.0} facing={walking ? 1 : -1} look={EXTRAS[5]} pose={walking ? walkPose(walkT * 0.32) : STAND_POSE}
+        {zone > 0.01 && <Check x={SL.x + SL.w * 0.5} y={SL.y + 165} s={pop(u, KV + 6) * (1 - wild)} />}
+        {tooFar && <Check x={SL.x + SL.w * 0.84} y={SL.y - 95} s={pop(u, GW + 14)} ok={false} />}
+        {bx < 1300 && <Person x={bx} y={1330} scale={1.0} facing={walking ? 1 : -1} look={EXTRAS[5]} pose={walking ? walkPose(walkT * 0.32) : STAND_POSE}
           expr={bExpr} t={walking ? undefined : f} blink={blinkOf(f, 6)} />}
-        {walking && bx < 1250 && <Notes x={bx - 30} y={1100} scale={0.6} count={2} rot={-10} />}
+        {walking && bx < 1250 && <Notes x={bx - 30} y={1180} scale={0.6} count={2} rot={-10} />}
       </Lab>;
-      const labels = <Label f={u} x={510} y={430} size={78} color={GREEN} enter="words" enterAt={KV} exitAt={len - 8}>KNOW THE VALUE</Label>;
+      const dot = toS(cam, { x: SL.x + SL.w * val, y: SL.y });
+      const labels = <>
+        <Label f={u} x={510} y={430} size={78} color={GREEN} enter="words" enterAt={KV} exitAt={len - 8}>KNOW THE VALUE</Label>
+        <Label f={u} x={Math.max(240, dot.x)} y={dot.y + 92} size={40} color={GOLD} enter="rise" enterAt={8} exitAt={GW - 4}>FINAL PRICE</Label>
+      </>;
       return { cam, mood, body, labels };
     }
     case "counter": { // market two-shot: Rosa counters "$100" (bubble), Kai's "$200" bubble is there; on "meet at" the bubbles
-      // slide toward each other (closer to Kai's side) and give way to one gold "$160" tag that counts up and stamps
+      // fade out and give way (closer to Kai's side) to one gold "$160" tag that counts up and stamps
       const OH = C("one hundred", 22), MT = C("meet at", 60), OS = C("one sixty", 80);
       const hold = rosaWithGuitar(HELD, f, RX, RY, STAND_POSE);
-      cam = drift(on({ x: k(u, 0, len, 640, 660), y: 1010 }, k(u, 0, len, 1.3, 1.36)), f, 1.6);
+      cam = drift(on({ x: k(u, 0, len, 640, 660), y: 1072 }, k(u, 0, len, 1.3, 1.36)), f, 1.2);
       const body = <Market f={f}
         seller={<KaiP x={KB.x} y={KB.y} pose={{ ...KREST, lookX: 0.8 }} expr={u >= OS ? "smile" : "focused"} f={f} t={f} />}
         onTable={<KaiTable guitar={null} />}
@@ -519,14 +542,14 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           <HandDot p={hold.hL} s={RS} skin={ROSA.skin} /><HandDot p={hold.hR} s={RS} skin={ROSA.skin} />
         </g> }]} />;
       const kh = toS(cam, { x: KB.x, y: 860 }), rh = toS(cam, { x: RX, y: 960 });
-      const meet = k(u, MT, MT + 10, 0, 1, EASE.exit), gone = leave(u, MT + 2, 8);
+      const gone = leave(u, MT + 2, 8);
       const mx = kh.x + (rh.x - kh.x) * 0.4;
-      const kb = { x: kh.x + (mx - kh.x) * meet * 0.6, y: 600 }, rb = { x: rh.x + (mx - rh.x) * meet * 0.6, y: 600 };
+      const kb = { x: kh.x - 40, y: 600 }, rb = { x: rh.x + 30, y: 600 };   // kept apart; both fade out at the meet
       const n = countValue(u, OS - 6, 14, 100, 160);
       const labels = <>
         <Bubble x={kb.x} y={kb.y} text="$200" p={arrive(u, 2, 12)} out={gone} to={{ x: kh.x, y: kh.y - 40 }} s={0.9} />
         <Bubble x={rb.x} y={rb.y} text="$100" p={arrive(u, OH, 12)} out={gone} to={{ x: rh.x, y: rh.y - 40 }} fill="#ffe8e2" s={0.9} />
-        {u >= MT + 10 && <g transform={`translate(${mx} 600) scale(${stampScale(u, OS - 6, 14) * (0.7 + 0.3 * arrive(u, MT + 10, 12))})`} opacity={arrive(u, MT + 10, 8) * (1 - leave(u, len - 7))}>
+        {u >= OS - 6 && <g transform={`translate(${mx} 600) scale(${stampScale(u, OS - 6, 14) * (0.7 + 0.3 * arrive(u, OS - 6, 10))})`} opacity={arrive(u, OS - 6, 6) * (1 - leave(u, len - 7))}>
           <rect x={-150} y={-74} width={300} height={140} rx={30} fill={GOLD} stroke={INK} strokeWidth={9} />
           <text x={0} y={32} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={92} fill={INK}>${n}</text>
         </g>}
@@ -567,20 +590,20 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       // on "names her price first" she taps the crate tag, it flips to $40, she smirks - Kai's jaw drops
       const OW = C("runs her own", 24), NP = C("names her price", Math.round(len * 0.55));
       const RB = behindStall(ROSA_STALL);
-      const kx = k(u, 0, OW + 14, 150, 270, EASE.arrive), kWalk = u < OW + 8;
+      const kx = k(u, 0, OW + 14, 232, 290, EASE.arrive), kWalk = u < OW + 8;
       const tie = { x: 770, y: 1018 };
       const rig: Rig = { x: RB.x, y: RB.y, s: RB.scale, facing: 1, pose: STAND_POSE, t: f };
       const tap = k(u, NP - 8, NP, 0, 1, EASE.arrive) * (1 - k(u, NP + 10, NP + 18, 0, 1, EASE.exit));
       const rest = handAt(rig, "R");
       const rPose: Pose = { ...STAND_POSE, armL: [18, -30], armR: tap > 0.01 ? reach(rig, "R", rest.x + (tie.x - 20 - rest.x) * tap, rest.y + (tie.y + 70 - rest.y) * tap, 1) : [18, -30] };
       const flip = k(u, NP, NP + 10, 0, 1, EASE.arrive);
-      cam = drift(on({ x: k(u, 0, len, 520, 545), y: 1100 }, k(u, 0, len, 1.42, 1.5)), f, 1.5);
+      cam = drift(on({ x: k(u, 0, len, 520, 545), y: 1125 }, k(u, 0, len, 1.42, 1.5)), f, 1.2);
       const body = <Market f={f} stall={ROSA_STALL}
         seller={<RosaP x={RB.x} y={RB.y} s={RB.scale} pose={rPose} expr={u >= NP ? "smirk" : "smile"} f={f} t={f} tote={false} />}
         onTable={<g>
           <Crate x={tie.x - 60} y={stallTopY(ROSA_STALL)} scale={0.9} />
           <Crate x={430} y={stallTopY(ROSA_STALL)} scale={0.9} />
-          <PriceTag x={tie.x} y={tie.y} text={40} flip={flip} rot={Math.sin(u * 0.12) * 3} scale={0.72} />
+          <PriceTag x={tie.x} y={tie.y} text={txt<string | number>(40, "")} flip={flip} rot={Math.sin(u * 0.12) * 3} scale={0.72} />
         </g>}
         items={[{ y: RY, el: <KaiP x={kx} y={RY} s={1.03} facing={1} pose={kWalk ? walkPose(u * 0.3) : { ...STAND_POSE, lookX: 0.6 }}
           expr={u >= NP + 4 ? "shock" : "smile"} f={f} t={kWalk ? undefined : f} /> }]} />;
@@ -588,7 +611,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
     }
     default: {       // ask: pull out wide over the market from Rosa's stall; Kai pays for a record, shoppers stroll, bunting flutters
       const pull = k(u, 0, len, 0, 1);
-      cam = drift({ x: interpolate(pull, [0, 1], [-10, 0]), y: interpolate(pull, [0, 1], [110, -40]), zoom: interpolate(pull, [0, 1], [1.5, 1.0]), rot: 0 }, f, 1.5);
+      cam = drift({ x: interpolate(pull, [0, 1], [-10, 0]), y: interpolate(pull, [0, 1], [170, 45]), zoom: interpolate(pull, [0, 1], [1.5, 1.0]), rot: 0 }, f, 1.5);
       const RB = behindStall(ROSA_STALL);
       const kr: Rig = { x: 290, y: RY, s: 1.03, facing: 1, pose: STAND_POSE, t: f };
       const give = k(u, 10, 30, 0, 1, EASE.arrive);
@@ -599,7 +622,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         onTable={<g>
           <Crate x={710} y={stallTopY(ROSA_STALL)} scale={0.9} />
           <Crate x={430} y={stallTopY(ROSA_STALL)} scale={0.9} />
-          <PriceTag x={770} y={1018} text={40} flip={1} rot={Math.sin(u * 0.12) * 3} scale={0.72} />
+          <PriceTag x={770} y={1018} text={txt<string | number>(40, "")} flip={1} rot={Math.sin(u * 0.12) * 3} scale={0.72} />
         </g>}
         items={[
           { y: RY, el: <g><KaiP x={290} y={RY} s={1.03} pose={kPose} expr="worried" f={f} t={f} /><Notes x={kh.x + 10} y={kh.y - 6} scale={0.5} count={2} rot={-20} /></g> },
