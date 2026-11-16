@@ -12,7 +12,7 @@
 | Why the Silent Player Took Everything | done, in TheLittleEpic Drive 2026-11-16 (team build) | silent |
 | Stop Looking at the Pole | done, in TheLittleEpic Drive 2026-11-16 (team build) | pole |
 | The Winner Paid the Most and Lost | in production 2026-11-16 (team build) | winner |
-| Two Pizzas or One? Everyone Gets It Wrong | backlog | |
+| Two Pizzas or One? Everyone Gets It Wrong | in production 2026-11-16 (team build) | pizza |
 | The Punch He Never Saw Coming | backlog | |
 | You Can't Tickle Yourself. Here's Why | approved, in TheLittleEpic Drive 2026-11-15 | tickle |
 
