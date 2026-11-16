@@ -40,3 +40,25 @@ same voice". Code source of truth: `library/style/channel.ts` (new episodes impo
 | toast | bright morning cafe | environments25/cafe.tsx |
 | pole | sunny town square | environments25/square.tsx |
 | silent | cosy game night | environments25/gamenight.tsx |
+
+## Motion rules (adopted 2026-11-16 from motion-director, github.com/sharbelxyz/motion-director, MIT)
+Code: `src/engine25/motion.tsx` (EASE, arrive/leave/camMove, stagger, Label, countValue/stampScale, SAFE_TEXT).
+Check: `scripts/motion-check.mjs <video>` (runs in render-final QA; also run it on stills-era previews).
+- Eases by role: arrivals land on a long tail (EASE.arrive), exits ~45 % shorter and accelerate out (EASE.exit),
+  camera moves ease both ways (EASE.camera); linear only for spinning/progress.
+- Every on-screen label has a deliberate entrance AND exit (Label enter="rise|scale|words|present"); vary entrances
+  inside a video; a landed label is dead still (no pulse/wobble on text; characters keep breathing/blinking).
+- Overlap: the next element starts when the previous is 30-50 % done (stagger); words 60-120 ms apart.
+- Nothing holds still for more than ~3 s: if a shot is long, give it a second beat (a change in a big part of the frame).
+- Frame 0 is the hook: something meaningful on screen at frame 0, never empty.
+- One idea per frame: when the idea changes, prefer a cut over a crossfade (we keep 5-frame crossfades only on place
+  changes, with labels hidden).
+- Counters start at the first real value, fill well inside their beat, STOP and get a small stamp pop; every number
+  on screen has a source.
+- No zoom for its own sake: a push follows a specific element and must not push labels out of the safe box
+  (SAFE_TEXT: y 300-1350, 60 px left, 120 px right for the like/comment rail).
+- Transitions have a cause when possible (whip, object carries into the next shot, iris from an action).
+
+### First measurement (2026-11-16, picture holds over 3 s, captions band excluded)
+goalkeeper-still: 3.7 s at 9.7 s, 6.0 s at 51.3 s, 6.2 s at 57.6 s | lift-button: 5.8 s at 40.4 s |
+coin-flip: 3.1 s at 43.8 s | slow-queue, tickle, toast, pole, silent: none.

@@ -137,6 +137,8 @@ jobs:
           id=${{ needs.voice-and-mix.outputs.id }}
           ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate:format=duration -of compact final/$id.mp4 | tee final/$id.qa.txt
           ffmpeg -hide_banner -nostats -i final/$id.mp4 -af ebur128=peak=true -f null - 2>&1 | grep -A12 "Summary" | tee -a final/$id.qa.txt
+          # motion check (no still picture over 3 s, frame 0 not empty) - warns, never blocks
+          node scripts/motion-check.mjs final/$id.mp4 3 | tee -a final/$id.qa.txt || echo "::warning::motion check: picture holds still over 3 s (see qa.txt)"
       - name: Metadata JSON next to the MP4
         run: |
           id=${{ needs.voice-and-mix.outputs.id }}
