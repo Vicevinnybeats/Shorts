@@ -10,3 +10,6 @@
 - Never repeat the same visual across consecutive shots (e.g. the old dot diagrams in slow/snake/fair). Each shot gets its own image.
 - No character's feet/body sits in the caption band in wide shots; lanes/rows end above it.
 - Avoid abstract "dots" for people: show the characters themselves.
+
+## 2026-11-16 owner rejected "Why You Always Pick the Slow Queue" (video 2)
+- "I don't like it": removed from Drive, to be replaced by another video (not started until the owner says so).
