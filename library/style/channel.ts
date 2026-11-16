@@ -48,4 +48,10 @@ export const CAST: Record<string, Look> = {
   // Grandpa = rust cardigan, grey trousers, FlatCap + Beard (square.tsx).
   mila: { skin: SKIN.fair, hair: HAIR.brown, hairStyle: "curly", jersey: "#8cc63f", jersey2: "#6a9a2c", shorts: "#3a4fb8", socks: "#3a4fb8", boots: "#e8443a" },
   grandpa: { skin: SKIN.fair, hair: HAIR.grey, hairStyle: "short", jersey: "#b5523b", jersey2: "#8f3c2a", shorts: "#6b6f7d", socks: "#6b6f7d", boots: "#5a3a24" },
+  // silent (game night, environments25/gamenight.tsx). June = the quiet one (sage cardigan, black bun),
+  // Max = the talker (red, blond curls), friend1 (cyan, buzz) and friend2 (mustard, short hair) complete the table.
+  june: { skin: SKIN.fair, hair: HAIR.black, hairStyle: "bun", jersey: "#8fb87a", jersey2: "#6c9558", shorts: "#3b3346", socks: "#3b3346" },
+  max: { skin: SKIN.light, hair: HAIR.blond, hairStyle: "curly", jersey: "#e8443a", jersey2: "#b8302a", shorts: "#2d3a5a", socks: "#2d3a5a" },
+  friend1: { skin: SKIN.dark, hair: HAIR.black, hairStyle: "buzz", jersey: "#3fb8c9", jersey2: "#2a8a99", shorts: "#2a2f3d", socks: "#2a2f3d" },
+  friend2: { skin: SKIN.brown, hair: HAIR.brown, hairStyle: "short", jersey: "#f2c230", jersey2: "#c99a12", shorts: "#3b3346", socks: "#3b3346" },
 };

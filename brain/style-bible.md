@@ -39,3 +39,4 @@ same voice". Code source of truth: `library/style/channel.ts` (new episodes impo
 | tickle | evening living room | environments25/livingroom.tsx |
 | toast | bright morning cafe | environments25/cafe.tsx |
 | pole | sunny town square | environments25/square.tsx |
+| silent | cosy game night | environments25/gamenight.tsx |
