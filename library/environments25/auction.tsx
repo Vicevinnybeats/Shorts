@@ -348,7 +348,7 @@ export const behindTable = (g: TableGeom, u = 0.5, scale = 1.35) => {
  *  tablePoint). The arms start where the Person's body meets the table's back edge. Pose the Person's own arms down
  *  (e.g. armL/armR [14, -10]) so they disappear behind the table. sleeve = forearm colour (default skin). */
 export const TableHands: React.FC<{ g: TableGeom; p: { x: number; scale?: number }; look: Look; hands: [Pt | null, Pt | null]; sleeve?: string; spread?: number }> =
-  ({ g, p, look, hands, sleeve, spread = 52 }) => {
+  ({ g, p, look, hands, sleeve, spread = 58 }) => {
     const k = p.scale ?? 1, limbW = 13.2, ink = 4.2;
     return (
       <g>
@@ -688,8 +688,8 @@ export const CoinJar: React.FC<{ x: number; y: number; scale?: number; fill?: nu
   for (let yy = inner.y1 - 6; yy > level; yy -= 11) {
     const shift = R() * 30;
     for (let xx = inner.x0 - 10 + shift; xx < inner.x1 + 20; xx += 34 + R() * 10) {
-      const edge = R() < 0.18, cx = xx + (R() - 0.5) * 8, cy = yy + (R() - 0.5) * 6, kind = Math.floor(R() * 4);
-      if (edge) { const [c1] = COIN_COLS[kind]; coins.push(<rect key={"e" + k++} x={r2(cx - 4)} y={r2(cy - 18)} width={9} height={30} rx={4} fill={c1} stroke={INK} strokeWidth={3} transform={`rotate(${r2((R() - 0.5) * 40)} ${r2(cx)} ${r2(cy)})`} />); }
+      const edge = R() < 0.07, cx = xx + (R() - 0.5) * 8, cy = yy + (R() - 0.5) * 6, kind = Math.floor(R() * 4);
+      if (edge) { const [c1] = COIN_COLS[kind]; coins.push(<ellipse key={"e" + k++} cx={r2(cx)} cy={r2(cy - 6)} rx={7} ry={18} fill={c1} stroke={INK} strokeWidth={3} transform={`rotate(${r2((R() - 0.5) * 50)} ${r2(cx)} ${r2(cy - 6)})`} />); }
       else coins.push(coinFace(cx, cy, 17 + R() * 4, kind, "j" + k++, 0.34));
     }
   }
@@ -765,10 +765,10 @@ export const PriceBoard: React.FC<{ x: number; y: number; value: string; prev?: 
         {label && <text x={0} y={-CH / 2 - 36} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={r2(fit(label, W - 40, 44))} fill={AUCTION.lid}>{label}</text>}
         {Array.from({ length: n }, (_, i) => {
           const cx = -W / 2 + CW / 2 + i * (CW + gap), a = old[i], b = cur[i], changing = a !== b && t < 1;
-          const half = (ch: string, part: "t" | "b", k: string, sy = 1) => (
+          const half = (ch: string, part: "t" | "b", k: string, sy = 1, flap = false) => (
             <g key={k} clipPath={`url(#${idBase}-${part})`}>
               <g transform={`scale(1 ${r2(sy * 1000) / 1000})`}>
-                <rect x={-CW / 2} y={-CH / 2} width={CW} height={CH} rx={10} fill={part === "t" ? AUCTION.cell : AUCTION.cell2} />
+                <rect x={-CW / 2} y={-CH / 2} width={CW} height={CH} rx={10} fill={mix(part === "t" ? AUCTION.cell : AUCTION.cell2, "#ffffff", flap ? 0.14 : 0)} stroke={flap ? INK : "none"} strokeWidth={4} />
                 {glyph(ch, k + "g")}
               </g>
             </g>
@@ -776,9 +776,9 @@ export const PriceBoard: React.FC<{ x: number; y: number; value: string; prev?: 
           return <g key={i} transform={`translate(${cx} 0)`}>
             <rect x={-CW / 2 - 3} y={-CH / 2 - 3} width={CW + 6} height={CH + 6} rx={12} fill={INK} />
             {!changing ? <>{half(b, "t", "st")}{half(b, "b", "sb")}</> : t < 0.5 ? <>
-              {half(b, "t", "nt")}{half(a, "b", "ob")}{half(a, "t", "ft", Math.cos(t * Math.PI))}
+              {half(b, "t", "nt")}{half(a, "b", "ob")}{half(a, "t", "ft", Math.cos(t * Math.PI), true)}
             </> : <>
-              {half(b, "t", "nt")}{half(a, "b", "ob")}{half(b, "b", "fb", -Math.cos(t * Math.PI))}
+              {half(b, "t", "nt")}{half(a, "b", "ob")}{half(b, "b", "fb", -Math.cos(t * Math.PI), true)}
             </>}
             <path d={`M ${-CW / 2} 0 L ${CW / 2} 0`} stroke={INK} strokeWidth={4} />
             {[-1, 1].map((d) => <circle key={d} cx={d * (CW / 2 - 4)} cy={0} r={4} fill={AUCTION.silver2} />)}
@@ -789,24 +789,24 @@ export const PriceBoard: React.FC<{ x: number; y: number; value: string; prev?: 
   };
 
 /** Hanging manila luggage tag with a big "?" badge and `text` (e.g. "HOW MUCH?"). (x, y) = where the string is tied;
- *  the tag hangs below-right on a twine. rot swings it about the tie point. ~380 x 150 at scale 1. */
+ *  the tag hangs below-right on a twine. rot swings it about the tie point. ~440 x 150 at scale 1 (text auto-fits, ~12 characters read best). */
 export const QuestionTag: React.FC<{ x: number; y: number; text: string; scale?: number; rot?: number; twine?: number; mark?: boolean }> =
   ({ x, y, text, scale = 1, rot = 0, twine = 80, mark = true }) => {
-    const W = 380, H = 150, tx = 0, ty = twine;
+    const W = 440, H = 150, tx = 0, ty = twine, bx = tx + 96, t0 = mark ? bx + 50 : tx + 64, tw = W - 24 - t0;
     const shape = `M ${tx} ${ty + 30} L ${tx + 40} ${ty} L ${tx + W} ${ty} L ${tx + W} ${ty + H} L ${tx + 40} ${ty + H} L ${tx} ${ty + H - 30} Z`;
-    const fs = fit(text, W - (mark ? 170 : 90), 56);
+    const fs = fit(text, tw, 56);
     return (
       <g transform={`translate(${x} ${y}) rotate(${rot}) scale(${scale})`}>
-        <path d={`M 0 0 Q -10 ${ty * 0.5} ${tx + 34} ${ty + H / 2}`} stroke={AUCTION.twine} strokeWidth={5} fill="none" />
+        <path d={`M 0 0 Q -10 ${ty * 0.5} ${tx + 30} ${ty + H / 2}`} stroke={AUCTION.twine} strokeWidth={5} fill="none" />
         <circle cx={0} cy={0} r={6} fill={AUCTION.twine} stroke={INK} strokeWidth={3} />
         <path d={shape} fill={AUCTION.tag} stroke={INK} strokeWidth={7} strokeLinejoin="round" />
         <path d={`M ${tx + 14} ${ty + H - 18} L ${tx + W - 14} ${ty + H - 18}`} stroke={AUCTION.tag2} strokeWidth={5} strokeLinecap="round" />
-        <circle cx={tx + 34} cy={ty + H / 2} r={11} fill={AUCTION.tag2} stroke={INK} strokeWidth={4} />
+        <circle cx={tx + 30} cy={ty + H / 2} r={11} fill={AUCTION.tag2} stroke={INK} strokeWidth={4} />
         {mark && <g>
-          <circle cx={tx + 110} cy={ty + H / 2} r={44} fill={AUCTION.sold} stroke={INK} strokeWidth={6} />
-          <text x={tx + 110} y={ty + H / 2 + 22} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={64} fill="#ffffff">?</text>
+          <circle cx={bx} cy={ty + H / 2} r={38} fill={AUCTION.sold} stroke={INK} strokeWidth={6} />
+          <text x={bx} y={ty + H / 2 + 20} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={56} fill="#ffffff">?</text>
         </g>}
-        <text x={tx + (mark ? 160 : 60) + (W - (mark ? 160 : 60) - 20) / 2} y={r2(ty + H / 2 + fs * 0.36)} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={r2(fs)} fill={INK}>{text}</text>
+        <text x={r2(t0 + tw / 2)} y={r2(ty + H / 2 + fs * 0.36)} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={r2(fs)} fill={INK}>{text}</text>
       </g>
     );
   };
@@ -996,8 +996,9 @@ export const OilDerrick: React.FC<{ x: number; y: number; scale?: number; gush?:
   return (
     <g transform={`translate(${x} ${y}) scale(${scale})`}>
       {g > 0 && <g>
-        <path d={`M -10 ${-H} Q ${-30 - 60 * g} ${-H - 200 * g} ${-80 * g} ${-H - 320 * g} Q 0 ${-H - 380 * g} ${80 * g} ${-H - 320 * g} Q ${30 + 60 * g} ${-H - 200 * g} 10 ${-H} Z`} fill={AUCTION.oil} stroke={INK} strokeWidth={6} />
-        {[-1, 1].map((d) => <circle key={d} cx={d * 90 * g} cy={-H - 260 * g} r={16 * g} fill={AUCTION.oil} />)}
+        <path d={`M -10 ${-H} Q ${-30 - 60 * g} ${-H - 200 * g} ${-80 * g} ${-H - 320 * g} Q 0 ${-H - 380 * g} ${80 * g} ${-H - 320 * g} Q ${30 + 60 * g} ${-H - 200 * g} 10 ${-H} Z`} fill={AUCTION.oil} stroke={LAB.muted} strokeWidth={6} />
+        <path d={`M -4 ${-H - 20} Q ${-30 * g} ${-H - 180 * g} ${-50 * g} ${-H - 290 * g}`} stroke="#5a6690" strokeWidth={8} fill="none" strokeLinecap="round" />
+        {[-1, 1].map((d) => <circle key={d} cx={d * 100 * g} cy={-H - 250 * g} r={16 * g} fill={AUCTION.oil} stroke={LAB.muted} strokeWidth={4} />)}
       </g>}
       <rect x={-170} y={-16} width={340} height={22} rx={8} fill={c2} stroke={INK} strokeWidth={6} />
       <path d={beams.join(" ")} stroke={INK} strokeWidth={14} fill="none" strokeLinecap="round" />
