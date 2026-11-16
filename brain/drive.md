@@ -31,3 +31,4 @@ How a finished video gets into Drive (no rclone secrets needed):
 | 2026-11-15 | ALL 4 copied to TheLittleEpic/Shorts | 1 Goalkeeper, 2 Slow Queue, 3 Coin Flip, 4 Lift Button (mp4 + txt each) |
 | 2026-11-15 | tickle -> TheLittleEpic/Shorts | 5 - You Can't Tickle Yourself. Here's Why.mp4 (54.8 MB) + 5 - Tickle txt |
 | 2026-11-15 | toast -> TheLittleEpic/Shorts | 6 - Your Toast Isn't Unlucky, Your Table Is.mp4 (48.4 MB) + 6 - Toast txt |
+| 2026-11-16 | pole -> TheLittleEpic/Shorts | 7 - Stop Looking at the Pole.mp4 (66.5 MB) + 7 - Pole txt |

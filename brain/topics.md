@@ -10,7 +10,7 @@
 | Your Toast Isn't Unlucky, Your Table Is | done, in TheLittleEpic Drive 2026-11-15 (team build) | toast |
 | The Lift Button That Was Never Connected | rendered 2026-11-15, shown to owner; label fix in code (not re-rendered) | lift-button |
 | Why the Silent Player Took Everything | backlog | |
-| Stop Looking at the Pole | backlog | |
+| Stop Looking at the Pole | done, in TheLittleEpic Drive 2026-11-16 (team build) | pole |
 | The Winner Paid the Most and Lost | backlog | |
 | Two Pizzas or One? Everyone Gets It Wrong | backlog | |
 | The Punch He Never Saw Coming | backlog | |
