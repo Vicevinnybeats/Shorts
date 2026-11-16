@@ -17,7 +17,7 @@ import { Person, Look, INK, Expr, Pose } from "../../library/characters25/person
 import { CAST, EXTRAS } from "../../library/style/channel";
 import { Lab, T as LabT, LAB } from "../../library/environments25/lab";
 import { GAME, GameRoomWall, GameFloor, FairyLights, wallLights, PendantLamp, GameTable, tableLayout, tablePoint, SEAT_POSES, playerAt,
-  PlayerAtTable, HandsOnTable, Cards, CardStack, Dice, Snacks, Glass, SweatDrop, ClockBubble, SilenceBar, Lightbulb, AwkwardMeter,
+  PlayerAtTable, HandsOnTable, Cards, CardStack, Dice, Snacks, Glass, SweatDrop, ClockBubble, Lightbulb, AwkwardMeter,
   SpeechBubble, SeatName, sitPose } from "../../library/environments25/gamenight";
 import scenes from "../../content/scripts/silent.json";
 
@@ -37,7 +37,7 @@ const MOODS: Record<string, Mood> = {
   night: { grade: "#ff9a4a", gradeOp: 0.06, vignette: 0.42, glow: "#ffe2a8" },     // cosy evening, warm bulbs
   close: { grade: "#ff8a3a", gradeOp: 0.08, vignette: 0.5, glow: "#ffe2a8" },
   tense: { grade: "#2c3f7a", gradeOp: 0.18, vignette: 0.62, glow: "#e8f0ff" },     // the silence
-  freeze: { grade: "#1b2a6b", gradeOp: 0.45, vignette: 0.72 },                     // "Wait. Why?" - cold freeze-frame
+  freeze: { grade: "#1b2a6b", gradeOp: 0.2, vignette: 0.5 },                     // "Wait. Why?" - cold freeze-frame
   lab: { grade: "#0b1430", gradeOp: 0.04, vignette: 0.45 },
 };
 
@@ -184,6 +184,26 @@ const Pizza: React.FC<{ x: number; y: number; r: number; gap?: number; wob?: num
   return <g transform={`translate(${x} ${y})`}><ellipse cx={0} cy={r * 0.1} rx={r * 1.03} ry={r * 1.03} fill="#05040c" opacity={0.25} />{half(-1)}{half(1)}</g>;
 };
 
+/** a trading card that reads at phone size: solid colour face with a white border and a white diamond; x,y = bottom centre */
+const ColorCard: React.FC<{ x: number; y: number; s?: number; rot?: number; c: string }> = ({ x, y, s = 1, rot = 0, c }) => (
+  <g transform={`translate(${x} ${y}) rotate(${rot}) scale(${s})`}>
+    <rect x={-45} y={-128} width={90} height={128} rx={10} fill="#fbf6ea" stroke={INK} strokeWidth={6} />
+    <rect x={-36} y={-119} width={72} height={110} rx={6} fill={c} stroke={INK} strokeWidth={3} />
+    <path d="M 0 -94 L 18 -64 L 0 -34 L -18 -64 Z" fill="#fbf6ea" stroke={INK} strokeWidth={3} />
+  </g>
+);
+/** the three-second bar, thick: 3 segments filling left to right, a numbered tick 1-2-3 above each segment end */
+const BigBar: React.FC<{ x: number; y: number; w: number; progress: number }> = ({ x, y, w, progress }) => {
+  const p = Math.max(0, Math.min(1, progress)), Hh = 96;
+  return <g>
+    <rect x={x} y={y - Hh / 2} width={w} height={Hh} rx={Hh / 2} fill="#1a2448" stroke={INK} strokeWidth={9} />
+    {p > 0 && <rect x={x + 10} y={y - Hh / 2 + 10} width={Math.max(Hh - 20, (w - 20) * p)} height={Hh - 20} rx={(Hh - 20) / 2} fill={GOLD} />}
+    {[1, 2].map((i) => <path key={i} d={`M ${x + (w * i) / 3} ${y - Hh / 2 + 6} L ${x + (w * i) / 3} ${y + Hh / 2 - 6}`} stroke={INK} strokeWidth={7} opacity={0.7} />)}
+    {[1, 2, 3].map((i) => <text key={i} x={x + (w * i) / 3 - w / 6} y={y - Hh / 2 - 22} textAnchor="middle" fontFamily="CaptionSans, sans-serif" fontWeight={900} fontSize={54}
+      fill={p * 3 >= i - 0.02 ? GOLD : MUTED}>{i}</text>)}
+  </g>;
+};
+
 // ---------------------------------------------------------------- the game room
 type Seat = { pose: Pose; expr: Expr; rot?: number; t?: number; hide?: boolean; blink?: boolean };
 type RoomProps = { f: number; max?: Seat; june?: Seat; f1?: Seat; f2?: Seat; props?: React.ReactNode; backFront?: React.ReactNode; over?: React.ReactNode; lamp?: number };
@@ -300,7 +320,7 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
       body = <Room f={f} max={{ pose: mPose, expr: u < HO ? "smile" : "smirk", t: f + 13 }} june={{ pose: FRONT.rest, expr: u >= RD ? "focused" : "calm" }}
         f1={{ pose: SIDE.rest, expr: "smile", hide: true }} f2={{ pose: SIDE.rest, expr: "smile", hide: true }} props={tableProps()}
         backFront={<JuneHand lift={k(u, RD, RD + 6, 0, 1)} />}
-        over={<Cards x={hd.x} y={hd.y + 8} n={1} scale={1.2} rot={12} colors={[BLUE]} />} />;
+        over={<ColorCard x={hd.x} y={hd.y + 8} s={1.05} rot={12} c={BLUE} />} />;
       break;
     }
     case "pause": {  // June says nothing: everybody freezes, a big clock bubble ticks one third per spoken count
@@ -319,7 +339,7 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
         f1={{ pose: SIDE.hold, expr: "worried", t: t0, blink: false }} f2={{ pose: SIDE.rest, expr: "worried", t: t0, blink: false }}
         props={tableProps()} backFront={<JuneHand />}
         over={<>
-          <Cards x={hd.x} y={hd.y + 8} n={1} scale={1.0} rot={12} colors={[BLUE]} />
+          <ColorCard x={hd.x} y={hd.y + 8} s={0.9} rot={12} c={BLUE} />
           <g transform={`translate(540 470) scale(${k(u, 2, 10, 0, 1, Easing.out(Easing.back(1.6))) * (1 + tick)}) translate(-540 -470)`}>
             <ClockBubble x={540} y={470} r={150} progress={prog} tail="right" />
           </g></>} />;
@@ -345,8 +365,8 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
           const o = bub(t0);
           return o > 0.01 ? <g key={i} transform={`translate(${x} ${y}) rotate(${r}) scale(${o})`}><SpeechBubble x={0} y={0} w={230} h={130} tail={null}><Squiggles x={0} y={0} w={150} lines={2} /></SpeechBubble></g> : null;
         })}
-        <Thought x={540} y={460} w={700} h={330} o={th} to={{ x: 560, y: 650 }}>
-          <Bridge x={540} y={460} s={1.45 * th} built={k(u, BR - 6, BR + 10, 0.25, 1)} />
+        <Thought x={540} y={420} w={680} h={300} o={th} to={{ x: 560, y: 620 }}>
+          <Bridge x={540} y={420} s={1.35 * th} built={k(u, BR - 6, BR + 10, 0.25, 1)} />
         </Thought>
       </svg></AbsoluteFill>;
       break;
@@ -354,16 +374,16 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
     case "why": {    // "Wait." the frame freezes, cold grade, a spotlight finds the quiet one
       mood = MOODS.freeze;
       const t0 = span.a;
-      cam = { x: k(u, 0, len, 0, 18), y: 20, zoom: k(u, 0, len, 1.0, 1.05, Easing.out(Easing.cubic)), rot: 0 };
-      body = <Room f={t0} lamp={0.4}
+      cam = at({ x: k(u, 0, len, 640, 665), y: k(u, 0, len, 850, 830) }, k(u, 0, len, 1.3, 1.42, Easing.out(Easing.cubic)));
+      body = <Room f={t0} lamp={0.6}
         max={{ pose: sitPose("front", { armL: [110, -60], armR: [80, -80] }), expr: "worried", t: t0, blink: false, rot: 3 }}
         june={{ pose: FRONT.rest, expr: "smirk", t: t0, blink: false }}
-        f1={{ pose: SIDE.lean, expr: "shock", t: t0, blink: false }} f2={{ pose: SIDE.lean, expr: "shock", t: t0, blink: false }}
+        f1={{ pose: SIDE.lean, expr: "shock", t: t0, blink: false, hide: true }} f2={{ pose: SIDE.lean, expr: "shock", t: t0, blink: false, hide: true }}
         props={tableProps()} backFront={<JuneHand />}
         over={<SweatDrop x={H.max.x + 70} y={H.max.y - 30} scale={0.9} />} />;
       const sx = 540 + (H.june.x - 540 - cam.x) * cam.zoom, sy = 960 + (H.june.y + 60 - 960 - cam.y) * cam.zoom;
       overlay = <>
-        <AbsoluteFill style={{ background: `radial-gradient(260px 330px at ${sx}px ${sy}px, transparent 55%, rgba(5,6,24,${k(u, 2, 10, 0, 0.62)}) 100%)` }} />
+        <AbsoluteFill style={{ background: `radial-gradient(260px 330px at ${sx}px ${sy}px, transparent 55%, rgba(5,6,24,${k(u, 2, 10, 0, 0.36)}) 100%)` }} />
       </>;
       break;
     }
@@ -381,17 +401,17 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
       const pA: Pose = { ...A.pose, armR: shake > 0 ? reach(A, "R", ta.x, ta.y, 1) : A.pose.armR };
       const pB: Pose = { ...B.pose, armL: shake > 0 ? reach(B, "L", tb.x, tb.y, -1) : B.pose.armL };
       const deal = u >= BD;
-      cam = drift({ x: 0, y: 0, zoom: k(u, 0, len, 1.0, 1.04), rot: 0 }, f, 1.5);
+      cam = drift({ x: 0, y: 0, zoom: 1.0, rot: 0 }, f, 1.0);
       const barO = 1 - k(u, BD - 2, BD + 4, 0, 1);
       body = <Lab>
         <T x={540} y={420} s={64} c={GOLD} o={k(u, PA - 4, PA + 2, 0, 1)}>THREE-SECOND PAUSE</T>
-        {barO > 0.01 && !noText && <g opacity={barO * k(u, PA - 4, PA + 2, 0, 1)}><SilenceBar x={250} y={570} w={580} progress={fill} /></g>}
+        {barO > 0.01 && !noText && <g opacity={barO * k(u, PA - 4, PA + 2, 0, 1)}><BigBar x={250} y={600} w={580} progress={fill} /></g>}
         <path d="M 120 1252 L 960 1252" stroke={CREAM} strokeWidth={8} strokeLinecap="round" opacity={0.6} />
         <Person x={A.x} y={A.y} scale={A.s} facing={1} look={EXTRAS[1]} pose={pA} expr={deal ? "smile" : u >= PA ? "focused" : "calm"} t={f} blink={blinkOf(f, 5)} />
         <Person x={B.x} y={B.y} scale={B.s} facing={-1} look={EXTRAS[5]} pose={pB} expr={deal ? "smile" : u >= PA ? "focused" : "calm"} t={f + 40} blink={blinkOf(f, 6)} />
         <Check x={300} y={590} s={k(u, BD + 4, BD + 10, 0, 1.1, Easing.out(Easing.back(2)))} />
         <Check x={780} y={590} s={k(u, BD + 8, BD + 14, 0, 1.1, Easing.out(Easing.back(2)))} />
-        <T x={540} y={1345} s={72} c={GREEN} o={k(u, BD, BD + 6, 0, 1)}>BETTER DEALS</T>
+        <T x={540} y={1320} s={72} c={GREEN} o={k(u, BD, BD + 6, 0, 1)}>BETTER DEALS</T>
       </Lab>;
       break;
     }
@@ -423,27 +443,27 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
       mood = MOODS.lab;
       const FI = C("Fight", 42), OR = C("order a bigger one", 88), PE = C("People told", 137), GR = C("grew", 179);
       const grow = k(u, GR - 2, GR + 14, 0, 1, Easing.out(Easing.back(1.3)));
-      const R = 165 + 105 * grow, CY = 700;
+      const R = 165 + 85 * grow, CY = 680;
       const fight = u >= FI && u < PE;
       const tug = fight ? 18 + Math.sin(u * 0.6) * 8 : k(u, PE, PE + 8, 18, 0) * (u >= PE ? 1 : 0);
-      const A: Rig = { x: 190, y: 1240, s: 1.2, facing: 1, pose: { armL: [12, -6], armR: [12, -6], legL: [8, 0], legR: [8, 0], lookX: 1 }, t: f };
-      const B: Rig = { x: 890, y: 1240, s: 1.2, facing: -1, pose: { armL: [12, -6], armR: [12, -6], legL: [8, 0], legR: [8, 0], lookX: -1 }, t: f + 30 };
-      const ea = { x: 540 - R * 0.86 - tug, y: CY + R * 0.5 }, eb = { x: 540 + R * 0.86 + tug, y: CY + R * 0.5 };
+      const A: Rig = { x: 240, y: 1240, s: 1.2, facing: 1, pose: { armL: [12, -6], armR: [12, -6], legL: [8, 0], legR: [8, 0], lookX: 1 }, t: f };
+      const B: Rig = { x: 840, y: 1240, s: 1.2, facing: -1, pose: { armL: [12, -6], armR: [12, -6], legL: [8, 0], legR: [8, 0], lookX: -1 }, t: f + 30 };
+      const ea = { x: 540 - R * 0.66 - tug, y: CY + R * 0.75 }, eb = { x: 540 + R * 0.66 + tug, y: CY + R * 0.75 };
       const grab = u >= FI - 6;
       const pA: Pose = grab ? { ...A.pose, armR: reach(A, "R", ea.x, ea.y, 1), armL: reach(A, "L", ea.x - 10, ea.y + 30, 1), lean: fight ? -6 : 0 } : A.pose;
       const pB: Pose = grab ? { ...B.pose, armL: reach(B, "L", eb.x, eb.y, -1), armR: reach(B, "R", eb.x + 10, eb.y + 30, -1), lean: fight ? -6 : 0 } : B.pose;
       const ghost = k(u, OR, OR + 8, 0, 1) * (1 - k(u, GR, GR + 10, 0, 1));
       const ex: Expr = u >= GR ? "cheer" : u >= PE ? "focused" : fight ? "determined" : "smile";
-      cam = drift({ x: 0, y: 0, zoom: k(u, 0, len, 1.0, 1.04), rot: 0 }, f, 1.5);
+      cam = drift({ x: 0, y: 0, zoom: 1.0, rot: 0 }, f, 1.0);
       body = <Lab>
-        {ghost > 0.01 && <circle cx={540} cy={CY} r={270} fill="none" stroke={GOLD} strokeWidth={8} strokeDasharray="22 16" opacity={ghost} />}
+        {ghost > 0.01 && <circle cx={540} cy={CY} r={250} fill="none" stroke={GOLD} strokeWidth={8} strokeDasharray="22 16" opacity={ghost} />}
         <Pizza x={540} y={CY} r={R} gap={tug} wob={fight ? Math.sin(u * 0.6) * 3 : 0} />
         {u >= PE && u < GR + 4 && <g opacity={k(u, PE, PE + 5, 0, 1) * (1 - k(u, GR, GR + 4, 0, 1))}><circle cx={540} cy={CY} r={78} fill={LAB.bg} stroke={INK} strokeWidth={7} opacity={0.9} /><PauseIcon x={540} y={CY} s={0.85} /></g>}
         <path d="M 60 1242 L 1020 1242" stroke={CREAM} strokeWidth={8} strokeLinecap="round" opacity={0.6} />
         <Person x={A.x} y={A.y} scale={A.s} facing={1} look={EXTRAS[0]} pose={pA} expr={ex} t={f} blink={blinkOf(f, 8)} />
         <Person x={B.x} y={B.y} scale={B.s} facing={-1} look={EXTRAS[3]} pose={pB} expr={ex} t={f + 30} blink={blinkOf(f, 9)} />
-        <T x={540} y={372} s={76} c={GOLD} o={k(u, GR, GR + 6, 0, 1)}>BIGGER PIE</T>
-        <T x={540} y={1345} s={70} c={GREEN} o={k(u, GR + 8, GR + 14, 0, 1)}>FOR BOTH SIDES</T>
+        <T x={540} y={395} s={76} c={GOLD} o={k(u, GR, GR + 6, 0, 1)}>BIGGER PIE</T>
+        <T x={540} y={1320} s={70} c={GREEN} o={k(u, GR + 8, GR + 14, 0, 1)}>FOR BOTH SIDES</T>
       </Lab>;
       break;
     }
@@ -491,9 +511,9 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
         f1={{ pose: SIDE.rest, expr: "smile", hide: true }} f2={{ pose: SIDE.rest, expr: "smile", hide: true }} props={tableProps()}
         backFront={<JuneHand n={4} />}
         over={<>
-          {!(u >= HB + 8) && <Cards x={blueAt.x} y={blueAt.y + 8} n={1} scale={1.0} rot={sw * 24 - 12} colors={[BLUE]} />}
-          {u >= HB + 8 && <Cards x={hm.x} y={hm.y + 8} n={1} scale={1.0} rot={-10} colors={[REDC]} />}
-          <Cards x={redAt.x} y={redAt.y + 8} n={1} scale={1.0} rot={-12 + sw * 24} colors={[sw >= 1 && u < HB + 8 ? REDC : sw >= 1 ? BLUE : REDC]} />
+          {!(u >= HB + 8) && <ColorCard x={blueAt.x} y={blueAt.y + 8} s={1.15} rot={sw * 24 - 12} c={BLUE} />}
+          {u >= HB + 8 && <ColorCard x={hm.x} y={hm.y + 8} s={1.15} rot={-10} c={REDC} />}
+          <ColorCard x={redAt.x} y={redAt.y + 8} s={1.15} rot={-12 + sw * 24} c={sw >= 1 && u < HB + 8 ? REDC : sw >= 1 ? BLUE : REDC} />
           <g opacity={1 - k(u, TR + 4, TR + 10, 0, 1)}><Lightbulb x={H.june.x + 120} y={H.june.y - 150} scale={k(u, FD, FD + 6, 0, 0.7, Easing.out(Easing.back(2)))} on={k(u, FD + 4, FD + 8, 0, 1)} /></g>
           <Check x={H.max.x - 110} y={H.max.y - 140} s={k(u, HB + 2, HB + 8, 0, 0.9, Easing.out(Easing.back(2)))} />
           <Check x={H.june.x + 110} y={H.june.y - 140} s={k(u, HB + 6, HB + 12, 0, 0.9, Easing.out(Easing.back(2)))} />
@@ -525,7 +545,7 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
           june={{ pose: FRONT.rest, expr: "calm", hide: true }} f1={{ pose: SIDE.rest, expr: "smile", hide: true }} f2={{ pose: SIDE.rest, expr: "smile", hide: true }}
           props={tableProps()}
           over={<>{strain > 0.55 && <SweatDrop x={H.max.x + 72} y={H.max.y - 40 + ((u % 22) * 1.8)} scale={0.85} />}
-            <ClockBubble x={H.max.x + 128} y={H.max.y - 170} r={62} progress={prog} tail="left" /></>} />;
+            <ClockBubble x={H.max.x + 100} y={H.max.y - 170} r={62} progress={prog} tail="left" /></>} />;
       } else {
         // "Fine, take the snacks too!": hard cut to the two-shot, he shoves the bowl over to June
         const sh = k(u, FN + 4, FN + 22, 0, 1, Easing.out(Easing.cubic));
@@ -540,7 +560,7 @@ const ShotView: React.FC<{ span: ShotSpan }> = ({ span }) => {
             <TableArm who="max" side={1} to={{ x: bowl.x - 60, y: bowl.y - 30 }} look={MAX} />
             {sh > 0.1 && sh < 0.95 && [0, 1].map((i) => <path key={i} d={`M ${bowl.x - 120 - i * 20} ${bowl.y - 60 + i * 26} L ${bowl.x - 190 - i * 20} ${bowl.y - 60 + i * 26}`} stroke="#fff4d6" strokeWidth={7} strokeLinecap="round" />)}
             {hands("june")}</>}
-          over={<Shout x={H.max.x - 40} y={H.max.y - 225} r={100} o={k(u, FN, FN + 5, 0, 1)} rot={-5} fill="#ffe0d6" />} />;
+          over={<Shout x={H.max.x + 40} y={H.max.y - 225} r={92} o={k(u, FN, FN + 5, 0, 1)} rot={-5} fill="#ffe0d6" />} />;
         overlay = <Flash framesSince={u - FN} len={3} />;
       }
       break;
