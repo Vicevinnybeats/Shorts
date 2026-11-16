@@ -1,0 +1,120 @@
+{
+  "id": "first-offer",
+  "title": "He Said the Price First and Still Won",
+  "words": 156,
+  "cast": {
+    "kai": "kai",
+    "rosa": "rosa"
+  },
+  "shots": [
+    {
+      "id": "hook",
+      "cue": "Kai just broke",
+      "place": "market",
+      "narration": "Kai just broke the golden rule of haggling. And he's about to win."
+    },
+    {
+      "id": "wide",
+      "cue": "Saturday flea market",
+      "place": "market",
+      "narration": "Saturday flea market. Everyone wants a bargain."
+    },
+    {
+      "id": "guitar",
+      "cue": "Kai's old guitar",
+      "place": "market",
+      "narration": "Kai's old guitar has a blank tag. Rosa picks it up."
+    },
+    {
+      "id": "offer",
+      "cue": "Kai speaks first",
+      "place": "market",
+      "narration": "Kai speaks first. Two hundred dollars.",
+      "onScreenText": [
+        "$200"
+      ]
+    },
+    {
+      "id": "gasp",
+      "cue": "Rosa nearly drops",
+      "place": "market",
+      "narration": "Rosa nearly drops it. Two hundred?"
+    },
+    {
+      "id": "advice",
+      "cue": "Wait. Everyone says",
+      "place": "market",
+      "narration": "Wait. Everyone says never name the price first. Why did it work?",
+      "onScreenText": [
+        "NEVER GO FIRST?"
+      ]
+    },
+    {
+      "id": "study",
+      "cue": "In negotiation experiments",
+      "place": "lab",
+      "narration": "In negotiation experiments, whoever made the first offer usually got the better deal.",
+      "onScreenText": [
+        "FIRST OFFER",
+        "BETTER DEAL"
+      ]
+    },
+    {
+      "id": "anchor",
+      "cue": "That first number",
+      "place": "lab",
+      "narration": "That first number becomes an anchor. Every counteroffer gets dragged toward it.",
+      "onScreenText": [
+        "ANCHOR"
+      ]
+    },
+    {
+      "id": "wheel",
+      "cue": "Even a random",
+      "place": "lab2",
+      "narration": "Even a random wheel does it. In one test, people who saw ten guessed twenty five percent. Those who saw sixty five guessed forty five.",
+      "onScreenText": [
+        "AFRICA'S SHARE OF THE UN?",
+        "SAW 10 → GUESSED 25%",
+        "SAW 65 → GUESSED 45%"
+      ]
+    },
+    {
+      "id": "pull",
+      "cue": "The final price",
+      "place": "lab2",
+      "narration": "The final price follows it. Just know the real value. Go too wild, and buyers walk.",
+      "onScreenText": [
+        "KNOW THE VALUE"
+      ]
+    },
+    {
+      "id": "counter",
+      "cue": "Rosa counters with",
+      "place": "market",
+      "narration": "Rosa counters with one hundred. They meet at one sixty.",
+      "onScreenText": [
+        "$100",
+        "$160"
+      ]
+    },
+    {
+      "id": "deal",
+      "cue": "Deal. Rosa still",
+      "place": "market",
+      "narration": "Deal. Rosa still thinks she won."
+    },
+    {
+      "id": "twist",
+      "cue": "Next Saturday, Rosa",
+      "place": "market2",
+      "narration": "Next Saturday, Rosa runs her own stall. She names her price first."
+    },
+    {
+      "id": "ask",
+      "cue": "So, would you",
+      "place": "market2",
+      "narration": "So, would you say the price first?"
+    }
+  ]
+}

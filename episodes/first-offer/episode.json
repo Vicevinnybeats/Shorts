@@ -1,0 +1,10 @@
+{
+  "id": "first-offer",
+  "title": "He Said the Price First and Still Won",
+  "style": "2.5D",
+  "composition": "Ep-first-offer",
+  "stills": [10, 160, 250, 380, 460, 540, 690, 830, 980, 1260, 1450, 1580, 1660, 1800],
+  "chunks": 3,
+  "status": "test-render",
+  "publish": false
+}
