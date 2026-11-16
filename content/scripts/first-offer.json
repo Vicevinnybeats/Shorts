@@ -1,7 +1,7 @@
 {
   "id": "first-offer",
   "title": "He Said the Price First and Still Won",
-  "words": 156,
+  "words": 157,
   "cast": {
     "kai": "kai",
     "rosa": "rosa"
@@ -53,7 +53,7 @@
       "id": "study",
       "cue": "In negotiation experiments",
       "place": "lab",
-      "narration": "In negotiation experiments, whoever made the first offer usually got the better deal.",
+      "narration": "In negotiation experiments, whoever made the first offer tended to get the better deal.",
       "onScreenText": [
         "FIRST OFFER",
         "BETTER DEAL"
@@ -63,7 +63,7 @@
       "id": "anchor",
       "cue": "That first number",
       "place": "lab",
-      "narration": "That first number becomes an anchor. Every counteroffer gets dragged toward it.",
+      "narration": "That first number becomes an anchor. Counteroffers get dragged toward it.",
       "onScreenText": [
         "ANCHOR"
       ]
@@ -83,7 +83,7 @@
       "id": "pull",
       "cue": "The final price",
       "place": "lab2",
-      "narration": "The final price follows it. Just know the real value. Go too wild, and buyers walk.",
+      "narration": "The final price follows it. Just know the real value. Go too wild, and buyers may walk.",
       "onScreenText": [
         "KNOW THE VALUE"
       ]

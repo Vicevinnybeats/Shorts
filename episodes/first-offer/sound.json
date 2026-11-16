@@ -16,7 +16,7 @@
   {"cue": "twenty five percent.", "fn": "clink", "args": {"bright": 0.5}, "gain_db": -11},
   {"cue": "guessed forty five.", "fn": "clink", "args": {"bright": 0.9}, "gain_db": -10},
   {"cue": "The final price follows", "fn": "whoosh", "args": {"dur": 0.6, "peak": 0.08}, "gain_db": -10},
-  {"cue": "buyers walk.", "fn": "breeze", "args": {"dur": 2.0}, "level_lu": -23},
+  {"cue": "buyers may walk.", "fn": "breeze", "args": {"dur": 2.0}, "level_lu": -23},
   {"cue": "Rosa counters with", "fn": "crowd", "args": {"dur": 4.0}, "level_lu": -23},
   {"cue": "meet at one sixty.", "fn": "clink", "args": {"bright": 1.0}, "gain_db": -8},
   {"cue": "Deal. Rosa still", "fn": "applause", "args": {"dur": 1.5}, "level_lu": -23},
