@@ -1,0 +1,32 @@
+{
+  "episode": "pizza",
+  "test": true,
+  "youtube": {
+    "title": "Two Pizzas or One? Everyone Gets It Wrong #Shorts",
+    "description": "Lucas ordered two pizzas. Amira ordered one. She got more pizza.\n\nPizza is a surface: area grows with the square of the width, so twice as wide means four times the pizza. One 18-inch pizza is about 254 square inches; two 12-inch pizzas are about 226. Studies on size judgement suggest we compare one dimension and don't adjust enough for the other (Krider, Raghubir & Krishna, 2001; Ordabayeva & Chandon, 2013). And in NPR's analysis of 74,476 pizza prices, bigger pies were usually cheaper per square inch.\n\nSo, would you still order two?\n\nSources:\n- NPR Planet Money (2014), 74,476 Reasons You Should Always Get The Bigger Pizza: https://www.npr.org/sections/money/2014/02/26/282132576/74-476-reasons-you-should-always-get-the-bigger-pizza\n- Krider, Raghubir & Krishna (2001), Pizzas: pi or square? Psychophysical biases in area comparisons, Marketing Science 20(4): https://pubsonline.informs.org/doi/10.1287/mksc.20.4.405.9756\n- Ordabayeva & Chandon (2013), Predicting and managing consumers' package size impressions, Journal of Marketing 77(5): https://pure.eur.nl/en/publications/predicting-and-managing-consumers-package-size-impressions/\n\nLucas, Amira and the pizzeria are fictional.\nAI disclosure: made with AI assistance (script drafting, synthetic narration voice, animation).\n\n#Shorts #science #math #psychology #pizza #geometry #TheLittleEpic",
+    "tags": [
+      "shorts",
+      "pizza",
+      "pizza math",
+      "area of a circle",
+      "geometry",
+      "size perception",
+      "psychology",
+      "science",
+      "animation",
+      "TheLittleEpic"
+    ],
+    "category": "Education",
+    "made_for_kids": false,
+    "contains_synthetic_media": false
+  },
+  "instagram": {
+    "caption": "Two pizzas or one? One 18-inch pizza beats two 12-inch ones. 🍕\nTwice as wide means four times the pizza, and our eyes judge by width.\n\nSo, would you still order two? 👇\n\nMade with AI assistance. Sources on YouTube.\n\n#science #math #psychology #pizza #shorts #reels #animation #TheLittleEpic"
+  },
+  "sources": [
+    {"fact": "Area grows with the square of the diameter; 18-inch = ~254 sq in vs two 12-inch = ~226 sq in (computed)", "url": "https://www.mentalfloss.com/food/pizza/want-more-pizza-order-one-18-inch-pie-instead-two-12-inch-pies"},
+    {"fact": "Bigger pizzas usually cost less per square inch (74,476 prices, 3,678 US pizzerias, 2014)", "url": "https://www.npr.org/sections/money/2014/02/26/282132576/74-476-reasons-you-should-always-get-the-bigger-pizza"},
+    {"fact": "People compare areas along one salient dimension and adjust insufficiently for the other", "url": "https://pubsonline.informs.org/doi/10.1287/mksc.20.4.405.9756"},
+    {"fact": "People add changes across dimensions instead of multiplying them (AddChange)", "url": "https://pure.eur.nl/en/publications/predicting-and-managing-consumers-package-size-impressions/"}
+  ]
+}
