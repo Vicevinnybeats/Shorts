@@ -58,4 +58,12 @@ export const CAST: Record<string, Look> = {
   // stands behind his Stall; Rosa = the buyer (coral top, teal jeans, Sunglasses pushed up + ToteBag).
   kai: { skin: SKIN.deep, hair: HAIR.black, hairStyle: "short", jersey: "#5b86b8", jersey2: "#43699a", shorts: "#c9a46a", socks: "#c9a46a", boots: "#5a3a24" },
   rosa: { skin: SKIN.light, hair: HAIR.brown, hairStyle: "curly", jersey: "#ff6f5e", jersey2: "#d9503f", shorts: "#2f6f8a", socks: "#2f6f8a", boots: "#f2f2ee" },
+  // winner (school-hall charity auction, environments25/auction.tsx). Ben = the eager bidder (azure sweater, brown
+  // short hair, charcoal trousers); auctioneer = grey-haired, burgundy jersey = blazer (add Blazer + BowTie, or use
+  // <Auctioneer/>). parent1 = the excited parent who outbids Ben next year (orange, black bun), parent2/parent3 = extras.
+  ben: { skin: SKIN.light, hair: HAIR.brown, hairStyle: "short", jersey: "#2e9be6", jersey2: "#1f74b3", shorts: "#3b3346", socks: "#3b3346", boots: "#5a3a24" },
+  auctioneer: { skin: SKIN.deep, hair: HAIR.grey, hairStyle: "short", jersey: "#7a2a3a", jersey2: "#5a1c2a", shorts: "#2a2f3d", socks: "#2a2f3d", boots: "#1d1a24" },
+  parent1: { skin: SKIN.dark, hair: HAIR.black, hairStyle: "bun", jersey: "#ff8a3d", jersey2: "#d96a22", shorts: "#2d3a5a", socks: "#2d3a5a", boots: "#f2f2ee" },
+  parent2: { skin: SKIN.fair, hair: HAIR.blond, hairStyle: "short", jersey: "#5bbf6a", jersey2: "#3f9a4f", shorts: "#6a5a4a", socks: "#6a5a4a" },
+  parent3: { skin: SKIN.tan, hair: HAIR.grey, hairStyle: "bun", jersey: "#b06ad9", jersey2: "#8a4ab3", shorts: "#3b3f52", socks: "#3b3f52" },
 };

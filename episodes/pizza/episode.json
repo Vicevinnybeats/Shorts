@@ -1,0 +1,10 @@
+{
+  "id": "pizza",
+  "title": "Two Pizzas or One? Everyone Gets It Wrong",
+  "style": "2.5D",
+  "composition": "Ep-pizza",
+  "stills": [10, 181, 300, 444, 552, 641, 747, 964, 1242, 1447, 1584, 1716, 1843],
+  "chunks": 3,
+  "status": "test-render",
+  "publish": false
+}

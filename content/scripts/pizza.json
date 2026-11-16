@@ -1,0 +1,118 @@
+{
+  "id": "pizza",
+  "title": "Two Pizzas or One? Everyone Gets It Wrong",
+  "words": 153,
+  "cast": {
+    "lucas": "lucas",
+    "amira": "amira"
+  },
+  "shots": [
+    {
+      "id": "hook",
+      "cue": "Lucas ordered two",
+      "place": "shop",
+      "narration": "Lucas ordered two pizzas. Amira ordered one. She got more pizza.",
+      "onScreenText": [
+        "TWO OR ONE?"
+      ]
+    },
+    {
+      "id": "wide",
+      "cue": "Friday night. The",
+      "place": "shop",
+      "narration": "Friday night. The pizzeria is packed."
+    },
+    {
+      "id": "order",
+      "cue": "Lucas grins",
+      "place": "shop",
+      "narration": "Lucas grins. Two twelve inch pizzas, please. Amira points. One eighteen inch.",
+      "onScreenText": [
+        "2 × 12\"",
+        "1 × 18\""
+      ]
+    },
+    {
+      "id": "boxes",
+      "cue": "The boxes land",
+      "place": "shop",
+      "narration": "The boxes land. Lucas pats his stack. Two beats one."
+    },
+    {
+      "id": "open",
+      "cue": "Then the lids",
+      "place": "shop",
+      "narration": "Then the lids open. Hers looks enormous."
+    },
+    {
+      "id": "why",
+      "cue": "Wait. Two pizzas",
+      "place": "shop",
+      "narration": "Wait. Two pizzas, less pizza? Why?",
+      "onScreenText": [
+        "LESS PIZZA?"
+      ]
+    },
+    {
+      "id": "diameter",
+      "cue": "Menus sell pizza",
+      "place": "lab",
+      "narration": "Menus sell pizza by width. One line, edge to edge.",
+      "onScreenText": [
+        "SOLD BY WIDTH"
+      ]
+    },
+    {
+      "id": "area",
+      "cue": "But pizza is",
+      "place": "lab",
+      "narration": "But pizza is a surface. Twice as wide means four times the pizza. Like tiling a floor: double both sides, and you need four times the tiles.",
+      "onScreenText": [
+        "2× WIDE = 4× PIZZA"
+      ]
+    },
+    {
+      "id": "numbers",
+      "cue": "So one eighteen",
+      "place": "lab2",
+      "narration": "So one eighteen inch pizza: about two hundred fifty four square inches. Two twelve inch pizzas: about two hundred twenty six.",
+      "onScreenText": [
+        "18\": ~254 SQ IN",
+        "2 × 12\": ~226 SQ IN"
+      ]
+    },
+    {
+      "id": "brain",
+      "cue": "Studies suggest we",
+      "place": "lab3",
+      "narration": "Studies suggest we judge size along one line, then don't adjust enough for the rest.",
+      "onScreenText": [
+        "WIDTH ≠ AREA"
+      ]
+    },
+    {
+      "id": "price",
+      "cue": "And per bite",
+      "place": "lab3",
+      "narration": "And per bite, the large is often cheaper too.",
+      "onScreenText": [
+        "OFTEN CHEAPER PER BITE"
+      ]
+    },
+    {
+      "id": "twist",
+      "cue": "Next Friday, Lucas",
+      "place": "shop",
+      "narration": "Next Friday, Lucas orders one large. And a second one, just in case.",
+      "onScreenText": [
+        "JUST IN CASE"
+      ]
+    },
+    {
+      "id": "ask",
+      "cue": "So, would you",
+      "place": "shop",
+      "narration": "So, would you still order two?"
+    }
+  ]
+}
