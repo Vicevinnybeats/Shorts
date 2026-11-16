@@ -1,0 +1,107 @@
+{
+  "id": "silent",
+  "title": "Why the Silent Player Took Everything",
+  "words": 154,
+  "cast": {
+    "june": "june",
+    "max": "max"
+  },
+  "extras": {
+    "friend_a": "EXTRAS[0]",
+    "friend_b": "EXTRAS[3]"
+  },
+  "shots": [
+    {
+      "id": "hook",
+      "cue": "June hasn't said",
+      "place": "table",
+      "narration": "June hasn't said a word all night. She's about to take everything."
+    },
+    {
+      "id": "wide",
+      "cue": "Max talks nonstop",
+      "place": "table",
+      "narration": "Max talks nonstop. He jokes, he bluffs, he trades."
+    },
+    {
+      "id": "offer",
+      "cue": "He holds out",
+      "place": "table",
+      "narration": "He holds out a card. My blue for your red?"
+    },
+    {
+      "id": "pause",
+      "cue": "June says nothing",
+      "place": "table",
+      "narration": "June says nothing. One second. Two. Three."
+    },
+    {
+      "id": "cave",
+      "cue": "Max squirms and",
+      "place": "table",
+      "narration": "Max squirms and starts explaining. He needs red for his bridge."
+    },
+    {
+      "id": "why",
+      "cue": "Wait. Why does",
+      "place": "table",
+      "narration": "Wait. Why does the quiet one win?"
+    },
+    {
+      "id": "study",
+      "cue": "In a negotiation",
+      "place": "lab",
+      "narration": "In a negotiation study, pauses of three seconds or more came with better deals for both sides.",
+      "onScreenText": [
+        "THREE-SECOND PAUSE",
+        "BETTER DEALS"
+      ]
+    },
+    {
+      "id": "think",
+      "cue": "The pause isn't",
+      "place": "lab",
+      "narration": "The pause isn't a threat. It's thinking time. You stop fighting and start hunting for ideas.",
+      "onScreenText": [
+        "THINKING TIME"
+      ]
+    },
+    {
+      "id": "pie",
+      "cue": "Like a pizza",
+      "place": "lab2",
+      "narration": "Like a pizza. Fight over slices, or order a bigger one. People told to pause grew the pizza.",
+      "onScreenText": [
+        "BIGGER PIE",
+        "FOR BOTH SIDES"
+      ]
+    },
+    {
+      "id": "fill",
+      "cue": "But silence is",
+      "place": "lab3",
+      "narration": "But silence is hard. Even four seconds of quiet can make people uneasy. So we fill it.",
+      "onScreenText": [
+        "AWKWARD METER"
+      ]
+    },
+    {
+      "id": "win",
+      "cue": "June finds a",
+      "place": "table",
+      "narration": "June finds a trade that helps them both."
+    },
+    {
+      "id": "twist",
+      "cue": "Next round, Max",
+      "place": "table",
+      "narration": "Next round, Max tries silence. He lasts one second. Fine, take the snacks too!"
+    },
+    {
+      "id": "ask",
+      "cue": "Could you stay",
+      "place": "table",
+      "narration": "Could you stay quiet for three whole seconds?"
+    }
+  ]
+}
