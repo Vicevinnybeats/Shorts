@@ -54,4 +54,8 @@ export const CAST: Record<string, Look> = {
   max: { skin: SKIN.light, hair: HAIR.blond, hairStyle: "curly", jersey: "#e8443a", jersey2: "#b8302a", shorts: "#2d3a5a", socks: "#2d3a5a" },
   friend1: { skin: SKIN.dark, hair: HAIR.black, hairStyle: "buzz", jersey: "#3fb8c9", jersey2: "#2a8a99", shorts: "#2a2f3d", socks: "#2a2f3d" },
   friend2: { skin: SKIN.brown, hair: HAIR.brown, hairStyle: "short", jersey: "#f2c230", jersey2: "#c99a12", shorts: "#3b3346", socks: "#3b3346" },
+  // first-offer (flea market, environments25/market.tsx). Kai = the seller (chambray shirt, khaki chinos, mustard Cap),
+  // stands behind his Stall; Rosa = the buyer (coral top, teal jeans, Sunglasses pushed up + ToteBag).
+  kai: { skin: SKIN.deep, hair: HAIR.black, hairStyle: "short", jersey: "#5b86b8", jersey2: "#43699a", shorts: "#c9a46a", socks: "#c9a46a", boots: "#5a3a24" },
+  rosa: { skin: SKIN.light, hair: HAIR.brown, hairStyle: "curly", jersey: "#ff6f5e", jersey2: "#d9503f", shorts: "#2f6f8a", socks: "#2f6f8a", boots: "#f2f2ee" },
 };
