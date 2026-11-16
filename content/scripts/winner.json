@@ -1,0 +1,134 @@
+{
+  "id": "winner",
+  "title": "The Winner Paid the Most and Lost",
+  "words": 155,
+  "cast": {
+    "ben": "ben",
+    "auctioneer": "auctioneer"
+  },
+  "shots": [
+    {
+      "id": "hook",
+      "cue": "Ben just won",
+      "place": "hall",
+      "narration": "Ben just won the auction. And he just lost money."
+    },
+    {
+      "id": "wide",
+      "cue": "School charity night",
+      "place": "hall",
+      "narration": "School charity night. Parents, paddles, and one giant jar of coins."
+    },
+    {
+      "id": "jar",
+      "cue": "Nobody knows what's",
+      "place": "hall",
+      "narration": "Nobody knows what's inside. Everyone guesses.",
+      "onScreenText": [
+        "HOW MUCH?"
+      ]
+    },
+    {
+      "id": "bidding",
+      "cue": "Ten dollars. Fifteen.",
+      "place": "hall",
+      "narration": "Ten dollars. Fifteen. Twenty. Ben keeps his paddle up.",
+      "onScreenText": [
+        "$10",
+        "$15",
+        "$20"
+      ]
+    },
+    {
+      "id": "win",
+      "cue": "Sold, for twenty",
+      "place": "hall",
+      "narration": "Sold, for twenty five dollars!",
+      "onScreenText": [
+        "SOLD! $25"
+      ]
+    },
+    {
+      "id": "count",
+      "cue": "Ben counts the",
+      "place": "hall",
+      "narration": "Ben counts the coins. Eighteen dollars. His smile drops.",
+      "onScreenText": [
+        "PAID $25",
+        "INSIDE $18"
+      ]
+    },
+    {
+      "id": "why",
+      "cue": "Wait. He won.",
+      "place": "hall",
+      "narration": "Wait. He won. So why does winning feel like losing?",
+      "onScreenText": [
+        "WON... AND LOST?"
+      ]
+    },
+    {
+      "id": "guesses",
+      "cue": "It's like a",
+      "place": "lab",
+      "narration": "It's like a crowd guessing the sweets in a jar. Some guess low, some guess high.",
+      "onScreenText": [
+        "TRUE VALUE"
+      ]
+    },
+    {
+      "id": "highest",
+      "cue": "But who wins",
+      "place": "lab",
+      "narration": "But who wins an auction? The highest guess. Often the biggest overestimate.",
+      "onScreenText": [
+        "HIGHEST GUESS WINS"
+      ]
+    },
+    {
+      "id": "study",
+      "cue": "In a classroom",
+      "place": "lab2",
+      "narration": "In a classroom test, coin jars worth eight dollars sold for about ten. The average guess was about five.",
+      "onScreenText": [
+        "JAR WORTH $8",
+        "AVERAGE GUESS ~$5",
+        "WINNING BID ~$10"
+      ]
+    },
+    {
+      "id": "oil",
+      "cue": "Oil engineers named",
+      "place": "lab3",
+      "narration": "Oil engineers named it, after firms seemed to overpay for offshore oil fields. The winner's curse.",
+      "onScreenText": [
+        "THE WINNER'S CURSE"
+      ]
+    },
+    {
+      "id": "fix",
+      "cue": "The fix? Bid",
+      "place": "lab3",
+      "narration": "The fix? Bid below your own guess. More bidders? Step back further.",
+      "onScreenText": [
+        "BID BELOW YOUR GUESS",
+        "MORE BIDDERS → STEP BACK"
+      ]
+    },
+    {
+      "id": "twist",
+      "cue": "Next year, Ben",
+      "place": "hall",
+      "narration": "Next year, Ben bids low. An excited parent outbids him. Ben just smiles.",
+      "onScreenText": [
+        "NEXT YEAR"
+      ]
+    },
+    {
+      "id": "ask",
+      "cue": "So, would you",
+      "place": "hall",
+      "narration": "So, would you still raise your paddle?"
+    }
+  ]
+}

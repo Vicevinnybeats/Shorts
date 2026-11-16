@@ -1,0 +1,25 @@
+{
+  "id": "winner",
+  "title": "The Winner Paid the Most and Lost",
+  "style": "2.5D",
+  "composition": "Ep-winner",
+  "stills": [
+    10,
+    180,
+    290,
+    390,
+    490,
+    580,
+    700,
+    860,
+    1030,
+    1200,
+    1410,
+    1580,
+    1740,
+    1860
+  ],
+  "chunks": 3,
+  "status": "test-render",
+  "publish": false
+}

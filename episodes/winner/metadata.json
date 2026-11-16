@@ -1,0 +1,44 @@
+{
+  "episode": "winner",
+  "test": true,
+  "youtube": {
+    "title": "The Winner Paid the Most and Lost #Shorts",
+    "description": "Ben just won the auction. And he just lost money.\n\nWhen nobody knows what a prize is really worth, the winning bid tends to come from whoever overestimated it most. That is the winner's curse, named by oil engineers studying offshore lease auctions (Capen, Clapp & Campbell, 1971). In classroom auctions of coin jars worth $8, the average guess was about $5, yet the average winning bid was about $10 (Bazerman & Samuelson, 1983; Thaler, 1988). The fix: bid below your own estimate, and step back further when there are more bidders.\n\nSo, would you still raise your paddle?\n\nSources:\n- Thaler (1988), Anomalies: The Winner's Curse, Journal of Economic Perspectives 2(1): https://www.aeaweb.org/articles?id=10.1257/jep.2.1.191\n- Bazerman & Samuelson (1983), I Won the Auction But Don't Want the Prize, Journal of Conflict Resolution 27(4): https://econpapers.repec.org/RePEc:sae:jocore:v:27:y:1983:i:4:p:618-634\n- Capen, Clapp & Campbell (1971), Competitive Bidding in High-Risk Situations (summary): https://en.wikipedia.org/wiki/Winner%27s_curse\n- Harvard Program on Negotiation, How to avoid the winner's curse: https://www.pon.harvard.edu/daily/business-negotiations/how-to-avoid-the-winners-curse\n\nBen and the school charity auction are fictional.\nAI disclosure: made with AI assistance (script drafting, synthetic narration voice, animation).\n\n#Shorts #science #psychology #economics #auction #winnerscurse #TheLittleEpic",
+    "tags": [
+      "shorts",
+      "winner's curse",
+      "auction",
+      "bidding",
+      "overpaying",
+      "behavioral economics",
+      "psychology",
+      "science",
+      "animation",
+      "TheLittleEpic"
+    ],
+    "category": "Education",
+    "made_for_kids": false,
+    "contains_synthetic_media": false
+  },
+  "instagram": {
+    "caption": "He won the auction, and lost money. 🫙\nWhen nobody knows the real value, the winner tends to be whoever guessed highest: the winner's curse.\n\nSo, would you still raise your paddle? 👇\n\nMade with AI assistance. Sources on YouTube.\n\n#science #psychology #economics #auction #shorts #reels #animation #TheLittleEpic"
+  },
+  "sources": [
+    {
+      "fact": "Winner's curse: in common-value auctions the winner tends to be the biggest overestimator; more bidders call for more caution",
+      "url": "https://www.aeaweb.org/articles?id=10.1257/jep.2.1.191"
+    },
+    {
+      "fact": "Coin jars worth $8: mean estimate $5.13, mean winning bid $10.01 (average loss $2.01)",
+      "url": "https://econpapers.repec.org/RePEc:sae:jocore:v:27:y:1983:i:4:p:618-634"
+    },
+    {
+      "fact": "Term coined by Capen, Clapp & Campbell (1971) for offshore oil lease auctions",
+      "url": "https://en.wikipedia.org/wiki/Winner%27s_curse"
+    },
+    {
+      "fact": "Shade your bid downward below your estimate",
+      "url": "https://www.pon.harvard.edu/daily/business-negotiations/how-to-avoid-the-winners-curse"
+    }
+  ]
+}
