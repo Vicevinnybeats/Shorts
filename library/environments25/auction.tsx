@@ -441,7 +441,7 @@ const SeatedFigure: React.FC<{ s: Seated; view: CrowdView; bob: number; armsUp: 
       {view === "back" ? (<>
         {[-1, 1].map((d) => <ellipse key={"e" + d} cx={d * 0.49 * sc} cy={headY - 0.28 * sc} rx={0.08 * sc} ry={0.12 * sc} fill={c(s.skin)} stroke={INK} strokeWidth={sw * 0.8} />)}
         <ellipse cx={0} cy={headY - 0.32 * sc} rx={0.48 * sc} ry={0.46 * sc} fill={c(s.skin)} stroke={INK} strokeWidth={sw} />
-        <path d={s.style === 2 ? `M ${-0.48 * sc} ${headY - 0.3 * sc} C ${-0.52 * sc} ${headY - 0.86 * sc} ${0.52 * sc} ${headY - 0.86 * sc} ${0.48 * sc} ${headY - 0.3 * sc} Q 0 ${headY - 0.16 * sc} ${-0.48 * sc} ${headY - 0.3 * sc} Z`
+        <path d={s.style === 2 ? `M ${-0.49 * sc} ${headY - 0.3 * sc} C ${-0.53 * sc} ${headY - 0.88 * sc} ${0.53 * sc} ${headY - 0.88 * sc} ${0.49 * sc} ${headY - 0.3 * sc} Q ${0.4 * sc} ${headY - 0.06 * sc} 0 ${headY - 0.02 * sc} Q ${-0.4 * sc} ${headY - 0.06 * sc} ${-0.49 * sc} ${headY - 0.3 * sc} Z`
           : `M ${-0.49 * sc} ${headY - 0.26 * sc} C ${-0.54 * sc} ${headY - 0.88 * sc} ${0.54 * sc} ${headY - 0.88 * sc} ${0.49 * sc} ${headY - 0.26 * sc} Q ${0.42 * sc} ${headY + (s.style === 1 ? 0.2 : 0.02) * sc} 0 ${headY + (s.style === 1 ? 0.24 : 0.06) * sc} Q ${-0.42 * sc} ${headY + (s.style === 1 ? 0.2 : 0.02) * sc} ${-0.49 * sc} ${headY - 0.26 * sc} Z`}
           fill={c(s.hair)} stroke={INK} strokeWidth={sw} strokeLinejoin="round" />
         {s.style === 3 && <circle cx={0} cy={headY - 0.82 * sc} r={0.17 * sc} fill={c(s.hair)} stroke={INK} strokeWidth={sw} />}
@@ -498,7 +498,7 @@ export const CrowdRows: React.FC<CrowdRowsProps> = (p) => {
     return <g key={"bid" + i}>
       <path d={path} stroke={INK} strokeWidth={sc * 0.22} fill="none" strokeLinecap="round" strokeLinejoin="round" />
       <path d={path} stroke={mix(view === "back" ? s.shirt : s.skin, fogColor, s.fade)} strokeWidth={sc * 0.12} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      <Paddle x={hand.x} y={hand.y + sc * 0.1} scale={sc / 70 * (0.6 + 0.4 * u)} number={b.number} rot={d * (1 - u) * 30} back={view === "back"} />
+      <Paddle x={hand.x} y={hand.y + sc * 0.1} scale={sc / 120 * (0.6 + 0.4 * u)} number={b.number} rot={d * (1 - u) * 30} />
       <circle cx={r2(hand.x)} cy={r2(hand.y)} r={sc * 0.11} fill={mix(s.skin, fogColor, s.fade)} stroke={INK} strokeWidth={sc * 0.05} />
     </g>;
   });
@@ -530,26 +530,27 @@ export const Paddle: React.FC<{ x: number; y: number; scale?: number; number?: s
     );
   };
 
-export const PODIUM = { top: 250, w: 250 } as const;
-/** Wooden lectern, x = centre, y = floor (on the stage: hallGeom().stageTop). Slanted top at y - 250*scale, front panel
- *  with a gold crest (no text). Draw AFTER the auctioneer (behindPodium) so it hides the lower body. */
+export const PODIUM = { top: 202, w: 250 } as const;
+/** Wooden lectern, x = centre, y = floor (on the stage: hallGeom().stageTop). Slanted top at y - 202*scale (just
+ *  above the hips of a behindPodium Person), front panel with a gold crest (no text). Draw AFTER the auctioneer so it
+ *  hides the lower body. */
 export const Podium: React.FC<{ x: number; y: number; scale?: number }> = ({ x, y, scale = 1 }) => (
   <g transform={`translate(${x} ${y}) scale(${scale})`}>
     <ellipse cx={0} cy={3} rx={150} ry={14} fill={SHADOW} opacity={0.25} />
-    <rect x={-120} y={-26} width={240} height={26} rx={6} fill={AUCTION.wood2} stroke={INK} strokeWidth={7} />
-    <path d="M -100 -26 L -112 -232 L 112 -232 L 100 -26 Z" fill={AUCTION.wood} stroke={INK} strokeWidth={8} strokeLinejoin="round" />
-    <path d="M -76 -50 L -84 -206 L 84 -206 L 76 -50 Z" fill="none" stroke={AUCTION.wood2} strokeWidth={6} strokeLinejoin="round" />
-    <path d="M -88 -60 L -96 -214" stroke={AUCTION.woodHi} strokeWidth={6} strokeLinecap="round" opacity={0.7} />
+    <rect x={-120} y={-24} width={240} height={24} rx={6} fill={AUCTION.wood2} stroke={INK} strokeWidth={7} />
+    <path d="M -100 -24 L -112 -182 L 112 -182 L 100 -24 Z" fill={AUCTION.wood} stroke={INK} strokeWidth={8} strokeLinejoin="round" />
+    <path d="M -78 -44 L -86 -160 L 86 -160 L 78 -44 Z" fill="none" stroke={AUCTION.wood2} strokeWidth={6} strokeLinejoin="round" />
+    <path d="M -90 -54 L -98 -166" stroke={AUCTION.woodHi} strokeWidth={6} strokeLinecap="round" opacity={0.7} />
     {/* crest */}
-    <path d="M 0 -176 L 38 -164 L 34 -120 Q 26 -96 0 -86 Q -26 -96 -34 -120 L -38 -164 Z" fill={AUCTION.emblem} stroke={INK} strokeWidth={6} strokeLinejoin="round" />
-    <path d="M 0 -160 L 8 -140 L 28 -140 L 12 -128 L 18 -108 L 0 -120 L -18 -108 L -12 -128 L -28 -140 L -8 -140 Z" fill={AUCTION.wood} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+    <path d="M 0 -146 L 36 -135 L 32 -94 Q 25 -72 0 -62 Q -25 -72 -32 -94 L -36 -135 Z" fill={AUCTION.emblem} stroke={INK} strokeWidth={6} strokeLinejoin="round" />
+    <path d="M 0 -130 L 8 -111 L 27 -111 L 12 -99 L 17 -80 L 0 -91 L -17 -80 L -12 -99 L -27 -111 L -8 -111 Z" fill={AUCTION.wood} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
     {/* slanted top */}
-    <path d="M -132 -236 L 132 -236 L 122 -268 L -122 -268 Z" fill={AUCTION.woodHi} stroke={INK} strokeWidth={8} strokeLinejoin="round" />
-    <path d="M -132 -236 L 132 -236 L 132 -226 L -132 -226 Z" fill={AUCTION.wood2} stroke={INK} strokeWidth={6} strokeLinejoin="round" />
+    <path d="M -132 -184 L 132 -184 L 122 -212 L -122 -212 Z" fill={AUCTION.woodHi} stroke={INK} strokeWidth={8} strokeLinejoin="round" />
+    <path d="M -132 -184 L 132 -184 L 132 -174 L -132 -174 Z" fill={AUCTION.wood2} stroke={INK} strokeWidth={6} strokeLinejoin="round" />
   </g>
 );
 /** y of the podium's top surface (put the GavelBlock here) */
-export const podiumTop = (pod: { y: number; scale?: number }) => pod.y - 258 * (pod.scale ?? 1);
+export const podiumTop = (pod: { y: number; scale?: number }) => pod.y - 202 * (pod.scale ?? 1);
 /** Person props for the auctioneer standing behind a Podium (same floor, draw the Person before the Podium). The
  *  Person is 1.05x the podium scale; dx = sideways offset in podium px. */
 export const behindPodium = (pod: { x: number; y: number; scale?: number }, dx = 0) => {
@@ -631,7 +632,7 @@ export const BangLines: React.FC<{ x: number; y: number; impact: number; scale?:
   return (
     <g transform={`translate(${x} ${y}) scale(${scale})`} opacity={r2(Math.min(1, impact * 1.6) * 100) / 100}>
       {Array.from({ length: n }, (_, i) => {
-        const a = rad(-180 + (i + 0.5) * (180 / n)), r0 = 60 + grow * 60, r1 = r0 + 50 - grow * 20;
+        const a = rad(-180 + (i + 0.5) * (180 / n)), r0 = 90 + grow * 70, r1 = r0 + 56 - grow * 24;
         const d = `M ${r2(Math.cos(a) * r0)} ${r2(Math.sin(a) * r0 * 0.8)} L ${r2(Math.cos(a) * r1)} ${r2(Math.sin(a) * r1 * 0.8)}`;
         return <g key={i}><path d={d} stroke={INK} strokeWidth={16} strokeLinecap="round" /><path d={d} stroke={color} strokeWidth={8} strokeLinecap="round" /></g>;
       })}
