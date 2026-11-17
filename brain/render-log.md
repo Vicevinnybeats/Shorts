@@ -125,3 +125,9 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-16 21:11 | render-final | first-offer | render (1358-2035) | 3 | 1444 | success (run 43956041968) |
 | 2026-11-16 21:11 | render-final | first-offer | assemble | 2 | 1446 | success (run 43956041968) |
 | 2026-11-16 21:11 | render-final | first-offer | log | 1 | 1447 | success (run 43956041968) |
+| 2026-11-17 05:08 | render-final | winner | voice-and-mix | 4 | 1451 | success (run 44020846226) |
+| 2026-11-17 05:08 | render-final | winner | render (0-693) | 4 | 1455 | success (run 44020846226) |
+| 2026-11-17 05:08 | render-final | winner | render (1388-2079) | 3 | 1458 | success (run 44020846226) |
+| 2026-11-17 05:08 | render-final | winner | render (694-1387) | 2 | 1460 | success (run 44020846226) |
+| 2026-11-17 05:08 | render-final | winner | assemble | 3 | 1463 | success (run 44020846226) |
+| 2026-11-17 05:08 | render-final | winner | log | 1 | 1464 | success (run 44020846226) |
