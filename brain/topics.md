@@ -11,8 +11,8 @@
 | The Lift Button That Was Never Connected | rendered 2026-11-15, shown to owner; label fix in code (not re-rendered) | lift-button |
 | Why the Silent Player Took Everything | done, in TheLittleEpic Drive 2026-11-16 (team build) | silent |
 | Stop Looking at the Pole | done, in TheLittleEpic Drive 2026-11-16 (team build) | pole |
-| The Winner Paid the Most and Lost | in production 2026-11-16 (team build) | winner |
-| Two Pizzas or One? Everyone Gets It Wrong | in production 2026-11-16 (team build) | pizza |
+| The Winner Paid the Most and Lost | done, in TheLittleEpic Drive as video 9 2026-11-17 | winner |
+| Two Pizzas or One? Everyone Gets It Wrong | paused 2026-11-17 (script done, set half done) | pizza |
 | The Punch He Never Saw Coming | backlog | |
 | You Can't Tickle Yourself. Here's Why | approved, in TheLittleEpic Drive 2026-11-15 | tickle |
 
