@@ -66,4 +66,9 @@ export const CAST: Record<string, Look> = {
   parent1: { skin: SKIN.dark, hair: HAIR.black, hairStyle: "bun", jersey: "#ff8a3d", jersey2: "#d96a22", shorts: "#2d3a5a", socks: "#2d3a5a", boots: "#f2f2ee" },
   parent2: { skin: SKIN.fair, hair: HAIR.blond, hairStyle: "short", jersey: "#5bbf6a", jersey2: "#3f9a4f", shorts: "#6a5a4a", socks: "#6a5a4a" },
   parent3: { skin: SKIN.tan, hair: HAIR.grey, hairStyle: "bun", jersey: "#b06ad9", jersey2: "#8a4ab3", shorts: "#3b3f52", socks: "#3b3f52" },
+  // pizza (pizzeria, environments25/pizzeria.tsx). Lucas = orders two mediums (mustard shirt, brown hair), Amira = orders
+  // one large (purple top, black curls), pizzaiolo = behind the Counter in white (add ChefApron + Neckerchief + ChefHat).
+  lucas: { skin: SKIN.fair, hair: HAIR.brown, hairStyle: "short", jersey: "#f2b630", jersey2: "#c98f12", shorts: "#2a2f3d", socks: "#2a2f3d", boots: "#f2f2ee" },
+  amira: { skin: SKIN.deep, hair: HAIR.black, hairStyle: "curly", jersey: "#7d4ad0", jersey2: "#5d33a3", shorts: "#2d3a5a", socks: "#2d3a5a", boots: "#f2f2ee" },
+  pizzaiolo: { skin: SKIN.tan, hair: HAIR.black, hairStyle: "short", jersey: "#f6f3ec", jersey2: "#dcd6c8", shorts: "#3b3346", socks: "#3b3346", boots: "#1d1a24" },
 };
