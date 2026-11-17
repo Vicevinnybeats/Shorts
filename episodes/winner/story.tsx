@@ -96,8 +96,8 @@ const Hall: React.FC<{ f: number; stage?: React.ReactNode; items?: Item[]; crowd
   );
 
 /** the stage: auctioneer behind the podium (gavel resting or banging at `bangAt`), jar on its table */
-const StageSet: React.FC<{ f: number; u: number; bangAt?: number; jar?: boolean; jarFill?: number; expr?: Expr; point?: number }> =
-  ({ f, u, bangAt, jar = true, jarFill = 0.85, expr = "smile", point = 0 }) => {
+const StageSet: React.FC<{ f: number; u: number; bangAt?: number; jar?: boolean; jarFill?: number; expr?: Expr; point?: number; table?: boolean }> =
+  ({ f, u, bangAt, jar = true, jarFill = 0.85, expr = "smile", point = 0, table = true }) => {
     const base: Pose = { ...STAND, armL: [14 + 70 * point, -10 - 20 * point] };
     const bang = auctioneerBang({ ...AUCP, facing: 1, pose: base }, BLOCK, u, bangAt ?? -1000);
     return (
@@ -107,8 +107,8 @@ const StageSet: React.FC<{ f: number; u: number; bangAt?: number; jar?: boolean;
         <GavelBlock x={BLOCK.x} y={BLOCK.y + 2} scale={POD.scale} />
         <Gavel {...bang.gavel} hand={AUC.skin} />
         <BangLines x={BLOCK.x} y={BLOCK.y - 10} impact={bang.impact} scale={0.8} />
-        <HallTable x={JT.x} y={JT.y} w={JT.w} />
-        {jar && <CoinJar x={JAR_AT.x} y={JAR_AT.y} scale={0.5} fill={jarFill} />}
+        {table && <HallTable x={JT.x} y={JT.y} w={JT.w} />}
+        {table && jar && <CoinJar x={JAR_AT.x} y={JAR_AT.y} scale={0.5} fill={jarFill} />}
       </g>
     );
   };
@@ -145,6 +145,17 @@ const ArrowLabel: React.FC<{ f: number; y: number; left: string; right: string; 
       <text x={ax + 88} y={y + (1 - p3) * 34} textAnchor="start" {...common} fill={color} opacity={p3}>{right}</text>
     </g>;
   };
+/** a Label on a dark card (for hall shots, so text never sits straight on the busy set) */
+const CardLabel: React.FC<React.ComponentProps<typeof Label>> = (p) => {
+  if (p.hidden || p.f < p.enterAt) return null;
+  const o = arrive(p.f, p.enterAt, 10) * (Number.isFinite(p.exitAt) ? 1 - leave(p.f, p.exitAt) : 1);
+  if (o <= 0) return null;
+  const w = p.children.length * p.size * 0.68 + 70;
+  return <g>
+    <rect x={p.x - w / 2} y={p.y - p.size * 0.98} width={w} height={p.size * 1.34} rx={24} fill={INK} opacity={0.8 * o} />
+    <Label {...p} />
+  </g>;
+};
 /** a counter label (gold card) that counts, stops and is stamped */
 const CountCard: React.FC<{ f: number; x: number; y: number; prefix: string; n: number; startAt: number; dur: number; exitAt: number; color?: string; size?: number; w?: number }> =
   ({ f, x, y, prefix, n, startAt, dur, exitAt, color = GOLD, size = 76, w = 560 }) => {
@@ -187,7 +198,7 @@ const ShotView: React.FC<{ span: ShotSpan; spans: ShotSpan[]; freezeAt?: number 
 // guesses for the lab shots: average ~5.6 sits below the true value 8, the highest guess (13) far above it
 const TRUTH = 8;
 const GUESSES = [5, 9, 3, 6, 4, 13, 5.5, 2, 7, 4.5, 6.5, 3, 10, 5, 2.5, 6, 4, 7.5, 3.5, 5];
-const GD = { x: 130, y: 1180, w: 820, values: GUESSES, truth: TRUTH, domain: [0, 14] as [number, number] };
+const GD = { x: 120, y: 1250, w: 840, values: GUESSES, truth: TRUTH, domain: [0, 14] as [number, number], dot: 46 };
 const AVG = GUESSES.reduce((a, b) => a + b, 0) / GUESSES.length;
 
 const build = (id: string, f: number, u: number, len: number, C: (p: string, fb: number) => number): View => {
@@ -204,7 +215,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const pose: Pose = { ...STAND, armL: [160 - 140 * drop, 8 - 14 * drop], armR: [160 - 140 * drop, 8 - 14 * drop], lookX: drop * 0.5, headTilt: drop * 6 };
       const h = handPos({ x: bx, y: by - bounce, scale: s, facing: 1, pose }, "R");
       const push = k(u, LM, len, 0, 1);
-      cam = drift(on({ x: interpolate(push, [0, 1], [600, 545]), y: interpolate(push, [0, 1], [900, 880]) }, interpolate(push, [0, 1], [1.45, 1.75])), f, 1.4);
+      cam = drift(on({ x: interpolate(push, [0, 1], [590, 540]), y: interpolate(push, [0, 1], [880, 860]) }, interpolate(push, [0, 1], [1.6, 1.95])), f, 1.4);
       const body = <Hall f={f} crowd={null}
         stage={<StageSet f={f} u={u} jarFill={0.85} expr="laugh" />}
         items={[{ y: by, el: <g>
@@ -213,8 +224,8 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           <circle cx={h.x} cy={h.y} r={8} fill={BEN.skin} stroke={INK} strokeWidth={4.2} />
         </g> }]}
         over={<g opacity={1 - 0.6 * drop}>
-          <Confetti x={360} y={300} f={u + 26} count={46} spread={1.4} power={0.9} seed={2} />
-          <Confetti x={760} y={260} f={u + 18} count={46} spread={1.4} power={0.9} seed={5} />
+          <Confetti x={380} y={760} f={u + 12} count={50} spread={1.5} power={0.75} seed={2} />
+          <Confetti x={700} y={740} f={u + 6} count={50} spread={1.5} power={0.75} seed={5} />
         </g>} />;
       return { cam, mood, body, cold: 0.85 * drop };
     }
@@ -235,7 +246,6 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       mood = MOODS.close;
       const NK = C("Nobody knows", 2), EG = C("Everyone guesses", 40);
       cam = drift(on({ x: k(u, 0, len, 690, 700), y: k(u, 0, len, 560, 545) }, k(u, 0, len, 2.2, 2.55)), f, 1);
-      const tie = { x: JAR_AT.x - 30, y: JAR_AT.y - 238 };
       const drop = arrive(u, NK + 4, 14), h = u - (NK + 4);
       const swing = h < 0 ? 0 : Math.sin(h * 0.25) * 14 * Math.exp(-h / 26) + Math.sin(u * 0.08) * 2;
       const shake = u >= EG && u < EG + 14 ? Math.sin((u - EG) * 1.4) * 6 * (1 - (u - EG) / 14) : 0;
@@ -244,9 +254,8 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           <StageSet f={f} u={u} jar={false} />
           <g transform={`rotate(${shake} ${JAR_AT.x} ${JAR_AT.y})`}><CoinJar x={JAR_AT.x} y={JAR_AT.y} scale={0.5} fill={0.85} /></g>
         </g>} />;
-      const ts = toS(cam, tie);
       const labels = drop > 0 ? <g opacity={Math.min(1, drop * 2) * (1 - leave(u, len - 7))} transform={`translate(0 ${(1 - drop) * -200})`}>
-        <QuestionTag x={ts.x - 160} y={Math.max(330, ts.y - 240)} text="HOW MUCH?" scale={1.1} rot={swing - 4} twine={60} />
+        <QuestionTag x={150} y={340} text="HOW MUCH?" scale={1.45} rot={swing + 4} twine={50} />
       </g> : null;
       return { cam, mood, body, labels };
     }
@@ -254,22 +263,22 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       // "Twenty" and the board flips $10 -> $15 -> $20; Ben (front, on a folding chair) keeps his paddle up, determined
       const T10 = C("Ten dollars", 2), T15 = C("Fifteen", 28), T20 = C("Twenty", 50), KP = C("keeps his", 80);
       const RY = -260, RG = RY + 1300;                                   // ground 1040
-      const crowd: CrowdRowsProps = { f, rows: 3, y0: 1110, rowH: 75, size: 56, view: "front", seed: 9, x0: -80, w: 1240 };
+      const crowd: CrowdRowsProps = { f, rows: 3, y0: 1050, rowH: 70, size: 52, view: "front", seed: 9, x0: -80, w: 1240 };
       const upA = arrive(u, T10, 9) * (1 - k(u, T15 + 4, T15 + 12, 0, 1, EASE.exit));
       const upC = arrive(u, T20, 9) * (1 - k(u, KP - 4, KP + 4, 0, 1, EASE.exit));
       const bids: CrowdBid[] = [
-        { row: 1, col: 3, up: upA, number: txt(12, undefined), side: 1 },
-        { row: 0, col: 12, up: upC, number: txt(31, undefined), side: -1 },
+        { row: 1, col: 4, up: upA, number: txt(12, undefined), side: 1 },
+        { row: 0, col: 8, up: upC, number: txt(31, undefined), side: -1 },
       ];
       const benUp = arrive(u, T15, 8);
       const val = u >= T20 ? "$20" : u >= T15 ? "$15" : "$10", prev = u >= T20 ? "$15" : u >= T15 ? "$10" : "$10";
       const at = u >= T20 ? T20 : T15;
       const flip = u >= T15 ? k(u, at, at + 8, 0, 1, EASE.linear) : 1;
-      const bp = { x: 640, s: 0.92 }, floor = 1395;
+      const bp = { x: 710, s: 1.05 }, floor = 1330;
       const bpose: Pose = sitPose("front", { armL: [22, -40], armR: [22 + 140 * benUp, -40 + 50 * benUp] }, { lookX: -0.5 + 0.5 * benUp });
       const bY = sitY(floor, bp.s, bpose);
       const bh = handPos({ x: bp.x, y: bY, scale: bp.s, facing: 1, pose: bpose }, "R");
-      cam = drift({ x: k(u, 0, len, -20, 20), y: k(u, 0, len, -40, -20), zoom: k(u, 0, len, 1.0, 1.06), rot: 0 }, f, 1.4);
+      cam = drift(on({ x: k(u, 0, len, 570, 600), y: k(u, 0, len, 975, 985) }, k(u, 0, len, 1.38, 1.46)), f, 1.4);
       const bsc = stampScale(u, at, 8);
       const body = <>
         <Layer p={0.6}><Svg><HallBackdrop y={RY} h={1300} stage={false} /></Svg></Layer>
@@ -290,10 +299,10 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
     }
     case "win": {    // medium on the podium: the gavel slams on "Sold", camera kick, the SOLD! $25 sign stamps in over the stage
       const SD = Math.max(8, C("Sold", 2) + 8);
-      cam = kickCam(drift(on({ x: 400, y: 690 }, k(u, 0, len, 1.75, 1.85)), f, 1), u - SD, 16);
-      const body = <Hall f={f} crowd={null} stage={<StageSet f={f} u={u} bangAt={SD} expr={u >= SD ? "laugh" : "focused"} />} />;
+      cam = kickCam(drift(on({ x: 330, y: 690 }, k(u, 0, len, 1.75, 1.85)), f, 1), u - SD, 16);
+      const body = <Hall f={f} crowd={null} stage={<StageSet f={f} u={u} bangAt={SD} jar={false} table={false} expr={u >= SD ? "laugh" : "focused"} />} />;
       const st = k(u, SD + 1, SD + 9, 0, 1, EASE.linear);
-      const labels = <g opacity={1 - leave(u, len - 7)}><SoldSign x={540} y={430} scale={0.85} stamp={st} text="SOLD! $25" /></g>;
+      const labels = <g opacity={1 - leave(u, len - 7)}><SoldSign x={520} y={450} scale={1.15} stamp={st} text="SOLD! $25" /></g>;
       return { cam, mood, body, labels, overlay: <Flash framesSince={u - SD} len={4} /> };
     }
     case "count": {  // Ben at a cloth table on the hall floor tips the jar out and counts: the pile grows, INSIDE counts up to $18,
@@ -320,7 +329,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         </g> }]} />;
       const n = countValue(u, CT + 4, Math.max(10, E18 - CT - 4), 1, 18);
       const labels = <>
-        <Label f={u} x={540} y={400} size={84} color={RED} enter="rise" enterAt={4} exitAt={len - 8}>PAID $25</Label>
+        <CardLabel f={u} x={540} y={400} size={80} color={RED} enter="rise" enterAt={4} exitAt={len - 8}>PAID $25</CardLabel>
         <CountCard f={u} x={540} y={540} prefix="INSIDE $" n={n} startAt={CT + 4} dur={Math.max(10, E18 - CT - 4)} exitAt={len - 8} />
       </>;
       return { cam, mood, body, labels };
@@ -332,18 +341,18 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const bx = 540, by = 1330, s = 1.12;
       const pose: Pose = { ...STAND, armL: [20, -125], armR: [20, -125], lookX: u >= WD ? 0 : -0.6, headTilt: u >= WD ? -5 * k(u, WD, WD + 8, 0, 1) : 4 };
       const hl = handPos({ x: bx, y: by, scale: s, facing: 1, pose }, "L"), hr = handPos({ x: bx, y: by, scale: s, facing: 1, pose }, "R");
-      const jarBottom = (hl.y + hr.y) / 2 + 105;
+      const jarBottom = (hl.y + hr.y) / 2 + 80;
       const push = k(u, WD, len, 0, 1);
       cam = on({ x: 540, y: interpolate(push, [0, 1], [930, 900]) }, interpolate(push, [0, 1], [1.7, 2.05]) + k(u, 0, WD, 0, 0.05));
       const body = <Hall f={f - u} crowd={{ y0: 1180 }}
         stage={<StageSet f={f - u} u={0} jar={false} />}
         items={[{ y: by, el: <g>
           <Person x={bx} y={by} scale={s} look={BEN} pose={pose} expr="worried" blink={false} />
-          <CoinJar x={bx} y={jarBottom} scale={0.4} fill={0.2} />
+          <CoinJar x={bx} y={jarBottom} scale={0.3} fill={0.2} />
           <circle cx={hl.x} cy={hl.y} r={8 * s} fill={BEN.skin} stroke={INK} strokeWidth={4.2 * s} />
           <circle cx={hr.x} cy={hr.y} r={8 * s} fill={BEN.skin} stroke={INK} strokeWidth={4.2 * s} />
         </g> }]} />;
-      const labels = <Label f={u} x={540} y={430} size={92} color={CREAM} enter="words" enterAt={6} exitAt={len - 8}>WON... AND LOST?</Label>;
+      const labels = <CardLabel f={u} x={520} y={430} size={84} color={CREAM} enter="words" enterAt={6} exitAt={len - 8}>WON... AND LOST?</CardLabel>;
       return { cam, mood, body, labels, cold: 1 };
     }
     case "guesses": { // lab: a crowd of guesses pops in on a number line under a jar ("crowd guessing"); on "Some guess low" the low
@@ -357,18 +366,18 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const tx = guessX(GD, TRUTH), ax = guessX(GD, AVG), xlo = guessX(GD, 4), xhi = guessX(GD, 10);
       const loP = arrive(u, LO, 10), hiP = arrive(u, HI, 10);
       const body = <Lab>
-        <g transform={`translate(0 ${(1 - arrive(u, 0, 14)) * 40})`}><CoinJar x={540} y={720} scale={0.62} fill={0.8} seed={4} /></g>
-        <rect x={GD.x - 30} y={GD.y - 400} width={xlo - GD.x + 30} height={420} rx={24} fill="#3a7bd5" opacity={0.22 * loP} />
-        <rect x={xhi} y={GD.y - 400} width={GD.x + GD.w + 30 - xhi} height={420} rx={24} fill={ORANGE} opacity={0.22 * hiP} />
-        <GuessDots {...GD} reveal={reveal} showTruth={truthP} showAvg={avgP} height={400} />
+        <g transform={`translate(0 ${(1 - arrive(u, 0, 14)) * 40})`}><CoinJar x={540} y={610} scale={0.62} fill={0.8} seed={4} /></g>
+        <rect x={GD.x - 30} y={GD.y - 460} width={xlo - GD.x + 30} height={480} rx={24} fill="#3a7bd5" opacity={0.22 * loP} />
+        <rect x={xhi} y={GD.y - 460} width={GD.x + GD.w + 30 - xhi} height={480} rx={24} fill={ORANGE} opacity={0.22 * hiP} />
+        <GuessDots {...GD} reveal={reveal} showTruth={truthP} showAvg={avgP} height={460} />
       </Lab>;
-      const ts = toS(cam, { x: tx, y: GD.y - 400 }), as = toS(cam, { x: ax, y: GD.y }), ls = toS(cam, { x: (GD.x + xlo) / 2, y: GD.y });
+      const ts = toS(cam, { x: tx, y: GD.y - 460 }), as = toS(cam, { x: ax, y: GD.y }), ls = toS(cam, { x: (GD.x + xlo) / 2, y: GD.y });
       const hs = toS(cam, { x: (xhi + GD.x + GD.w) / 2, y: GD.y });
       const labels = <>
-        <Label f={u} x={Math.min(840, ts.x + 40)} y={ts.y - 30} size={50} color={GREEN} enter="rise" enterAt={CG + 34} exitAt={len - 8}>TRUE VALUE $8</Label>
-        <Label f={u} x={ls.x} y={ls.y + 100} size={54} color={"#7fb2ff"} enter="scale" enterAt={LO + 2} exitAt={len - 8}>LOW</Label>
-        <Label f={u} x={hs.x} y={hs.y + 100} size={54} color={ORANGE} enter="scale" enterAt={HI + 2} exitAt={len - 8}>HIGH</Label>
-        <Label f={u} x={as.x} y={as.y + 180} size={46} color={GOLD} enter="rise" enterAt={HI + 18} exitAt={len - 8}>AVERAGE</Label>
+        <Label f={u} x={Math.min(760, ts.x + 20)} y={ts.y - 30} size={58} color={GREEN} enter="rise" enterAt={CG + 34} exitAt={len - 8}>TRUE VALUE $8</Label>
+        <Label f={u} x={ls.x} y={ls.y + 100} size={64} color={"#7fb2ff"} enter="scale" enterAt={LO + 2} exitAt={len - 8}>LOW</Label>
+        <Label f={u} x={hs.x} y={hs.y + 100} size={64} color={ORANGE} enter="scale" enterAt={HI + 2} exitAt={len - 8}>HIGH</Label>
+        <Label f={u} x={as.x} y={as.y + 160} size={56} color={GOLD} enter="rise" enterAt={HI + 18} exitAt={len - 8}>AVERAGE</Label>
       </>;
       return { cam, mood, body, labels };
     }
@@ -377,7 +386,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       mood = MOODS.lab;
       const WA = C("wins an auction", 20), HG = C("highest guess", Math.round(len * 0.35)), BO = C("biggest overestimate", Math.round(len * 0.7));
       const vals = [4, 5, 6, 9, 13];
-      const xs = [170, 350, 530, 710, 890], fy = 1250, s = 0.8;
+      const xs = [170, 345, 520, 695, 870], fy = 1250, s = 1.0;
       const win = arrive(u, HG, 12);
       cam = drift({ x: k(u, HG, HG + 30, 0, 90), y: k(u, HG, HG + 30, 0, -30), zoom: k(u, HG, HG + 30, 1.0, 1.12), rot: 0 }, f, 1.2);
       const body = <Lab>
@@ -396,7 +405,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       </Lab>;
       const labels = <>
         <Label f={u} x={510} y={400} size={74} color={GOLD} enter="words" enterAt={HG} exitAt={len - 8}>HIGHEST GUESS WINS</Label>
-        <Label f={u} x={510} y={510} size={58} color={RED} enter="rise" enterAt={BO} exitAt={len - 8}>PAYS $13 - WORTH $8</Label>
+        <Label f={u} x={510} y={510} size={64} color={RED} enter="rise" enterAt={BO} exitAt={len - 8}>PAYS $13 - WORTH $8</Label>
       </>;
       return { cam, mood, body, labels };
     }
@@ -420,9 +429,9 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <Label f={u} x={510} y={400} size={70} color={GREEN} enter="words" enterAt={W8} exitAt={A10 - 6}>JAR WORTH $8</Label>
         <Label f={u} x={510} y={400} size={70} color={RED} enter="words" enterAt={A10} exitAt={A5 - 6}>WINNING BID ~$10</Label>
         <Label f={u} x={510} y={400} size={70} color={GOLD} enter="words" enterAt={A5} exitAt={len - 8}>AVERAGE GUESS ~$5</Label>
-        <Label f={u} x={bx(0).x} y={bx(0).y} size={44} color={CREAM} enter="rise" enterAt={W8 + 4} exitAt={len - 8}>WORTH</Label>
-        <Label f={u} x={bx(1).x} y={bx(1).y} size={44} color={CREAM} enter="rise" enterAt={A5 + 4} exitAt={len - 8}>AVG GUESS</Label>
-        <Label f={u} x={bx(2).x} y={bx(2).y} size={44} color={CREAM} enter="rise" enterAt={A10 + 4} exitAt={len - 8}>WIN BID</Label>
+        <Label f={u} x={bx(0).x} y={bx(0).y} size={50} color={CREAM} enter="rise" enterAt={W8 + 4} exitAt={len - 8}>WORTH</Label>
+        <Label f={u} x={bx(1).x} y={bx(1).y} size={50} color={CREAM} enter="rise" enterAt={A5 + 4} exitAt={len - 8}>AVG GUESS</Label>
+        <Label f={u} x={bx(2).x} y={bx(2).y} size={50} color={CREAM} enter="rise" enterAt={A10 + 4} exitAt={len - 8}>WIN BID</Label>
       </>;
       return { cam, mood, body, labels };
     }
@@ -434,18 +443,18 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const plots = [1, 7, 8, 13, 17];
       const MX = 540, MY = 900, MW = 820, MH = 600, cols = 5, rows = 4;
       const rise = arrive(u, WC - 4, 16);
-      cam = drift({ x: 0, y: k(u, WC - 8, WC + 16, 40, 120), zoom: k(u, 0, WC - 8, 1.08, 1.14) - k(u, WC - 8, WC + 16, 0, 0.2), rot: 0 }, f, 1.2);
+      cam = drift({ x: 0, y: 40, zoom: k(u, 0, WC - 8, 1.08, 1.14) - k(u, WC - 8, WC + 16, 0, 0.16), rot: 0 }, f, 1.2);
       const pc = (i: number) => ({ x: MX - MW / 2 + (i % cols + 0.5) * (MW / cols), y: MY - MH / 2 + (Math.floor(i / cols) + 0.5) * (MH / rows) });
       const body = <Lab>
         <g transform={`translate(0 ${(1 - arrive(u, 0, 14)) * 40})`}>
           <MapPatch x={MX} y={MY} w={MW} h={MH} cols={cols} rows={rows} highlight={plots} hl={hl} seed={2} />
         </g>
         {plots.map((p, i) => { const c = pc(p), n = Math.round(k(u, OP + i * 3, OP + 14 + i * 3, 0, 4 + (i % 3), EASE.arrive)); return n > 0 ? <CoinStack key={p} x={c.x} y={c.y + 34} count={n} scale={1.1} kind={i % 2} /> : null; })}
-        {rise > 0 && <g opacity={Math.min(1, rise * 2)}><OilDerrick x={pc(8).x} y={pc(8).y + 40} scale={0.75 * (0.5 + 0.5 * rise)} gush={u >= WC + 8 ? 0.35 * Math.exp(-(u - WC - 8) / 14) : 0} /></g>}
+        {rise > 0 && <g opacity={Math.min(1, rise * 2)}><OilDerrick x={pc(8).x} y={pc(8).y + 40} scale={0.55 * (0.5 + 0.5 * rise)} gush={u >= WC + 8 ? 0.35 * Math.exp(-(u - WC - 8) / 14) : 0} /></g>}
       </Lab>;
       const labels = <>
         <Label f={u} x={510} y={400} size={64} color={CREAM} enter="rise" enterAt={OE + 4} exitAt={WC - 8}>OFFSHORE OIL LEASES</Label>
-        <Label f={u} x={510} y={400} size={86} color={RED} enter="scale" enterAt={WC + 2} exitAt={len - 8}>THE WINNER'S CURSE</Label>
+        <Label f={u} x={510} y={380} size={80} color={RED} enter="scale" enterAt={WC + 2} exitAt={len - 8}>THE WINNER'S CURSE</Label>
       </>;
       return { cam, mood, body, labels };
     }
@@ -456,7 +465,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const step1 = arrive(u, BB + 4, 16), step2 = arrive(u, SB - 2, 18);
       const bid = 0.74 - 0.18 * step1 - 0.22 * step2;
       const bidders = 2 + Math.round(k(u, MB, MB + 14, 0, 6, EASE.linear));
-      cam = drift({ x: 0, y: 0, zoom: k(u, 0, len, 1.0, 1.05), rot: 0 }, f, 1.2);
+      cam = drift({ x: 0, y: -40, zoom: k(u, 0, len, 1.2, 1.26), rot: 0 }, f, 1.2);
       const enter = arrive(u, 0, 14);
       const body = <Lab>
         <g opacity={enter} transform={`translate(0 ${(1 - enter) * 40})`}>
@@ -466,7 +475,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       </Lab>;
       const labels = <>
         <Label f={u} x={510} y={420} size={66} color={GREEN} enter="words" enterAt={BB} exitAt={MB - 6}>BID BELOW YOUR GUESS</Label>
-        <ArrowLabel f={u} y={420} left="MORE BIDDERS" right="STEP BACK" color={RED} enterAt={MB} exitAt={len - 8} ax={560} size={50} />
+        <ArrowLabel f={u} y={420} left="MORE BIDDERS" right="STEP BACK" color={RED} enterAt={MB} exitAt={len - 8} ax={540} size={54} />
       </>;
       return { cam, mood, body, labels };
     }
@@ -478,20 +487,20 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const jump = u >= OB ? Math.abs(Math.sin((u - OB) * 0.28)) * 40 : 0;
       cam = drift(on({ x: k(u, 0, len, 560, 590), y: 1000 }, k(u, 0, len, 1.32, 1.4)), f, 1.2);
       const body = <Hall f={f} crowd={null}
-        stage={<StageSet f={f} u={u} jarFill={0.6} />}
+        stage={<StageSet f={f} u={u} table={false} />}
         items={[
           { y: 1300, el: <PaddlePerson x={400} y={1300} s={0.98} look={BEN} up={benUp} num={7} expr={u >= JS ? "smirk" : "calm"} f={f} seed={1} t={f}
             lookX={u >= JS ? 0 : 0.6} headTilt={u >= JS ? -5 : 0} /> },
           { y: 1310, el: <PaddlePerson x={760} y={1310} s={0.98} look={PARENT} up={pUp} num={22} expr={u >= OB ? "cheer" : "focused"} f={f} seed={8}
             t={u >= OB ? undefined : f} jump={jump} lookX={-0.4} other={u >= OB ? [150, 10] : [14, -10]} /> },
         ]} />;
-      const labels = <Label f={u} x={510} y={400} size={86} color={GOLD} enter="scale" enterAt={2} exitAt={Math.max(30, OB - 6)}>NEXT YEAR</Label>;
+      const labels = <CardLabel f={u} x={600} y={420} size={86} color={GOLD} enter="scale" enterAt={2} exitAt={Math.max(30, OB - 6)}>NEXT YEAR</CardLabel>;
       return { cam, mood, body, labels };
     }
     default: {       // ask: pull out from Ben in the aisle to the whole hall; on stage the excited parent hugs the jar, parents cheer
       const RP = C("raise your", Math.round(len * 0.4));
       const pull = k(u, 0, len, 0, 1);
-      cam = drift({ x: interpolate(pull, [0, 1], [330, 0]), y: interpolate(pull, [0, 1], [80, 10]), zoom: interpolate(pull, [0, 1], [1.7, 1.0]), rot: 0 }, f, 1.5);
+      cam = drift({ x: interpolate(pull, [0, 1], [415, 0]), y: interpolate(pull, [0, 1], [190, -30]), zoom: interpolate(pull, [0, 1], [1.7, 0.96]), rot: 0 }, f, 1.5);
       const pPose: Pose = { ...STAND, armL: [20, -125], armR: [20, -125] };
       const px = 560, py = G.stageTop, ps = 0.82;
       const hl = handPos({ x: px, y: py, scale: ps, facing: 1, pose: pPose }, "L"), hr = handPos({ x: px, y: py, scale: ps, facing: 1, pose: pPose }, "R");
@@ -499,11 +508,12 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         stage={<g>
           <StageSet f={f} u={u} jar={false} expr="laugh" />
           <Person x={px} y={py} scale={ps} look={PARENT} pose={pPose} expr="cheer" blink={blinkOf(f, 8)} />
-          <CoinJar x={px} y={(hl.y + hr.y) / 2 + 90} scale={0.34} fill={0.6} seed={2} />
+          <CoinJar x={px} y={(hl.y + hr.y) / 2 + 66} scale={0.26} fill={0.6} seed={2} />
           <circle cx={hl.x} cy={hl.y} r={8 * ps} fill={PARENT.skin} stroke={INK} strokeWidth={4.2 * ps} />
           <circle cx={hr.x} cy={hr.y} r={8 * ps} fill={PARENT.skin} stroke={INK} strokeWidth={4.2 * ps} />
         </g>}
-        items={[{ y: BEN_AISLE.y, el: <PaddlePerson {...BEN_AISLE} look={BEN} up={0} num={7} expr="smirk" f={f} seed={1} t={f} lookX={-0.3} /> }]} />;
+        items={[{ y: BEN_AISLE.y, el: <PaddlePerson {...BEN_AISLE} look={BEN} up={0} num={7} expr="smirk" f={f} seed={1} t={f} lookX={-0.3} /> }]}
+        over={<Confetti x={560} y={700} f={u - RP} count={60} spread={1.6} power={1.1} seed={7} />} />;
       return { cam, mood, body };
     }
   }
