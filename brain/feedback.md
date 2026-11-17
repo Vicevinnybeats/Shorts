@@ -13,3 +13,7 @@
 
 ## 2026-11-16 owner rejected "Why You Always Pick the Slow Queue" (video 2)
 - "I don't like it": removed from Drive, to be replaced by another video (not started until the owner says so).
+
+## 2026-11-17 owner: "Make just 3 stories about GTA 6 in the same style but don't make the video yet"
+- Scripts only (gta-countdown, gta-delay, gta-download). Same theme: everyday moment + science rule, our own cast.
+- IP: no Rockstar logo, game footage, characters or map; the game is only named in words. Metadata will say "not affiliated with Rockstar Games".
