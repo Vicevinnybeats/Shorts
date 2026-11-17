@@ -7,7 +7,7 @@ Why your toast lands butter side down. Why the quiet player gets the best deal. 
 
 Every fact is checked against real studies, and the sources are in each video's description.
 
-New animated shorts every week. Got an everyday "why does this always happen to me?" moment? Leave it in the comments and it could be the next episode.
+New animated shorts every day. Got an everyday "why does this always happen to me?" moment? Leave it in the comments and it could be the next episode.
 
 Animated with AI assistance (script drafting, synthetic narration voice, animation).
 
@@ -18,4 +18,4 @@ Everyday moments, decided by surprising science.
 Everyday moments, decided by surprising science 🧠
 1-minute animated shorts 🎬
 Real studies, sources in every video 📚
-New every week ⬇️
+New every day ⬇️

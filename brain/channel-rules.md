@@ -63,3 +63,4 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
 - All agents (script-writer, asset-library, scene-builder, voice-captions, then qa-reviewer) work together, at the
   same time, on ONE video. Make only one video, then stop and wait until the owner says to make the next one.
 - Same channel theme for every video (everyday face-off decided by a surprising science rule), same style bible.
+- Upload schedule: DAILY (owner, 2026-11-17). Bios say 'every day'.
