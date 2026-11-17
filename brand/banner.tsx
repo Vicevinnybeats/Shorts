@@ -43,12 +43,12 @@ const Banner: React.FC = () => (
     <Feather x={2300} y={480} scale={0.75} rot={-30} />
     {/* mobile-safe area 1546 x 423 centred: x 507-2053, y 508-931 */}
     <g>
-      <Person x={640} y={925} scale={0.85} facing={1} look={MASCOT} pose={WAVE} expr="smirk" shadow={0} />
-      <Bulb x={756} y={572} s={0.42} />
-      <text x={1530} y={705} textAnchor="middle" fontFamily="Montserrat" fontWeight={900} fontSize={126} fill="#f6efe0">The<tspan fill={LAB.gold}>Little</tspan>Epic</text>
-      <text x={1530} y={782} textAnchor="middle" fontFamily="Montserrat" fontWeight={800} fontSize={31} fill={LAB.muted}>Everyday moments, decided by surprising science</text>
-      <rect x={1220} y={815} width={620} height={76} rx={38} fill={LAB.gold} stroke={INK} strokeWidth={6} />
-      <text x={1530} y={866} textAnchor="middle" fontFamily="Montserrat" fontWeight={900} fontSize={38} fill={INK}>NEW SHORT EVERY DAY</text>
+      <Person x={605} y={925} scale={0.85} facing={1} look={MASCOT} pose={WAVE} expr="smirk" shadow={0} />
+      <Bulb x={721} y={572} s={0.42} />
+      <text x={1280} y={680} textAnchor="middle" fontFamily="Montserrat" fontWeight={900} fontSize={126} fill="#f6efe0">The<tspan fill={LAB.gold}>Little</tspan>Epic</text>
+      <text x={1280} y={757} textAnchor="middle" fontFamily="Montserrat" fontWeight={800} fontSize={31} fill={LAB.muted}>Everyday moments, decided by surprising science</text>
+      <rect x={970} y={790} width={620} height={76} rx={38} fill={LAB.gold} stroke={INK} strokeWidth={6} />
+      <text x={1280} y={841} textAnchor="middle" fontFamily="Montserrat" fontWeight={900} fontSize={38} fill={INK}>NEW SHORT EVERY DAY</text>
     </g>
   </svg>
 );
