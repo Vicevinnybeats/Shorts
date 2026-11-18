@@ -1,0 +1,6 @@
+# Why Everyone Bought GTA 6 (scripted 2026-11-18, not built)
+- GTA VI trailer 1 (Dec 2023): 90,421,491 YouTube views in 24 h, Guinness World Record (most viewed video game reveal
+  on YouTube in 24 h). https://www.pushsquare.com/news/2023/12/gta-6-trailer-pulls-90-million-views-in-24-hours-sets-new-world-records
+- Salganik, Dodds & Watts (2006), Science 311:854-856, MusicLab: 14,341 participants, 48 unknown songs; social-influence
+  worlds saw download counts -> more inequality and more unpredictability; best songs rarely did badly, worst rarely
+  well, anything else possible. https://www.cs.toronto.edu/~bor/303s19/docs/salganik_dodds_watts.pdf

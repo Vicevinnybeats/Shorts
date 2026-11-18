@@ -17,3 +17,7 @@
 ## 2026-11-17 owner: "Make just 3 stories about GTA 6 in the same style but don't make the video yet"
 - Scripts only (gta-countdown, gta-delay, gta-download). Same theme: everyday moment + science rule, our own cast.
 - IP: no Rockstar logo, game footage, characters or map; the game is only named in words. Metadata will say "not affiliated with Rockstar Games".
+
+## 2026-11-18 owner: GTA 6 will be out when the limit resets -> 3 other (post-launch) stories, verified info
+- New scripts: gta-allnighter, gta-minimap, gta-hype (work after launch). Pre-launch scripts kept, marked outdated.
+- After launch: re-check verified launch facts (official sales/records from Take-Two/Rockstar, not rumours) before building.

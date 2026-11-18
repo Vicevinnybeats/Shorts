@@ -14,9 +14,12 @@
 | The Winner Paid the Most and Lost | done, in TheLittleEpic Drive as video 9 2026-11-17 | winner |
 | Two Pizzas or One? Everyone Gets It Wrong | paused 2026-11-17 (script done, set half done) | pizza |
 | The Punch He Never Saw Coming | backlog | |
-| GTA 6 Is Almost Here. The Best Part Is Already Over. | scripted 2026-11-17, awaiting owner OK (do not build yet) | gta-countdown |
-| GTA 6 Was Delayed Twice. You'd Miss It Too. | scripted 2026-11-17, awaiting owner OK (do not build yet) | gta-delay |
-| Why the GTA 6 Download Feels Endless | scripted 2026-11-17, awaiting owner OK (do not build yet) | gta-download |
+| GTA 6 Is Almost Here. The Best Part Is Already Over. | scripted 2026-11-17, pre-launch angle, outdated after Nov 19 | gta-countdown |
+| GTA 6 Was Delayed Twice. You'd Miss It Too. | scripted 2026-11-17, pre-launch angle, outdated after Nov 19 | gta-delay |
+| Why the GTA 6 Download Feels Endless | scripted 2026-11-17, pre-launch angle, outdated after Nov 19 | gta-download |
+| The 4 A.M. Player (GTA 6 all-nighter) | scripted 2026-11-18 for after launch, awaiting owner OK | gta-allnighter |
+| Minimap On or Off? (GTA 6) | scripted 2026-11-18 for after launch, awaiting owner OK | gta-minimap |
+| Why Everyone Bought GTA 6 | scripted 2026-11-18 for after launch, awaiting owner OK | gta-hype |
 | You Can't Tickle Yourself. Here's Why | approved, in TheLittleEpic Drive 2026-11-15 | tickle |
 
 ## Retired series (2026-11-14) - kept so nothing repeats
