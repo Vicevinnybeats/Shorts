@@ -1,0 +1,28 @@
+{
+  "id": "gta-ufo",
+  "title": "GTA 6 Has a UFO. Your Eyes Can Make One Too",
+  "style": "2.5D",
+  "composition": "Ep-gta-ufo",
+  "stills": [
+    0,
+    150,
+    262,
+    360,
+    520,
+    660,
+    760,
+    880,
+    1000,
+    1120,
+    1230,
+    1420,
+    1555,
+    1740,
+    1920,
+    1995,
+    2110
+  ],
+  "chunks": 3,
+  "status": "test-render",
+  "publish": false
+}

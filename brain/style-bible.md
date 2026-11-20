@@ -42,6 +42,8 @@ same voice". Code source of truth: `library/style/channel.ts` (new episodes impo
 | silent | cosy game night | environments25/gamenight.tsx |
 | first-offer | sunny flea market | environments25/market.tsx |
 | winner | school gym-hall auction | environments25/auction.tsx |
+| gta-army | army counselor office, park, gym | environments25/army.tsx |
+| gta-ufo | night campsite + dark country road (hook) + 1930s dark room | drawn locally in episodes/gta-ufo/story.tsx |
 
 ## Motion rules (adopted 2026-11-16 from motion-director, github.com/sharbelxyz/motion-director, MIT)
 Code: `src/engine25/motion.tsx` (EASE, arrive/leave/camMove, stagger, Label, countValue/stampScale, SAFE_TEXT).

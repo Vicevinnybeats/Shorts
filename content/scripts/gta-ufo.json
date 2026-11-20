@@ -1,0 +1,129 @@
+{
+  "id": "gta-ufo",
+  "title": "GTA 6 Has a UFO. Your Eyes Can Make One Too",
+  "words": 177,
+  "cast": {
+    "kai": "kai",
+    "nia": "nia"
+  },
+  "shots": [
+    {
+      "id": "hook",
+      "cue": "In GTA",
+      "place": "road",
+      "narration": "In GTA 6, players say a UFO shows up on a dark road after two in the morning.",
+      "onScreenText": [
+        "GTA 6 · PLAYERS SAY: AFTER 2 AM"
+      ]
+    },
+    {
+      "id": "eyes",
+      "cue": "Your own eyes",
+      "place": "road",
+      "narration": "Your own eyes can make one too.",
+      "onScreenText": [
+        "YOUR EYES CAN MAKE ONE"
+      ]
+    },
+    {
+      "id": "camp",
+      "cue": "Two a.m. Nia",
+      "place": "camp",
+      "narration": "Two a.m. Nia and Kai are camping. Just stars.",
+      "onScreenText": [
+        "2:00 AM"
+      ]
+    },
+    {
+      "id": "point",
+      "cue": "Nia points.",
+      "place": "camp",
+      "narration": "Nia points. That light is moving. Kai stares. It drifts left. Then down.",
+      "onScreenText": [
+        "IT DRIFTS"
+      ]
+    },
+    {
+      "id": "phone",
+      "cue": "Kai grabs his",
+      "place": "camp",
+      "narration": "Kai grabs his phone. On the screen, the light is perfectly still.",
+      "onScreenText": [
+        "ON SCREEN: STILL"
+      ]
+    },
+    {
+      "id": "wait",
+      "cue": "Wait. Did it",
+      "place": "camp",
+      "narration": "Wait. Did it move or not?",
+      "onScreenText": [
+        "DID IT MOVE?"
+      ]
+    },
+    {
+      "id": "jitter",
+      "cue": "Your eyes are",
+      "place": "lab",
+      "narration": "Your eyes are never perfectly still. And in the dark, one small light has nothing next to it to compare with.",
+      "onScreenText": [
+        "NO REFERENCE"
+      ]
+    },
+    {
+      "id": "name",
+      "cue": "So your brain",
+      "place": "lab",
+      "narration": "So your brain blames the light. It's called the autokinetic effect. It was described over a hundred years ago.",
+      "onScreenText": [
+        "AUTOKINETIC EFFECT",
+        "100+ YEARS"
+      ]
+    },
+    {
+      "id": "darkroom",
+      "cue": "In the nineteen",
+      "place": "darkroom",
+      "narration": "In the nineteen thirties, people alone in a dark room watched one still dot. They saw it wander.",
+      "onScreenText": [
+        "1930s"
+      ]
+    },
+    {
+      "id": "branch",
+      "cue": "Put a branch",
+      "place": "camp",
+      "narration": "Put a branch next to the light, and it stops.",
+      "onScreenText": [
+        "REFERENCE = STILL"
+      ]
+    },
+    {
+      "id": "pentagon",
+      "cue": "The Pentagon reviewed",
+      "place": "lab",
+      "narration": "The Pentagon reviewed almost eighty years of UFO investigations. No evidence of alien technology. Mostly ordinary things.",
+      "onScreenText": [
+        "1945-2023",
+        "NO ALIEN TECH FOUND",
+        "MOSTLY ORDINARY THINGS"
+      ]
+    },
+    {
+      "id": "twist",
+      "cue": "Next night, Kai",
+      "place": "camp",
+      "narration": "Next night, Kai lines the light up with a branch. It's a planet. It never moved. Nia isn't convinced.",
+      "onScreenText": [
+        "PLANET"
+      ]
+    },
+    {
+      "id": "ask",
+      "cue": "So, what have",
+      "place": "camp",
+      "narration": "So, what have you seen in the sky?",
+      "onScreenText": []
+    }
+  ]
+}

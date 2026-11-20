@@ -137,3 +137,4 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-20 12:13 | render-final | gta-army | render (0-708) | 3 | 1477 | success (run 44732930535) |
 | 2026-11-20 12:13 | render-final | gta-army | assemble | 2 | 1479 | success (run 44732930535) |
 | 2026-11-20 12:13 | render-final | gta-army | log | 1 | 1480 | success (run 44732930535) |
+| 2026-11-20 | local stills | gta-ufo | 17 stills + 6 re-check (scale 0.3) | - | - | built (cheap mode, 1 builder): camp/road/lab/darkroom drawn in story.tsx; not committed |
