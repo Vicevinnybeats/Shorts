@@ -119,3 +119,4 @@ Add 10 new topics per series over time (mark them `added`).
 | Help Them or Not? Why the Choice Feels So Heavy | PC Gamer guides: mission choices (help Frankie and Mario?) | decision regret: we regret actions vs inactions differently (Kahneman & Tversky; Gilovich & Medvec 1995) | idea 2026-11-20 |
 | Why Watching Someone Else Play Is So Fun | IGN: GTA 6 most-watched game ever on Twitch + Kick in a day | watching others: social viewing / co-experience makes things more enjoyable (Boothby, Clark & Bargh 2014 shared experiences are amplified) | idea 2026-11-20 |
 | Low Expectations Win | IGN: players surprised how well Xbox Series S runs GTA 6 | expectation vs outcome: satisfaction tracks the surprise, not the result (Rutledge et al. 2014 happiness equation) | idea 2026-11-20 |
+| GTA 6 Has a UFO. Your Eyes Can Make One Too | scout (Eurogamer UFO/Bigfoot) | autokinetic effect + AARO 2024 | done, in TheLittleEpic Drive as video 11 2026-11-20 (gta-ufo) |
