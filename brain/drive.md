@@ -38,3 +38,4 @@ How a finished video gets into Drive (no rclone secrets needed):
 | 2026-11-17 | winner -> TheLittleEpic/Shorts as video 9 | 9 - The Winner Paid the Most and Lost.mp4 + 9 - Winner txt |
 | 2026-11-20 | gta-army -> TheLittleEpic/Shorts as video 10 | 10 - 43 Soldiers Re-Enlisted. The Headline Was GTA 6.mp4 (41.8 MB) + 10 - Soldiers GTA 6 txt (pizza moves to 11) |
 | 2026-11-20 | gta-ufo -> TheLittleEpic/Shorts as video 11 (cheap mode: 1 builder) | 11 - GTA 6 Has a UFO. Your Eyes Can Make One Too.mp4 (18.8 MB) + 11 - UFO GTA 6 txt (pizza -> 12) |
+| 2026-11-20 | gta-redlight -> TheLittleEpic/Shorts as video 12 (cheap mode) | 12 - He Can Do Anything in GTA 6. He Still Stops at Red Lights.mp4 (30.6 MB) + 12 - Red Lights txt (pizza -> 13) |
