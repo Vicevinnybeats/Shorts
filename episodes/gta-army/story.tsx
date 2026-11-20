@@ -337,7 +337,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
   let mood = MOODS.office;
   switch (id) {
     case "hook": {   // medium-close: a soldier stands at the counselor's desk signing the RE-ENLIST contract on a clipboard; the
-      // signature runs from "signed up" to "years"; "+2 MORE YEARS" lands on "two more years"; slow push
+      // signature runs from "signed up" to "years"; "2+ MORE YEARS" lands on "two more years"; slow push
       mood = MOODS.close;
       const SU = C("signed up", 30), TY = C("two more years", 62), AR = C("army", 110);
       const signed = k(u, Math.min(4, SU - 26), AR, 0.08, 1, EASE.linear);
@@ -346,7 +346,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         { y: FLOOR - 1, el: <DeskSet f={f} expr={u >= AR ? "laugh" : "smile"} pose={{ lookX: 0.6 }} /> },
         { y: FLOOR, el: <Signer x={760} s={1.1} f={f} signed={signed} expr={u >= AR ? "smile" : "focused"} t={f} /> },
       ]} />;
-      const labels = <CardLabel f={u} x={510} y={420} size={74} color={GOLD} enter="scale" enterAt={TY} exitAt={len - 7}>+2 MORE YEARS</CardLabel>;
+      const labels = <CardLabel f={u} x={510} y={420} size={74} color={GOLD} enter="scale" enterAt={TY} exitAt={len - 7}>2+ MORE YEARS</CardLabel>;
       return { cam, mood, body, labels };
     }
     case "headline": { // close-up on the soldier's face (contract done); on "four days" the golden 4 DAY PASS pops over his head,
@@ -388,7 +388,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const ring = k(u, NF + 2, NF + 26, 0, 1, EASE.linear);
       const pinP = arrive(u, FP - 4, 14);
       const camA = { x: 575, y: 560, z: 2.1 }, camB = { x: 575, y: 720, z: 1.6 }, camC = { x: 575, y: 1000, z: 2.0 };
-      const tB = k(u, FP - 10, FP + 14, 0, 1), tC = k(u, GT - 8, GT + 16, 0, 1);
+      const tB = k(u, FP - 10, FP + 14, 0, 1), tC = k(u, GT - 16, GT + 4, 0, 1);
       const lerp = (a: number, b: number, c: number) => a + (b - a) * tB + (c - b) * tC;
       cam = drift(on({ x: 575, y: lerp(camA.y, camB.y, camC.y) }, lerp(camA.z, camB.z, camC.z) + k(u, 0, FP - 10, 0, 0.06)), f, 0.8);
       const body = <Office f={f} calendar over={<g>
@@ -400,7 +400,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       </g>} />;
       const labels = <>
         <CardLabel f={u} x={510} y={420} size={58} color={CREAM} enter="rise" enterAt={NF - 4} exitAt={FP - 12}>RE-ENLIST BY NOV 14</CardLabel>
-        <CardLabel f={u} x={510} y={1080} size={64} color={GOLD} enter="words" enterAt={GT + 6} exitAt={len - 7}>WHEN GTA 6 COMES OUT</CardLabel>
+        <CardLabel f={u} x={510} y={Math.min(1300, toS(cam, { x: 575, y: 880 + 0.42 * 160 }).y + 150)} size={58} color={GOLD} enter="words" enterAt={GT + 4} exitAt={len - 7}>WHEN GTA 6 COMES OUT</CardLabel>
       </>;
       return { cam, mood, body, labels };
     }
