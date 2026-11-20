@@ -64,3 +64,6 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   same time, on ONE video. Make only one video, then stop and wait until the owner says to make the next one.
 - Same channel theme for every video (everyday face-off decided by a surprising science rule), same style bible.
 - Upload schedule: DAILY (owner, 2026-11-17). Bios say 'every day'.
+
+## Agent World (owner, 2026-11-20): PAUSED
+- Do NOT use the Agent World tools (start_task / report_step) until the owner says to turn them back on.
