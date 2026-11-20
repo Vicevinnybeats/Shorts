@@ -102,3 +102,13 @@ Add 10 new topics per series over time (mark them `added`).
 | An owl explains night-shift workers | backlog | |
 | A cow explains supermarkets | backlog | |
 | A parrot explains small talk | backlog | |
+
+## Ideas from the owner's Cloudflare scout (viceverified-scout, read 2026-11-20) - GTA 6 launch news + a science rule
+| Title idea | Scout item (source) | Science angle (verify before scripting) | Status |
+|---|---|---|---|
+| They Re-Enlisted for GTA 6 | 43 soldiers took a 4-day GTA pass with re-enlistment (PC Gamer/AP) | temptation bundling (Milkman 2014) | BUILDING 2026-11-20 (gta-army) |
+| Everyone Saw Bigfoot | Rockstar hides Bigfoot/UFOs in its games (Kotaku, PC Gamer) | pareidolia: brains find faces/shapes in noise | idea |
+| The Game You Can't Fail | streamer: "you won't fail any mission" | challenge vs enjoyment (flow, optimal difficulty ~85% success, Wilson et al. 2019) | idea |
+| Why In-Game Social Media Is So Addictive | players love GTA 6's in-game social feeds (Eurogamer) | variable rewards (Skinner schedules / slot machines) | idea |
+| Disc or Download? | GameStop CEO defends physical games (GameSpot) | endowment effect: we value what we hold (Kahneman, Knetsch & Thaler 1990 mugs) | idea |
+| The Leak That Nobody Believed | leak group claims a dev build (Eurogamer) | illusory truth effect: repetition makes claims feel true (Hasher 1977) | idea (careful: never show leaked material) |
