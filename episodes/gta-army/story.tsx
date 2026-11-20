@@ -24,7 +24,7 @@ import { CAST, EXTRAS } from "../../library/style/channel";
 import { Lab, LAB } from "../../library/environments25/lab";
 import { handPos } from "../../library/environments25/gamenight";
 import { reachLimb } from "../../library/environments25/square";
-import { LivingWall, LivingFloor, Sofa, FloorLamp, Rug } from "../../library/environments25/livingroom";
+import { LivingWall, LivingFloor, Sofa, FloorLamp, Rug, PersonPart } from "../../library/environments25/livingroom";
 import { ARMY, CounselorOffice, Desk, DESK_TOP, Contract, contractSignPoint, Pen, PassCard, Calendar, CamoShirt, PatrolCap, Headphones,
   ParkPath, Gym, Treadmill, TREADMILL_DECK, Audiobook } from "../../library/environments25/army";
 import scenes from "../../content/scripts/gta-army.json";
@@ -61,7 +61,6 @@ const blinkOf = (f: number, seed: number) => ((f + seed * 37) % 103) < 4;
 /** false while a crossfade runs: then in-scene text is blanked too. Set by ShotView right before it builds the shot
  *  (rendering is synchronous), read by the helpers below. */
 let SCENE_TEXT = true;
-const txt = <V,>(v: V, blank: V): V => (SCENE_TEXT ? v : blank);
 
 // ---------------------------------------------------------------- cast + set geometry
 const SOL: Look = CAST.soldier1, SOL2: Look = CAST.soldier2, COU: Look = CAST.counselor;
@@ -129,7 +128,7 @@ const BlankPass: React.FC<{ x: number; y: number; scale: number }> = ({ x, y, sc
   </g>
 );
 const Pass: React.FC<{ x: number; y: number; scale: number; pop?: number }> = (p) =>
-  SCENE_TEXT ? <PassCard {...p} /> : <BlankPass x={p.x} y={p.y} scale={p.scale * Math.min(1, Math.max(0, p.pop ?? 1))} />;
+  !React.useContext(NoText) ? <PassCard {...p} /> : <BlankPass x={p.x} y={p.y} scale={p.scale * Math.min(1, Math.max(0, p.pop ?? 1))} />;
 
 /** a glowing idea bulb (pops in, rays pulse once) */
 const Bulb: React.FC<{ x: number; y: number; s: number; p: number; u: number }> = ({ x, y, s, p, u }) => {
@@ -148,11 +147,13 @@ const Bulb: React.FC<{ x: number; y: number; s: number; p: number; u: number }> 
 
 /** a soldier holding the contract on a clipboard at the chest and signing it (signed 0..1) */
 const Signer: React.FC<{ x: number; s: number; f: number; signed: number; expr: Expr; lookX?: number; t?: number }> = ({ x, s, f, signed, expr, lookX = -0.3, t }) => {
+  const showText = !React.useContext(NoText);
   const base: Pose = { ...STAND, lookX };
   const cs = 0.45 * s / 1.1, cx = x, cy = FLOOR - 170 * s / 1.1 * 1.0 - 0;
   const sp = contractSignPoint(signed);
   const tip = { x: cx + sp.x * cs, y: cy + sp.y * cs };
-  const grip = { x: tip.x + Math.sin(Math.PI / 6) * 70 * 0.6, y: tip.y - Math.cos(Math.PI / 6) * 70 * 0.6 };
+  const grip = { x: tip.x + Math.sin(Math.PI / 6) * 110 * 0.6, y: tip.y - Math.cos(Math.PI / 6) * 110 * 0.6 };
+  const wrist = { x: cx + 250 * cs, y: grip.y + 70 * cs };
   const holdL = { x: cx - 220 * cs + 4, y: cy - 10 };
   let pose = reachLimb({ x, y: FLOOR, scale: s, pose: base }, "armR", grip, 1);
   pose = reachLimb({ x, y: FLOOR, scale: s, pose }, "armL", holdL, 1);
@@ -160,11 +161,14 @@ const Signer: React.FC<{ x: number; s: number; f: number; signed: number; expr: 
     <Soldier x={x} y={FLOOR} s={s} look={SOL} pose={pose} expr={expr} f={f} seed={1} t={t} />
     <rect x={cx - 230 * cs} y={cy - 310 * cs} width={460 * cs} height={620 * cs} rx={10} fill="#a8693e" stroke={INK} strokeWidth={6} />
     <rect x={cx - 60 * cs} y={cy - 326 * cs} width={120 * cs} height={40 * cs} rx={6} fill="#c9ccd2" stroke={INK} strokeWidth={5} />
-    {SCENE_TEXT ? <Contract x={cx} y={cy} scale={cs} signed={signed} label="RE-ENLIST" /> :
+    {showText ? <Contract x={cx} y={cy} scale={cs} signed={signed} label="RE-ENLIST" /> :
       <rect x={cx - 220 * cs} y={cy - 290 * cs} width={440 * cs} height={580 * cs} fill={ARMY.paper} stroke={INK} strokeWidth={8 * cs} />}
+    <path d={`M ${wrist.x + 40} ${wrist.y + 40} L ${wrist.x} ${wrist.y} L ${grip.x} ${grip.y}`} stroke={INK} strokeWidth={22 * s} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+    <path d={`M ${wrist.x + 40} ${wrist.y + 40} L ${wrist.x} ${wrist.y}`} stroke={SOL.jersey} strokeWidth={13 * s} fill="none" strokeLinecap="round" />
+    <path d={`M ${wrist.x} ${wrist.y} L ${grip.x} ${grip.y}`} stroke={SOL.skin} strokeWidth={13 * s} fill="none" strokeLinecap="round" />
     <Pen x={tip.x} y={tip.y} rot={30} scale={0.6} />
-    <circle cx={grip.x} cy={grip.y} r={8 * s} fill={SOL.skin} stroke={INK} strokeWidth={4.2 * s} />
-    <circle cx={holdL.x} cy={holdL.y} r={8 * s} fill={SOL.skin} stroke={INK} strokeWidth={4.2 * s} />
+    <circle cx={grip.x} cy={grip.y} r={12 * s} fill={SOL.skin} stroke={INK} strokeWidth={4.2 * s} />
+    <circle cx={holdL.x} cy={holdL.y} r={11 * s} fill={SOL.skin} stroke={INK} strokeWidth={4.2 * s} />
   </g>;
 };
 
@@ -235,7 +239,7 @@ const CashStack: React.FC<{ x: number; y: number; n: number; w?: number }> = ({ 
 
 /** the see-saw: plank rotates around the fulcrum (deg > 0 = right end down) */
 const SeeSaw: React.FC<{ x: number; y: number; ang: number; want: number; wantY: number; glow: number }> = ({ x, y, ang, want, wantY, glow }) => {
-  const L = 380;
+  const L = 380, showText = !React.useContext(NoText);
   return <g>
     <path d={`M ${x} ${y} L ${x - 90} ${y + 190} L ${x + 90} ${y + 190} Z`} fill="#3a4266" stroke={INK} strokeWidth={9} strokeLinejoin="round" />
     <rect x={x - 400} y={y + 186} width={800} height={18} rx={9} fill="#2a3256" />
@@ -246,7 +250,7 @@ const SeeSaw: React.FC<{ x: number; y: number; ang: number; want: number; wantY:
         <rect x={-110} y={-200} width={220} height={200} rx={10} fill="#7d86a8" stroke={INK} strokeWidth={8} />
         <path d="M -110 -150 L 110 -150 M -110 -50 L 110 -50" stroke="#5a6488" strokeWidth={8} />
         <rect x={-30} y={-232} width={60} height={34} rx={10} fill="none" stroke={INK} strokeWidth={9} />
-        {SCENE_TEXT && <text x={0} y={-82} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={50} fill={CREAM} stroke={INK} strokeWidth={2}>SHOULD</text>}
+        {showText && <text x={0} y={-82} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={50} fill={CREAM} stroke={INK} strokeWidth={2}>SHOULD</text>}
       </g>
       {/* WANT: glowing orb that lands on the left end */}
       {want > 0 && <g transform={`translate(${x - L + 110} ${y - 26 - 120 - wantY})`} opacity={Math.min(1, want * 2)}>
@@ -254,7 +258,7 @@ const SeeSaw: React.FC<{ x: number; y: number; ang: number; want: number; wantY:
         <circle r={150} fill={GOLD} opacity={0.22 * glow} />
         <circle r={120} fill="#ffd25a" stroke={INK} strokeWidth={9} />
         <path d="M -70 -50 Q -50 -86 -10 -92" stroke="#fff6c8" strokeWidth={12} fill="none" strokeLinecap="round" />
-        {SCENE_TEXT && <text x={0} y={18} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={60} fill={INK}>WANT</text>}
+        {showText && <text x={0} y={18} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={60} fill={INK}>WANT</text>}
       </g>}
     </g>
   </g>;
@@ -266,6 +270,15 @@ const Tick: React.FC<{ x: number; y: number; s: number; p: number; color?: strin
     <path d="M -30 0 L -8 24 L 34 -28" pathLength={1} strokeDasharray="1 1" strokeDashoffset={1 - p} stroke={INK} strokeWidth={22} fill="none" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M -30 0 L -8 24 L 34 -28" pathLength={1} strokeDasharray="1 1" strokeDashoffset={1 - p} stroke={color} strokeWidth={12} fill="none" strokeLinecap="round" strokeLinejoin="round" />
   </g>
+);
+
+/** headphones resting round the neck (band under the chin, cups on the collar) - same props as the Person */
+const NeckPhones: React.FC<{ x: number; y: number; scale: number; pose: Pose }> = (p) => (
+  <PersonPart {...p} part="head">
+    <path d="M -54 6 C -50 44 50 44 54 6" stroke={INK} strokeWidth={16} fill="none" strokeLinecap="round" />
+    <path d="M -54 6 C -50 44 50 44 54 6" stroke={ARMY.machine} strokeWidth={7} fill="none" strokeLinecap="round" />
+    {[-1, 1].map((d) => <rect key={d} x={d * 52 - 18} y={-8} width={36} height={50} rx={15} fill={RED} stroke={INK} strokeWidth={6} />)}
+  </PersonPart>
 );
 
 /** simple icons for the bundling cards */
@@ -344,12 +357,12 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       cam = kickCam(drift(on({ x: 740, y: k(u, 0, FD, 960, 900) }, k(u, 0, FD, 1.75, 2.05) + k(u, FD, len, 0, 0.06)), f, 1), u - FD, 12);
       const cheer = arrive(u, FD + 2, 10);
       const pose: Pose = { ...STAND, armL: [12 + 150 * cheer, -6 + 20 * cheer], armR: [20, -110 + 100 * cheer], lookX: u >= FD ? 0 : -0.4, headTilt: u >= FD ? -4 : 0 };
-      const passAt = { x: 740, y: 690 };
+      const passAt = { x: 740, y: 735 };
       const body = <Office f={f} items={[
         { y: FLOOR - 1, el: <DeskSet f={f} expr="smile" pose={{ lookX: 0.7 }} /> },
         { y: FLOOR, el: <Soldier x={760} y={FLOOR} s={1.1} look={SOL} pose={pose} expr={u >= FD ? "cheer" : "smile"} f={f} seed={1} t={f} /> },
-      ]} over={pp > 0 ? <Pass x={passAt.x} y={passAt.y - (1 - pp) * 40} scale={0.52} pop={pp} /> : null} />;
-      const labels = <Label f={u} x={510} y={372} size={64} color={GOLD} enter="words" enterAt={VG - 10} exitAt={len - 7}>4 DAYS OF GAMING</Label>;
+      ]} over={pp > 0 ? <Pass x={passAt.x} y={passAt.y - (1 - pp) * 40} scale={0.44} pop={pp} /> : null} />;
+      const labels = <CardLabel f={u} x={510} y={380} size={62} color={GOLD} enter="words" enterAt={VG - 10} exitAt={len - 7}>4 DAYS OF GAMING</CardLabel>;
       return { cam, mood, body, labels, overlay: <Flash framesSince={u - FD} len={3} /> };
     }
     case "fort": {   // wide establishing: the whole office; the place name rises in; on "career counselor" the counselor looks up,
@@ -495,12 +508,12 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           <Gym f={f} />
           {runner(300, EXTRAS[3], 0, "a")}
           {runner(790, EXTRAS[0], 1.7, "b")}
-          {ap > 0 && <g transform={`translate(540 600) scale(${ap}) translate(-540 -600)`}><Audiobook x={540} y={600} scale={0.6} locked={lock} /></g>}
+          {ap > 0 && <g transform={`translate(760 640) scale(${ap}) translate(-760 -640)`}><Audiobook x={760} y={640} scale={0.66} locked={lock} /></g>}
         </Svg></Layer>
       </>;
       const labels = <>
-        <CardLabel f={u} x={510} y={852} size={50} color={CREAM} enter="rise" enterAt={GA + 6} exitAt={len - 7}>AUDIOBOOKS:</CardLabel>
-        <CardLabel f={u} x={510} y={920} size={56} color={GOLD} enter="scale" enterAt={AG - 4} exitAt={len - 7}>GYM ONLY</CardLabel>
+        <CardLabel f={u} x={300} y={600} size={50} color={CREAM} enter="rise" enterAt={GA + 6} exitAt={len - 7}>AUDIOBOOKS:</CardLabel>
+        <CardLabel f={u} x={300} y={690} size={60} color={GOLD} enter="scale" enterAt={AG - 4} exitAt={len - 7}>GYM ONLY</CardLabel>
       </>;
       return { cam, mood, body, labels };
     }
@@ -508,12 +521,12 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       // stops and stamps; on "At first." the bundled bar sinks back toward the usual one and AT FIRST stamps over the gap
       mood = MOODS.lab;
       const FO = C("fifty one", 60), AF = C("At first", 125);
-      const BY = 1180, BH = 360;
+      const BY = 1220, BH = 440;
       const g0 = arrive(u, 4, 16), g1 = k(u, FO - 8, FO + 16, 0, 1, EASE.arrive);
       const fade = k(u, AF, AF + 20, 0, 1);
-      const h0 = BH * g0, h1 = BH * (1 + 0.51 * g1) * (u < FO - 8 ? g0 : 1) - BH * 0.36 * fade;
+      const h0 = BH * g0, h1 = BH * (1 + 0.51 * g1) * (u < FO - 8 ? g0 : 1) - BH * 0.26 * fade;
       cam = drift({ x: 0, y: k(u, 0, len, 20, 0), zoom: k(u, 0, len, 1.0, 1.05), rot: 0 }, f, 1.2);
-      const x0 = 340, x1 = 720, bw = 220;
+      const x0 = 330, x1 = 730, bw = 260;
       const body = <Lab>
         <path d={`M 140 ${BY} L 940 ${BY}`} stroke={MUTED} strokeWidth={8} strokeLinecap="round" />
         <rect x={x0 - bw / 2} y={BY - h0} width={bw} height={h0} rx={14} fill="#7d86a8" stroke={INK} strokeWidth={8} />
@@ -522,7 +535,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         {SCENE_TEXT && <>
           <text x={x0} y={BY + 70} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={46} fill={CREAM} opacity={g0}>USUAL</text>
           <text x={x1} y={BY + 70} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={46} fill={GOLD} opacity={g0}>GYM-ONLY</text>
-          <text x={x1} y={BY + 122} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={46} fill={GOLD} opacity={g0}>BOOKS</text>
+          <text x={x1} y={BY + 118} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={46} fill={GOLD} opacity={g0}>BOOKS</text>
         </>}
         <g transform={`translate(${x0} ${BY - h0 - 70})`} opacity={g0}><DumbbellIcon x={0} y={0} s={0.5} /></g>
         <g transform={`translate(${x1} ${BY - h1 - 70})`} opacity={g0}><PhonesIcon x={0} y={0} s={0.55} /></g>
@@ -531,7 +544,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const labels = <>
         <Label f={u} x={510} y={400} size={64} color={CREAM} enter="rise" enterAt={2} exitAt={FO - 10}>GYM VISITS</Label>
         <CountCard f={u} x={510} y={400} text={`+${n}% GYM VISITS`} startAt={FO - 8} dur={24} exitAt={len - 7} size={64} w={680} />
-        <Stamp f={u} x={560} y={560} text="AT FIRST" at={AF + 6} exitAt={len - 7} />
+        <Stamp f={u} x={320} y={570} text="AT FIRST" at={AF + 6} exitAt={len - 7} />
       </>;
       return { cam, mood, body, labels };
     }
@@ -543,21 +556,21 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       cam = drift({ x: 0, y: k(u, 0, len, 10, -10), zoom: k(u, 0, len, 1.0, 1.05), rot: 0 }, f, 1.2);
       const card = (x: number, head: string, col: string, icon: React.ReactNode, p: number, dx: number) => p <= 0 ? null :
         <g opacity={Math.min(1, p * 1.5)} transform={`translate(${(1 - p) * dx} 0)`}>
-          <rect x={x - 170} y={720} width={340} height={420} rx={28} fill="#1e2a52" stroke={INK} strokeWidth={9} />
-          <rect x={x - 170} y={720} width={340} height={110} rx={28} fill={col} stroke={INK} strokeWidth={9} />
+          <rect x={x - 160} y={720} width={320} height={420} rx={28} fill="#1e2a52" stroke={INK} strokeWidth={9} />
+          <rect x={x - 160} y={720} width={320} height={110} rx={28} fill={col} stroke={INK} strokeWidth={9} />
           {SCENE_TEXT && <text x={x} y={800} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={60} fill={INK}>{head}</text>}
           {icon}
         </g>;
       const body = <Lab>
         {card(300, "AVOID", RED, <DumbbellIcon x={300} y={980} s={1.1} />, a, -500)}
-        {card(780, "CRAVE", GOLD, <PhonesIcon x={780} y={990} s={1.2} />, c, 500)}
+        {card(760, "CRAVE", GOLD, <PhonesIcon x={760} y={990} s={1.2} />, c, 500)}
         {c > 0.5 && <g opacity={arrive(u, CV + 4, 8)}>
-          <circle cx={540} cy={930} r={44} fill={INK} /><path d="M 518 930 L 562 930 M 540 908 L 540 952" stroke={CREAM} strokeWidth={12} strokeLinecap="round" />
+          <circle cx={530} cy={930} r={44} fill={INK} /><path d="M 508 930 L 552 930 M 530 908 L 530 952" stroke={CREAM} strokeWidth={12} strokeLinecap="round" />
         </g>}
         {tie > 0 && <g>
-          <path d={`M 130 1060 L ${130 + 820 * tie} 1060`} stroke={INK} strokeWidth={40} strokeLinecap="round" />
-          <path d={`M 130 1060 L ${130 + 820 * tie} 1060`} stroke={GOLD} strokeWidth={26} strokeLinecap="round" />
-          {tie >= 1 && <g transform="translate(540 1060)">
+          <path d={`M 130 1110 L ${130 + 800 * tie} 1110`} stroke={INK} strokeWidth={40} strokeLinecap="round" />
+          <path d={`M 130 1110 L ${130 + 800 * tie} 1110`} stroke={GOLD} strokeWidth={26} strokeLinecap="round" />
+          {tie >= 1 && <g transform="translate(530 1110)">
             <path d="M 0 0 C -60 -70 -120 -30 -100 10 C -80 50 -30 20 0 0 C 30 20 80 50 100 10 C 120 -30 60 -70 0 0 Z" fill={GOLD} stroke={INK} strokeWidth={8} strokeLinejoin="round" />
             <circle r={20} fill={ARMY.gold2} stroke={INK} strokeWidth={6} />
           </g>}
@@ -588,7 +601,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       </Svg></Layer>;
       void speed;
       const labels = <CardLabel f={u} x={510} y={420} size={62} color={GOLD} enter="words" enterAt={RO - 6} exitAt={len - 7}>PODCAST = RUNS ONLY</CardLabel>;
-      return { cam, mood, body, labels, bg: ARMY.dawnTop };
+      return { cam, mood, body, labels, bg: ARMY.grass };
     }
     case "weeks": {  // wide park, Kai small on the left: a WEEK 1 strip ticks off all seven days on "runs every day"; on "Week four" the
       // strip flips to WEEK 4, the ticks stop after one day, Kai slows to a walk and tugs the headphones off; "NEW PODCAST?"
@@ -608,7 +621,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       </Svg></Layer>;
       const flip = wk4 ? k(u, W4, W4 + 8, 0, 1, EASE.linear) : 1;
       const strip = (w: number, ticks: number, op: number) => <g opacity={op}>
-        <rect x={100} y={480} width={880} height={190} rx={26} fill={INK} opacity={0.82} />
+        <rect x={100} y={340} width={880} height={330} rx={26} fill={INK} opacity={0.82} />
         {Array.from({ length: 7 }, (_, i) => <g key={i}>
           <rect x={130 + i * 116} y={510} width={100} height={130} rx={16} fill="#f6efe0" stroke={GOLD} strokeWidth={5} />
           <Tick x={180 + i * 116} y={576} s={1} p={k(u - (w === 4 ? W4 : 0), (w === 4 ? 10 : 12) + i * 7, (w === 4 ? 10 : 12) + i * 7 + 6, 0, 1, EASE.linear) * (i < ticks ? 1 : 0)} />
@@ -621,7 +634,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <Label f={u} x={510} y={420} size={70} color={RED} enter="scale" enterAt={W4} exitAt={len - 7}>WEEK 4</Label>
         <CardLabel f={u} x={510} y={800} size={60} color={CREAM} enter="words" enterAt={NP - 2} exitAt={len - 7}>NEW PODCAST?</CardLabel>
       </>;
-      return { cam, mood, body, labels, bg: ARMY.dawnTop };
+      return { cam, mood, body, labels, bg: ARMY.grass };
     }
     default: {       // ask: home in the evening, Kai on the sofa with the headphones round his neck turns to us and shrugs, palms up,
       // a small smile; the camera eases out from his face to the room
@@ -630,7 +643,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const pull = k(u, 0, len, 0, 1);
       const sh = arrive(u, WY + 6, 12);
       cam = drift(on({ x: interpolate(pull, [0, 1], [540, 540]), y: interpolate(pull, [0, 1], [900, 960]) }, interpolate(pull, [0, 1], [1.7, 1.25])), f, 1.2);
-      const SS = 1.0, SY = 1300, px = 540, py = SY - 150 * SS;
+      const SS = 0.8, PS = 1.05, SY = 1300, px = 540, py = SY - 104;
       const pose: Pose = { armL: [22 + 30 * sh, -40 - 70 * sh], armR: [22 + 30 * sh, -40 - 70 * sh], legL: [6, 0], legR: [6, 0], crouch: 0.6, headTilt: 6 * sh, lookX: 0 };
       const body = <>
         <Layer p={0.6}><Svg><LivingWall y={-300} h={1600} /></Svg></Layer>
@@ -639,8 +652,8 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           <Rug x={540} y={1420} w={760} />
           <FloorLamp x={930} y={1300} scale={0.85} />
           <Sofa x={540} y={SY} scale={SS} />
-          <Person x={px} y={py} scale={SS} look={KAI} pose={pose} expr={u >= WY + 6 ? "smirk" : "smile"} blink={blinkOf(f, 2)} t={f} shadow={0} />
-          <g transform={`translate(0 ${70 * SS})`}><Headphones x={px} y={py} scale={SS} pose={pose} color={RED} /></g>
+          <Person x={px} y={py} scale={PS} look={KAI} pose={pose} expr={u >= WY + 6 ? "smirk" : "smile"} blink={blinkOf(f, 2)} t={f} shadow={0} />
+          <NeckPhones x={px} y={py} scale={PS} pose={pose} />
           <Sofa x={540} y={SY} scale={SS} front />
         </Svg></Layer>
       </>;
