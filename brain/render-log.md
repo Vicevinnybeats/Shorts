@@ -150,3 +150,9 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-20 14:17 | render-final | gta-redlight | render (0-730) | 4 | 1534 | success (run 44750546862) |
 | 2026-11-20 14:17 | render-final | gta-redlight | assemble | 3 | 1537 | success (run 44750546862) |
 | 2026-11-20 14:17 | render-final | gta-redlight | log | 1 | 1538 | success (run 44750546862) |
+| 2026-11-20 20:13 | render-final | gta-radio | voice-and-mix | 3 | 1541 | success (run 44808334770) |
+| 2026-11-20 20:13 | render-final | gta-radio | render (0-731) | 3 | 1544 | success (run 44808334770) |
+| 2026-11-20 20:13 | render-final | gta-radio | render (1464-2195) | 3 | 1547 | success (run 44808334770) |
+| 2026-11-20 20:13 | render-final | gta-radio | render (732-1463) | 3 | 1550 | success (run 44808334770) |
+| 2026-11-20 20:13 | render-final | gta-radio | assemble | 2 | 1552 | success (run 44808334770) |
+| 2026-11-20 20:13 | render-final | gta-radio | log | 1 | 1553 | success (run 44808334770) |
