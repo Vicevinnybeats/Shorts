@@ -1,0 +1,144 @@
+{
+  "id": "gta-army",
+  "title": "43 Soldiers Re-Enlisted. The Headline Was GTA 6",
+  "words": 170,
+  "cast": {
+    "kai": "kai",
+    "soldier1": "soldier1",
+    "soldier2": "soldier2",
+    "counselor": "counselor"
+  },
+  "shots": [
+    {
+      "id": "hook",
+      "cue": "Forty three soldiers",
+      "place": "office",
+      "narration": "Forty three soldiers signed up for two more years in the army.",
+      "onScreenText": [
+        "+2 MORE YEARS"
+      ]
+    },
+    {
+      "id": "headline",
+      "cue": "And the headlines",
+      "place": "office",
+      "narration": "And the headlines were all about four days of video games.",
+      "onScreenText": [
+        "4 DAYS OF GAMING"
+      ]
+    },
+    {
+      "id": "fort",
+      "cue": "Fort Stewart, Georgia.",
+      "place": "office",
+      "narration": "Fort Stewart, Georgia. An army career counselor had an idea.",
+      "onScreenText": [
+        "FORT STEWART, GEORGIA"
+      ]
+    },
+    {
+      "id": "offer",
+      "cue": "Re-enlist by November",
+      "place": "office",
+      "narration": "Re-enlist by November fourteenth, and get a special four day pass. Right when GTA 6 comes out.",
+      "onScreenText": [
+        "NOV 14",
+        "4 DAY PASS",
+        "GTA 6"
+      ]
+    },
+    {
+      "id": "count",
+      "cue": "Forty three of",
+      "place": "office",
+      "narration": "Forty three of the hundred and thirty soldiers who could take it, took it.",
+      "onScreenText": [
+        "43 OF 130"
+      ]
+    },
+    {
+      "id": "bonus",
+      "cue": "Wait. Many still",
+      "place": "office",
+      "narration": "Wait. Many still got the usual re-enlistment bonuses. One got over sixty thousand dollars.",
+      "onScreenText": [
+        "USUAL BONUSES",
+        "$60,000+"
+      ]
+    },
+    {
+      "id": "why",
+      "cue": "So why did",
+      "place": "office",
+      "narration": "So why did four days of gaming steal the show?",
+      "onScreenText": [
+        "WHY THE PASS?"
+      ]
+    },
+    {
+      "id": "carry",
+      "cue": "Because a want",
+      "place": "lab",
+      "narration": "Because a want can carry a should.",
+      "onScreenText": [
+        "WANT",
+        "SHOULD"
+      ]
+    },
+    {
+      "id": "gym",
+      "cue": "Researchers at a",
+      "place": "gym",
+      "narration": "Researchers at a university gym gave people gripping audiobooks. The catch? They could only listen at the gym.",
+      "onScreenText": [
+        "AUDIOBOOKS: GYM ONLY"
+      ]
+    },
+    {
+      "id": "result",
+      "cue": "Those people went",
+      "place": "lab",
+      "narration": "Those people went to the gym fifty one percent more often. At first.",
+      "onScreenText": [
+        "+51% GYM VISITS",
+        "AT FIRST"
+      ]
+    },
+    {
+      "id": "name",
+      "cue": "It's called temptation",
+      "place": "lab",
+      "narration": "It's called temptation bundling. Pair the thing you avoid with the thing you crave.",
+      "onScreenText": [
+        "TEMPTATION BUNDLING",
+        "AVOID + CRAVE"
+      ]
+    },
+    {
+      "id": "kai",
+      "cue": "Kai hates running.",
+      "place": "park",
+      "narration": "Kai hates running. So his favorite podcast is now for runs only.",
+      "onScreenText": [
+        "PODCAST = RUNS ONLY"
+      ]
+    },
+    {
+      "id": "weeks",
+      "cue": "Week one, he",
+      "place": "park",
+      "narration": "Week one, he runs every day. Week four, he needs a new podcast.",
+      "onScreenText": [
+        "WEEK 1",
+        "WEEK 4",
+        "NEW PODCAST?"
+      ]
+    },
+    {
+      "id": "ask",
+      "cue": "So, what would",
+      "place": "home",
+      "narration": "So, what would you bundle?"
+    }
+  ]
+}
