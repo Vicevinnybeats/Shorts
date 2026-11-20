@@ -260,7 +260,7 @@ const ShotView: React.FC<{ span: ShotSpan; freezeAt?: number }> = ({ span, freez
 };
 
 // the light's apparent drift in "point": left, then down
-const drifted = (u: number, DL: number, TD: number): Pt => ({ x: LIGHT.x - 130 * k(u, DL, DL + 30, 0, 1), y: LIGHT.y + 100 * k(u, TD, TD + 26, 0, 1) });
+const drifted = (u: number, DL: number, TD: number): Pt => ({ x: LIGHT.x - 130 * k(u, DL, DL + 30, 0, 1), y: LIGHT.y + 80 + 100 * k(u, TD, TD + 26, 0, 1) });
 // the wandering path seen in the dark room
 const wander = (t: number): Pt => ({ x: 760 + 150 * Math.sin(t * 5.1) * t + 40 * Math.sin(t * 13), y: 640 + 120 * Math.sin(t * 3.3 + 1) * t + 30 * Math.cos(t * 11) });
 
@@ -319,7 +319,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
     case "point": {  // medium: Nia points at the light; on "Kai stares" he looks up; on "drifts left" the light slides left, on
       // "Then down" it sinks, a dashed path trails behind it
       const KS = C("Kai stares", 50), DL = C("drifts left", 90), TD = C("Then down", 125);
-      cam = drift(on({ x: 600, y: k(u, 0, len, 950, 930) }, k(u, 0, len, 1.22, 1.28)), f, 1);
+      cam = drift(on({ x: 600, y: k(u, 0, len, 1015, 1010) }, k(u, 0, len, 1.1, 1.12)), f, 1);
       const lp = drifted(u, DL, TD);
       const arm = arrive(u, 0, 12);
       const nPose = reachLimb({ x: 750, y: FLOOR, scale: 0.95, pose: { ...SIT, lookX: 0.3, headTilt: -6 } }, "armR", lp, 1);
@@ -513,9 +513,9 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         { y: FLOOR, el: <Person x={820} y={FLOOR} scale={0.95} look={NIA} pose={nPose} expr={u >= NI ? "smirk" : "calm"} blink={blinkOf(f, 4)} t={f} /> },
         { y: FLOOR - 2, el: <g><rect x={626} y={760} width={28} height={570} fill="#3a2618" stroke={INK} strokeWidth={6} /><Pine x={640} y={1080} h={560} c="#1a3024" /></g> },
       ]} over={<g>
-        <Branch x={LP.x + 40} y={LP.y + 36} s={0.4} />
+        {toN < 0.5 && <g opacity={1 - 2 * toN}><Branch x={LP.x + 40} y={LP.y + 36} s={0.4} /></g>}
         {sight > 0 && <path d={`M ${eye.x} ${eye.y} L ${eye.x + (LP.x - eye.x) * sight} ${eye.y + (LP.y - eye.y) * sight}`} stroke={GOLD} strokeWidth={6} strokeDasharray="12 14" opacity={0.8 * (1 - leave(u, NI - 10, 8))} />}
-        {pl > 0 ? <g transform={`translate(${LP.x} ${LP.y}) scale(${0.3 + 0.7 * pl})`}>
+        {toN > 0.5 ? null : pl > 0 ? <g opacity={1 - 2 * toN} transform={`translate(${LP.x} ${LP.y}) scale(${0.3 + 0.7 * pl})`}>
           <circle r={110} fill="#fff1c0" opacity={0.15} />
           <circle r={52} fill="#ffe0a0" stroke={INK} strokeWidth={7} />
           <path d="M -46 -14 Q 0 0 46 -18 M -44 18 Q 0 26 46 12" stroke="#e8a85a" strokeWidth={8} fill="none" />
