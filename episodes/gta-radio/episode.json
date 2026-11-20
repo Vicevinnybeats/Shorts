@@ -1,0 +1,10 @@
+{
+  "id": "gta-radio",
+  "title": "You'll Love the GTA 6 Song You Hate. Here's Why",
+  "style": "2.5D",
+  "composition": "Ep-gta-radio",
+  "stills": [0, 120, 230, 400, 560, 670, 780, 880, 1100, 1260, 1420, 1650, 1800, 1930, 2070],
+  "chunks": 3,
+  "status": "test-render",
+  "publish": false
+}

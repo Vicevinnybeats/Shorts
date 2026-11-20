@@ -1,0 +1,109 @@
+{
+  "id": "gta-radio",
+  "title": "You'll Love the GTA 6 Song You Hate. Here's Why",
+  "words": 172,
+  "cast": {
+    "kai": "kai",
+    "nia": "nia"
+  },
+  "shots": [
+    {
+      "id": "hook",
+      "cue": "Kai hated this",
+      "place": "car",
+      "narration": "Kai hated this song on Monday. By Friday, he's singing it.",
+      "onScreenText": ["MONDAY: HATES IT", "FRIDAY: SINGS IT"]
+    },
+    {
+      "id": "drive",
+      "cue": "GTA 6 launch",
+      "place": "road",
+      "narration": "GTA 6 launch week. Kai drives everywhere with the radio on.",
+      "onScreenText": ["GTA 6 LAUNCH WEEK", "RADIO: ALWAYS ON"]
+    },
+    {
+      "id": "count",
+      "cue": "Kotaku counted a",
+      "place": "lab",
+      "narration": "Kotaku counted a hundred and fifty songs on just its pop and classic rock stations.",
+      "onScreenText": ["KOTAKU COUNTED", "150 SONGS", "POP + CLASSIC ROCK"]
+    },
+    {
+      "id": "again",
+      "cue": "But one track",
+      "place": "street",
+      "narration": "But one track keeps coming back. Kai groans. Again? He doesn't switch it off.",
+      "onScreenText": ["PLAYED: 1", "PLAYED: 2", "PLAYED: 3", "AGAIN?", "STAYS ON"]
+    },
+    {
+      "id": "day5",
+      "cue": "Day five. Nia",
+      "place": "kitchen",
+      "narration": "Day five. Nia catches him humming it.",
+      "onScreenText": ["DAY 5", "HUMMING IT"]
+    },
+    {
+      "id": "what",
+      "cue": "Wait. He hated",
+      "place": "kitchen",
+      "narration": "Wait. He hated that song. What changed?",
+      "onScreenText": ["HE HATED IT", "WHAT CHANGED?"]
+    },
+    {
+      "id": "notsong",
+      "cue": "Not the song.",
+      "place": "lab",
+      "narration": "Not the song. Just how often he heard it.",
+      "onScreenText": ["NOT THE SONG", "SAME SONG", "HOW OFTEN"]
+    },
+    {
+      "id": "zajonc",
+      "cue": "In nineteen sixty",
+      "place": "lab",
+      "narration": "In nineteen sixty eight, psychologist Robert Zajonc showed people strange words and symbols, some once, some up to twenty five times.",
+      "onScreenText": ["ROBERT ZAJONC", "1968", "ZAJONC 1968", "STRANGE WORDS + SYMBOLS", "x0 x1 x2 x5 x10 x25"]
+    },
+    {
+      "id": "liking",
+      "cue": "The more often",
+      "place": "lab",
+      "narration": "The more often people saw one, the more they tended to like it.",
+      "onScreenText": ["LIKING", "MORE SEEN = MORE LIKED"]
+    },
+    {
+      "id": "effect",
+      "cue": "It's called the",
+      "place": "lab",
+      "narration": "It's called the mere exposure effect. Familiar feels safe, and safe feels good.",
+      "onScreenText": ["MERE EXPOSURE", "EFFECT", "FAMILIAR = SAFE = GOOD"]
+    },
+    {
+      "id": "curve",
+      "cue": "Music works the",
+      "place": "lab",
+      "narration": "Music works the same way. Up to a point. In later studies, songs played too many times started to lose their shine.",
+      "onScreenText": ["MUSIC TOO", "UP TO A POINT", "LATER STUDIES", "TOO MANY PLAYS"]
+    },
+    {
+      "id": "joke",
+      "cue": "It's like a",
+      "place": "lab",
+      "narration": "It's like a joke. Funny the second time. Annoying the tenth.",
+      "onScreenText": ["LAUGH-O-METER", "2ND", "10TH", "FUNNY", "ANNOYING"]
+    },
+    {
+      "id": "week3",
+      "cue": "Week three. The",
+      "place": "radio",
+      "narration": "Week three. The song comes on. Kai changes the station.",
+      "onScreenText": ["WEEK 3", "PLAYED: TOO MANY", "NEW STATION"]
+    },
+    {
+      "id": "ask",
+      "cue": "So, which song",
+      "place": "kitchen",
+      "narration": "So, which song did you hate, then love?",
+      "onScreenText": ["HATE → LOVE?"]
+    }
+  ]
+}
