@@ -144,3 +144,9 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-20 13:52 | render-final | gta-ufo | render (723-1445) | 3 | 1507 | success (run 44743393121) |
 | 2026-11-20 13:52 | render-final | gta-ufo | assemble | 13 | 1520 | success (run 44743393121) |
 | 2026-11-20 13:52 | render-final | gta-ufo | log | 1 | 1521 | success (run 44743393121) |
+| 2026-11-20 14:17 | render-final | gta-redlight | voice-and-mix | 3 | 1524 | success (run 44750546862) |
+| 2026-11-20 14:17 | render-final | gta-redlight | render (731-1461) | 4 | 1528 | success (run 44750546862) |
+| 2026-11-20 14:17 | render-final | gta-redlight | render (1462-2190) | 2 | 1530 | success (run 44750546862) |
+| 2026-11-20 14:17 | render-final | gta-redlight | render (0-730) | 4 | 1534 | success (run 44750546862) |
+| 2026-11-20 14:17 | render-final | gta-redlight | assemble | 3 | 1537 | success (run 44750546862) |
+| 2026-11-20 14:17 | render-final | gta-redlight | log | 1 | 1538 | success (run 44750546862) |
