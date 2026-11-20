@@ -1,7 +1,7 @@
 {
   "id": "gta-army",
   "title": "43 Soldiers Re-Enlisted. The Headline Was GTA 6",
-  "words": 170,
+  "words": 172,
   "cast": {
     "kai": "kai",
     "soldier1": "soldier1",
@@ -13,7 +13,7 @@
       "id": "hook",
       "cue": "Forty three soldiers",
       "place": "office",
-      "narration": "Forty three soldiers signed up for two more years in the army.",
+      "narration": "Forty three soldiers signed up for at least two more years in the army.",
       "onScreenText": [
         "+2 MORE YEARS"
       ]

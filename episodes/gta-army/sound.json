@@ -1,4 +1,4 @@
-{"music": {"mood": "upbeat", "bpm": 108, "key": 60, "level_lu": -12},
+{"music": {"mood": "playful", "bpm": 108, "key": 60, "level_lu": -12},
  "sfx": [
   {"cue": "Forty three soldiers", "fn": "whoosh", "args": {"dur": 0.5, "peak": 0.08}, "gain_db": -10},
   {"cue": "signed up for", "fn": "rattle", "args": {"dur": 0.6, "density": 8.0}, "gain_db": -13},
