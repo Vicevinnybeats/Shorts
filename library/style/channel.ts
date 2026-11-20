@@ -71,4 +71,10 @@ export const CAST: Record<string, Look> = {
   lucas: { skin: SKIN.fair, hair: HAIR.brown, hairStyle: "short", jersey: "#f2b630", jersey2: "#c98f12", shorts: "#2a2f3d", socks: "#2a2f3d", boots: "#f2f2ee" },
   amira: { skin: SKIN.deep, hair: HAIR.black, hairStyle: "curly", jersey: "#7d4ad0", jersey2: "#5d33a3", shorts: "#2d3a5a", socks: "#2d3a5a", boots: "#f2f2ee" },
   pizzaiolo: { skin: SKIN.tan, hair: HAIR.black, hairStyle: "short", jersey: "#f6f3ec", jersey2: "#dcd6c8", shorts: "#3b3346", socks: "#3b3346", boots: "#1d1a24" },
+  // gta-army (counselor office + park + gym, environments25/army.tsx). Generic olive field uniform, NO insignia:
+  // soldier1/soldier2 = re-enlisting soldiers, counselor = the career counselor (same uniform, add CamoShirt + PatrolCap
+  // from army.tsx). Kai (above) comes back as the runner with Headphones.
+  soldier1: { skin: SKIN.tan, hair: HAIR.black, hairStyle: "buzz", jersey: "#6f7d43", jersey2: "#56633a", shorts: "#5f6b3b", socks: "#5f6b3b", boots: "#3b2f24" },
+  soldier2: { skin: SKIN.light, hair: HAIR.brown, hairStyle: "short", jersey: "#6f7d43", jersey2: "#56633a", shorts: "#5f6b3b", socks: "#5f6b3b", boots: "#3b2f24" },
+  counselor: { skin: SKIN.dark, hair: HAIR.black, hairStyle: "short", jersey: "#6f7d43", jersey2: "#56633a", shorts: "#5f6b3b", socks: "#5f6b3b", boots: "#3b2f24" },
 };
