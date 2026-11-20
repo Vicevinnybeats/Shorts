@@ -21,3 +21,7 @@
 ## 2026-11-18 owner: GTA 6 will be out when the limit resets -> 3 other (post-launch) stories, verified info
 - New scripts: gta-allnighter, gta-minimap, gta-hype (work after launch). Pre-launch scripts kept, marked outdated.
 - After launch: re-check verified launch facts (official sales/records from Take-Two/Rockstar, not rumours) before building.
+
+## 2026-11-20 scheduled post-launch fact check (GTA 6)
+- Verified: Metacritic 99 (ties highest ever). Not verified: sales (only Sensor Tower estimates; Take-Two gave no figure yet).
+- All 3 post-launch scripts still accurate. Suggested addition to gta-hype: the 99 Metacritic line. Re-check sales after Take-Two reports.

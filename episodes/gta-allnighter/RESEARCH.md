@@ -5,3 +5,7 @@
   equal to or worse than BAC 0.05%; response speed up to 50% slower; accuracy poorer. Not a driving test.
   https://pmc.ncbi.nlm.nih.gov/articles/PMC1739867
 - Script says "some of their results" and "over the legal limit in many countries" (0.05% is the limit in e.g. Australia, much of Europe).
+
+## Post-launch check 2026-11-20
+- Still accurate: BambooHR stats were pre-launch plans ("said they planned to"), wording already matches.
+- No verified launch-day absence figure exists; keep the line as is.
