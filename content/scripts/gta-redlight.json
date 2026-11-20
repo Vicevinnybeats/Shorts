@@ -1,0 +1,137 @@
+{
+  "id": "gta-redlight",
+  "title": "He Can Do Anything in GTA 6. He Still Stops at Red Lights",
+  "words": 177,
+  "cast": {
+    "kai": "kai",
+    "nia": "nia"
+  },
+  "shots": [
+    {
+      "id": "hook",
+      "cue": "He can do",
+      "place": "living",
+      "narration": "He can do anything in GTA 6. And he still stops at every red light.",
+      "onScreenText": [
+        "GTA 6: ANYTHING GOES",
+        "HE STILL STOPS"
+      ]
+    },
+    {
+      "id": "launch",
+      "cue": "Launch week. Kai",
+      "place": "living",
+      "narration": "Launch week. Kai finally gets the controller. Fast car. Empty road. Red light. He stops.",
+      "onScreenText": [
+        "LAUNCH WEEK",
+        "HE STOPS"
+      ]
+    },
+    {
+      "id": "go",
+      "cue": "Nia stares. Nobody's",
+      "place": "living",
+      "narration": "Nia stares. Nobody's chasing you. Go!",
+      "onScreenText": [
+        "GO!"
+      ]
+    },
+    {
+      "id": "green",
+      "cue": "He waits for",
+      "place": "living",
+      "narration": "He waits for green anyway.",
+      "onScreenText": [
+        "WAITS FOR GREEN"
+      ]
+    },
+    {
+      "id": "headline",
+      "cue": "And he's not",
+      "place": "lab",
+      "narration": "And he's not alone. One PC Gamer writer posted: Help, I can't stop obeying traffic laws in GTA 6.",
+      "onScreenText": [
+        "NOT ALONE",
+        "PC GAMER HEADLINE",
+        "\"HELP: I CAN'T STOP OBEYING TRAFFIC LAWS\" (IN GTA 6)"
+      ]
+    },
+    {
+      "id": "rules",
+      "cue": "Wait. It's a",
+      "place": "living",
+      "narration": "Wait. It's a game. So why won't his hands break the rules?",
+      "onScreenText": [
+        "IT'S A GAME"
+      ]
+    },
+    {
+      "id": "habit",
+      "cue": "Because a lot",
+      "place": "lab",
+      "narration": "Because a lot of what you do isn't a choice. It's a habit.",
+      "onScreenText": [
+        "CHOICE?",
+        "HABIT"
+      ]
+    },
+    {
+      "id": "diary",
+      "cue": "Psychologists had students",
+      "place": "lab",
+      "narration": "Psychologists had students write down what they were doing, hour by hour.",
+      "onScreenText": [
+        "HOUR BY HOUR"
+      ]
+    },
+    {
+      "id": "study",
+      "cue": "In one study,",
+      "place": "lab",
+      "narration": "In one study, about forty three percent of their actions were habits. Done almost every day, in the same place, often while thinking about something else.",
+      "onScreenText": [
+        "43% HABITS (ONE STUDY)",
+        "SAME PLACE · ALMOST DAILY · MIND ELSEWHERE"
+      ]
+    },
+    {
+      "id": "loop",
+      "cue": "A habit is",
+      "place": "lab",
+      "narration": "A habit is a shortcut. The cue appears, the action follows. Red light, foot on the brake.",
+      "onScreenText": [
+        "CUE",
+        "ACTION"
+      ]
+    },
+    {
+      "id": "password",
+      "cue": "It's like typing",
+      "place": "lab",
+      "narration": "It's like typing your password without thinking. Your fingers know it. You don't.",
+      "onScreenText": [
+        "FINGERS: KNOW IT",
+        "YOU: ?"
+      ]
+    },
+    {
+      "id": "cereal",
+      "cue": "Next morning, Nia",
+      "place": "kitchen",
+      "narration": "Next morning, Nia moves the cereal to a new shelf. Kai opens the old cupboard. Three times.",
+      "onScreenText": [
+        "NEXT MORNING",
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "id": "ask",
+      "cue": "So, what do",
+      "place": "living",
+      "narration": "So, what do you do on autopilot?",
+      "onScreenText": []
+    }
+  ]
+}

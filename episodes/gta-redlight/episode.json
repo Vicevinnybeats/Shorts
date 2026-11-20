@@ -1,0 +1,10 @@
+{
+  "id": "gta-redlight",
+  "title": "He Can Do Anything in GTA 6. He Still Stops at Red Lights",
+  "style": "2.5D",
+  "composition": "Ep-gta-redlight",
+  "stills": [0, 120, 200, 300, 420, 500, 600, 700, 800, 960, 1110, 1260, 1440, 1560, 1660, 1780, 1880, 2010, 2120],
+  "chunks": 3,
+  "status": "test-render",
+  "publish": false
+}
