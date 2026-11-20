@@ -106,7 +106,7 @@ Add 10 new topics per series over time (mark them `added`).
 ## Ideas from the owner's Cloudflare scout (viceverified-scout, read 2026-11-20) - GTA 6 launch news + a science rule
 | Title idea | Scout item (source) | Science angle (verify before scripting) | Status |
 |---|---|---|---|
-| They Re-Enlisted for GTA 6 | 43 soldiers took a 4-day GTA pass with re-enlistment (PC Gamer/AP) | temptation bundling (Milkman 2014) | BUILDING 2026-11-20 (gta-army) |
+| They Re-Enlisted for GTA 6 | 43 soldiers took a 4-day GTA pass with re-enlistment (PC Gamer/AP) | temptation bundling (Milkman 2014) | done, in TheLittleEpic Drive as video 10 2026-11-20 |
 | Everyone Saw Bigfoot | Rockstar hides Bigfoot/UFOs in its games (Kotaku, PC Gamer) | pareidolia: brains find faces/shapes in noise | idea |
 | The Game You Can't Fail | streamer: "you won't fail any mission" | challenge vs enjoyment (flow, optimal difficulty ~85% success, Wilson et al. 2019) | idea |
 | Why In-Game Social Media Is So Addictive | players love GTA 6's in-game social feeds (Eurogamer) | variable rewards (Skinner schedules / slot machines) | idea |
