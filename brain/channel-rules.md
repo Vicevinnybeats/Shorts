@@ -67,3 +67,12 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
 
 ## Agent World (owner, 2026-11-20): PAUSED
 - Do NOT use the Agent World tools (start_task / report_step) until the owner says to turn them back on.
+
+## New series (owner, 2026-11-21): "WHAT IF" - GTA 6 first, 6 videos, ONE AT A TIME
+- 70-100 s stories, premise -> hour/day chapters -> real science -> twist -> question. Style kit: library/whatif/ (see
+  brain/style-whatif.md). Characters in the spirit of the owner's reference screenshots but ORIGINAL (not their robot).
+- Drive folder for this series (owner): https://drive.google.com/drive/folders/1C3YDZzPqlFhBQM_7rurN7XRCnhhyqT_o
+  (id 1C3YDZzPqlFhBQM_7rurN7XRCnhhyqT_o). Old TheLittleEpic videos stay in the old folder.
+- GTA 6 what-if plan: 1 30 days no sleep (wi-gta-nosleep) | 2 moving to the real Leonida (Florida facts) |
+  3 GTA physics in real life (falls, crashes) | 4 GTA money became real (inflation) | 5 everyone skipped work for GTA 6 |
+  6 healing like a GTA character (wound/bone healing).
