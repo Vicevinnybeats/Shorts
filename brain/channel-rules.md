@@ -76,3 +76,9 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
 - GTA 6 what-if plan: 1 30 days no sleep (wi-gta-nosleep) | 2 moving to the real Leonida (Florida facts) |
   3 GTA physics in real life (falls, crashes) | 4 GTA money became real (inflation) | 5 everyone skipped work for GTA 6 |
   6 healing like a GTA character (wound/bone healing).
+- QUEUE (owner 2026-11-21: make ONLY video 1 now, queue the rest): 2 Leonida, 3 GTA physics, 4 GTA money, 5 everyone
+  skips work, 6 GTA healing - status: QUEUED, start one only when the owner says so.
+- Look (owner 2026-11-21): "Golden Neon" line-art (black bg, glowing gold/coral outlines, dotted light lines, spotlight,
+  particles) COMBINED with the what-if HUD (live counter, bars, chapter screens, choice cards, phone) + strong motion
+  graphics (draw-on lines, punch-in chapters) and a motion-graphics opening sting that is also the hook.
+- Audio for this series: narrator Kokoro "bm_george" (episode.json "voice"), music mood "cinematic" (new bed).
