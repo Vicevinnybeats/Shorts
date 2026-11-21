@@ -128,3 +128,5 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   (Stick3DTest: NEON3D palette + REMY3D puppets, 3D toon rooms, shafts, dust, camera rigs); Golden Neon = colours only.
 - 2026-11-21 owner: Blender = OPTION 2 (headless Blender on GitHub Actions, bpy scripts in repo -> .glb, no owner computer,
   no Higgsfield). Live local Blender MCP only if an object cannot be done that way. Objects are built once, reused.
+- 2026-11-21 owner: SAVE every Blender .glb model for reuse: library/models/<name>.glb + a line in brain/stick3d/README.md
+  ("Blender objects": name, what it is, colours, which video used it). Reuse before making a new one.
