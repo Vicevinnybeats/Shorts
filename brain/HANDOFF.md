@@ -2,11 +2,9 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
-1. What If 1 sound fix: remix 1 (run 44922080023) clarity band -28.3 -> -24.8 (not enough); remix 2 queued 16:09 with
-   stronger voice_eq + music -19. Remix (reuses render-final run 44912499914 picture+voice,
-   applies episode.json "voice_eq" clarity chain + music level_lu -16). When done: git pull, measure
-   episodes/wi-gta-nosleep/preview.mp4 bands (ffmpeg ebur128 on highpass1000+lowpass5000; target ~ -21 LUFS like old
-   gta-radio; it was -28.3 before the fix), send preview to owner (SendUserFile). Owner judges.
+1. What If 1 sound fix DONE (remix 2, run 44922935325): clarity band 1-5 kHz -28.3 -> -23.4 LUFS (old What If 2 -23.7,
+   gta-radio -21.2), bass -17.0, master -14.1; voice_eq in episode.json, music level_lu -19. Preview sent to owner,
+   WAITING for verdict. GitHub artifact downloads are blocked by this sandbox's proxy -> deliver via repo preview or Drive.
 2. Owner voice complaints (What If 1 render): "not natural, phrases glued, muddy, not loud/clear, old videos were louder".
    Done: clarity EQ (no afftdn denoise), music lower. Still open: NATURAL FLOW -> regenerate voice with chatterbox
    --chunk-chars 160 --exag 0.5 --cfg 0.5 --gap 0.35 --ref-len 20 (test: voice-compare.yml run 44921323877, artifact
