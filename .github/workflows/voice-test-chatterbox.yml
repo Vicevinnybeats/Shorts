@@ -1,0 +1,39 @@
+name: voice-test-chatterbox
+# Speaks a test line in the owner's cloned voice with Chatterbox (MIT) from the encrypted reference, then the plain
+# Kokoro narrator for comparison; artifact final-voicetest2/voicetest2.mp4 for drive-put. Never published.
+on:
+  workflow_dispatch:
+    inputs:
+      text: { description: "Test text", required: false, type: string, default: "What if you played a game for thirty days straight? No sleep. No breaks. Let's see how far you would really get." }
+      exag: { description: "Emotion (0.25-1.0)", required: false, type: string, default: "0.5" }
+      cfg: { description: "Pace/adherence (0.3-0.7)", required: false, type: string, default: "0.5" }
+      ref_start: { description: "Reference slice start (s)", required: false, type: string, default: "20" }
+permissions: { contents: read }
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - uses: actions/cache@v4
+        with: { path: ~/.cache/huggingface, key: hf-chatterbox-v1 }
+      - name: Chatterbox clone (own venv)
+        env: { VOICE_KEY: "${{ secrets.VOICE_KEY }}", TEXT: "${{ inputs.text }}" }
+        run: |
+          set -e
+          [ -n "$VOICE_KEY" ] || { echo "::error::VOICE_KEY secret missing"; exit 1; }
+          sudo apt-get install -y -qq ffmpeg >/dev/null
+          python -m venv /tmp/cb && . /tmp/cb/bin/activate
+          pip install -q --upgrade pip
+          pip install -q torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+          pip install -q chatterbox-tts soundfile
+          mkdir -p t final; printf '%s\n' "$TEXT" > t/script.txt
+          openssl enc -d -aes-256-cbc -pbkdf2 -in assets/voice/owner_ref.wav.enc -out t/ref.wav -pass env:VOICE_KEY
+          python pipeline/voice/chatterbox_tts.py t/script.txt t/ref.wav t --exag "${{ inputs.exag }}" --cfg "${{ inputs.cfg }}" --ref-start "${{ inputs.ref_start }}"
+          rm -f t/ref.wav
+          ffmpeg -loglevel error -y -f lavfi -i color=c=black:s=720x1280:r=30 -i t/voice.wav -shortest -c:v libx264 -pix_fmt yuv420p -c:a aac -b:a 192k final/voicetest2.mp4
+          ls -la final
+      - uses: actions/upload-artifact@v4
+        with: { name: final-voicetest2, path: final/voicetest2.mp4, retention-days: 7 }
