@@ -244,15 +244,15 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-21 18:30 | health-check | - | audio-mix | 2 | 1933 | success (run 44934711776) |
 | 2026-11-21 18:30 | health-check | - | report | 1 | 1934 | running (run 44934711776) |
 | 2026-11-21 18:35 | render-stills | wi-gta-nosleep  | stills | 3 | 1937 | running (run 44936135336) |
-| 2026-11-21 18:54 | render-final | wi-gta-nosleep | voice-and-mix | 3 | 1937 | success (run 44936176684) |
-| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (0-273) | 17 | 1954 | success (run 44936176684) |
-| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (822-1095) | 6 | 1960 | success (run 44936176684) |
-| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (548-821) | 14 | 1974 | success (run 44936176684) |
-| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (1096-1369) | 14 | 1988 | success (run 44936176684) |
-| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (274-547) | 13 | 2001 | success (run 44936176684) |
-| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (1370-1643) | 9 | 2010 | success (run 44936176684) |
-| 2026-11-21 18:54 | render-final | wi-gta-nosleep | assemble | 2 | 2012 | success (run 44936176684) |
-| 2026-11-21 18:54 | render-final | wi-gta-nosleep | log | 1 | 2013 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | voice-and-mix | 3 | 1940 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (0-273) | 17 | 1957 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (822-1095) | 6 | 1963 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (548-821) | 14 | 1977 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (1096-1369) | 14 | 1991 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (274-547) | 13 | 2004 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (1370-1643) | 9 | 2013 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | assemble | 2 | 2015 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | log | 1 | 2016 | success (run 44936176684) |
 
 2026-11-21 wi-gta-leonida REMAKE in Stick3D (builder agent): story.tsx rewritten like What If 1 (REMY3D + beanie, lit toon sets, drop/blob shadows,
 linear camera + gentle whip at place changes), 15 shots / 9 places (home, Miami street, wishlist dioramas, golf pond, Florida map diorama,
@@ -260,3 +260,4 @@ beach sky, house in storm, game/real split, sunset beach). New Blender props: su
 alligator, flat_tv (+ library/stick3d/leonida.tsx). 19 local stills (half scale, swangle, rough timing) checked: no caption words on screen
 (slogan shown before it is spoken, fades when said), figures above the caption band, sets lit. Contact sheet:
 library/previews/whatif/wi-gta-leonida-stick3d.png. Note: three's ExtrudeGeometry drops the caps of the Florida outline -> separate ShapeGeometry cap.
+| 2026-11-21 18:57 | render-stills | wi-gta-leonida  | stills | 3 | 2019 | running (run 44938171741) |
