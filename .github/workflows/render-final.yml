@@ -80,9 +80,11 @@ jobs:
             /tmp/cb/bin/python pipeline/voice/chatterbox_tts.py episodes/$id/script.txt $B/voice/ref.wav $B/voice \
               --exag "$EX" --cfg "$CF" --ref-start "$RS"
             rm -f $B/voice/ref.wav
-            # same voice chain as approved test 4: rumble cut, light denoise, de-ess, compression, -13 LUFS
-            mv $B/voice/voice.wav $B/voice/voice_raw.wav
-            ffmpeg -loglevel error -y -i $B/voice/voice_raw.wav -af "highpass=f=75,afftdn=nf=-30,deesser=i=0.3,acompressor=threshold=-20dB:ratio=3:attack=5:release=80:makeup=2,loudnorm=I=-13:TP=-1:LRA=6" -ac 1 -ar 24000 $B/voice/voice.wav
+                        mv $B/voice/voice.wav $B/voice/voice_raw.wav
+            # clarity chain (owner: muddy/quiet): no denoise (it smears), less mud at 250 Hz, +6 dB presence at 3 kHz
+            EQ=$(node -p "require('./episodes/$id/episode.json').voice_eq || ''")
+            [ -n "$EQ" ] || EQ="highpass=f=90,equalizer=f=250:t=q:w=1:g=-4,equalizer=f=3000:t=q:w=1.5:g=6,equalizer=f=6000:t=q:w=1:g=2,acompressor=threshold=-20dB:ratio=3:attack=5:release=100:makeup=3,loudnorm=I=-13:TP=-1:LRA=6"
+            ffmpeg -loglevel error -y -i $B/voice/voice_raw.wav -af "$EQ" -ac 1 -ar 24000 $B/voice/voice.wav
             rm -f $B/voice/voice_raw.wav
             python pipeline/voice/align_words.py $B/voice/voice.wav episodes/$id/script.txt $B/voice/words.json
             CLONE=done

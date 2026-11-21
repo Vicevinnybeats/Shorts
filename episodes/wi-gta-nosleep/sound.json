@@ -1,29 +1,218 @@
-{"music": {"mood": "cinematic", "bpm": 84, "key": 57, "level_lu": -12},
+{
+ "music": {
+  "mood": "cinematic",
+  "bpm": 84,
+  "key": 57,
+  "level_lu": -16
+ },
  "sfx": [
-  {"cue": "No sleep.", "fn": "push_thump", "args": {}, "gain_db": -8},
-  {"cue": "No breaks.", "fn": "push_thump", "args": {}, "gain_db": -9},
-  {"cue": "Let's see how", "fn": "whoosh", "args": {"dur": 0.6, "peak": 0.08}, "gain_db": -10},
-  {"cue": "Hour zero. Launch", "fn": "whoosh", "args": {"dur": 0.6, "peak": 0.08, "f_lo": 200, "f_hi": 1200}, "gain_db": -10},
-  {"cue": "Snacks stacked.", "fn": "rattle", "args": {"dur": 0.8, "density": 14.0}, "gain_db": -15},
-  {"cue": "Phone on silent.", "fn": "clink", "args": {"bright": 0.8}, "gain_db": -12},
-  {"cue": "Hour seventeen. You", "fn": "breeze", "args": {"dur": 5.0, "level": 0.35}, "level_lu": -23},
-  {"cue": "You're not.", "fn": "push_thump", "args": {}, "gain_db": -8},
-  {"cue": "as badly on", "fn": "clink", "args": {"bright": 0.7}, "gain_db": -12},
-  {"cue": "Hour twenty four.", "fn": "whoosh", "args": {"dur": 0.7, "peak": 0.08}, "gain_db": -10},
-  {"cue": "in your head.", "fn": "push_thump", "args": {}, "gain_db": -9},
-  {"cue": "Day two. You", "fn": "whoosh", "args": {"dur": 0.6, "peak": 0.08}, "gain_db": -10},
-  {"cue": "Day three. You", "fn": "breeze", "args": {"dur": 4.5, "level": 0.35}, "level_lu": -23},
-  {"cue": "You feel sick.", "fn": "creak", "args": {"dur": 0.35}, "gain_db": -12},
-  {"cue": "In nineteen sixty", "fn": "whoosh", "args": {"dur": 0.6, "peak": 0.08}, "gain_db": -10},
-  {"cue": "Randy Gardner tried", "fn": "clink", "args": {"bright": 0.9}, "gain_db": -12},
-  {"cue": "His memory slipped,", "fn": "clink", "args": {"bright": 0.6}, "gain_db": -12},
-  {"cue": "two hundred sixty", "fn": "rattle", "args": {"dur": 1.6, "density": 12.0}, "gain_db": -16},
-  {"cue": "Eleven days.", "fn": "push_thump", "args": {}, "gain_db": -8},
-  {"cue": "stopped accepting attempts", "fn": "push_thump", "args": {}, "gain_db": -8},
-  {"cue": "So day thirty?", "fn": "whoosh", "args": {"dur": 0.6, "peak": 0.08}, "gain_db": -10},
-  {"cue": "You never get", "fn": "push_thump", "args": {}, "gain_db": -7},
-  {"cue": "tiny naps,", "fn": "breeze", "args": {"dur": 4.0, "level": 0.3}, "level_lu": -23},
-  {"cue": "he slept for", "fn": "clink", "args": {"bright": 0.5}, "gain_db": -13},
-  {"cue": "Play. Sleep. Repeat.", "fn": "clink", "args": {"bright": 1.0}, "gain_db": -11},
-  {"cue": "What's the longest", "fn": "breeze", "args": {"dur": 3.0, "level": 0.3}, "level_lu": -23}
- ]}
+  {
+   "cue": "No sleep.",
+   "fn": "push_thump",
+   "args": {},
+   "gain_db": -8
+  },
+  {
+   "cue": "No breaks.",
+   "fn": "push_thump",
+   "args": {},
+   "gain_db": -9
+  },
+  {
+   "cue": "Let's see how",
+   "fn": "whoosh",
+   "args": {
+    "dur": 0.6,
+    "peak": 0.08
+   },
+   "gain_db": -10
+  },
+  {
+   "cue": "Hour zero. Launch",
+   "fn": "whoosh",
+   "args": {
+    "dur": 0.6,
+    "peak": 0.08,
+    "f_lo": 200,
+    "f_hi": 1200
+   },
+   "gain_db": -10
+  },
+  {
+   "cue": "Snacks stacked.",
+   "fn": "rattle",
+   "args": {
+    "dur": 0.8,
+    "density": 14.0
+   },
+   "gain_db": -15
+  },
+  {
+   "cue": "Phone on silent.",
+   "fn": "clink",
+   "args": {
+    "bright": 0.8
+   },
+   "gain_db": -12
+  },
+  {
+   "cue": "Hour seventeen. You",
+   "fn": "breeze",
+   "args": {
+    "dur": 5.0,
+    "level": 0.35
+   },
+   "level_lu": -23
+  },
+  {
+   "cue": "You're not.",
+   "fn": "push_thump",
+   "args": {},
+   "gain_db": -8
+  },
+  {
+   "cue": "as badly on",
+   "fn": "clink",
+   "args": {
+    "bright": 0.7
+   },
+   "gain_db": -12
+  },
+  {
+   "cue": "Hour twenty four.",
+   "fn": "whoosh",
+   "args": {
+    "dur": 0.7,
+    "peak": 0.08
+   },
+   "gain_db": -10
+  },
+  {
+   "cue": "in your head.",
+   "fn": "push_thump",
+   "args": {},
+   "gain_db": -9
+  },
+  {
+   "cue": "Day two. You",
+   "fn": "whoosh",
+   "args": {
+    "dur": 0.6,
+    "peak": 0.08
+   },
+   "gain_db": -10
+  },
+  {
+   "cue": "Day three. You",
+   "fn": "breeze",
+   "args": {
+    "dur": 4.5,
+    "level": 0.35
+   },
+   "level_lu": -23
+  },
+  {
+   "cue": "You feel sick.",
+   "fn": "creak",
+   "args": {
+    "dur": 0.35
+   },
+   "gain_db": -12
+  },
+  {
+   "cue": "In nineteen sixty",
+   "fn": "whoosh",
+   "args": {
+    "dur": 0.6,
+    "peak": 0.08
+   },
+   "gain_db": -10
+  },
+  {
+   "cue": "Randy Gardner tried",
+   "fn": "clink",
+   "args": {
+    "bright": 0.9
+   },
+   "gain_db": -12
+  },
+  {
+   "cue": "His memory slipped,",
+   "fn": "clink",
+   "args": {
+    "bright": 0.6
+   },
+   "gain_db": -12
+  },
+  {
+   "cue": "two hundred sixty",
+   "fn": "rattle",
+   "args": {
+    "dur": 1.6,
+    "density": 12.0
+   },
+   "gain_db": -16
+  },
+  {
+   "cue": "Eleven days.",
+   "fn": "push_thump",
+   "args": {},
+   "gain_db": -8
+  },
+  {
+   "cue": "stopped accepting attempts",
+   "fn": "push_thump",
+   "args": {},
+   "gain_db": -8
+  },
+  {
+   "cue": "So day thirty?",
+   "fn": "whoosh",
+   "args": {
+    "dur": 0.6,
+    "peak": 0.08
+   },
+   "gain_db": -10
+  },
+  {
+   "cue": "You never get",
+   "fn": "push_thump",
+   "args": {},
+   "gain_db": -7
+  },
+  {
+   "cue": "tiny naps,",
+   "fn": "breeze",
+   "args": {
+    "dur": 4.0,
+    "level": 0.3
+   },
+   "level_lu": -23
+  },
+  {
+   "cue": "he slept for",
+   "fn": "clink",
+   "args": {
+    "bright": 0.5
+   },
+   "gain_db": -13
+  },
+  {
+   "cue": "Play. Sleep. Repeat.",
+   "fn": "clink",
+   "args": {
+    "bright": 1.0
+   },
+   "gain_db": -11
+  },
+  {
+   "cue": "What's the longest",
+   "fn": "breeze",
+   "args": {
+    "dur": 3.0,
+    "level": 0.3
+   },
+   "level_lu": -23
+  }
+ ]
+}

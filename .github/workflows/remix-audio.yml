@@ -28,6 +28,10 @@ jobs:
         run: |
           id=${{ inputs.episode }}
           snd=episodes/$id/sound.json; [ -f $snd ] || snd=-
+          EQ=$(node -p "require('./episodes/$id/episode.json').voice_eq || ''")
+          if [ -n "$EQ" ]; then  # clarity fix on the existing voice (timing unchanged)
+            ffmpeg -v error -y -i build/voice/voice.wav -af "$EQ" -ac 1 -ar 24000 build/voice/voice_eq.wav && mv build/voice/voice_eq.wav build/voice/voice.wav
+          fi
           python pipeline/audio/mixdown.py build/voice/voice.wav build/words.json $snd build/audio
       - name: Replace the audio (picture copied, not re-encoded) + preview
         run: |
