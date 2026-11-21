@@ -124,3 +124,5 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
 - 2026-11-21 owner: does NOT want to use his own computer and does NOT want to pay for Higgsfield. -> No Higgsfield
   Bridge / local Blender. 3D objects instead from Blender run HEADLESS for free (GitHub Actions or the cloud container),
   bpy scripts committed to the repo, results saved in brain/stick3d. Never spend Higgsfield credits.
+- 2026-11-21 owner: "keep the Stick3D in my style like before" -> What If uses the installed Stick3D pack look AS-IS
+  (Stick3DTest: NEON3D palette + REMY3D puppets, 3D toon rooms, shafts, dust, camera rigs); Golden Neon = colours only.
