@@ -270,3 +270,7 @@ library/previews/whatif/wi-gta-leonida-stick3d.png. Note: three's ExtrudeGeometr
 | 2026-11-21 19:03 | render-final | wi-gta-leonida | render (840-1119) | 3 | 2038 | cancelled (run 44938267008) |
 | 2026-11-21 19:03 | render-final | wi-gta-leonida | log | 1 | 2039 | cancelled (run 44938267008) |
 | 2026-11-21 19:03 | render-final | wi-gta-leonida | assemble | 1 | 2040 | cancelled (run 44938267008) |
+- 2026-11-21 What If 1 re-edit (owner: "no cuts, one sequence"): 23 SHOTS (each script line = 1-2 shots, own framing +
+  short in-shot move), hard cuts on line changes, 5 transitions via @remotion/transitions 4.0.290 (slide into study,
+  fade into 1964, wipe into DAY 30, fade into Randy's bedroom, slide into the ask; 10 f each, outgoing shot extended so
+  cues stay on the voice). Sub-shots share the parent scene clock (HUD/counter continue across the cut). Stills ~3.1 s.
