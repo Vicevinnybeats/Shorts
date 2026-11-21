@@ -121,3 +121,20 @@ Add 10 new topics per series over time (mark them `added`).
 | Low Expectations Win | IGN: players surprised how well Xbox Series S runs GTA 6 | expectation vs outcome: satisfaction tracks the surprise, not the result (Rutledge et al. 2014 happiness equation) | idea 2026-11-20 |
 | GTA 6 Has a UFO. Your Eyes Can Make One Too | scout (Eurogamer UFO/Bigfoot) | autokinetic effect + AARO 2024 | done, in TheLittleEpic Drive as video 11 2026-11-20 (gta-ufo) |
 | You'll Love the GTA 6 Song You Hate | scout: Kotaku 150 songs (2026-11-19) | mere exposure (Zajonc 1968) + inverted U | done, in TheLittleEpic Drive as video 13 2026-11-20 (gta-radio) |
+
+## NEW FORMAT IDEA (owner, 2026-11-21): "What if" stories, 70-100 s - IDEAS ONLY, not started
+Reference: owner's screenshots of a what-if reels channel (dark cinematic scenes, glowing HUD counters, data bars,
+phone UI mockups, DAY 1 -> DAY 10 -> DAY 30 chapters, A/B/C/D choice cards). Use the LANGUAGE of that style only;
+never copy their character, premises, layouts or text. Our own mascot + our own topics.
+| What if... | Story spine (days/counters) | Science backbone (verify before scripting) | Status |
+|---|---|---|---|
+| ...you never slept again? | HOURS AWAKE counter, day 1-11 | Randy Gardner 1964, 264 h; effects of sleep loss | idea |
+| ...the Moon vanished tonight? | TIDE HEIGHT bar, nights darker, tilt wobble | Sun's tides ~46% of Moon's; Moon stabilises axial tilt | idea |
+| ...all 8 billion people jumped at once? | PEOPLE JUMPING counter, Earth moves ? m | momentum: Earth moves far less than an atom | idea |
+| ...the Sun disappeared? | countdown 8 min 20 s | light travel time; Earth flies straight on | idea |
+| ...you quit your phone for 30 days? | SCREEN TIME bar, day 1/10/30 | Allcott et al. 2020 Facebook deactivation study | idea |
+| ...you won the lottery? | BANK balance, year 1-5 | Brickman 1978; later lottery-wellbeing studies | idea |
+| ...all ice on Earth melted? | SEA LEVEL +m gauge, city cards | USGS: ~70 m sea-level rise | idea |
+| ...you dropped a coin from a skyscraper? | SPEED counter | terminal velocity of a coin; myth busting | idea |
+| ...you were the last person on Earth? | POWER GRID %, day 1/30/365 | grids fail fast without people (verify) | idea |
+| ...you lived 30 days in a GTA-style city? (our own fictional city) | WANTED-style meters, day 1/30 | risk perception / habit / time sense | idea |
