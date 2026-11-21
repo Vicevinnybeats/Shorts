@@ -69,7 +69,8 @@ const Shot: React.FC<{ u: number; len?: number; cut?: [boolean, boolean]; keys: 
   const c = camLin(u / FPS, keys);
   const out = cut[1] ? Math.pow(clamp((u - (len - WHIP)) / WHIP), 2) : 0;
   const inn = cut[0] ? Math.pow(1 - clamp(u / WHIP), 2) : 0;
-  const dx = (inn - out) * 2.2;
+  const dist = Math.hypot(c.look[0] - c.pos[0], c.look[2] - c.pos[2]);
+  const dx = (inn - out) * 0.09 * dist; // gentle whip (~5 deg) so close shots never swing the hero off frame
   const look: V3 = [c.look[0] + dx, c.look[1], c.look[2]];
   return <Cam t={u / FPS} keys={[{ ...c, t: 0, look }]} fovKick={kicks.map((x) => x / FPS)} impacts={impacts.map(([a, b]) => [a / FPS, b] as [number, number])} />;
 };
@@ -222,14 +223,12 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <Hero p={[0, 0.2, -1.35]} look={REMY} pose={{ arms: "hold", mood: u >= NS ? "deadpan" : "grin", lookX: Math.sin(f * 0.21) * 0.6 }} f={f} shadow={false} rimO={0.45} />
         <Pad p={[0, 1.2, -1.2]} f={f} />
         <HeroLight p={[0, 0, -1.35]} h={6.2} r={1.6} t={t} />
-        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} kicks={[NS, NB]} keys={[ck(0, [1.2, 2.45, 6.9], [0.1, 2.33, -1.3], 42, 0.03), ck(len, [0.5, 2.42, 6.8], [0.05, 2.32, -1.3], 41, -0.01)]} />
+        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [1.2, 2.45, 6.9], [0.1, 2.33, -1.3], 42, 0.03), ck(len, [0.5, 2.42, 6.8], [0.05, 2.32, -1.3], 41, -0.01)]} />
       </>;
       const hud = !hide && <>
         <StrokeWord text="WHAT IF" x={540} y={565} h={125} p={wp} />
         <LiveCounter f={u} from={0} to={0} at={16} tag="DAY 1" />
-        <HudText f={u} x={540} y={780} size={58} color={CREAM} enter="rise" at={22} out={len - 6}>30 DAYS OF GTA 6?</HudText>
-        <Stamp f={u} x={540} y={880} text="NO SLEEP" at={NS} out={NB - 3} size={54} />
-        <Stamp f={u} x={540} y={880} text="NO BREAKS" at={NB} out={len - 6} size={54} rot={4} />
+        <HudText f={u} x={540} y={790} size={58} color={CREAM} enter="rise" at={30} out={len - 6}>GOAL: 720 H</HudText>
       </>;
       return { world, hud };
     }
@@ -269,14 +268,11 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         </group>
         <Hero p={[1.9, 0.3 * jump, 1.6]} look={REMY} pose={{ arms: ready ? "up" : "chest", armK: ready ? 1 : 0.6, mood: ready ? "grin" : "smile", squash: ready ? -0.08 * jump : 0, lookX: -0.8 }} f={f} rimO={0.4} />
         <HeroLight p={[1.9, 0, 1.6]} h={6} r={1.2} t={t} />
-        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [4.6, 3.6, 11.4], [0.6, 2.1, 1.1], 46, 0.02), ck(len, [3.6, 3.4, 10.8], [0.6, 2.06, 1.1], 46, -0.01)]} kicks={[YR]} />
+        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [4.6, 3.6, 11.4], [0.6, 2.1, 1.1], 46, 0.02), ck(len, [3.6, 3.4, 10.8], [0.6, 2.06, 1.1], 46, -0.01)]} />
       </>;
       const hud = !hide && <>
-        <ChapterScreen f={u} id="h0" big="HOUR 0" small="LAUNCH NIGHT" y={800} size={190} at={0} out={chapOut} />
+        <ChapterScreen f={u} id="h0" big="DAY 1" y={800} size={190} at={0} out={chapOut} />
         <LiveCounter f={u} from={0} to={0} at={chapOut + 8} tag="DAY 1" />
-        <HudText f={u} x={540} y={680} size={56} color={GOLD} enter="rise" at={Math.max(SS, chapOut + 8)} out={len - 6}>SNACKS: STACKED</HudText>
-        <HudText f={u} x={540} y={765} size={56} color={CORAL} enter="rise" at={PS} out={len - 6}>PHONE: SILENT</HudText>
-        <Stamp f={u} x={540} y={880} text="READY." at={YR} out={len - 6} color={AMBER} size={60} rot={-3} />
       </>;
       return { world, hud, dim: u < chapOut ? 0.55 : 0 };
     }
@@ -288,17 +284,15 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <Hero p={[0, 0.2, -1.35]} look={REMY} pose={{ arms: "hold", mood: tired > 0.5 ? "tired" : "smile", lids: 0.15 + 0.35 * tired, bags: 0.2 + 0.6 * tired, sweat: 0.45 * tired, nod: tired * 0.12 * (0.5 + 0.5 * Math.sin(f * 0.09)), tilt: -0.05 * tired }} f={f} shadow={false} rimO={0.5} />
         <Pad p={[0, 1.2, -1.2]} f={f} />
         <HeroLight p={[0, 0, -1.35]} h={6.2} r={1.5} t={t} />
-        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} kicks={[YN]} keys={[ck(0, [0.7, 2.2, 6.4], [0.05, 1.98, -1.3], 40, 0.02), ck(len, [-0.3, 2.2, 5.9], [0, 1.98, -1.3], 40, -0.02)]} />
+        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [0.7, 2.2, 6.4], [0.05, 1.98, -1.3], 40, 0.02), ck(len, [-0.3, 2.2, 5.9], [0, 1.98, -1.3], 40, -0.02)]} />
       </>;
       const hud = !hide && <>
         <LiveCounter f={u} from={0} to={17} at={2} dur={22} tag="DAY 1" />
-        <HudText f={u} x={540} y={680} size={60} color={CREAM} enter="rise" at={10} out={len - 6}>YOU FEEL FINE</HudText>
-        <HudText f={u} x={540} y={775} size={70} color={CORAL} enter="scale" at={YN} out={len - 6}>{"YOU'RE NOT."}</HudText>
       </>;
       return { world, hud };
     }
     case "study": { // test lab: Remy (17-19 h awake) and someone at the drink-drive limit wobble the same; bars fill equally
-      const AS = C("as badly", 126), DD = C("drink drive", 221);
+      const AS = C("as badly", 126), DD = C("drink drive", 221), PD = C("people did", 110), MC = C("many countries", 250);
       const sway = Math.sin(f * 0.11) * (0.04 + 0.06 * k(u, AS, AS + 20, 0, 1));
       const slump = k(u, AS, AS + 16, 0, 1, EASE.arrive);
       const world = <>
@@ -319,15 +313,15 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <Hero p={[1.5, 0, 0.6]} look={MO} pose={{ mood: "deadpan", lids: 0.45, tilt: sway, hunch: slump * 0.8, arms: "down" }} f={f + 7} rim={N3.coral} rimO={0.35} />
         <HeroLight p={[-1.5, 0, 0.6]} h={6} r={1.1} t={t} /><HeroLight p={[1.5, 0, 0.6]} h={6} r={1.1} t={t + 1} color={N3.coral} o={0.8} />
         <Motes t={t} c={[0, 0.5, 0]} area={[4, 5, 2]} />
-        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [1.2, 3.1, 12.3], [0.1, 2.3, 0.6], 46, 0.0), ck(len, [-0.6, 3.0, 11.85], [-0.05, 2.28, 0.6], 46, 0.0)]} kicks={[AS]} />
+        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [1.2, 3.1, 12.3], [0.1, 2.3, 0.6], 46, 0.0), ck(len, [-0.6, 3.0, 11.85], [-0.05, 2.28, 0.6], 46, 0.0)]} />
       </>;
       const hud = !hide && <>
-        <HudText f={u} x={540} y={410} size={60} color={CREAM} enter="rise" at={2} out={len - 6}>ONE STUDY</HudText>
+        <HudText f={u} x={540} y={410} size={60} color={CREAM} enter="rise" at={2} out={len - 6}>RESEARCH · 2000</HudText>
         <CompareBars f={u} y={530} gap={190} bh={70} labelSize={46} out={len - 6} rows={[
-          { label: "17-19 H AWAKE", fill: 0.74, at: 28 },
-          { label: "AT THE DRINK-DRIVE LIMIT", fill: 0.74, color: CORAL, at: Math.min(AS, Math.max(40, DD - 40)) },
+          { label: "17-19 H AWAKE", fill: 0.74, at: PD },
+          { label: "BLOOD ALCOHOL 0.05%", fill: 0.74, color: CORAL, at: AS },
         ]} />
-        <Stamp f={u} x={540} y={920} text="AS BAD ON SOME TESTS" at={AS + 24} out={len - 6} color={GOLD} size={48} rot={-2} />
+        <Stamp f={u} x={540} y={920} text="SOME TESTS: EQUAL" at={MC + 8} out={len - 6} color={GOLD} size={48} rot={-2} />
       </>;
       return { world, hud };
     }
@@ -354,19 +348,16 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         {head > 0 && <Panel p={[0, 1.75, -7.2]} s={[2.0, 2.0]} px={[256, 256]} additive o={head} dep={Math.floor(u / 2)} draw={(c, W) => {
           c.strokeStyle = CYAN; c.shadowColor = CYAN; c.shadowBlur = 14; c.lineWidth = 7; c.setLineDash([16, 14]); c.lineDashOffset = -u * 2; c.beginPath(); c.arc(W / 2, W / 2, W * 0.44, 0, 7); c.stroke();
         }} />}
-        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [0.3, 2.8, 3.0], [0, 1.6, -6], 44, 0), ck(IG, [0.2, 2.6, 1.2], [0, 1.85, -7.5], 44, roll), ck(Math.max(IG + 1, len), [0, 2.3, -0.85], [0, 2.0, -7.55], 42, roll)]} kicks={[IH]} />
+        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [0.3, 2.8, 3.0], [0, 1.6, -6], 44, 0), ck(IG, [0.2, 2.6, 1.2], [0, 1.85, -7.5], 44, roll), ck(Math.max(IG + 1, len), [0, 2.3, -0.85], [0, 2.0, -7.55], 42, roll)]} />
       </>;
       const hud = !hide && <>
         <LiveCounter f={u} from={17} to={24} at={2} dur={18} tag="DAY 2" />
-        <HudText f={u} x={540} y={680} size={62} color={CREAM} enter="rise" at={14} out={IG - 4}>DRIFTING</HudText>
-        <HudText f={u} x={540} y={680} size={62} color={CYAN} enter="rise" at={IG} out={len - 6}>IN THE GAME</HudText>
-        <HudText f={u} x={540} y={765} size={62} color={CORAL} enter="scale" at={IH} out={len - 6}>AND IN YOUR HEAD</HudText>
       </>;
       return { world, hud };
     }
     case "day2": { // chapter DAY 2; Remy on a tiny stage at a mic trips over a tongue twister: the bubble's letters scramble
       const BS = C("You stumble", 30);
-      const chapOut = Math.max(18, BS - 6);
+      const chapOut = BS + 26;
       const scr = u > BS + 10;
       const sc = (w: string, s: number) => { if (!scr || w.length < 4) return w; const m = w.slice(1, -1).split(""); const sd = Math.floor((u + s) / 5); for (let i = m.length - 1; i > 0; i--) { const j = Math.floor(rnd(sd * 13 + i) * (i + 1)); [m[i], m[j]] = [m[j], m[i]]; } return w[0] + m.join("") + w[w.length - 1]; };
       const line1 = sc("SHE", 0) + " " + sc("SELLS", 3), line2 = sc("SEASHELLS", 7);
@@ -392,13 +383,13 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           c.fillStyle = CREAM; c.textAlign = "center"; c.font = `900 66px ${FONT3}`; c.fillText(line1, W / 2, 92); c.fillStyle = scr ? CORAL : CREAM; c.fillText(line2, W / 2, 166);
         }} /></group>}
         <Motes t={t} c={[0, 1, 0]} area={[4, 5, 2]} />
-        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} kicks={[BS + 10]} keys={[ck(0, [1.6, 2.7, 11.3], [0.15, 2.6, 0.5], 46, 0.02), ck(len, [0.65, 2.6, 10.9], [0.15, 2.58, 0.5], 46, -0.04)]} />
+        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [1.6, 2.7, 11.3], [0.15, 2.6, 0.5], 46, 0.02), ck(len, [0.65, 2.6, 10.9], [0.15, 2.58, 0.5], 46, -0.04)]} />
       </>;
       const hud = !hide && <>
-        <ChapterScreen f={u} id="d2" big="DAY 2" y={800} size={210} at={0} out={chapOut} />
+        <ChapterScreen f={u} id="d2" big="DAY 2" y={800} size={210} at={BS} out={chapOut} />
         <LiveCounter f={u} from={24} to={36} at={chapOut + 8} dur={20} tag="DAY 2" />
       </>;
-      return { world, hud, dim: u < chapOut ? 0.55 : 0 };
+      return { world, hud, dim: u >= BS - 4 && u < chapOut ? 0.55 : 0 };
     }
     case "day3": { // high angle: Remy slumped on the floor among wrappers; the (cyan, game) mission marker cracks and fades; queasy camera
       const FM = C("You forget", 22), FS = C("You feel sick", 114);
@@ -418,20 +409,19 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           for (const s of [-1, 1]) { c.save(); c.translate(s * d, s * d * 0.4); c.rotate(s * broken * 0.25); c.beginPath(); c.rect(s < 0 ? 0 : m, 0, m, W); c.clip();
             c.beginPath(); c.moveTo(m, 30); c.lineTo(W - 40, m); c.lineTo(m, W - 30); c.lineTo(40, m); c.closePath(); c.stroke(); c.font = `900 110px ${FONT3}`; c.fillStyle = CYAN; c.textAlign = "center"; c.fillText("!", m, m + 40); c.restore(); }
         }} />
-        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [2.2, 6.3, 14.3], [0, 2.76, 1.5], 46, 0.03 * Math.sin(u * 0.07) * (0.3 + q)), ck(len, [1.2, 6.0, 13.95], [0, 2.74, 1.5], 46, 0.05 * Math.sin(u * 0.07) * (0.3 + q))]} kicks={[FS]} />
+        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [2.2, 6.3, 14.3], [0, 2.76, 1.5], 46, 0.03 * Math.sin(u * 0.07) * (0.3 + q)), ck(len, [1.2, 6.0, 13.95], [0, 2.74, 1.5], 46, 0.05 * Math.sin(u * 0.07) * (0.3 + q))]} />
       </>;
       const hud = !hide && <>
-        <LiveCounter f={u} from={48} to={60} at={2} dur={20} tag="DAY 3" />
-        <HudText f={u} x={540} y={670} size={56} color={CORAL} enter="rise" at={FM + 10} out={len - 6}>MISSION ???</HudText>
-        <HudText f={u} x={540} y={790} size={60} color={AMBER} enter="scale" at={FS} out={len - 6}>YOU FEEL SICK</HudText>
+        <LiveCounter f={u} from={48} to={60} at={FM + 4} dur={20} tag="DAY 3" />
+        <HudText f={u} x={540} y={670} size={56} color={CORAL} enter="rise" at={FM + 10} out={len - 6}>OBJECTIVE: ???</HudText>
       </>;
       return { world, hud };
     }
     case "real":
     case "symptoms": { // 1964 room: wood panels, wall calendar (year rolls 2026 -> 1964), SAN DIEGO sign, radio, old TV (off)
       const isR = id === "real";
-      const Y64 = isR ? C("In nineteen", 45) : -999, SY = isR ? C("seventeen year", 100) : -999, RG = isR ? C("Randy Gardner", 183) : -999, NG = isR ? C("No games", 264) : -999;
-      const MO_ = !isR ? C("his mood", 39) : 0, SR = !isR ? C("some reports", 95) : 0, ST = !isR ? C("saw things", 137) : 0;
+      const Y64 = isR ? C("In nineteen", 45) : -999, SY = isR ? C("seventeen year", 100) : -999, RG = isR ? C("Randy Gardner", 183) : -999, FR = isR ? C("for real", 215) : -999, NG = isR ? C("No games", 264) : -999;
+      const MO_ = !isR ? C("his mood", 39) : 0, SR = !isR ? C("some reports", 95) : 0, ST = !isR ? C("saw things", 137) : 0, WT = !isR ? C("weren't there", 160) : 0;
       const year = isR ? Math.round(k(u, Y64, Y64 + 26, 2026, 1964, EASE.arrive)) : 1964;
       const chapIn = isR && u >= Y64 - 4 && u < RG;
       const gp = isR ? 0 : k(u, ST - 4, ST + 18, 0, 1, EASE.arrive);
@@ -469,19 +459,16 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           }} />))}
         {!isR && gp > 0 && <Halo p={[1.2, 2.5, -1]} r={3} color={CYAN} o={0.08 * gp} />}
         <Motes t={t} c={[0, 0.5, -0.5]} area={[4, 5, 2.5]} />
-        {isR ? <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [1.2, 3.1, 11.9], [0.1, 2.22, 0.6], 46, 0.02), ck(len, [-0.2, 3.0, 11.45], [0, 2.2, 0.6], 46, -0.01)]} kicks={[RG]} />
-          : <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [3.6, 2.7, 8.3], [1.2, 1.44, 0.6], 42, 0.03), ck(len, [2.7, 2.6, 7.9], [1.2, 1.42, 0.6], 42, 0.0)]} kicks={[ST]} />}
+        {isR ? <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [1.2, 3.1, 11.9], [0.1, 2.22, 0.6], 46, 0.02), ck(len, [-0.2, 3.0, 11.45], [0, 2.2, 0.6], 46, -0.01)]} />
+          : <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [3.6, 2.7, 8.3], [1.2, 1.44, 0.6], 42, 0.03), ck(len, [2.7, 2.6, 7.9], [1.2, 1.42, 0.6], 42, 0.0)]} />}
       </>;
       const hud = !hide && (isR ? <>
-        <Stamp f={u} x={540} y={700} text="NOT A GUESS" at={2} out={Y64 - 6} size={64} />
         {chapIn && <ChapterScreen f={u} id="y64" big={String(year)} y={760} size={220} at={Y64} out={RG - 8} />}
-        <HudText f={u} x={540} y={900} size={50} color={MUTED} enter="rise" at={SY} out={RG - 8} spacing={4}>AGE 17 · SAN DIEGO</HudText>
-        <HudText f={u} x={540} y={640} size={60} color={CREAM} enter="rise" at={RG} out={len - 6}>RANDY GARDNER, 17</HudText>
-        <HudText f={u} x={540} y={720} size={46} color={GOLD} enter="rise" at={RG + 6} out={len - 6} spacing={3}>SAN DIEGO · 1964</HudText>
-        <HudText f={u} x={540} y={830} size={54} color={CORAL} enter="scale" at={NG} out={len - 6}>NO GAMES. JUST AWAKE.</HudText>
+        <HudText f={u} x={540} y={640} size={60} color={CREAM} enter="rise" at={FR} out={len - 6}>RANDY GARDNER, 17</HudText>
+        <HudText f={u} x={540} y={720} size={46} color={GOLD} enter="rise" at={FR + 6} out={len - 6} spacing={3}>SAN DIEGO · 1964</HudText>
       </> : <>
-        <HudText f={u} x={540} y={420} size={62} color={GOLD} enter="rise" at={0} out={len - 6}>WHAT SLIPPED</HudText>
-        {[{ t: "MEMORY", a: 6 }, { t: "MOOD", a: MO_ }, { t: "SEES THINGS (REPORTED)", a: SR }].map((it, i) => {
+        <HudText f={u} x={540} y={420} size={62} color={GOLD} enter="rise" at={0} out={len - 6}>SYMPTOMS</HudText>
+        {[{ t: "MEMORY", a: MO_ + 6 }, { t: "MOOD", a: SR + 4 }, { t: "SEES THINGS (REPORTED)", a: WT + 12 }].map((it, i) => {
           const y = 545 + i * 100, cp = drawOn(u, it.a, 12);
           return <g key={i}>
             {cp > 0 && <rect x={86} y={y - 52} width={760} height={76} rx={14} fill="#000" opacity={0.5 * cp} />}
@@ -515,7 +502,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         {u >= BA - 10 && <group position={[1.4, by, 1.4]}><Barrier p={[0, 0, 0]} w={2.4} /></group>}
         {u >= BA - 10 && <NeonSign p={[1.4, 1.55 + by, 1.45]} s={[2.6, 0.55]} text="CLOSED" color={N3.coral} box />}
         <Motes t={t} c={[0, 0.3, 0]} area={[5, 4, 2]} />
-        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} impacts={[[BA, 0.05]]} keys={[ck(0, [0.6, 3.3, 14.6], [-0.55, 2.62, 0.6], 44, 0), ck(len, [-0.6, 3.2, 14.2], [-0.7, 2.6, 0.6], 44, -0.01)]} />
+        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} impacts={[[BA, 0.015]]} keys={[ck(0, [0.6, 3.3, 14.6], [-0.55, 2.62, 0.6], 44, 0), ck(len, [-0.6, 3.2, 14.2], [-0.7, 2.6, 0.6], 44, -0.01)]} />
       </>;
       const hud = !hide && <>
         <HudText f={u} x={540} y={400} size={44} color={MUTED} enter="rise" at={0} out={len - 6} spacing={6}>HOURS AWAKE</HudText>
@@ -524,9 +511,8 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           <NeonText x={710} y={560} size={96} color={GOLD} anchor="start">H</NeonText>
         </g>
         <HudText f={u} x={540} y={690} size={66} color={GOLD} enter="scale" at={ED} out={len - 6}>= 11 DAYS</HudText>
-        <HudText f={u} x={540} y={790} size={48} color={CREAM} enter="rise" at={GU} out={len - 6}>GUINNESS:</HudText>
-        <Stamp f={u} x={540} y={890} text="NO MORE ATTEMPTS" at={BA} out={len - 6} size={54} />
-        <HudText f={u} x={540} y={995} size={48} color={CORAL} enter="rise" at={TD} out={len - 6}>TOO DANGEROUS</HudText>
+        <HudText f={u} x={540} y={790} size={48} color={CREAM} enter="rise" at={TD} out={len - 6}>GUINNESS:</HudText>
+        <Stamp f={u} x={540} y={890} text="NO MORE ATTEMPTS" at={TD + 6} out={len - 6} size={54} />
       </>;
       return { world, hud };
     }
@@ -534,30 +520,30 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const YN = C("You never", 43);
       const lit = Math.round(k(u, 6, 40, 0, 11, EASE.arrive));
       const cross = u >= YN;
-      const gl = k(u, 16, YN, 0.2, 1) * (0.6 + 0.4 * Math.abs(Math.sin(u * 0.9)));
+      const gl = 0.18 * (0.5 + 0.5 * Math.sin(u * 0.15)); // calm, slow glitch
       const nod = 0.5 + 0.5 * Math.sin(f * 0.12);
       const world = <>
-        <Lights3 k={0.85} hero={[2.4, 0, 0.4]} prac={[[[-0.3, 2.0, -3.0], N3.gold, 10], [[1.0, 0.9, -3.2], Math.floor(u / 3) % 2 ? N3.cyan : N3.coral, 4]]} />
+        <Lights3 k={0.85} hero={[2.4, 0, 0.4]} prac={[[[-0.3, 2.0, -3.0], N3.gold, 10], [[1.0, 0.9, -3.2], Math.floor(u / 15) % 2 ? N3.cyan : N3.coral, 4]]} />
         <Floor lit gain={SG} kind="tile" a="#252a3c" b="#2c3247" w={30} d={44} />
         <WallDoor lit gain={SG} z={-4} W={24} kind="plain" a="#272d46" b="#272d46" />
-        <Panel p={[-0.3, 2.0, -3.9]} s={[4.2, 3.5]} px={[660, 550]} dep={lit * 10 + (cross ? 1 : 0) + Math.floor(u / 3) * 100} draw={(c, W, H) => {
+        <Panel p={[-0.3, 2.0, -3.9]} s={[4.2, 3.5]} px={[660, 550]} dep={lit * 10 + (cross ? 1 : 0) + Math.floor(u / 15) * 100} draw={(c, W, H) => {
           c.fillStyle = "#080a12"; c.fillRect(0, 0, W, H); c.strokeStyle = GOLD; c.lineWidth = 6; c.strokeRect(4, 4, W - 8, H - 8);
           const cw = W / 6, ch = H / 5; c.textAlign = "center"; c.textBaseline = "middle"; c.font = `900 40px ${FONT3}`;
           for (let i = 0; i < 30; i++) { const x = (i % 6) * cw, y = Math.floor(i / 6) * ch, on = i < lit, last = i === 29;
             c.fillStyle = on ? "rgba(245,185,66,.28)" : "#0d1020"; c.fillRect(x + 8, y + 8, cw - 16, ch - 16);
             c.strokeStyle = on ? GOLD : "#2a2f45"; c.lineWidth = 3; c.strokeRect(x + 8, y + 8, cw - 16, ch - 16);
-            c.fillStyle = last ? (Math.floor(u / 3) % 2 ? CYAN : CORAL) : on ? N3.hot : "#3a3f55"; c.fillText(String(i + 1), x + cw / 2 + (last ? (rnd(Math.floor(u / 3)) - 0.5) * 16 : 0), y + ch / 2);
+            c.fillStyle = last ? (Math.floor(u / 15) % 2 ? CYAN : CORAL) : on ? N3.hot : "#3a3f55"; c.fillText(String(i + 1), x + cw / 2 + (last ? (rnd(Math.floor(u / 15)) - 0.5) * 8 : 0), y + ch / 2);
             if (cross && i >= 11) { c.strokeStyle = CORAL; c.lineWidth = 5; c.beginPath(); c.moveTo(x + 22, y + 22); c.lineTo(x + cw - 22, y + ch - 22); c.moveTo(x + cw - 22, y + 22); c.lineTo(x + 22, y + ch - 22); c.stroke(); } }
         }} />
         <Halo p={[-0.3, 2.0, -3.6]} r={3.2} color={N3.gold} o={0.1} />
         <Hero p={[2.4, 0, 0.4]} look={REMY} pose={{ mood: "tired", lids: 0.4 + 0.5 * nod, bags: 1, sweat: 0.6, nod: nod * 0.8, hunch: 0.6, tilt: -0.06 * nod }} f={f} rimO={0.45} />
         <HeroLight p={[2.4, 0, 0.4]} h={6} r={1.2} t={t} />
         <Motes t={t} c={[0, 0.3, 0]} area={[4, 4, 2]} />
-        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} kicks={[YN]} impacts={[[YN, 0.04]]} keys={[ck(0, [2.6, 2.7, 12.9], [1.4, 2.44, 0.4], 46, 0.02), ck(len, [2.0, 2.6, 12.5], [1.4, 2.42, 0.4], 46, -0.02)]} />
+        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [2.6, 2.7, 12.9], [1.4, 2.44, 0.4], 46, 0.02), ck(len, [2.0, 2.6, 12.5], [1.4, 2.42, 0.4], 46, -0.02)]} />
       </>;
       const hud = !hide && <>
-        <ChapterScreen f={u} id="d30" big="DAY 30" y={560} size={170} at={0} glitch={gl} />
-        <Stamp f={u} x={540} y={720} text="UNREACHABLE" at={YN} out={len - 6} size={54} color={NEON.red} />
+        <ChapterScreen f={u} id="d30" big="DAY 30" y={560} size={170} at={YN} glitch={gl} />
+        <Stamp f={u} x={540} y={720} text="UNREACHABLE" at={YN + 20} out={len - 6} size={54} color={NEON.red} />
       </>;
       return { world, hud, dim: 0.35 };
     }
@@ -578,7 +564,6 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       </>;
       const hud = !hide && !inB && <>
         <HudText f={u} x={540} y={680} size={92} color={GOLD} enter="scale" at={TN + 14} out={len - 6} tube spacing={4}>MICROSLEEP</HudText>
-        <HudText f={u} x={540} y={775} size={52} color={CREAM} enter="rise" at={TN + 26} out={len - 6}>JUST SECONDS</HudText>
       </>;
       return { world, hud, black: inB ? 1 : 0 };
     }
@@ -611,8 +596,6 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       </>;
       const hud = !hide && <>
         <LiveCounter f={u} label="HOURS ASLEEP" from={0} to={14} at={FH} dur={16} />
-        <HudText f={u} x={540} y={690} size={56} color={CREAM} enter="rise" at={4} out={len - 6}>FINALLY ASLEEP</HudText>
-        <Stamp f={u} x={540} y={810} text="SLEPT 14 H" at={FH + 4} out={len - 6} color={AMBER} size={60} rot={-3} />
       </>;
       return { world, hud };
     }
@@ -651,11 +634,9 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         {mode === 1 && <Pad p={[0, 0.95, 0.12]} f={f} />}
         <HeroLight p={[0, 0, 0]} h={6.5} r={1.2} t={t} />
         <Motes t={t} c={[0, 0.3, 0]} area={[4, 4, 3]} />
-        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} kicks={[PL, SL, RP]} keys={[ck(0, [12.5 * Math.sin(oa), 8, 12.5 * Math.cos(oa)], [0, 0.6, 0], 40, 0), ck(len, [12.5 * Math.sin(oa), 8, 12.5 * Math.cos(oa)], [0, 0.6, 0], 40, 0)]} />
+        <Shot u={u} len={len} cut={CUT[id] ?? [false, false]} keys={[ck(0, [12.5 * Math.sin(oa), 8, 12.5 * Math.cos(oa)], [0, 0.6, 0], 40, 0), ck(len, [12.5 * Math.sin(oa), 8, 12.5 * Math.cos(oa)], [0, 0.6, 0], 40, 0)]} />
       </>;
       const hud = !hide && <>
-        <HudText f={u} x={540} y={400} size={64} color={GOLD} enter="words" at={4} out={len - 6}>THE REAL SPEEDRUN</HudText>
-        {word && <g key={word}><HudText f={u} x={540} y={540} size={96} color={mode === 3 ? CORAL : CREAM} enter="scale" at={mode === 1 ? PL : mode === 2 ? SL : RP} tube spacing={6}>{word}</HudText></g>}
       </>;
       return { world, hud };
     }
@@ -675,8 +656,8 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           <rect x={90} y={640} width={900} height={250} rx={26} fill="#000" opacity={0.55 * qp} />
           <NeonPath d="M 116 640 L 964 640 Q 990 640 990 666 L 990 864 Q 990 890 964 890 L 116 890 Q 90 890 90 864 L 90 666 Q 90 640 116 640 Z" p={qp} w={4} color={CORAL} />
         </>}
-        <HudText f={u} x={540} y={740} size={66} color={CREAM} enter="rise" at={12} out={len + 30}>{"LONGEST YOU'VE"}</HudText>
-        <HudText f={u} x={540} y={840} size={74} color={CORAL} enter="scale" at={18} out={len + 30}>STAYED AWAKE?</HudText>
+        <HudText f={u} x={540} y={740} size={66} color={CREAM} enter="rise" at={12} out={len + 30}>DROP YOUR HOURS</HudText>
+        <HudText f={u} x={540} y={840} size={74} color={CORAL} enter="scale" at={18} out={len + 30}>IN THE COMMENTS</HudText>
       </>;
       return { world, hud };
     }
