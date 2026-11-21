@@ -94,7 +94,9 @@ export function patternTex(kind: Kind, a: string, b: string, rep: [number, numbe
   const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(...rep); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; texCache.set(key, t); return t;
 }
 // Textured plane, repeat computed from world size (unit = world units per texture tile)
-export const Surface: React.FC<{ p: [number, number, number]; s: [number, number]; rot?: [number, number, number]; kind: Kind; a: string; b: string; unit?: number }> = ({ p, s, rot = [0, 0, 0], kind, a, b, unit = 1.6 }) => {
+/** lit = Lambert material (takes scene lights + receives shadow maps); tint x gain multiplies the texture (exposure;
+ *  gain > 1 compensates the dark linear output of `linear flat` canvases) */
+export const Surface: React.FC<{ p: [number, number, number]; s: [number, number]; rot?: [number, number, number]; kind: Kind; a: string; b: string; unit?: number; lit?: boolean; tint?: string; gain?: number }> = ({ p, s, rot = [0, 0, 0], kind, a, b, unit = 1.6, lit, tint = "#ffffff", gain = 1 }) => {
   const tex = patternTex(kind, a, b, [s[0] / unit, s[1] / unit]);
-  return <mesh position={p} rotation={rot}><planeGeometry args={s} /><meshBasicMaterial map={tex} /></mesh>;
+  return <mesh position={p} rotation={rot} receiveShadow={!!lit}><planeGeometry args={s} />{lit ? <meshLambertMaterial map={tex} color={new THREE.Color(tint).multiplyScalar(gain)} /> : <meshBasicMaterial map={tex} />}</mesh>;
 };

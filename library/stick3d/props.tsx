@@ -3,12 +3,12 @@ import * as THREE from "three";
 import { Box, Cyl, Ball, CanvasPlane, Surface, INK } from "./toon";
 import { V3 } from "./kit";
 
-export const Floor: React.FC<{ kind: "plank" | "tile" | "carpet" | "marble"; a: string; b: string; w?: number; d?: number; unit?: number }> = ({ kind, a, b, w = 24, d = 24, unit = 2.2 }) => (
-  <Surface p={[0, 0, -2]} s={[w, d]} rot={[-Math.PI / 2, 0, 0]} kind={kind} a={a} b={b} unit={unit} />
+export const Floor: React.FC<{ kind: "plank" | "tile" | "carpet" | "marble"; a: string; b: string; w?: number; d?: number; unit?: number; lit?: boolean; tint?: string; gain?: number }> = ({ kind, a, b, w = 24, d = 24, unit = 2.2, lit, tint, gain }) => (
+  <Surface p={[0, 0, -2]} s={[w, d]} rot={[-Math.PI / 2, 0, 0]} kind={kind} a={a} b={b} unit={unit} lit={lit} tint={tint} gain={gain} />
 );
 
 // Back wall with a real doorway hole (so characters can walk THROUGH it). Wall spans x:[-W/2,W/2], y:[0,9].
-export const WallDoor: React.FC<{ z: number; W: number; kind: "brick" | "wood" | "plain"; a: string; b: string; door?: { x: number; w: number; h: number }; unit?: number; base?: string }> = ({ z, W, kind, a, b, door, unit = 1.6, base }) => {
+export const WallDoor: React.FC<{ z: number; W: number; kind: "brick" | "wood" | "plain"; a: string; b: string; door?: { x: number; w: number; h: number }; unit?: number; base?: string; lit?: boolean; tint?: string; gain?: number }> = ({ z, W, kind, a, b, door, unit = 1.6, base, lit, tint, gain }) => {
   const H = 9;
   const pieces: [number, number, number, number][] = [];
   if (!door) pieces.push([-W / 2, W / 2, 0, H]); else {
@@ -16,13 +16,13 @@ export const WallDoor: React.FC<{ z: number; W: number; kind: "brick" | "wood" |
     pieces.push([-W / 2, l, 0, H], [r, W / 2, 0, H], [l, r, door.h + 0.3, H]);
   }
   return (<>
-    {pieces.map(([x0, x1, y0, y1], i) => <Surface key={i} p={[(x0 + x1) / 2, (y0 + y1) / 2, z]} s={[x1 - x0, y1 - y0]} kind={kind} a={a} b={b} unit={unit} />)}
+    {pieces.map(([x0, x1, y0, y1], i) => <Surface key={i} p={[(x0 + x1) / 2, (y0 + y1) / 2, z]} s={[x1 - x0, y1 - y0]} kind={kind} a={a} b={b} unit={unit} lit={lit} tint={tint} gain={gain} />)}
     {base ? pieces.slice(0, door ? 2 : 1).map(([x0, x1], i) => <Box key={"b" + i} p={[(x0 + x1) / 2, 0.22, z + 0.06]} s={[x1 - x0, 0.44, 0.12]} color={base} line={3} />) : null}
   </>);
 };
 
-export const SideWall: React.FC<{ x: number; kind: "brick" | "wood" | "plain"; a: string; b: string; d?: number; unit?: number }> = ({ x, kind, a, b, d = 24, unit = 1.6 }) => (
-  <Surface p={[x, 4.5, -2]} s={[d, 9]} rot={[0, x < 0 ? Math.PI / 2 : -Math.PI / 2, 0]} kind={kind} a={a} b={b} unit={unit} />
+export const SideWall: React.FC<{ x: number; kind: "brick" | "wood" | "plain"; a: string; b: string; d?: number; unit?: number; lit?: boolean; tint?: string; gain?: number }> = ({ x, kind, a, b, d = 24, unit = 1.6, lit, tint, gain }) => (
+  <Surface p={[x, 4.5, -2]} s={[d, 9]} rot={[0, x < 0 ? Math.PI / 2 : -Math.PI / 2, 0]} kind={kind} a={a} b={b} unit={unit} lit={lit} tint={tint} gain={gain} />
 );
 
 export const Glow: React.FC<{ p: V3; r: number; color: string; o?: number }> = ({ p, r, color, o = 0.6 }) => (

@@ -220,3 +220,10 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-21 16:28 | render-final | wi-gta-nosleep | render (1070-1604) | 4 | 1780 | cancelled (run 44924099314) |
 | 2026-11-21 16:28 | render-final | wi-gta-nosleep | log | 1 | 1781 | cancelled (run 44924099314) |
 | 2026-11-21 16:28 | render-final | wi-gta-nosleep | assemble | 1 | 1782 | cancelled (run 44924099314) |
+- 2026-11-21 What If 1 picture redo (owner: lighting, shadows, camera through cuts): walls/floors now LIT (Surface `lit`
+  Lambert + `gain` 3.2 for the dark linear canvas output) with brighter navy/wood/carpet colours; rig = ambient 0.85 +
+  sky/ground bounce 1.0 + warm key (shadow-casting, PCF soft 1024) + gold rim + hero pool + practicals; bed light toned
+  down. Shadows: drop shadow of every standing puppet (silhouette on the floor away from the key) + pack contact blobs +
+  blobs under Blender props (Glb `blob`); shadow maps on, but under swangle they barely show -> the drop/blob shadows
+  carry the look. Camera: piecewise-linear moves (no ease to a stop), the whole film trucks LEFT + pushes in, whip-pan
+  carry-over (8 f) out of and into every place change. Stills ~2.8 s avg (max 3.3) vs ~1.9 s before.

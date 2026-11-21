@@ -11,7 +11,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { LineSegments2 } from "three/examples/jsm/lines/LineSegments2.js";
 import { LineSegmentsGeometry } from "three/examples/jsm/lines/LineSegmentsGeometry.js";
 import { LineMaterial } from "three/examples/jsm/lines/LineMaterial.js";
-import { INK } from "./toon";
+import { INK, Shadow } from "./toon";
 import { V3 } from "./kit";
 
 const ramp = (() => { const d = new Uint8Array([90, 170, 255]); const t = new THREE.DataTexture(d, 3, 1, THREE.RedFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
@@ -38,7 +38,7 @@ export const useGlb = (name: string): THREE.Object3D | null => {
 };
 
 /** a Blender prop in toon style with ink outlines; `fallback` renders while/if the model is missing */
-export const Glb: React.FC<{ name: string; p?: V3; rot?: V3; s?: number | V3; line?: number; fallback?: React.ReactNode; tint?: number }> = ({ name, p = [0, 0, 0], rot = [0, 0, 0], s = 1, line = 3, fallback = null }) => {
+export const Glb: React.FC<{ name: string; p?: V3; rot?: V3; s?: number | V3; line?: number; fallback?: React.ReactNode; tint?: number; blob?: number }> = ({ name, p = [0, 0, 0], rot = [0, 0, 0], s = 1, line = 3, fallback = null, blob = 0 }) => {
   const src = useGlb(name);
   const { size } = useThree();
   const obj = useMemo(() => {
@@ -53,12 +53,14 @@ export const Glb: React.FC<{ name: string; p?: V3; rot?: V3; s?: number | V3; li
       m.material = em
         ? new THREE.MeshBasicMaterial({ color: old.emissive.clone().multiplyScalar(1.0), toneMapped: false })
         : new THREE.MeshToonMaterial({ color: old.color ?? new THREE.Color("#888"), gradientMap: ramp });
+      m.castShadow = true; m.receiveShadow = !em;
       const eg = new LineSegmentsGeometry(); eg.setPositions(new THREE.EdgesGeometry(m.geometry, 35).attributes.position.array as Float32Array);
       m.add(new LineSegments2(eg, lm));
     }
     return root;
   }, [src, size, line]);
-  if (!obj) return <>{fallback}</>;
+  const sh = blob > 0 ? <Shadow p={[p[0], p[1] + 0.01, p[2]]} r={blob} o={0.55} /> : null;
+  if (!obj) return <>{sh}{fallback}</>;
   const sc: V3 = typeof s === "number" ? [s, s, s] : s;
-  return <primitive object={obj} position={p} rotation={rot} scale={sc} />;
+  return <>{sh}<primitive object={obj} position={p} rotation={rot} scale={sc} /></>;
 };
