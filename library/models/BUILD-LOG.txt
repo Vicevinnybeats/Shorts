@@ -1,12 +1,4 @@
-build 2026-11-21T18:31:05Z commit ea14ae6 blender Blender 4.2.3 LTS (hash 0e22e4fcea03 built 2024-10-14 23:31:34)
-alligator: ok glb=245168B preview=yes
-    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
-    MODEL OK library/models/alligator.glb 245168 bytes
-    PREVIEW OK library/models/previews/alligator.png
-beach_umbrella: ok glb=30436B preview=yes
-    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
-    MODEL OK library/models/beach_umbrella.glb 30436 bytes
-    PREVIEW OK library/models/previews/beach_umbrella.png
+build 2026-11-21T18:33:20Z commit ec94d17 blender Blender 4.2.3 LTS (hash 0e22e4fcea03 built 2024-10-14 23:31:34)
 bed_1964: ok glb=41912B preview=yes
     EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
     MODEL OK library/models/bed_1964.glb 41912 bytes
@@ -19,26 +11,14 @@ couch: ok glb=85428B preview=yes
     EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
     MODEL OK library/models/couch.glb 85428 bytes
     PREVIEW OK library/models/previews/couch.png
-flat_tv: ok glb=69504B preview=yes
-    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
-    MODEL OK library/models/flat_tv.glb 69504 bytes
-    PREVIEW OK library/models/previews/flat_tv.png
 game_controller: ok glb=59084B preview=yes
     EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
     MODEL OK library/models/game_controller.glb 59084 bytes
     PREVIEW OK library/models/previews/game_controller.png
-golf_flag: ok glb=71228B preview=yes
-    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
-    MODEL OK library/models/golf_flag.glb 71228 bytes
-    PREVIEW OK library/models/previews/golf_flag.png
 mic_stand: ok glb=61680B preview=yes
     EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
     MODEL OK library/models/mic_stand.glb 61680 bytes
     PREVIEW OK library/models/previews/mic_stand.png
-palm_tree: ok glb=242992B preview=yes
-    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
-    MODEL OK library/models/palm_tree.glb 242992 bytes
-    PREVIEW OK library/models/previews/palm_tree.png
 pizza_box: ok glb=12364B preview=yes
     EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
     MODEL OK library/models/pizza_box.glb 12364 bytes
@@ -59,14 +39,6 @@ soda_can: ok glb=15084B preview=yes
     EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
     MODEL OK library/models/soda_can.glb 15084 bytes
     PREVIEW OK library/models/previews/soda_can.png
-sports_car: ok glb=91520B preview=yes
-    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
-    MODEL OK library/models/sports_car.glb 91520 bytes
-    PREVIEW OK library/models/previews/sports_car.png
-suitcase: ok glb=83068B preview=yes
-    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
-    MODEL OK library/models/suitcase.glb 83068 bytes
-    PREVIEW OK library/models/previews/suitcase.png
 toy_car: ok glb=55252B preview=yes
     EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
     MODEL OK library/models/toy_car.glb 55252 bytes
