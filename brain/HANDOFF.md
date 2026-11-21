@@ -3,7 +3,7 @@ Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on thi
 
 ## NOW (open items, in order)
 00000. (owner ~19:25) "use GitHub tools for good voiceovers, it's a loop; fix video 1, then video 2".
-   What If 2 render CANCELLED (run 44940497484). tts-compare.yml running -> send health/voice/compare/*.mp3 to owner
+   What If 2 render CANCELLED (run 44940497484). tts-compare DONE (6 files in health/voice/compare/, sent 20:17) ->
    -> he picks -> wire engine into render-final -> re-render What If 1 (re-edit 1fac241 already has real cuts) ->
    owner OK -> only then What If 2 (f0c934a, GO_FINAL file exists; re-touch it to render).
    Note: What If 1 render with cuts + am_liam finished (run 44939643924, preview committed) - NOT sent, voice will change.
