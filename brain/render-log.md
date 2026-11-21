@@ -228,12 +228,18 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
   carry the look. Camera: piecewise-linear moves (no ease to a stop), the whole film trucks LEFT + pushes in, whip-pan
   carry-over (8 f) out of and into every place change. Stills ~2.8 s avg (max 3.3) vs ~1.9 s before.
 | 2026-11-21 16:54 | render-stills | wi-gta-nosleep  | stills | 3 | 1788 | running (run 44926962631) |
-| 2026-11-21 17:20 | render-final | wi-gta-nosleep | voice-and-mix | 3 | 1788 | success (run 44927000990) |
-| 2026-11-21 17:20 | render-final | wi-gta-nosleep | render (535-1069) | 16 | 1804 | success (run 44927000990) |
-| 2026-11-21 17:20 | render-final | wi-gta-nosleep | render (1070-1604) | 21 | 1825 | success (run 44927000990) |
-| 2026-11-21 17:20 | render-final | wi-gta-nosleep | render (1605-2139) | 22 | 1847 | success (run 44927000990) |
-| 2026-11-21 17:20 | render-final | wi-gta-nosleep | render (2675-3206) | 22 | 1869 | success (run 44927000990) |
-| 2026-11-21 17:20 | render-final | wi-gta-nosleep | render (0-534) | 20 | 1889 | success (run 44927000990) |
-| 2026-11-21 17:20 | render-final | wi-gta-nosleep | render (2140-2674) | 12 | 1901 | success (run 44927000990) |
-| 2026-11-21 17:20 | render-final | wi-gta-nosleep | assemble | 3 | 1904 | success (run 44927000990) |
-| 2026-11-21 17:20 | render-final | wi-gta-nosleep | log | 1 | 1905 | success (run 44927000990) |
+| 2026-11-21 17:20 | render-final | wi-gta-nosleep | voice-and-mix | 3 | 1791 | success (run 44927000990) |
+| 2026-11-21 17:20 | render-final | wi-gta-nosleep | render (535-1069) | 16 | 1807 | success (run 44927000990) |
+| 2026-11-21 17:20 | render-final | wi-gta-nosleep | render (1070-1604) | 21 | 1828 | success (run 44927000990) |
+| 2026-11-21 17:20 | render-final | wi-gta-nosleep | render (1605-2139) | 22 | 1850 | success (run 44927000990) |
+| 2026-11-21 17:20 | render-final | wi-gta-nosleep | render (2675-3206) | 22 | 1872 | success (run 44927000990) |
+| 2026-11-21 17:20 | render-final | wi-gta-nosleep | render (0-534) | 20 | 1892 | success (run 44927000990) |
+| 2026-11-21 17:20 | render-final | wi-gta-nosleep | render (2140-2674) | 12 | 1904 | success (run 44927000990) |
+| 2026-11-21 17:20 | render-final | wi-gta-nosleep | assemble | 3 | 1907 | success (run 44927000990) |
+| 2026-11-21 17:20 | render-final | wi-gta-nosleep | log | 1 | 1908 | success (run 44927000990) |
+| 2026-11-21 18:30 | health-check | - | voice-kokoro | 4 | 1912 | success (run 44934711776) |
+| 2026-11-21 18:30 | health-check | - | render | 14 | 1926 | success (run 44934711776) |
+| 2026-11-21 18:30 | health-check | - | drive | 1 | 1927 | success (run 44934711776) |
+| 2026-11-21 18:30 | health-check | - | voice-voicestudio | 4 | 1931 | failure (run 44934711776) |
+| 2026-11-21 18:30 | health-check | - | audio-mix | 2 | 1933 | success (run 44934711776) |
+| 2026-11-21 18:30 | health-check | - | report | 1 | 1934 | running (run 44934711776) |
