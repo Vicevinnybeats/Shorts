@@ -295,3 +295,12 @@ camera move per shot), hard cuts on line changes, 5 x 10-frame @remotion/transit
 slide rules, fade ask), sub-shots share the parent HUD clock. Couch drawn without its coral pillow. 29 local stills checked;
 contact sheet rebuilt (library/previews/whatif/wi-gta-leonida-stick3d.png).
 | 2026-11-21 19:23 | render-stills | wi-gta-leonida  | stills | 3 | 2097 | running (run 44940457257) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | voice-and-mix | 4 | 2047 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (0-340) | 19 | 2066 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (341-681) | 17 | 2083 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (1364-1704) | 18 | 2101 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (1705-2044) | 13 | 2114 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (682-1022) | 13 | 2127 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (1023-1363) | 10 | 2137 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | assemble | 2 | 2139 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | log | 1 | 2140 | success (run 44939643924) |
