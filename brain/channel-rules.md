@@ -73,7 +73,7 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   brain/style-whatif.md). Characters in the spirit of the owner's reference screenshots but ORIGINAL (not their robot).
 - Drive folder for this series (owner): https://drive.google.com/drive/folders/1C3YDZzPqlFhBQM_7rurN7XRCnhhyqT_o
   (id 1C3YDZzPqlFhBQM_7rurN7XRCnhhyqT_o). Old TheLittleEpic videos stay in the old folder.
-- GTA 6 what-if plan: 1 30 days no sleep (wi-gta-nosleep) | 2 moving to the real Leonida (Florida facts) |
+- GTA 6 what-if plan: 1 30 days no sleep (wi-gta-nosleep, DONE 2026-11-21, in What if folder) | 2 moving to the real Leonida (Florida facts) |
   3 GTA physics in real life (falls, crashes) | 4 GTA money became real (inflation) | 5 everyone skipped work for GTA 6 |
   6 healing like a GTA character (wound/bone healing).
 - QUEUE (owner 2026-11-21: make ONLY video 1 now, queue the rest): 2 Leonida, 3 GTA physics, 4 GTA money, 5 everyone
@@ -82,3 +82,5 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   particles) COMBINED with the what-if HUD (live counter, bars, chapter screens, choice cards, phone) + strong motion
   graphics (draw-on lines, punch-in chapters) and a motion-graphics opening sting that is also the hook.
 - Audio for this series: narrator Kokoro "bm_george" (episode.json "voice"), music mood "cinematic" (new bed).
+- 2026-11-21: Actions minutes ran out on the private repo; owner made Vicevinnybeats/Shorts PUBLIC (unlimited free minutes).
+  Never commit secrets: the repo is public now.

@@ -40,3 +40,4 @@ How a finished video gets into Drive (no rclone secrets needed):
 | 2026-11-20 | gta-ufo -> TheLittleEpic/Shorts as video 11 (cheap mode: 1 builder) | 11 - GTA 6 Has a UFO. Your Eyes Can Make One Too.mp4 (18.8 MB) + 11 - UFO GTA 6 txt (pizza -> 12) |
 | 2026-11-20 | gta-redlight -> TheLittleEpic/Shorts as video 12 (cheap mode) | 12 - He Can Do Anything in GTA 6. He Still Stops at Red Lights.mp4 (30.6 MB) + 12 - Red Lights txt (pizza -> 13) |
 | 2026-11-20 | gta-radio -> TheLittleEpic/Shorts as video 13 (cheap mode) | 13 - You'll Love the GTA 6 Song You Hate. Here's Why.mp4 (30.6 MB) + 13 - Radio txt (pizza -> 14) |
+| 2026-11-21 | wi-gta-nosleep -> 'What if' folder (1C3YDZzPqlFhBQM_7rurN7XRCnhhyqT_o) as What If 1 | What If 1 - You Played GTA 6 for 30 Days Straight.mp4 (30.8 MB) + txt; repo made PUBLIC by owner (free Actions minutes) |
