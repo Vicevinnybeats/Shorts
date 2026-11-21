@@ -243,3 +243,4 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-21 18:30 | health-check | - | voice-voicestudio | 4 | 1931 | failure (run 44934711776) |
 | 2026-11-21 18:30 | health-check | - | audio-mix | 2 | 1933 | success (run 44934711776) |
 | 2026-11-21 18:30 | health-check | - | report | 1 | 1934 | running (run 44934711776) |
+| 2026-11-21 18:35 | render-stills | wi-gta-nosleep  | stills | 3 | 1937 | running (run 44936135336) |
