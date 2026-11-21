@@ -2,9 +2,9 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
-0. What If 1 REDO (owner 2026-11-21 ~16:40): Kokoro bm_george + better lighting + real shadows + camera that moves through
-   cuts. Picture redo DONE (commit 2c99927: lit sets, drop+blob shadows, whip carry-over cuts; stills checked).
-   GO_FINAL render started -> when done: git pull, check preview, send to owner.
+0. What If 1 REDO RENDERED (run 44927000990, 106.7 s, bm_george; master -14.1, 1-5 kHz -23.9, bass -15.7). Preview sent to
+   owner - WAITING for verdict. Seen in frame sheet: microsleep shot frames Remy half off the right edge (fix if owner
+   wants changes). Then: Drive "What if" folder via Zapier + drive-put (brain/drive.md), then What If 2.
    Items 1-3 below are history (owner dropped his clone).
 1. What If 1 sound fix DONE (remix 2, run 44922935325): clarity band 1-5 kHz -28.3 -> -23.4 LUFS (old What If 2 -23.7,
    gta-radio -21.2), bass -17.0, master -14.1; voice_eq in episode.json, music level_lu -19. Preview sent to owner,
