@@ -18,6 +18,7 @@
 ## After that
 - Blender (Higgsfield Bridge MCP, bl_* tools): owner must open Blender + Higgsfield panel + Connect. Use only FREE tools
   (no bl_generate_3d / credits). Save new objects + notes in brain/stick3d.
+  2026-11-21: bridge reports Blender connected, but bl_get_scene_summary timed out twice (Blender not answering; read-only, nothing changed).
 ## Rules that matter most
 - Free only; never publish; one video at a time; stop after each and wait for the owner.
 - Agent World: PAUSED (don't call it).
