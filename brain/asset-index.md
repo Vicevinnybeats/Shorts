@@ -30,3 +30,14 @@ No real insignia, logos, flags or unit badges anywhere (wording rule in episodes
 - `Audiobook({ x, y, scale, locked 0..1 })` old-school pocket player (300x500 centred) with a book cover (no text),
   click wheel, earbuds; `locked` dims the screen and pops a gold padlock.
 - CAST keys added in library/style/channel.ts: `soldier1`, `soldier2`, `counselor`.
+
+## WHAT IF series - Golden Neon kit (2026-11-21)
+Files: `library/whatif/kit.tsx` (+ `figure.tsx`), rules `brain/style-whatif.md`, previews `library/previews/whatif/kit.png`,
+`characters.png`. First used by `episodes/wi-gta-nosleep`.
+- `NeonFigure({ x, y (feet), scale, look: LOOKS.remy|mo|june|kit|randy, pose, expr, f, tilt, blink, prop })` ~430 tall.
+- HUD: `LiveCounter({ f, from, to, at, dur, tag, label, unit, display })`, `CompareBars({ f, y, rows:[{label, fill, at, color, value}] })`,
+  `ChapterScreen({ f, id, big, small, y, size, at, out, glitch })`, `ChoiceCards({ f, y, cards, pick, pickAt })`,
+  `Phone({ x, y, scale, p }) + Notification({ y, title, body, muted })`, `Stamp`, `HudText`, `StrokeWord("WHAT IF")`.
+- Stage: `Stage({ cam, hud })`, `Plane({ p })`, `Bake({ id, done })`, `Spotlight`, `Particles`, `FloorGlow`, `RoomLines`, `Skyline`.
+- Props: `Controller`, `TV`, `Couch(part)`, `SnackPile(n, at)`, `Bed` + `Blanket`, `Clock(hours)`, `CarBack`, `Road(bend)`,
+  `MissionMarker(broken)`, `Bubble`, `Calendar30(lit, cross)`, `Zzz`, `RepeatIcon`, `MoonIcon`.

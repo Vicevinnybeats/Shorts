@@ -1,25 +1,208 @@
 {
-  "id": "wi-gta-nosleep",
-  "title": "What If You Played GTA 6 for 30 Days Straight?",
-  "series": "WHAT IF #1",
-  "words": 213,
-  "cast": { "remy": "TOY_LOOKS.remy (library/whatif/toy.tsx)", "extras": "TOY_LOOKS.mo, june, kit (choice cards, ending)" },
-  "shots": [
-    { "id": "hook", "cue": "What if you", "place": "room", "narration": "What if you played GTA 6 for thirty days straight? No sleep. No breaks.", "onScreenText": ["HOURS AWAKE 000 · DAY 1", "30 DAYS?", "NO SLEEP"] },
-    { "id": "crash", "cue": "Let's see how", "place": "cards", "narration": "Let's see how far you'd really get.", "onScreenText": ["WHERE DO YOU", "CRASH FIRST?", "A HOUR 17", "B DAY 2", "C DAY 3", "D NEVER"] },
-    { "id": "hour0", "cue": "Hour zero. Launch", "place": "room", "narration": "Hour zero. Launch night. Snacks stacked. Phone on silent. You're ready.", "onScreenText": ["HOUR 0", "LAUNCH NIGHT", "SNACKS: STACKED", "PHONE: SILENT", "READY."] },
-    { "id": "hour17", "cue": "Hour seventeen. You", "place": "face", "narration": "Hour seventeen. You feel fine. You're not.", "onScreenText": ["HOURS AWAKE 017", "YOU FEEL FINE", "YOU'RE NOT."] },
-    { "id": "study", "cue": "In one study,", "place": "lab", "narration": "In one study, after seventeen to nineteen hours awake, people did as badly on some tests as someone over the drink drive limit in many countries.", "onScreenText": ["ONE STUDY (2000)", "17-19 H AWAKE", "OVER THE LIMIT (0.05%)", "AS BAD ON SOME TESTS", "LIMIT IN MANY COUNTRIES"] },
-    { "id": "hour24", "cue": "Hour twenty four.", "place": "tv", "narration": "Hour twenty four. Your car keeps drifting off the road. In the game, and in your head.", "onScreenText": ["HOURS AWAKE 024", "DRIFTING...", "IN THE GAME", "AND IN YOUR HEAD"] },
-    { "id": "day2", "cue": "Day two. You", "place": "phone", "narration": "Day two. You stumble over simple words.", "onScreenText": ["HOURS AWAKE 036 · DAY 2", "(phone) notifications + garbled reply"] },
-    { "id": "day3", "cue": "Day three. You", "place": "room-high", "narration": "Day three. You forget the mission you just started. You feel sick.", "onScreenText": ["HOURS AWAKE 060 · DAY 3", "MISSION ???", "YOU FEEL SICK"] },
-    { "id": "real", "cue": "That's not a", "place": "lab", "narration": "That's not a guess. In nineteen sixty four, a seventeen year old in San Diego named Randy Gardner tried staying awake for real. No games. Just awake.", "onScreenText": ["NOT A GUESS", "1964", "RANDY GARDNER, 17", "SAN DIEGO", "NO GAMES. JUST AWAKE."] },
-    { "id": "symptoms", "cue": "His memory slipped,", "place": "lab", "narration": "His memory slipped, his mood crashed, and some reports say he even saw things that weren't there.", "onScreenText": ["WHAT SLIPPED", "WORDS", "MEMORY", "MOOD", "SEES THINGS (REPORTED)"] },
-    { "id": "record", "cue": "He stopped after", "place": "lab", "narration": "He stopped after two hundred sixty four hours. Eleven days. Guinness later stopped accepting attempts at this record because it's too dangerous.", "onScreenText": ["HOURS AWAKE", "264 H", "= 11 DAYS", "GUINNESS:", "NO MORE ATTEMPTS", "TOO DANGEROUS"] },
-    { "id": "day30", "cue": "So day thirty?", "place": "lab", "narration": "So day thirty? You never get there.", "onScreenText": ["DAY 30", "UNREACHABLE"] },
-    { "id": "micro", "cue": "Your brain starts", "place": "eyes", "narration": "Your brain starts grabbing tiny naps, just seconds long, whether you want them or not.", "onScreenText": ["MICROSLEEP", "JUST SECONDS"] },
-    { "id": "slept", "cue": "When Randy finally", "place": "bed", "narration": "When Randy finally slept, he slept for fourteen hours.", "onScreenText": ["SLEPT 14 H"] },
-    { "id": "speedrun", "cue": "So here's the", "place": "day", "narration": "So here's the real speedrun. Play. Sleep. Repeat.", "onScreenText": ["THE REAL SPEEDRUN", "PLAY", "SLEEP", "REPEAT"] },
-    { "id": "ask", "cue": "What's the longest", "place": "spot", "narration": "What's the longest you've ever stayed awake?", "onScreenText": ["PLAY · SLEEP · REPEAT", "LONGEST YOU'VE", "STAYED AWAKE?", "YOUR RECORD ??? H"] }
-  ]
+ "id": "wi-gta-nosleep",
+ "title": "What If You Played GTA 6 for 30 Days Straight?",
+ "series": "WHAT IF #1",
+ "words": 213,
+ "cast": {
+  "remy": "LOOKS.remy (library/whatif/figure.tsx): neon silhouette, hoodie + beanie tuft",
+  "randy": "LOOKS.randy (neon silhouette, no photo)"
+ },
+ "shots": [
+  {
+   "id": "hook",
+   "cue": "What if you",
+   "place": "room",
+   "narration": "What if you played GTA 6 for thirty days straight? No sleep. No breaks.",
+   "onScreenText": [
+    "WHAT IF (draws on)",
+    "HOURS AWAKE 000 · DAY 1",
+    "30 DAYS OF GTA 6?",
+    "NO SLEEP",
+    "NO BREAKS"
+   ]
+  },
+  {
+   "id": "crash",
+   "cue": "Let's see how",
+   "place": "cards",
+   "narration": "Let's see how far you'd really get.",
+   "onScreenText": [
+    "WHERE DO YOU",
+    "CRASH FIRST?",
+    "A HOUR 17",
+    "B DAY 2",
+    "C DAY 3",
+    "D NEVER"
+   ]
+  },
+  {
+   "id": "hour0",
+   "cue": "Hour zero. Launch",
+   "place": "table",
+   "narration": "Hour zero. Launch night. Snacks stacked. Phone on silent. You're ready.",
+   "onScreenText": [
+    "HOUR 0",
+    "LAUNCH NIGHT",
+    "SNACKS: STACKED",
+    "PHONE: SILENT",
+    "READY."
+   ]
+  },
+  {
+   "id": "hour17",
+   "cue": "Hour seventeen. You",
+   "place": "face",
+   "narration": "Hour seventeen. You feel fine. You're not.",
+   "onScreenText": [
+    "HOURS AWAKE 017",
+    "YOU FEEL FINE",
+    "YOU'RE NOT."
+   ]
+  },
+  {
+   "id": "study",
+   "cue": "In one study,",
+   "place": "bars",
+   "narration": "In one study, after seventeen to nineteen hours awake, people did as badly on some tests as someone over the drink drive limit in many countries.",
+   "onScreenText": [
+    "ONE STUDY (2000)",
+    "17-19 H AWAKE",
+    "SOME TESTS",
+    "OVER THE LIMIT (0.05%)",
+    "AS BAD ON SOME TESTS",
+    "LIMIT IN MANY COUNTRIES"
+   ]
+  },
+  {
+   "id": "hour24",
+   "cue": "Hour twenty four.",
+   "place": "road",
+   "narration": "Hour twenty four. Your car keeps drifting off the road. In the game, and in your head.",
+   "onScreenText": [
+    "HOURS AWAKE 024",
+    "DRIFTING...",
+    "IN THE GAME",
+    "AND IN YOUR HEAD"
+   ]
+  },
+  {
+   "id": "day2",
+   "cue": "Day two. You",
+   "place": "bubbles",
+   "narration": "Day two. You stumble over simple words.",
+   "onScreenText": [
+    "DAY 2",
+    "HOURS AWAKE 036",
+    "SIMPLE -> SMIPLE",
+    "WORDS -> WRODS"
+   ]
+  },
+  {
+   "id": "day3",
+   "cue": "Day three. You",
+   "place": "floor",
+   "narration": "Day three. You forget the mission you just started. You feel sick.",
+   "onScreenText": [
+    "HOURS AWAKE 060 · DAY 3",
+    "MISSION ???",
+    "YOU FEEL SICK"
+   ]
+  },
+  {
+   "id": "real",
+   "cue": "That's not a",
+   "place": "file",
+   "narration": "That's not a guess. In nineteen sixty four, a seventeen year old in San Diego named Randy Gardner tried staying awake for real. No games. Just awake.",
+   "onScreenText": [
+    "NOT A GUESS",
+    "1964",
+    "AGE 17 · SAN DIEGO",
+    "RANDY GARDNER, 17",
+    "SAN DIEGO · 1964",
+    "NO GAMES. JUST AWAKE."
+   ]
+  },
+  {
+   "id": "symptoms",
+   "cue": "His memory slipped,",
+   "place": "file",
+   "narration": "His memory slipped, his mood crashed, and some reports say he even saw things that weren't there.",
+   "onScreenText": [
+    "WHAT SLIPPED",
+    "MEMORY",
+    "MOOD",
+    "SEES THINGS (REPORTED)"
+   ]
+  },
+  {
+   "id": "record",
+   "cue": "He stopped after",
+   "place": "count",
+   "narration": "He stopped after two hundred sixty four hours. Eleven days. Guinness later stopped accepting attempts at this record because it's too dangerous.",
+   "onScreenText": [
+    "HOURS AWAKE",
+    "264 H",
+    "= 11 DAYS",
+    "GUINNESS:",
+    "NO MORE ATTEMPTS",
+    "TOO DANGEROUS"
+   ]
+  },
+  {
+   "id": "day30",
+   "cue": "So day thirty?",
+   "place": "calendar",
+   "narration": "So day thirty? You never get there.",
+   "onScreenText": [
+    "DAY 30",
+    "UNREACHABLE",
+    "calendar lights 1-11"
+   ]
+  },
+  {
+   "id": "micro",
+   "cue": "Your brain starts",
+   "place": "eyes",
+   "narration": "Your brain starts grabbing tiny naps, just seconds long, whether you want them or not.",
+   "onScreenText": [
+    "MICROSLEEP",
+    "JUST SECONDS"
+   ]
+  },
+  {
+   "id": "slept",
+   "cue": "When Randy finally",
+   "place": "bed",
+   "narration": "When Randy finally slept, he slept for fourteen hours.",
+   "onScreenText": [
+    "SLEPT 14 H",
+    "clock spins 14 h"
+   ]
+  },
+  {
+   "id": "speedrun",
+   "cue": "So here's the",
+   "place": "loop",
+   "narration": "So here's the real speedrun. Play. Sleep. Repeat.",
+   "onScreenText": [
+    "THE REAL SPEEDRUN",
+    "PLAY",
+    "SLEEP",
+    "REPEAT"
+   ]
+  },
+  {
+   "id": "ask",
+   "cue": "What's the longest",
+   "place": "spot",
+   "narration": "What's the longest you've ever stayed awake?",
+   "onScreenText": [
+    "YOUR RECORD ??? H",
+    "PLAY · SLEEP · REPEAT",
+    "LONGEST YOU'VE",
+    "STAYED AWAKE?"
+   ]
+  }
+ ],
+ "look": "Golden Neon (library/whatif/kit.tsx, brain/style-whatif.md)"
 }

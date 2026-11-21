@@ -156,3 +156,4 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-20 20:13 | render-final | gta-radio | render (732-1463) | 3 | 1550 | success (run 44808334770) |
 | 2026-11-20 20:13 | render-final | gta-radio | assemble | 2 | 1552 | success (run 44808334770) |
 | 2026-11-20 20:13 | render-final | gta-radio | log | 1 | 1553 | success (run 44808334770) |
+| 2026-11-21 | local stills | wi-gta-nosleep | 17 stills @0.4 (Golden Neon kit, 2 fix rounds) | - | - | ~1.3 s/still incl. overhead; tsc ok; voice bm_george pending in CI |

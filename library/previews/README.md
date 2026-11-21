@@ -13,6 +13,7 @@ importing the same components and CAST keys: same faces, outfits, colours and se
 | Army office, gym, sunrise park, pass/contract/calendar props | `library/environments25/army.tsx` | `army/*.png` |
 | Narration voice | Kokoro `am_michael` (`VOICE` in channel.ts) | - |
 | Motion rules (eases, labels, counters) | `src/engine25/motion.tsx` | - |
+| WHAT IF "Golden Neon" kit (HUD, props) + characters (Remy, Mo, June, Kit, Randy; poses, expressions) | `library/whatif/kit.tsx`, `figure.tsx` | `whatif/kit.png`, `whatif/characters.png` |
 
 Episode -> set map: tickle (livingroom), toast (cafe), pole (square), silent (gamenight), first-offer (market),
 winner (auction), lift-button (office), coin-flip (kitchen), goalkeeper-still (stadium), gta-army (army), pizza (pizzeria, WIP).

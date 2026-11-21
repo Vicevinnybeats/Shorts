@@ -1,9 +1,9 @@
 {
  "id": "wi-gta-nosleep",
- "voice": "am_michael",
+ "voice": "bm_george",
  "seconds": 85.2,
  "estimated": true,
- "note": "roughWords timing (start 0.15 s, 2.85 words/s, +0.25 s after . ! ?, +0.1 s after , ; :); CI makes the real voice",
+ "note": "roughWords timing (start 0.15 s, 2.85 words/s, +0.25 s after . ! ?, +0.1 s after , ; :); CI makes the real voice; voice changes to bm_george, so timing is approximate",
  "words": [
   {
    "w": "What",
