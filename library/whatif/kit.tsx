@@ -5,9 +5,13 @@
 // All components are SVG <g> in the 1080x1920 design space; `f` = frame (shot-relative), `at` = start frame.
 // Static scenery: wrap in <Bake done={p >= 1}> so it is drawn ONCE into a cached image (CachedSvg) after its draw-on.
 import React from "react";
-import { interpolate, Easing } from "remotion";
+import { interpolate, Easing, AbsoluteFill, useCurrentFrame } from "remotion";
 import { CachedSvg } from "../../src/engine25/cached";
 import { EASE, arrive, leave, stampScale } from "../../src/engine25/motion";
+import { shotAt, cueTime, FPS } from "../../src/engine/timeline";
+import type { ShotSpan } from "../../src/engine/timeline";
+import type { Word } from "../../src/captions/Captions";
+import type { SceneProps } from "../../src/engine/EpisodeShort";
 export { NeonFigure, FloorGlow, LOOKS, FACE } from "./figure";
 export type { FigLook, FigPose, FigExpr } from "./figure";
 
@@ -180,10 +184,11 @@ export const Digits: React.FC<{ x: number; y: number; text: string; size: number
   return <g>{text.split("").map((ch, i) => <NeonText key={i} x={x0 + cell * (i + 0.5)} y={y} size={size} color={color}>{ch}</NeonText>)}</g>;
 };
 /** Corner LIVE COUNTER card: small caps label, big ticking digits (from -> to over dur), DAY tag, blinking live dot.
- *  Default box 380x150 at (x, y) = top-left; keep it inside y 300-1350, x 60-960. */
+ *  Box 380x150 x s (default s 1.6 = 608x240, motion fix 2026-11-21: bigger HUD) at (x, y) = top-left; keep it inside
+ *  y 300-1350, x 60-960. With the default size other text starts at y >= 620. Hide it while a ChapterScreen is up. */
 export const LiveCounter: React.FC<{ f: number; x?: number; y?: number; label?: string; from: number; to: number; at?: number; dur?: number; tag?: string;
-  out?: number; hidden?: boolean; digits?: number; unit?: string; display?: string }> =
-  ({ f, x = 70, y = 316, label = "HOURS AWAKE", from, to, at = 0, dur = 18, tag, out = Infinity, hidden, digits = 3, unit, display }) => {
+  out?: number; hidden?: boolean; digits?: number; unit?: string; display?: string; s?: number }> =
+  ({ f, x = 70, y = 316, label = "HOURS AWAKE", from, to, at = 0, dur = 18, tag, out = Infinity, hidden, digits = 3, unit, display, s = 1.6 }) => {
     if (hidden) return null;
     const ex = Number.isFinite(out) ? leave(f, out) : 0;
     if (ex >= 1) return null;
@@ -192,7 +197,7 @@ export const LiveCounter: React.FC<{ f: number; x?: number; y?: number; label?: 
     const st = stampScale(f, at, dur);
     const W = 380, Hh = 150;
     const br = (d: string) => <NeonPath d={d} w={3.5} p={p} color={NEON.gold} />;
-    return <g opacity={1 - ex} transform={`translate(${x} ${y - ex * 14})`}>
+    return <g opacity={1 - ex} transform={`translate(${x} ${y - ex * 14}) scale(${s})`}>
       <rect x={0} y={0} width={W} height={Hh} rx={14} fill="#000" opacity={0.55 * p} />
       <NeonPath d={`M 0 0 L ${W} 0 L ${W} ${Hh} L 0 ${Hh} Z`} w={1.5} glow={0} o={0.35} p={p} />
       {br(`M 0 34 L 0 0 L 34 0`)}{br(`M ${W - 34} 0 L ${W} 0 L ${W} 34`)}{br(`M 0 ${Hh - 34} L 0 ${Hh} L 34 ${Hh}`)}{br(`M ${W - 34} ${Hh} L ${W} ${Hh} L ${W} ${Hh - 34}`)}
@@ -210,9 +215,11 @@ export const LiveCounter: React.FC<{ f: number; x?: number; y?: number; label?: 
   };
 
 export type BarRow = { label: string; fill: number; value?: string; color?: string; at: number; sub?: string };
-/** horizontal comparison bars: outlined tracks, fills grow with overshoot, labels above each bar */
-export const CompareBars: React.FC<{ f: number; x?: number; y: number; w?: number; rows: BarRow[]; gap?: number; out?: number; hidden?: boolean }> =
-  ({ f, x = 90, y, w = 820, rows, gap = 190, out = Infinity, hidden }) => {
+/** horizontal comparison bars: outlined tracks, fills grow with overshoot, labels above each bar, BIG value under it.
+ *  Motion fix 2026-11-21: defaults span the safe width (x 70..950), bars 96 tall, labels 50 px, values 66 px amber. */
+export const CompareBars: React.FC<{ f: number; x?: number; y: number; w?: number; rows: BarRow[]; gap?: number; out?: number; hidden?: boolean;
+  bh?: number; labelSize?: number; valueSize?: number }> =
+  ({ f, x = 70, y, w = 880, rows, gap = 300, out = Infinity, hidden, bh = 96, labelSize = 50, valueSize = 66 }) => {
     const ex = Number.isFinite(out) ? leave(f, out) : 0;
     if (ex >= 1) return null;
     return <g opacity={1 - ex}>{rows.map((r, i) => {
@@ -221,19 +228,20 @@ export const CompareBars: React.FC<{ f: number; x?: number; y: number; w?: numbe
       const g = interpolate(f, [r.at, r.at + 22], [0, 1], { ...cl, easing: Easing.out(Easing.back(1.6)) });
       const fw = Math.max(0, w * r.fill * g);
       return <g key={i}>
-        {!hidden && <HudText f={f} x={x} y={yy - 22} size={40} color={c} enter="rise" at={r.at - 6} anchor="start">{r.label}</HudText>}
-        <NeonPath d={`M ${x} ${yy} L ${x + w} ${yy} L ${x + w} ${yy + 70} L ${x} ${yy + 70} Z`} w={2.5} p={tp} color={NEON.dim} glow={0.4} />
+        {!hidden && <HudText f={f} x={x} y={yy - 24} size={labelSize} color={c} enter="rise" at={r.at - 6} anchor="start">{r.label}</HudText>}
+        <NeonPath d={`M ${x} ${yy} L ${x + w} ${yy} L ${x + w} ${yy + bh} L ${x} ${yy + bh} Z`} w={2.5} p={tp} color={NEON.dim} glow={0.4} />
         {fw > 2 && <>
-          <rect x={x + 6} y={yy + 6} width={Math.max(0, fw - 12)} height={58} fill={c} opacity={0.22} />
-          {Array.from({ length: Math.floor((fw - 12) / 22) }, (_, k) => <path key={k} d={`M ${x + 14 + k * 22} ${yy + 60} L ${x + 30 + k * 22} ${yy + 10}`} stroke={c} strokeWidth={3} opacity={0.35} />)}
-          <NeonPath d={`M ${x + 6} ${yy + 6} L ${x + fw - 6} ${yy + 6} L ${x + fw - 6} ${yy + 64} L ${x + 6} ${yy + 64} Z`} w={3.5} color={c} hot />
+          <rect x={x + 6} y={yy + 6} width={Math.max(0, fw - 12)} height={bh - 12} fill={c} opacity={0.22} />
+          {Array.from({ length: Math.floor((fw - 12) / 24) }, (_, k) => <path key={k} d={`M ${x + 14 + k * 24} ${yy + bh - 10} L ${x + 34 + k * 24} ${yy + 10}`} stroke={c} strokeWidth={3} opacity={0.35} />)}
+          <NeonPath d={`M ${x + 6} ${yy + 6} L ${x + fw - 6} ${yy + 6} L ${x + fw - 6} ${yy + bh - 6} L ${x + 6} ${yy + bh - 6} Z`} w={3.5} color={c} hot />
         </>}
-        {!hidden && r.value && <HudText f={f} x={x + w} y={yy + 128} size={36} color={NEON.muted} enter="type" at={r.at + 14} anchor="end">{r.value}</HudText>}
+        {!hidden && r.value && <HudText f={f} x={x + w} y={yy + bh + valueSize + 8} size={valueSize} color={r.color ?? NEON.amber} enter="scale" at={r.at + 16} anchor="end">{r.value}</HudText>}
       </g>;
     })}</g>;
   };
 
-/** huge CHAPTER screen ("DAY 3"): brackets draw on, the word punches in (scale 1.4 -> 1 with back ease) and a light
+/** huge CHAPTER screen ("DAY 3"); box spans y - 0.95 size .. y + 0.25 size, subtitle below it (+92). Hide the
+ *  LiveCounter and other labels while it is up (motion fix 2026-11-21). Brackets draw on, the word punches in (scale 1.4 -> 1 with back ease) and a light
  *  sweep crosses it; glitch 0..1 slices it into offset coral/cyan bands. Centre (x, y) = text baseline centre. */
 export const ChapterScreen: React.FC<{ f: number; id: string; big: string; small?: string; at?: number; out?: number; x?: number; y?: number; size?: number;
   glitch?: number; hidden?: boolean; color?: string }> =
@@ -261,19 +269,21 @@ export const ChapterScreen: React.FC<{ f: number; id: string; big: string; small
           <g clipPath={`url(#${id}-clip)`}><path d={`M ${x - bw / 2 + bw * sw} ${top - 40} l 70 0 l -140 ${bot - top + 80} l -70 0 Z`} fill={NEON.hot} opacity={0.75} /></g>
         </>}
       </g>
-      {small && <HudText f={f} x={x} y={y + 110} size={52} color={NEON.muted} enter="type" at={at + 10} spacing={6}>{small}</HudText>}
+      {/* motion fix 2026-11-21: subtitle sits fully BELOW the bracket box (clear gap), rises in instead of typing */}
+      {small && <HudText f={f} x={x} y={bot + 40 + 52} size={52} color={NEON.muted} enter="rise" at={at + 8} spacing={6}>{small}</HudText>}
     </g>;
   };
 
 export type Choice = { letter: string; text: string };
-/** A/B/C/D CHOICE CARDS in a 2x2 grid centred at (x, y); borders draw on in sequence; pick highlights one in coral */
+/** A/B/C/D CHOICE CARDS in a 2x2 grid centred at (x, y); borders draw on in quick sequence (all four built in 0.6 s);
+ *  pick highlights one in coral. Series rule: use them ONCE per episode, in the final ask shot only. */
 export const ChoiceCards: React.FC<{ f: number; cards: Choice[]; x?: number; y: number; at?: number; pick?: number; pickAt?: number; cw?: number; ch?: number; out?: number; hidden?: boolean }> =
   ({ f, cards, x = 510, y, at = 0, pick = -1, pickAt = Infinity, cw = 400, ch = 190, out = Infinity, hidden }) => {
     const ex = Number.isFinite(out) ? leave(f, out) : 0;
     if (ex >= 1) return null;
     return <g opacity={1 - ex}>{cards.map((c, i) => {
       const cx = x + (i % 2 ? 1 : -1) * (cw / 2 + 14), cy = y + (i < 2 ? -1 : 1) * (ch / 2 + 14);
-      const a = at + i * 5, p = drawOn(f, a, 14);
+      const a = at + i * 3, p = drawOn(f, a, 9); // motion fix 2026-11-21: all four cards fully built within 18 f (0.6 s)
       if (p <= 0) return null;
       const hi = i === pick && f >= pickAt;
       const col = hi ? NEON.coral : NEON.gold;
@@ -285,7 +295,7 @@ export const ChoiceCards: React.FC<{ f: number; cards: Choice[]; x?: number; y: 
         {!hidden && p > 0.4 && <>
           <circle cx={-cw / 2 + 62} cy={0} r={38} fill="none" stroke={col} strokeWidth={4} />
           <NeonText x={-cw / 2 + 62} y={20} size={52} color={col}>{c.letter}</NeonText>
-          <NeonText x={-cw / 2 + 120} y={18} size={50} color={NEON.text} anchor="start" o={arrive(f, a + 6, 10)}>{c.text}</NeonText>
+          <NeonText x={-cw / 2 + 120} y={18} size={50} color={NEON.text} anchor="start" o={arrive(f, a + 3, 6)}>{c.text}</NeonText>
         </>}
       </g>;
     })}</g>;
@@ -505,3 +515,50 @@ export const RepeatIcon: React.FC<{ x: number; y: number; s?: number; p?: number
 export const MoonIcon: React.FC<{ x: number; y: number; s?: number; p?: number; color?: string }> = ({ x, y, s = 1, p = 1, color = NEON.gold }) => (
   <g transform={`translate(${x} ${y}) scale(${s})`}><NeonPath d="M 20 -62 A 64 64 0 1 0 60 26 A 50 50 0 1 1 20 -62 Z" w={6} p={p} color={color} /></g>
 );
+
+// ---------------------------------------------------------------- layout guards + clean scene transitions (motion fixes 2026-11-21)
+/** clips its children to world y < `y` (use around close-up figures so no body part reaches the caption band) */
+export const ClipBelow: React.FC<{ id: string; y: number; children: React.ReactNode }> = ({ id, y, children }) => (
+  <g><defs><clipPath id={`wi-cb-${id}`}><rect x={-2000} y={-2000} width={5080} height={y + 2000} /></clipPath></defs>
+    <g clipPath={`url(#wi-cb-${id})`}>{children}</g></g>
+);
+/** screen y of a world y inside <Plane p> for camera c (to check WI_SAFE.figureMax) */
+export const screenY = (worldY: number, c: WCam, p = 1) => 960 + (worldY - 960 - c.y * p) * (1 + (c.zoom - 1) * p);
+
+export type WiView = { cam: WCam; world: React.ReactNode; hud?: React.ReactNode; black?: number };
+export type WiBuild = (id: string, f: number, u: number, len: number, C: (phrase: string, fallback: number) => number, hide: boolean) => WiView;
+const WordsCtx = React.createContext<Word[]>([]);
+const cueLocal = (words: Word[], phrase: string, span: ShotSpan, fallback: number) => {
+  try { return Math.round(cueTime(words, phrase, span.a / FPS - 0.3) * FPS) - span.a; } catch { return fallback; }
+};
+const WiShot: React.FC<{ span: ShotSpan; build: WiBuild; freezeAt?: number; noText?: boolean; o?: number }> = ({ span, build, freezeAt, noText, o = 1 }) => {
+  const f0 = useCurrentFrame();
+  const f = freezeAt ?? f0;
+  const words = React.useContext(WordsCtx);
+  const v = build(span.id, f, f - span.a, span.b - span.a, (p, fb) => cueLocal(words, p, span, fb), !!noText);
+  return <AbsoluteFill style={{ opacity: o }}>
+    <Stage cam={v.cam} hud={v.hud || null}>{v.world}</Stage>
+    {v.black ? <AbsoluteFill style={{ background: "#000", opacity: v.black }} /> : null}
+  </AbsoluteFill>;
+};
+/**
+ * Scene for a WHAT IF episode. Place changes use a clean DIP through black (never a crossfade where the old shot's
+ * line art lies over the new one): frames 0-2 the old shot fades out ALONE, frames 3-5 the new one fades in, and all
+ * HUD text is hidden for those XF frames. Same-place shot changes are hard cuts.
+ */
+export const makeWhatIfScene = (shots: { id: string; place: string }[], build: WiBuild, XF = 6): React.FC<SceneProps> => {
+  const PLACE: Record<string, string> = Object.fromEntries(shots.map((s) => [s.id, s.place]));
+  const half = Math.floor(XF / 2);
+  const WiScene: React.FC<SceneProps> = ({ spans, words }) => {
+    const f = useCurrentFrame();
+    const span = shotAt(spans, f);
+    const prev = span.i > 0 ? spans[span.i - 1] : null;
+    const u = f - span.a;
+    const dip = !!prev && u < XF && PLACE[prev.id] !== PLACE[span.id];
+    return <WordsCtx.Provider value={words}><AbsoluteFill style={{ background: NEON.bg }}>
+      {dip && prev && u < half ? <WiShot span={prev} build={build} freezeAt={prev.b - 1} noText o={1 - (u + 1) / (half + 1)} />
+        : <WiShot span={span} build={build} noText={dip} o={dip ? (u - half + 1) / (XF - half + 1) : 1} />}
+    </AbsoluteFill></WordsCtx.Provider>;
+  };
+  return WiScene;
+};

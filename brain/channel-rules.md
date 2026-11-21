@@ -84,3 +84,4 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
 - Audio for this series: narrator Kokoro "bm_george" (episode.json "voice"), music mood "cinematic" (new bed).
 - 2026-11-21: Actions minutes ran out on the private repo; owner made Vicevinnybeats/Shorts PUBLIC (unlimited free minutes).
   Never commit secrets: the repo is public now.
+- 2026-11-21 owner: ONLY video 2 for now. #3 (wi-gta-physics) script is ready but must NOT be built until the owner says so.
