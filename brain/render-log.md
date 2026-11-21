@@ -187,3 +187,4 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
   NeonSign, NeonClock, NightWindow, NeonPoster); puppet.ts: beanie/pom, flattop hair, collar, moods tired/sleep/sick/dizzy,
   lids/bags/nod. Stills (rough 2.85 w/s timing) checked; contact sheet library/previews/whatif/wi-gta-nosleep-stick3d.png.
 - ~2 s per half-scale still locally (swangle). Real timing comes from words.json at render time (all beats cue-driven).
+| 2026-11-21 13:49 | render-stills | wi-gta-nosleep  | stills | 2 | 1607 | running (run 44910624186) |
