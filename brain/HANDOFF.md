@@ -2,7 +2,8 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
-1. What If 1 (wi-gta-nosleep) sound fix: remix-audio run 44922080023 (reuses render-final run 44912499914 picture+voice,
+1. What If 1 sound fix: remix 1 (run 44922080023) clarity band -28.3 -> -24.8 (not enough); remix 2 queued 16:09 with
+   stronger voice_eq + music -19. Remix (reuses render-final run 44912499914 picture+voice,
    applies episode.json "voice_eq" clarity chain + music level_lu -16). When done: git pull, measure
    episodes/wi-gta-nosleep/preview.mp4 bands (ffmpeg ebur128 on highpass1000+lowpass5000; target ~ -21 LUFS like old
    gta-radio; it was -28.3 before the fix), send preview to owner (SendUserFile). Owner judges.
