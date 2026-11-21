@@ -58,4 +58,5 @@ jobs:
           done
           cat "$log"
       - name: Commit models back
-        run: bash scripts/commit-push.sh "models: headless Blender build (${GITHUB_SHA::7})" library/models
+        run: |
+          bash scripts/commit-push.sh "models: headless Blender build (${GITHUB_SHA::7})" library/models
