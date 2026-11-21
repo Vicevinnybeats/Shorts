@@ -1,0 +1,49 @@
+build 2026-11-21T14:02:53Z commit bfa15b4 blender Blender 4.2.3 LTS (hash 0e22e4fcea03 built 2024-10-14 23:31:34)
+bed_1964: ok glb=41912B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/bed_1964.glb 41912 bytes
+    PREVIEW OK library/models/previews/bed_1964.png
+chips_bag: ok glb=24476B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/chips_bag.glb 24476 bytes
+    PREVIEW OK library/models/previews/chips_bag.png
+couch: ok glb=85428B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/couch.glb 85428 bytes
+    PREVIEW OK library/models/previews/couch.png
+game_controller: ok glb=57608B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/game_controller.glb 57608 bytes
+    PREVIEW OK library/models/previews/game_controller.png
+mic_stand: ok glb=61680B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/mic_stand.glb 61680 bytes
+    PREVIEW OK library/models/previews/mic_stand.png
+pizza_box: ok glb=12364B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/pizza_box.glb 12364 bytes
+    PREVIEW OK library/models/previews/pizza_box.png
+radio_1964: ok glb=54628B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/radio_1964.glb 54628 bytes
+    PREVIEW OK library/models/previews/radio_1964.png
+side_table: ok glb=49408B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/side_table.glb 49408 bytes
+    PREVIEW OK library/models/previews/side_table.png
+smartphone: ok glb=18528B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/smartphone.glb 18528 bytes
+    PREVIEW OK library/models/previews/smartphone.png
+soda_can: ok glb=15084B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/soda_can.glb 15084 bytes
+    PREVIEW OK library/models/previews/soda_can.png
+toy_car: ok glb=55252B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/toy_car.glb 55252 bytes
+    PREVIEW OK library/models/previews/toy_car.png
+tv_1964: ok glb=65760B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/tv_1964.glb 65760 bytes
+    PREVIEW OK library/models/previews/tv_1964.png
