@@ -98,3 +98,8 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   Upload goes to Drive "What if/Voice recordings (upload here)". Not built yet: waits for the upload.
   Privacy: repo is public -> keep the reference clip out of the repo if the owner wants (options: private assets repo
   + token secret, or accept it being public). Metadata must still say the narration is a synthetic copy of his voice.
+- 2026-11-21 voice-clone tool decision: owner's accent sounds off -> use OpenVoice V2 (MyShell, MIT): Kokoro bm_george
+  speaks the script (clean accent, our pauses/speed), OpenVoice tone-colour converter turns it into the owner's voice from
+  a 1-5 min reference. Backup: Chatterbox (copies accent). Skip RVC (needs GPU training) and Seed-VC (GPL-3.0).
+  Never use the owner's spoken recording itself as narration (long pauses) - reference only.
+  First upload (Drive file "Vice vinny New school samples.mp3", 44 s) was a beat/sample track, not speech -> asked again.
