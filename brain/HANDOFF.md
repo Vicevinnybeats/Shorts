@@ -15,7 +15,9 @@
   Test 4 APPROVED by the owner (2026-11-21).
 - DONE: Chatterbox wired into render-final.yml as DEFAULT voice (test-4 settings, align_words.py timings). First real
   check = the What If 1 remake. What If 1 REBUILT in Stick3D (commit face8f4, stills checked) - WAITING for owner OK on
-  the frames before render-final (create episodes/wi-gta-nosleep/GO_FINAL). What If 2 only after that.
+  the frames. UPDATE: 12 Blender .glb props (library/models, headless Blender workflow blender-models.yml) + lighting rig
+  in every scene (commit 7d5cec9). render-final run 44912499914 started (GO_FINAL) -> Drive Review. Owner judges it.
+  What If 2 only after that.
 ## After that
 - Blender: owner will NOT use his computer and will NOT pay for Higgsfield -> no Higgsfield Bridge. Use free headless
   Blender (GitHub Actions / cloud), bpy scripts in the repo, save objects + notes in brain/stick3d.
