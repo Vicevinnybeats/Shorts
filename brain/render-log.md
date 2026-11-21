@@ -193,3 +193,12 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
   library/stick3d/glb.tsx, and a per-scene lighting rig (key + fill + gold rim + hero pool + motivated practicals:
   lamp/TV/neon/window, cyan game light on the road, footlights on stage, gold calendar/blocks, coral stations).
 | 2026-11-21 14:08 | render-stills | wi-gta-nosleep  | stills | 2 | 1610 | running (run 44912243381) |
+| 2026-11-21 14:55 | render-final | wi-gta-nosleep | voice-and-mix | 27 | 1637 | success (run 44912499914) |
+| 2026-11-21 14:55 | render-final | wi-gta-nosleep | render (0-484) | 16 | 1653 | success (run 44912499914) |
+| 2026-11-21 14:55 | render-final | wi-gta-nosleep | render (1940-2424) | 17 | 1670 | success (run 44912499914) |
+| 2026-11-21 14:55 | render-final | wi-gta-nosleep | render (485-969) | 9 | 1679 | success (run 44912499914) |
+| 2026-11-21 14:55 | render-final | wi-gta-nosleep | render (970-1454) | 11 | 1690 | success (run 44912499914) |
+| 2026-11-21 14:55 | render-final | wi-gta-nosleep | render (1455-1939) | 12 | 1702 | success (run 44912499914) |
+| 2026-11-21 14:55 | render-final | wi-gta-nosleep | render (2425-2905) | 16 | 1718 | success (run 44912499914) |
+| 2026-11-21 14:55 | render-final | wi-gta-nosleep | assemble | 3 | 1721 | success (run 44912499914) |
+| 2026-11-21 14:55 | render-final | wi-gta-nosleep | log | 1 | 1722 | success (run 44912499914) |
