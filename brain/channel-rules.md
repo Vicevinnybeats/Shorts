@@ -85,3 +85,5 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
 - 2026-11-21: Actions minutes ran out on the private repo; owner made Vicevinnybeats/Shorts PUBLIC (unlimited free minutes).
   Never commit secrets: the repo is public now.
 - 2026-11-21 owner: ONLY video 2 for now. #3 (wi-gta-physics) script is ready but must NOT be built until the owner says so.
+- 2026-11-21: Stick3D pack installed (brain/stick3d/README.md). What If 1+2 deleted from Drive; remake both with Stick3D
+  in Golden Neon colours when the owner says go. Voice: sentence pauses 0.42 s, speed 0.92 for What If.

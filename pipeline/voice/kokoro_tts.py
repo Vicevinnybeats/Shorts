@@ -32,8 +32,10 @@ def main():
     # joined with one short, constant breath gap.
     paras = [" ".join(l.strip() for l in p.splitlines() if l.strip()) for p in re.split(r"\n\s*\n", text)]
     flow = "\n\n".join(p for p in paras if p)
-    GAP, PAD = float(os.environ.get("NARRATOR_GAP", "0.16")), 0.04
-    for res in pipe(flow, voice=a.voice, speed=a.speed, split_pattern=r"\n\n+"):
+    # owner 2026-11-21 (2nd note): "talking too fast and no pauses between sentences" -> every sentence is its own
+    # chunk, followed by a real pause (NARRATOR_GAP, default 0.42 s); a blank line in the script = a longer pause.
+    GAP, PAD = float(os.environ.get("NARRATOR_GAP", "0.42")), 0.04
+    for res in pipe(flow, voice=a.voice, speed=a.speed, split_pattern=r"\n\n+|(?<=[.!?])\s+"):
         chunk = res.audio.cpu().numpy() if hasattr(res.audio, "cpu") else np.asarray(res.audio)
         loud = np.flatnonzero(np.abs(chunk) > 0.02 * (np.abs(chunk).max() + 1e-9))
         lead = max(0, loud[0] - int(PAD * SR)) if loud.size else 0

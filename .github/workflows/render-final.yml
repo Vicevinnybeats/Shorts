@@ -55,8 +55,10 @@ jobs:
             python pipeline/voice/align_words.py $B/voice/voice.wav episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice/words.json
           else
             V=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').voice || process.env.NARRATOR_VOICE")
-            echo "voice: $V"
-            python pipeline/voice/kokoro_tts.py episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice --voice "$V"
+            SP=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').speed || 1.0")
+            export NARRATOR_GAP=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').pause || 0.42")
+            echo "voice: $V speed: $SP pause: $NARRATOR_GAP"
+            python pipeline/voice/kokoro_tts.py episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice --voice "$V" --speed "$SP"
           fi
           cp $B/voice/words.json $B/words.json
       - name: Music + SFX + mix
