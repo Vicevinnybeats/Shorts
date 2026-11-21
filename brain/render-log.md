@@ -261,15 +261,15 @@ alligator, flat_tv (+ library/stick3d/leonida.tsx). 19 local stills (half scale,
 (slogan shown before it is spoken, fades when said), figures above the caption band, sets lit. Contact sheet:
 library/previews/whatif/wi-gta-leonida-stick3d.png. Note: three's ExtrudeGeometry drops the caps of the Florida outline -> separate ShapeGeometry cap.
 | 2026-11-21 18:57 | render-stills | wi-gta-leonida  | stills | 3 | 2019 | running (run 44938171741) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | voice-and-mix | 4 | 2020 | success (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (1400-1679) | 3 | 2023 | cancelled (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (560-839) | 3 | 2026 | cancelled (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (0-279) | 3 | 2029 | cancelled (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (1120-1399) | 3 | 2032 | cancelled (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (280-559) | 3 | 2035 | cancelled (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (840-1119) | 3 | 2038 | cancelled (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | log | 1 | 2039 | cancelled (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | assemble | 1 | 2040 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | voice-and-mix | 4 | 2023 | success (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (1400-1679) | 3 | 2026 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (560-839) | 3 | 2029 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (0-279) | 3 | 2032 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (1120-1399) | 3 | 2035 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (280-559) | 3 | 2038 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (840-1119) | 3 | 2041 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | log | 1 | 2042 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | assemble | 1 | 2043 | cancelled (run 44938267008) |
 - 2026-11-21 What If 1 re-edit (owner: "no cuts, one sequence"): 23 SHOTS (each script line = 1-2 shots, own framing +
   short in-shot move), hard cuts on line changes, 5 transitions via @remotion/transitions 4.0.290 (slide into study,
   fade into 1964, wipe into DAY 30, fade into Randy's bedroom, slide into the ask; 10 f each, outgoing shot extended so
@@ -289,3 +289,4 @@ library/previews/whatif/wi-gta-leonida-stick3d.png. Note: three's ExtrudeGeometr
 | 2026-11-21 19:12 | health-check | - | voice-kokoro | 5 | 2063 | success (run 44938853872) |
 | 2026-11-21 19:12 | health-check | - | audio-mix | 2 | 2065 | success (run 44938853872) |
 | 2026-11-21 19:12 | health-check | - | report | 1 | 2066 | running (run 44938853872) |
+| 2026-11-21 19:14 | render-stills | wi-gta-nosleep  | stills | 4 | 2047 | running (run 44939600514) |
