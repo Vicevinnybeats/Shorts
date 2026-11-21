@@ -16,7 +16,9 @@
 - DONE: Chatterbox wired into render-final.yml as DEFAULT voice (test-4 settings, align_words.py timings). First real
   check = the What If 1 remake. What If 1 REBUILT in Stick3D (commit face8f4, stills checked) - WAITING for owner OK on
   the frames. UPDATE: 12 Blender .glb props (library/models, headless Blender workflow blender-models.yml) + lighting rig
-  in every scene (commit 7d5cec9). render-final run 44912499914 started (GO_FINAL) -> Drive Review. Owner judges it.
+  in every scene (commit 7d5cec9). render-final run 44912499914 SUCCESS (97 s, clone voice). Drive step skipped (no rclone secrets) -> preview
+  episodes/wi-gta-nosleep/preview.mp4 sent to owner in chat; full MP4 = artifact final-wi-gta-nosleep of that run
+  (Drive via Zapier + drive-put, brain/drive.md) once the owner approves.
   What If 2 only after that.
 ## After that
 - Blender: owner will NOT use his computer and will NOT pay for Higgsfield -> no Higgsfield Bridge. Use free headless
