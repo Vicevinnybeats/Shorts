@@ -274,23 +274,24 @@ library/previews/whatif/wi-gta-leonida-stick3d.png. Note: three's ExtrudeGeometr
   short in-shot move), hard cuts on line changes, 5 transitions via @remotion/transitions 4.0.290 (slide into study,
   fade into 1964, wipe into DAY 30, fade into Randy's bedroom, slide into the ask; 10 f each, outgoing shot extended so
   cues stay on the voice). Sub-shots share the parent scene clock (HUD/counter continue across the cut). Stills ~3.1 s.
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | voice-and-mix | 4 | 2023 | success (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (1400-1679) | 3 | 2026 | cancelled (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (560-839) | 3 | 2029 | cancelled (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (0-279) | 3 | 2032 | cancelled (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (1120-1399) | 3 | 2035 | cancelled (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (280-559) | 3 | 2038 | cancelled (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (840-1119) | 3 | 2041 | cancelled (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | log | 1 | 2042 | cancelled (run 44938267008) |
-| 2026-11-21 19:03 | render-final | wi-gta-leonida | assemble | 1 | 2043 | cancelled (run 44938267008) |
-| 2026-11-21 19:12 | health-check | - | voice-voicestudio | 5 | 2048 | failure (run 44938853872) |
-| 2026-11-21 19:12 | health-check | - | render | 9 | 2057 | cancelled (run 44938853872) |
-| 2026-11-21 19:12 | health-check | - | drive | 1 | 2058 | success (run 44938853872) |
-| 2026-11-21 19:12 | health-check | - | voice-kokoro | 5 | 2063 | success (run 44938853872) |
-| 2026-11-21 19:12 | health-check | - | audio-mix | 2 | 2065 | success (run 44938853872) |
-| 2026-11-21 19:12 | health-check | - | report | 1 | 2066 | running (run 44938853872) |
-| 2026-11-21 19:14 | render-stills | wi-gta-nosleep  | stills | 4 | 2047 | running (run 44939600514) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | voice-and-mix | 4 | 2047 | success (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (1400-1679) | 3 | 2050 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (560-839) | 3 | 2053 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (0-279) | 3 | 2056 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (1120-1399) | 3 | 2059 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (280-559) | 3 | 2062 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (840-1119) | 3 | 2065 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | log | 1 | 2066 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | assemble | 1 | 2067 | cancelled (run 44938267008) |
+| 2026-11-21 19:12 | health-check | - | voice-voicestudio | 5 | 2072 | failure (run 44938853872) |
+| 2026-11-21 19:12 | health-check | - | render | 9 | 2081 | cancelled (run 44938853872) |
+| 2026-11-21 19:12 | health-check | - | drive | 1 | 2082 | success (run 44938853872) |
+| 2026-11-21 19:12 | health-check | - | voice-kokoro | 5 | 2087 | success (run 44938853872) |
+| 2026-11-21 19:12 | health-check | - | audio-mix | 2 | 2089 | success (run 44938853872) |
+| 2026-11-21 19:12 | health-check | - | report | 1 | 2090 | running (run 44938853872) |
+| 2026-11-21 19:14 | render-stills | wi-gta-nosleep  | stills | 4 | 2094 | running (run 44939600514) |
 2026-11-21 wi-gta-leonida RE-EDIT (real shots + cuts): 26 shots (14 lines -> 1-2 shots each: wide / medium / insert, own short
 camera move per shot), hard cuts on line changes, 5 x 10-frame @remotion/transitions (slide miami, wipe gators, fade tv,
 slide rules, fade ask), sub-shots share the parent HUD clock. Couch drawn without its coral pillow. 29 local stills checked;
 contact sheet rebuilt (library/previews/whatif/wi-gta-leonida-stick3d.png).
+| 2026-11-21 19:23 | render-stills | wi-gta-leonida  | stills | 3 | 2097 | running (run 44940457257) |
