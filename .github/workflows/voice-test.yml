@@ -1,0 +1,35 @@
+name: voice-test
+# Speaks a short test line in the owner's cloned voice (Kokoro words + pauses -> OpenVoice V2 timbre) and stores it as
+# artifact final-voicetest/voicetest.mp4 (black picture + audio) so drive-put can send it to Drive. Never published.
+on:
+  workflow_dispatch:
+    inputs:
+      text: { description: "Test text", required: false, type: string, default: "What if you played a game for thirty days straight? No sleep. No breaks. Let's see how far you would really get." }
+      speed: { description: "Kokoro speed", required: false, type: string, default: "0.92" }
+permissions: { contents: read }
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: { render: "false", audio: "true", voice: "true" }
+      - name: Kokoro + OpenVoice clone
+        env: { VOICE_KEY: "${{ secrets.VOICE_KEY }}", TEXT: "${{ inputs.text }}", SPEED: "${{ inputs.speed }}" }
+        run: |
+          set -e
+          [ -n "$VOICE_KEY" ] || { echo "::error::VOICE_KEY secret missing"; exit 1; }
+          mkdir -p t final; printf '%s\n' "$TEXT" > t/script.txt
+          python pipeline/voice/kokoro_tts.py t/script.txt t --voice bm_george --speed "$SPEED"
+          openssl enc -d -aes-256-cbc -pbkdf2 -in assets/voice/owner_ref.wav.enc -out t/ref.wav -pass env:VOICE_KEY
+          pip install -q --no-deps "git+https://github.com/myshell-ai/OpenVoice.git"
+          pip install -q librosa==0.10.2.post1 unidecode inflect eng_to_ipa pypinyin cn2an jieba huggingface_hub
+          python pipeline/voice/openvoice_convert.py t/voice.wav t/ref.wav t/clone.wav
+          rm -f t/ref.wav
+          # clone first, then 1 s gap, then the plain Kokoro line for comparison
+          ffmpeg -loglevel error -y -i t/clone.wav -f lavfi -t 1 -i anullsrc=r=24000:cl=mono -i t/voice.wav -filter_complex "[0][1][2]concat=n=3:v=0:a=1" t/both.wav
+          ffmpeg -loglevel error -y -f lavfi -i color=c=black:s=720x1280:r=30 -i t/both.wav -shortest -c:v libx264 -pix_fmt yuv420p -c:a aac -b:a 192k final/voicetest.mp4
+          ls -la final
+      - uses: actions/upload-artifact@v4
+        with: { name: final-voicetest, path: final/voicetest.mp4, retention-days: 7 }

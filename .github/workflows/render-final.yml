@@ -48,6 +48,7 @@ jobs:
       - uses: ./.github/actions/setup
         with: { render: "false", audio: "true", voice: "true" }
       - name: Voice (${{ env.NARRATOR_ENGINE }} / ${{ env.NARRATOR_VOICE }})
+        env: { VOICE_KEY: "${{ secrets.VOICE_KEY }}" }
         run: |
           B=episodes/${{ steps.ep.outputs.id }}/build; mkdir -p $B/voice
           OWN=$(ls episodes/${{ steps.ep.outputs.id }}/voice.{wav,m4a,mp3,aac,ogg} 2>/dev/null | head -1 || true)
@@ -65,6 +66,20 @@ jobs:
             export NARRATOR_GAP=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').pause || 0.42")
             echo "voice: $V speed: $SP pause: $NARRATOR_GAP"
             python pipeline/voice/kokoro_tts.py episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice --voice "$V" --speed "$SP"
+          fi
+          CLONE=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').clone || ''")
+          if [ -z "$OWN" ] && [ "$CLONE" = "owner" ]; then
+            if [ -n "$VOICE_KEY" ]; then
+              # owner's voice clone (OpenVoice V2): Kokoro keeps words + pauses, OpenVoice swaps in the owner's timbre
+              openssl enc -d -aes-256-cbc -pbkdf2 -in assets/voice/owner_ref.wav.enc -out $B/voice/ref.wav -pass env:VOICE_KEY
+              pip install -q --no-deps "git+https://github.com/myshell-ai/OpenVoice.git"
+              pip install -q librosa==0.10.2.post1 unidecode inflect eng_to_ipa pypinyin cn2an jieba huggingface_hub
+              mv $B/voice/voice.wav $B/voice/voice_kokoro.wav
+              python pipeline/voice/openvoice_convert.py $B/voice/voice_kokoro.wav $B/voice/ref.wav $B/voice/voice.wav
+              rm -f $B/voice/ref.wav
+            else
+              echo "::warning::episode wants the owner's voice clone but the VOICE_KEY secret is missing - using Kokoro"
+            fi
           fi
           cp $B/voice/words.json $B/words.json
       - name: Music + SFX + mix
