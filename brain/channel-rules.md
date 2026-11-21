@@ -170,3 +170,9 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   framings per shot (wide / medium / close-up / insert), camera motion INSIDE a shot only. Not one continuous move.
   Tool found on GitHub: @remotion/transitions (official Remotion package, same version as remotion). Others seen:
   Remocn/remocn, av/remotion-bits (not added; check licence first).
+- 2026-11-21 owner: "use GitHub tools for good voiceovers, we're going in a loop". Stop tweaking one engine; compare
+  REAL alternatives side by side, owner picks by ear, then lock it. Candidates (free, commercial-OK, CPU):
+  Kokoro (Apache-2.0, current), resemble-ai/chatterbox (MIT, built-in voice, no clone) + Chatterbox Turbo (MIT),
+  KittenML/KittenTTS (Apache-2.0). Rejected: VoiceStudio/OmniVoice (non-commercial), voice-pro (GPL), MisoTTS/neutts
+  (unclear licence), VibeVoice/Zonos/Orpheus/Dia (need a GPU for good speed). Test: .github/workflows/tts-compare.yml
+  -> health/voice/compare/*.mp3. ORDER: fix What If 1 completely first, THEN What If 2 (owner: "after 1 make 2").

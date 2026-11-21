@@ -1,0 +1,85 @@
+name: tts-compare
+# Free, commercial-OK open-source voices (found on GitHub) reading the same What If 1 lines, so the owner can pick:
+#   1 kokoro_am_liam   Kokoro (Apache-2.0), current, per-line takes
+#   2 chatterbox       resemble-ai/chatterbox (MIT), built-in voice, no clone
+#   3 chatterbox_turbo resemble-ai/chatterbox Turbo (MIT), built-in voice
+#   4 kitten_*         KittenML/KittenTTS (Apache-2.0), CPU, male voices
+# Stock voices only (no personal audio) -> mp3s committed to health/voice/compare/. Never published.
+on:
+  workflow_dispatch:
+  push:
+    paths: [".github/workflows/tts-compare.yml"]
+permissions: { contents: write }
+env:
+  TEXT: |
+    What if you played GTA 6 for thirty days straight? No sleep. No breaks. Let's see how far you'd really get.
+    Hour zero. Launch night. Snacks stacked. Phone on silent. You're ready.
+    Hour seventeen. You feel fine. You're not. In one study, after seventeen to nineteen hours awake, people did as badly on some tests as someone at the drink drive limit in many countries.
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env: { GITHUB_TOKEN: "${{ github.token }}" }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: { render: "false", audio: "true", voice: "true" }
+      - uses: actions/setup-python@v5
+        id: py311
+        with: { python-version: "3.11", update-environment: false }
+      - uses: actions/cache@v4
+        with: { path: ~/.cache/huggingface, key: hf-tts-compare-v1 }
+      - name: Kokoro am_liam (current)
+        run: |
+          mkdir -p t out health/voice/compare; printf '%s' "$TEXT" > t/script.txt
+          NARRATOR_FLOW=natural NARRATOR_GAP=0.45 python pipeline/voice/kokoro_tts.py t/script.txt t/k --voice am_liam --speed 1.05
+          cp t/k/voice.wav out/1_kokoro_am_liam.wav
+      - name: Chatterbox + Turbo + KittenTTS (own venv)
+        env: { PY311: "${{ steps.py311.outputs.python-path }}" }
+        run: |
+          "$PY311" -m venv /tmp/v && . /tmp/v/bin/activate
+          pip install -q --upgrade pip
+          pip install -q torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+          pip install -q chatterbox-tts soundfile || echo "::warning::chatterbox install failed"
+          pip install -q "https://github.com/KittenML/KittenTTS/releases/download/0.1/kittentts-0.1.0-py3-none-any.whl" || pip install -q kittentts || echo "::warning::kitten install failed"
+          python - <<'EOF'
+          import os, re, numpy as np, soundfile as sf
+          lines = [l.strip() for l in open("t/script.txt").read().splitlines() if l.strip()]
+          def join(parts, sr, gap=0.45):
+              out = []
+              for w in parts:
+                  w = np.asarray(w, dtype=np.float32).squeeze()
+                  loud = np.flatnonzero(np.abs(w) > 0.02 * (np.abs(w).max() + 1e-9))
+                  if loud.size: w = w[max(0, loud[0] - int(.04 * sr)): loud[-1] + int(.06 * sr)]
+                  if out: out.append(np.zeros(int(gap * sr), np.float32))
+                  out.append(w)
+              return np.concatenate(out)
+          try:
+              from chatterbox.tts import ChatterboxTTS
+              m = ChatterboxTTS.from_pretrained(device="cpu")
+              sf.write("out/2_chatterbox.wav", join([m.generate(l, exaggeration=0.5, cfg_weight=0.5).cpu().numpy() for l in lines], m.sr), m.sr)
+              print("chatterbox ok")
+          except Exception as e: print("::warning::chatterbox", e)
+          try:
+              from chatterbox.tts_turbo import ChatterboxTurboTTS
+              m = ChatterboxTurboTTS.from_pretrained(device="cpu")
+              sf.write("out/3_chatterbox_turbo.wav", join([m.generate(l).cpu().numpy() for l in lines], m.sr), m.sr)
+              print("turbo ok")
+          except Exception as e: print("::warning::turbo", e)
+          try:
+              from kittentts import KittenTTS
+              k = KittenTTS()
+              names = [v for v in getattr(k, "available_voices", []) if v.endswith("m")] or ["expr-voice-2-m", "expr-voice-4-m"]
+              for v in names[:3]:
+                  try:
+                      sf.write(f"out/4_kitten_{v}.wav", join([k.generate(l, voice=v) for l in lines], 24000), 24000)
+                      print("kitten ok", v)
+                  except Exception as e: print("::warning::kitten", v, e)
+          except Exception as e: print("::warning::kitten", e)
+          EOF
+      - name: Loudness-match + commit
+        run: |
+          for f in out/*.wav; do n=$(basename "$f" .wav)
+            ffmpeg -loglevel error -y -i "$f" -af "loudnorm=I=-14:TP=-1:LRA=7" -ac 1 -ar 24000 -b:a 96k "health/voice/compare/$n.mp3"; done
+          ls -la health/voice/compare
+          bash scripts/commit-push.sh "tts compare (run ${{ github.run_id }})" health/voice/compare
