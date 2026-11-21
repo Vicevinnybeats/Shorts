@@ -261,3 +261,12 @@ alligator, flat_tv (+ library/stick3d/leonida.tsx). 19 local stills (half scale,
 (slogan shown before it is spoken, fades when said), figures above the caption band, sets lit. Contact sheet:
 library/previews/whatif/wi-gta-leonida-stick3d.png. Note: three's ExtrudeGeometry drops the caps of the Florida outline -> separate ShapeGeometry cap.
 | 2026-11-21 18:57 | render-stills | wi-gta-leonida  | stills | 3 | 2019 | running (run 44938171741) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | voice-and-mix | 4 | 2020 | success (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (1400-1679) | 3 | 2023 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (560-839) | 3 | 2026 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (0-279) | 3 | 2029 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (1120-1399) | 3 | 2032 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (280-559) | 3 | 2035 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | render (840-1119) | 3 | 2038 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | log | 1 | 2039 | cancelled (run 44938267008) |
+| 2026-11-21 19:03 | render-final | wi-gta-leonida | assemble | 1 | 2040 | cancelled (run 44938267008) |
