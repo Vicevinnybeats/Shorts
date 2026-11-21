@@ -244,3 +244,12 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-21 18:30 | health-check | - | audio-mix | 2 | 1933 | success (run 44934711776) |
 | 2026-11-21 18:30 | health-check | - | report | 1 | 1934 | running (run 44934711776) |
 | 2026-11-21 18:35 | render-stills | wi-gta-nosleep  | stills | 3 | 1937 | running (run 44936135336) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | voice-and-mix | 3 | 1937 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (0-273) | 17 | 1954 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (822-1095) | 6 | 1960 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (548-821) | 14 | 1974 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (1096-1369) | 14 | 1988 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (274-547) | 13 | 2001 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | render (1370-1643) | 9 | 2010 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | assemble | 2 | 2012 | success (run 44936176684) |
+| 2026-11-21 18:54 | render-final | wi-gta-nosleep | log | 1 | 2013 | success (run 44936176684) |
