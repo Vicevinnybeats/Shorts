@@ -109,3 +109,7 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   Use: episode.json "clone": "owner" -> render-final: Kokoro (words, pauses, speed) -> pipeline/voice/openvoice_convert.py
   (OpenVoice V2 tone colour) -> owner's voice; timings unchanged. Test: workflow voice-test (artifact final-voicetest ->
   drive-put). Metadata: "Narration: AI voice clone of the creator's own voice."
+- 2026-11-21: owner: OpenVoice test "not sounding like my voice"; asked for VoiceStudio -> declined (OmniVoice is
+  CC-BY-NC non-commercial). Owner: "take the best one" -> Chatterbox (MIT) test made: pipeline/voice/chatterbox_tts.py,
+  workflow voice-test-chatterbox (own venv, Python 3.11, encrypted ref + VOICE_KEY). Waiting for owner's verdict
+  before wiring it into render-final (then: "clone": "owner" + engine chatterbox, words via align_words.py).
