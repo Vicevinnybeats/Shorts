@@ -53,3 +53,11 @@ Units: 1 = scene unit (puppet h 2.5); origin at floor centre unless noted; front
 | radio_1964 | library/models/radio_1964.glb | 1960s table radio | walnut #5a3a1e, amber dial/grille | 1964 room |
 | tv_1964 | library/models/tv_1964.glb | 1960s console TV with rabbit ears (top ~2.9) | wood, dark screen, cream knobs | 1964 room (OFF) |
 | bed_1964 | library/models/bed_1964.glb | wooden bed 4.4 long, headboard at -X, mattress top 0.95 | wood, cream mattress, white pillow, gold trim | Randy sleeps 14 h |
+| suitcase | library/models/suitcase.glb | rolling suitcase, shell ~1.0 + pulled handle to 1.6 (front -Y), use s 0.72 at a puppet's hand | coral shell + ribs, cyan/gold stickers, gold grip | wi-gta-leonida hook, miami |
+| palm_tree | library/models/palm_tree.glb | palm, trunk leans to +X, crown ~5 high | brown ringed trunk, two greens, coconuts | wi-gta-leonida street, golf, beach, respawn |
+| beach_umbrella | library/models/beach_umbrella.glb | striped umbrella (rim ~2.15, r 1.25) + towel; s 1.3 so a puppet fits under it | coral/cream panels, gold tip, cyan towel | wi-gta-leonida wish, beach (sky, ask), respawn |
+| sports_car | library/models/sports_car.glb | low sports car 2.8 long along +X | gold body, coral stripe, cyan head/underglow, coral tail | wi-gta-leonida wish (fast cars) |
+| golf_flag | library/models/golf_flag.glb | hole cup + flag pole 2.4 + golf ball | white pole, coral flag, gold band | wi-gta-leonida golf |
+| alligator | library/models/alligator.glb | Florida alligator ~3.6 long, snout +X, belly on the ground | olive #4c6b34/#3a5428, cream belly/teeth, gold emissive eyes | wi-gta-leonida golf/twist/above, wish swamp, map (s 0.26) |
+| flat_tv | library/models/flat_tv.glb | flat TV on a media console, screen centre z 1.95 (2.4x1.36, picture drawn by the scene on a Panel just in front) | wood console + gold strip, ink frame, coral LED | wi-gta-leonida tv (hurricane cone) |
+Florida set pieces (code, not .glb): library/stick3d/leonida.tsx - FloridaMap (real outline slab + 67 county dots), SkyWall, StormCloud, Bolt, Water, Spiral, Tufts, Rain.
