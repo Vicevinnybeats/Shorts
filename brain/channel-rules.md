@@ -103,3 +103,9 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   a 1-5 min reference. Backup: Chatterbox (copies accent). Skip RVC (needs GPU training) and Seed-VC (GPL-3.0).
   Never use the owner's spoken recording itself as narration (long pauses) - reference only.
   First upload (Drive file "Vice vinny New school samples.mp3", 44 s) was a beat/sample track, not speech -> asked again.
+- 2026-11-21 OWNER VOICE (final, owner won't record again): source = his upload "Vincent_Short_Voice.mp3" (4 min).
+  Cleaned 100 s reference (denoise, pauses removed) is stored ENCRYPTED: assets/voice/owner_ref.wav.enc
+  (openssl aes-256-cbc pbkdf2; key = GitHub Actions secret VOICE_KEY, added by the owner). Never commit the plain audio.
+  Use: episode.json "clone": "owner" -> render-final: Kokoro (words, pauses, speed) -> pipeline/voice/openvoice_convert.py
+  (OpenVoice V2 tone colour) -> owner's voice; timings unchanged. Test: workflow voice-test (artifact final-voicetest ->
+  drive-put). Metadata: "Narration: AI voice clone of the creator's own voice."
