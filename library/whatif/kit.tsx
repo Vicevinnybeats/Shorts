@@ -295,7 +295,7 @@ export const ChoiceCards: React.FC<{ f: number; cards: Choice[]; x?: number; y: 
         {!hidden && p > 0.4 && <>
           <circle cx={-cw / 2 + 62} cy={0} r={38} fill="none" stroke={col} strokeWidth={4} />
           <NeonText x={-cw / 2 + 62} y={20} size={52} color={col}>{c.letter}</NeonText>
-          <NeonText x={-cw / 2 + 120} y={18} size={50} color={NEON.text} anchor="start" o={arrive(f, a + 3, 6)}>{c.text}</NeonText>
+          <NeonText x={-cw / 2 + 120} y={18} size={Math.max(32, Math.min(50, (cw - 150) / (c.text.length * 0.62)))} color={NEON.text} anchor="start" o={arrive(f, a + 3, 6)}>{c.text}</NeonText>
         </>}
       </g>;
     })}</g>;

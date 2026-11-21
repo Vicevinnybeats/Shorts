@@ -1,0 +1,12 @@
+{
+  "id": "wi-gta-leonida",
+  "title": "What If You Moved to the Real Leonida?",
+  "series": "WHAT IF #2",
+  "style": "golden-neon",
+  "composition": "Ep-wi-gta-leonida",
+  "voice": "bm_george",
+  "stills": [0, 200, 330, 560, 790, 900, 1060, 1210, 1270, 1400, 1490, 1620, 1760, 1900, 2140, 2290, 2420, 2590],
+  "chunks": 3,
+  "status": "test-render",
+  "publish": false
+}
