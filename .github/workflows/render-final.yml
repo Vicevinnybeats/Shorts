@@ -73,7 +73,7 @@ jobs:
               # owner's voice clone (OpenVoice V2): Kokoro keeps words + pauses, OpenVoice swaps in the owner's timbre
               openssl enc -d -aes-256-cbc -pbkdf2 -in assets/voice/owner_ref.wav.enc -out $B/voice/ref.wav -pass env:VOICE_KEY
               pip install -q --no-deps "git+https://github.com/myshell-ai/OpenVoice.git"
-              pip install -q librosa==0.10.2.post1 unidecode inflect eng_to_ipa pypinyin cn2an jieba huggingface_hub
+              pip install -q librosa==0.10.2.post1 unidecode inflect eng_to_ipa pypinyin cn2an jieba huggingface_hub wavmark
               mv $B/voice/voice.wav $B/voice/voice_kokoro.wav
               python pipeline/voice/openvoice_convert.py $B/voice/voice_kokoro.wav $B/voice/ref.wav $B/voice/voice.wav
               rm -f $B/voice/ref.wav

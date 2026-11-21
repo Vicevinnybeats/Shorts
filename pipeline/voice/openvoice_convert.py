@@ -29,7 +29,11 @@ def main():
     cfg = hf_hub_download("myshell-ai/OpenVoiceV2", "converter/config.json")
     ckpt = hf_hub_download("myshell-ai/OpenVoiceV2", "converter/checkpoint.pth")
     dev = "cuda:0" if torch.cuda.is_available() else "cpu"
-    tcc = ToneColorConverter(cfg, device=dev, enable_watermark=False)
+    try:
+        tcc = ToneColorConverter(cfg, device=dev, enable_watermark=False)
+    except TypeError:  # older OpenVoice: no switch; it loads wavmark itself
+        tcc = ToneColorConverter(cfg, device=dev)
+    tcc.watermark_model = None  # no inaudible watermark in our narration
     tcc.load_ckpt(ckpt)
     tgt = tcc.extract_se(chunks(ref))
     srcs = chunks(src)

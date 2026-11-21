@@ -24,7 +24,7 @@ jobs:
           python pipeline/voice/kokoro_tts.py t/script.txt t --voice bm_george --speed "$SPEED"
           openssl enc -d -aes-256-cbc -pbkdf2 -in assets/voice/owner_ref.wav.enc -out t/ref.wav -pass env:VOICE_KEY
           pip install -q --no-deps "git+https://github.com/myshell-ai/OpenVoice.git"
-          pip install -q librosa==0.10.2.post1 unidecode inflect eng_to_ipa pypinyin cn2an jieba huggingface_hub
+          pip install -q librosa==0.10.2.post1 unidecode inflect eng_to_ipa pypinyin cn2an jieba huggingface_hub wavmark
           python pipeline/voice/openvoice_convert.py t/voice.wav t/ref.wav t/clone.wav
           rm -f t/ref.wav
           # clone first, then 1 s gap, then the plain Kokoro line for comparison
