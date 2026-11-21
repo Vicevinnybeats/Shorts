@@ -295,12 +295,21 @@ camera move per shot), hard cuts on line changes, 5 x 10-frame @remotion/transit
 slide rules, fade ask), sub-shots share the parent HUD clock. Couch drawn without its coral pillow. 29 local stills checked;
 contact sheet rebuilt (library/previews/whatif/wi-gta-leonida-stick3d.png).
 | 2026-11-21 19:23 | render-stills | wi-gta-leonida  | stills | 3 | 2097 | running (run 44940457257) |
-| 2026-11-21 19:35 | render-final | wi-gta-nosleep | voice-and-mix | 4 | 2047 | success (run 44939643924) |
-| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (0-340) | 19 | 2066 | success (run 44939643924) |
-| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (341-681) | 17 | 2083 | success (run 44939643924) |
-| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (1364-1704) | 18 | 2101 | success (run 44939643924) |
-| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (1705-2044) | 13 | 2114 | success (run 44939643924) |
-| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (682-1022) | 13 | 2127 | success (run 44939643924) |
-| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (1023-1363) | 10 | 2137 | success (run 44939643924) |
-| 2026-11-21 19:35 | render-final | wi-gta-nosleep | assemble | 2 | 2139 | success (run 44939643924) |
-| 2026-11-21 19:35 | render-final | wi-gta-nosleep | log | 1 | 2140 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | voice-and-mix | 4 | 2101 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (0-340) | 19 | 2120 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (341-681) | 17 | 2137 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (1364-1704) | 18 | 2155 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (1705-2044) | 13 | 2168 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (682-1022) | 13 | 2181 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | render (1023-1363) | 10 | 2191 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | assemble | 2 | 2193 | success (run 44939643924) |
+| 2026-11-21 19:35 | render-final | wi-gta-nosleep | log | 1 | 2194 | success (run 44939643924) |
+| 2026-11-21 21:07 | render-final | wi-gta-leonida | voice-and-mix | 3 | 2197 | success (run 44947593679) |
+| 2026-11-21 21:07 | render-final | wi-gta-leonida | render (1730-2075) | 8 | 2205 | success (run 44947593679) |
+| 2026-11-21 21:07 | render-final | wi-gta-leonida | render (692-1037) | 12 | 2217 | success (run 44947593679) |
+| 2026-11-21 21:07 | render-final | wi-gta-leonida | render (346-691) | 22 | 2239 | success (run 44947593679) |
+| 2026-11-21 21:07 | render-final | wi-gta-leonida | render (0-345) | 19 | 2258 | success (run 44947593679) |
+| 2026-11-21 21:07 | render-final | wi-gta-leonida | render (1384-1729) | 21 | 2279 | success (run 44947593679) |
+| 2026-11-21 21:07 | render-final | wi-gta-leonida | render (1038-1383) | 20 | 2299 | success (run 44947593679) |
+| 2026-11-21 21:07 | render-final | wi-gta-leonida | assemble | 2 | 2301 | success (run 44947593679) |
+| 2026-11-21 21:07 | render-final | wi-gta-leonida | log | 1 | 2302 | success (run 44947593679) |
