@@ -36,8 +36,7 @@ export const Plant: React.FC<{ p: V3; s?: number; pot?: string }> = ({ p, s = 1,
   <group position={p} scale={s}><Cyl p={[0, 0.35, 0]} rt={0.42} rb={0.3} h={0.7} color={pot} />
     <Ball p={[0, 1.15, 0]} r={0.55} color="#35b060" s={[1, 1.15, 1]} /><Ball p={[-0.38, 0.95, 0.12]} r={0.38} color="#43c46e" /><Ball p={[0.4, 1.0, -0.1]} r={0.4} color="#2c9c54" /><Ball p={[0.05, 1.55, 0.05]} r={0.32} color="#4ed17c" /></group>
 );
-export const Shelf: React.FC<{ p: V3; w?: number; rows?: number; seed?: number; wood?: string }> = ({ p, w = 3, rows = 4, seed = 1, wood = "#7a4a2a" }) => {
-  const cols = ["#d94a4a", "#3a6fd8", "#e5b43a", "#2f9e6a", "#7a54d6", "#e0743a", "#f2f2f2", "#2b3350"];
+export const Shelf: React.FC<{ p: V3; w?: number; rows?: number; seed?: number; wood?: string; cols?: string[] }> = ({ p, w = 3, rows = 4, seed = 1, wood = "#7a4a2a", cols = ["#d94a4a", "#3a6fd8", "#e5b43a", "#2f9e6a", "#7a54d6", "#e0743a", "#f2f2f2", "#2b3350"] }) => {
   return (<group position={p}>
     <Box p={[0, rows * 0.55, 0]} s={[w, rows * 1.1 + 0.15, 0.7]} color={wood} />
     {Array.from({ length: rows }, (_, r) => { let x = -w / 2 + 0.2, i = 0; const items: React.ReactNode[] = []; while (x < w / 2 - 0.35) { const bw = 0.13 + ((seed * 7 + r * 13 + i * 5) % 5) * 0.035, bh = 0.62 + ((seed * 3 + r * 11 + i * 7) % 4) * 0.11; items.push(<Box key={i} p={[x + bw / 2, r * 1.1 + 0.15 + bh / 2 + 0.07, 0.16]} s={[bw, bh, 0.45]} color={cols[(seed + r * 3 + i) % cols.length]} line={2} />); x += bw + 0.015; i++; } return <React.Fragment key={r}>{items}</React.Fragment>; })}

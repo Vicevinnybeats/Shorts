@@ -19,3 +19,12 @@ Add every new pose/prop here with its pose-param names and the scene where first
 - extra.tsx helpers: `Cam` (Catmull-Rom camera path, micro handheld <=0.004, impact shake decaying < 0.5 s, FOV kicks), `camAt`, `FaceGroup` + `hand()` (props that stay glued to a puppet's hand).
 - extra.tsx props: Arrow3D, Extrude (any outlined polygon), Domino (pivots on its leading edge; chain rule: next starts when angle = asin(gap/h), rest angle = acos(th/spacing)), Globe, Crown, Throne, SpotCone, Curtain, Lectern, Building (lit windows), StreetLamp, StreetSign, Taxi, Hydrant, Bench, Bin, Barrier, PressCam, ChipStack, Card, Dice, HangLamp, Mug, Stars.
 - Patterns in videos/NvidiaV4.tsx: cable snap + falling arrow spearing the floor (parabolic drop + rotation + crack decal + debris arcs); mug released into a ballistic arc then a puddle; crown lift -> carry -> place with settle bounce; domino chain + winding small chain + hinged sign flipping up; 240 Hz crown physics sliding off a shaking throne and bouncing on a sphere; whip transition (translateX + blur).
+## Added for WHAT IF #1 remake (2026-11-21, episodes/wi-gta-nosleep)
+- puppet.ts Look: `beanie` + `beanieBand` + `pom` (Remy), hair `flattop`, `collar` (Randy 1964). Pose moods `tired`
+  (heavy lids + bags), `sleep` (closed eyes), `sick` (green tint, wavy mouth), `dizzy` (spiral eyes); `lids` 0..1,
+  `bags` 0..1, `nod` 0..1 (head drops = microsleep). props.tsx Shelf `cols` (palette book colours).
+- neon.tsx (Golden Neon on Stick3D): Halo (additive sprite), FloorPool, NeonBar (tube + band halo), HeroLight (cone + pool
+  + can), Motes, Panel (canvas redrawn only when `dep` changes), NeonSign, NeonClock, NightWindow (dawn), NeonPoster.
+- Patterns in the episode: sitting = puppet inside a couch seat box (legs hidden); sitting on the floor = feet sunk below the
+  floor plane; lying = puppet canvas laid sideways (Panel rot z 90deg) under a blanket box; held controller at arms "hold"
+  hand height (0.378 h). Camera framing solved so every figure's feet/seat stay above screen y 1430.

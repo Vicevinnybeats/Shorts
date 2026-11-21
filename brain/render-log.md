@@ -176,3 +176,14 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-21 13:33 | health-check | - | drive | 1 | 1603 | success (run 44908447024) |
 | 2026-11-21 13:33 | health-check | - | audio-mix | 1 | 1604 | success (run 44908447024) |
 | 2026-11-21 13:33 | health-check | - | report | 1 | 1605 | running (run 44908447024) |
+
+## 2026-11-21 wi-gta-nosleep REMAKE in Stick3D + Golden Neon (stills only, local, not pushed/published)
+- story.tsx rewritten: one persistent ThreeCanvas (pack puppets/rooms, @remotion/three, gl swangle) + What-If SVG HUD on top;
+  16 cue-driven shots (hook sting at frame 0, choice cards once, counter 0->17->24->36->60, 264 H record, DAY 30 glitch,
+  microsleep blackouts, 14 H asleep, speedrun loop, question card). Dip-through-black place changes, HUD hidden in dips.
+- Reused from the pack / Stick3DTest: REMY3D look (+ series beanie), NEON3D floor/wall colours, Lights, Grade, Shaft, Dust,
+  Person/Billboard puppets, Floor/WallDoor/SideWall/Shelf/Lamp/Monitor/Cabinet/Rug, Cam (Catmull-Rom + FOV kicks/impacts),
+  Taxi, Barrier, Curtain, SpotCone. New: library/stick3d/neon.tsx (Halo, FloorPool, NeonBar, HeroLight, Motes, Panel,
+  NeonSign, NeonClock, NightWindow, NeonPoster); puppet.ts: beanie/pom, flattop hair, collar, moods tired/sleep/sick/dizzy,
+  lids/bags/nod. Stills (rough 2.85 w/s timing) checked; contact sheet library/previews/whatif/wi-gta-nosleep-stick3d.png.
+- ~2 s per half-scale still locally (swangle). Real timing comes from words.json at render time (all beats cue-driven).
