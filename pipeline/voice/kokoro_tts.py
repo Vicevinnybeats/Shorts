@@ -26,15 +26,31 @@ def main():
     t0 = time.time()
     pipe = KPipeline(lang_code=a.voice[0], repo_id="hexgrad/Kokoro-82M")
     audio, words, offset = [], [], 0.0
-    # split on blank lines / sentences so long scripts never hit the 510-token limit
-    for res in pipe(text, voice=a.voice, speed=a.speed, split_pattern=r"\n+"):
+    # Natural flow (owner 2026-11-21: "the voice pauses too much"): single line breaks are NOT pauses any more.
+    # Lines are joined into paragraphs (only blank lines split); Kokoro itself chunks long paragraphs at sentence
+    # ends to stay under its 510-token limit. Each chunk's leading/trailing silence is trimmed and chunks are
+    # joined with one short, constant breath gap.
+    paras = [" ".join(l.strip() for l in p.splitlines() if l.strip()) for p in re.split(r"\n\s*\n", text)]
+    flow = "\n\n".join(p for p in paras if p)
+    GAP, PAD = float(os.environ.get("NARRATOR_GAP", "0.16")), 0.04
+    for res in pipe(flow, voice=a.voice, speed=a.speed, split_pattern=r"\n\n+"):
         chunk = res.audio.cpu().numpy() if hasattr(res.audio, "cpu") else np.asarray(res.audio)
+        loud = np.flatnonzero(np.abs(chunk) > 0.02 * (np.abs(chunk).max() + 1e-9))
+        lead = max(0, loud[0] - int(PAD * SR)) if loud.size else 0
+        tail = min(len(chunk), loud[-1] + int(PAD * SR)) if loud.size else len(chunk)
+        chunk = chunk[lead:tail]
+        if audio:  # one short breath between chunks
+            audio.append(np.zeros(int(GAP * SR), dtype=chunk.dtype))
+            offset += GAP
+        shift = offset - lead / SR
+        end = offset + len(chunk) / SR
         for tok in (res.tokens or []):
             if tok.start_ts is None or tok.end_ts is None or PUNCT_ONLY.match(tok.text):
                 continue
-            words.append({"w": tok.text, "s": round(offset + tok.start_ts, 3), "e": round(offset + tok.end_ts, 3)})
+            s0 = min(max(offset, shift + tok.start_ts), end)
+            words.append({"w": tok.text, "s": round(s0, 3), "e": round(min(max(s0, shift + tok.end_ts), end), 3)})
         audio.append(chunk)
-        offset += len(chunk) / SR
+        offset = end
     # Kokoro tokenises punctuation separately: re-attach it to the previous word so captions read naturally
     wav = np.concatenate(audio) if audio else np.zeros(SR, dtype=np.float32)
     sf.write(os.path.join(a.out, "voice.wav"), wav, SR, subtype="PCM_16")
