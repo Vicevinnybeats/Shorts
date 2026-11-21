@@ -34,5 +34,5 @@
   "publish": false,
   "clone": "owner",
   "gl": "swangle",
-  "voice_eq": "highpass=f=90,equalizer=f=250:t=q:w=1:g=-4,equalizer=f=3000:t=q:w=1.5:g=6,equalizer=f=6000:t=q:w=1:g=2,acompressor=threshold=-20dB:ratio=3:attack=5:release=100:makeup=3,loudnorm=I=-13:TP=-1:LRA=6"
+  "voice_eq": "highpass=f=120,equalizer=f=250:t=q:w=1:g=-6,equalizer=f=2500:t=q:w=1.5:g=5,equalizer=f=4000:t=q:w=1.2:g=5,equalizer=f=7000:t=q:w=1:g=2,acompressor=threshold=-20dB:ratio=3:attack=5:release=100:makeup=3,loudnorm=I=-13:TP=-1:LRA=6"
 }
