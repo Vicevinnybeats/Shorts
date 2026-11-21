@@ -1,0 +1,31 @@
+name: voice-samples
+# Kokoro voice samples for the owner to pick from (stock voices, not personal audio -> committed to health/voice/samples).
+# Natural flow (paragraph takes) at speed 1.05. Never published.
+on:
+  workflow_dispatch:
+  push:
+    paths: [".github/workflows/voice-samples.yml"]
+permissions: { contents: write }
+env:
+  TEXT: "What if you played GTA 6 for thirty days straight? No sleep. No breaks. Let's see how far you'd really get. Hour seventeen. You feel fine. You're not. In one study, people this tired did as badly on some tests as someone at the drink drive limit."
+jobs:
+  samples:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env: { GITHUB_TOKEN: "${{ github.token }}" }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: { render: "false", audio: "true", voice: "true" }
+      - name: Samples
+        run: |
+          set -e
+          mkdir -p t health/voice/samples; printf '%s\n' "$TEXT" > t/script.txt
+          export NARRATOR_FLOW=natural NARRATOR_GAP=0.3
+          for v in am_michael am_adam am_eric am_liam am_onyx am_puck am_echo bm_george bm_daniel bm_lewis bm_fable; do
+            python pipeline/voice/kokoro_tts.py t/script.txt t/$v --voice $v --speed 1.05 || { echo "::warning::$v failed"; continue; }
+            ffmpeg -loglevel error -y -i t/$v/voice.wav -af "loudnorm=I=-14:TP=-1:LRA=7" -ac 1 -b:a 96k health/voice/samples/$v.mp3
+          done
+          ls -la health/voice/samples
+      - name: Commit
+        run: bash scripts/commit-push.sh "voice samples (run ${{ github.run_id }})" health/voice/samples

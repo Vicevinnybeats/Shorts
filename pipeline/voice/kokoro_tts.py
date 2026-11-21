@@ -35,7 +35,10 @@ def main():
     # owner 2026-11-21 (2nd note): "talking too fast and no pauses between sentences" -> every sentence is its own
     # chunk, followed by a real pause (NARRATOR_GAP, default 0.42 s); a blank line in the script = a longer pause.
     GAP, PAD = float(os.environ.get("NARRATOR_GAP", "0.42")), 0.04
-    for res in pipe(flow, voice=a.voice, speed=a.speed, split_pattern=r"\n\n+|(?<=[.!?])\s+"):
+    # NARRATOR_FLOW=natural (owner 2026-11-21: "not natural, too slow"): whole paragraphs per take, Kokoro keeps its
+    # own sentence rhythm; GAP only between paragraphs. Default stays "sentence" for old episodes.
+    split = r"\n\n+" if os.environ.get("NARRATOR_FLOW", "sentence") == "natural" else r"\n\n+|(?<=[.!?])\s+"
+    for res in pipe(flow, voice=a.voice, speed=a.speed, split_pattern=split):
         chunk = res.audio.cpu().numpy() if hasattr(res.audio, "cpu") else np.asarray(res.audio)
         loud = np.flatnonzero(np.abs(chunk) > 0.02 * (np.abs(chunk).max() + 1e-9))
         lead = max(0, loud[0] - int(PAD * SR)) if loud.size else 0
