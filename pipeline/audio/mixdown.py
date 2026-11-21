@@ -25,7 +25,9 @@ BED_DUCK_DB = -10.0      # and dip a further 10 dB while a word is spoken
 CHORDS = {"warm": [[0, 4, 7, 11], [9, 12, 16, 19], [5, 9, 12, 16], [7, 11, 14, 17]],
           "wonder": [[0, 7, 14, 16], [5, 12, 16, 19], [9, 16, 19, 23], [7, 14, 17, 21]],
           "tense": [[0, 3, 7, 10], [1, 5, 8, 12], [0, 3, 7, 10], [-2, 2, 5, 8]],
-          "playful": [[0, 4, 7, 12], [5, 9, 12, 17], [7, 11, 14, 19], [0, 4, 7, 12]]}
+          "playful": [[0, 4, 7, 12], [5, 9, 12, 17], [7, 11, 14, 19], [0, 4, 7, 12]],
+          # "What if" series: dark cinematic bed (no plucked arpeggio): low minor pads, soft timpani pulse, vibes motif
+          "cinematic": [[0, 3, 7, 10], [-4, 0, 3, 7], [-7, -3, 0, 3], [-5, -1, 2, 7]]}
 
 
 def music_bed(dur, mood="warm", bpm=84, key=57, seed=11):
@@ -36,6 +38,18 @@ def music_bed(dur, mood="warm", bpm=84, key=57, seed=11):
     bar = 4 * beat
     prog = CHORDS.get(mood, CHORDS["warm"])
     t, i = 0.0, 0
+    if mood == "cinematic":
+        while t < dur:
+            ch = prog[i % len(prog)]
+            place(out, I.pad([I.m2f(key - 24 + n) for n in ch[:3]], bar * 1.05, vel=0.55, r=r, att=1.2, rel=1.4, warm=600.0), t)
+            for k in (0, 2):
+                place(out, 0.45 * I.timpani(I.m2f(key - 24 + ch[0]), vel=0.35 + 0.15 * (k == 0), r=r, dur=1.4), t + k * beat)
+            if i % 2 == 1:
+                for k, n in enumerate((ch[2], ch[1] + 12, ch[3])):
+                    place(out, pan(I.vibes(I.m2f(key + n), vel=0.3, r=r, dur=1.4), 0.3 * (k - 1)), t + (1 + k) * beat)
+            t += bar
+            i += 1
+        return out[:, : ns(dur)]
     while t < dur:
         ch = prog[i % len(prog)]
         place(out, I.pad([I.m2f(key - 12 + n) for n in ch[:3]], bar, vel=0.5, r=r), t)

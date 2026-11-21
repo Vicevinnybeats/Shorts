@@ -54,7 +54,9 @@ jobs:
             bash pipeline/voice/voicestudio_tts.sh episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice
             python pipeline/voice/align_words.py $B/voice/voice.wav episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice/words.json
           else
-            python pipeline/voice/kokoro_tts.py episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice --voice "$NARRATOR_VOICE"
+            V=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').voice || process.env.NARRATOR_VOICE")
+            echo "voice: $V"
+            python pipeline/voice/kokoro_tts.py episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice --voice "$V"
           fi
           cp $B/voice/words.json $B/words.json
       - name: Music + SFX + mix
