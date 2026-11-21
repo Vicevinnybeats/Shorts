@@ -192,3 +192,4 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 - 2026-11-21 (later): What If #1 now uses 12 Blender props (library/models, built by workflow blender-models) via
   library/stick3d/glb.tsx, and a per-scene lighting rig (key + fill + gold rim + hero pool + motivated practicals:
   lamp/TV/neon/window, cyan game light on the road, footlights on stage, gold calendar/blocks, coral stations).
+| 2026-11-21 14:08 | render-stills | wi-gta-nosleep  | stills | 2 | 1610 | running (run 44912243381) |
