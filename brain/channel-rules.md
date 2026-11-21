@@ -136,3 +136,6 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   natural flow and clear". Asked to compare with VoiceStudio. VoiceStudio = OmniVoice CC-BY-NC (non-commercial, API refuses
   until licence accepted, health checks fail) -> not usable on a monetized channel unless the owner decides otherwise.
   Test voice-compare.yml: A current, B natural (multi-sentence takes, exag 0.5, cfg 0.5, ref 20 s, no denoise, clarity EQ), C Kokoro.
+- 2026-11-21 owner: DROPS his own voice clone ("still not what I want") -> use a normal stock voice. VoiceStudio refused
+  (non-commercial licence); owner chose "Kokoro, other voice" -> sent samples am_michael, am_fenrir, bm_george, af_heart
+  (health/voice/). Waiting for his pick; then What If 1 re-render with episode.json "clone": "none" + "voice": <pick>.

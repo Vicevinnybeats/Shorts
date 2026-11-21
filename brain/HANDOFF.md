@@ -2,6 +2,8 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
+0. OWNER DROPPED HIS VOICE CLONE -> Kokoro stock voice. Samples sent (health/voice/); waiting for pick, then re-render
+   What If 1 with "clone": "none", "voice": <pick>, speed 0.92, pause 0.42; remove voice_eq. Items 2-3 below are moot.
 1. What If 1 sound fix DONE (remix 2, run 44922935325): clarity band 1-5 kHz -28.3 -> -23.4 LUFS (old What If 2 -23.7,
    gta-radio -21.2), bass -17.0, master -14.1; voice_eq in episode.json, music level_lu -19. Preview sent to owner,
    WAITING for verdict. GitHub artifact downloads are blocked by this sandbox's proxy -> deliver via repo preview or Drive.
