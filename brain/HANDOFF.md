@@ -2,6 +2,9 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
+00. OWNER: bm_george "not natural, too slow" -> voice-samples.yml makes 11 Kokoro voices (natural flow, speed 1.05)
+   into health/voice/samples/*.mp3 -> send to owner, he picks -> set render-final default + episode.json
+   (NARRATOR_FLOW natural must be wired into render-final's Kokoro step), then re-render What If 1, then What If 2.
 0. What If 1 REDO RENDERED (run 44927000990, 106.7 s, bm_george; master -14.1, 1-5 kHz -23.9, bass -15.7). Preview sent to
    owner - WAITING for verdict. Seen in frame sheet: microsleep shot frames Remy half off the right edge (fix if owner
    wants changes). Then: Drive "What if" folder via Zapier + drive-put (brain/drive.md), then What If 2.

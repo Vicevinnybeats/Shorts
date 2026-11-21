@@ -152,3 +152,6 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   4. Frame-check stills before rendering; text never under captions or the counter card.
   5. Never use non-commercial licences (VoiceStudio/OmniVoice) and never spend credits.
   6. Keep the state in brain/HANDOFF.md, not in chat (tokens).
+- 2026-11-21 owner on What If 1 redo: bm_george "not natural and too slow" (speed 0.92 + 0.42 s per-sentence pauses).
+  -> new Kokoro option NARRATOR_FLOW=natural (paragraph takes), samples of 11 voices at speed 1.05 (voice-samples.yml ->
+  health/voice/samples/). Owner picks a voice BEFORE What If 2. Never again speed < 1.0 or per-sentence pauses by default.
