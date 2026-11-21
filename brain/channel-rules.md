@@ -130,3 +130,5 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   no Higgsfield). Live local Blender MCP only if an object cannot be done that way. Objects are built once, reused.
 - 2026-11-21 owner: SAVE every Blender .glb model for reuse: library/models/<name>.glb + a line in brain/stick3d/README.md
   ("Blender objects": name, what it is, colours, which video used it). Reuse before making a new one.
+- 2026-11-21 owner: EVERY scene needs DECENT LIGHTING (key + fill + rim on the characters, motivated practical lights,
+  no flat/dark scenes) and What If videos use Blender .glb assets (headless Blender on Actions) for the main props.
