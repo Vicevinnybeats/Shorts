@@ -6,6 +6,7 @@ Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on thi
    What If 2 render CANCELLED (run 44940497484). tts-compare.yml running -> send health/voice/compare/*.mp3 to owner
    -> he picks -> wire engine into render-final -> re-render What If 1 (re-edit 1fac241 already has real cuts) ->
    owner OK -> only then What If 2 (f0c934a, GO_FINAL file exists; re-touch it to render).
+   Note: What If 1 render with cuts + am_liam finished (run 44939643924, preview committed) - NOT sent, voice will change.
 0000. (owner ~19:05) "No cuts, everything pasted together" -> What If 2 render CANCELLED (run 44938267008).
    Voice: natural = per-line takes + 0.45 s pauses (kokoro_tts.py, render-final default). Picture: builder re-edits
    What If 1 into real shots + cuts with @remotion/transitions; then the same for What If 2. Then render both, previews.
