@@ -211,15 +211,15 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-21 16:03 | health-check | - | report | 1 | 1750 | running (run 44921323863) |
 | 2026-11-21 16:10 | remix-audio | wi-gta-nosleep | remix | 2 | 1752 | running (run 44922935325) |
 | 2026-11-21 16:23 | render-stills | wi-gta-nosleep  | stills | 3 | 1755 | running (run 44924099317) |
-| 2026-11-21 16:28 | render-final | wi-gta-nosleep | voice-and-mix | 4 | 1756 | success (run 44924099314) |
-| 2026-11-21 16:28 | render-final | wi-gta-nosleep | render (0-534) | 4 | 1760 | cancelled (run 44924099314) |
-| 2026-11-21 16:28 | render-final | wi-gta-nosleep | render (2140-2674) | 4 | 1764 | cancelled (run 44924099314) |
-| 2026-11-21 16:28 | render-final | wi-gta-nosleep | render (1605-2139) | 4 | 1768 | cancelled (run 44924099314) |
-| 2026-11-21 16:28 | render-final | wi-gta-nosleep | render (535-1069) | 4 | 1772 | cancelled (run 44924099314) |
-| 2026-11-21 16:28 | render-final | wi-gta-nosleep | render (2675-3207) | 4 | 1776 | cancelled (run 44924099314) |
-| 2026-11-21 16:28 | render-final | wi-gta-nosleep | render (1070-1604) | 4 | 1780 | cancelled (run 44924099314) |
-| 2026-11-21 16:28 | render-final | wi-gta-nosleep | log | 1 | 1781 | cancelled (run 44924099314) |
-| 2026-11-21 16:28 | render-final | wi-gta-nosleep | assemble | 1 | 1782 | cancelled (run 44924099314) |
+| 2026-11-21 16:28 | render-final | wi-gta-nosleep | voice-and-mix | 4 | 1759 | success (run 44924099314) |
+| 2026-11-21 16:28 | render-final | wi-gta-nosleep | render (0-534) | 4 | 1763 | cancelled (run 44924099314) |
+| 2026-11-21 16:28 | render-final | wi-gta-nosleep | render (2140-2674) | 4 | 1767 | cancelled (run 44924099314) |
+| 2026-11-21 16:28 | render-final | wi-gta-nosleep | render (1605-2139) | 4 | 1771 | cancelled (run 44924099314) |
+| 2026-11-21 16:28 | render-final | wi-gta-nosleep | render (535-1069) | 4 | 1775 | cancelled (run 44924099314) |
+| 2026-11-21 16:28 | render-final | wi-gta-nosleep | render (2675-3207) | 4 | 1779 | cancelled (run 44924099314) |
+| 2026-11-21 16:28 | render-final | wi-gta-nosleep | render (1070-1604) | 4 | 1783 | cancelled (run 44924099314) |
+| 2026-11-21 16:28 | render-final | wi-gta-nosleep | log | 1 | 1784 | cancelled (run 44924099314) |
+| 2026-11-21 16:28 | render-final | wi-gta-nosleep | assemble | 1 | 1785 | cancelled (run 44924099314) |
 - 2026-11-21 What If 1 picture redo (owner: lighting, shadows, camera through cuts): walls/floors now LIT (Surface `lit`
   Lambert + `gain` 3.2 for the dark linear canvas output) with brighter navy/wood/carpet colours; rig = ambient 0.85 +
   sky/ground bounce 1.0 + warm key (shadow-casting, PCF soft 1024) + gold rim + hero pool + practicals; bed light toned
@@ -227,3 +227,4 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
   blobs under Blender props (Glb `blob`); shadow maps on, but under swangle they barely show -> the drop/blob shadows
   carry the look. Camera: piecewise-linear moves (no ease to a stop), the whole film trucks LEFT + pushes in, whip-pan
   carry-over (8 f) out of and into every place change. Stills ~2.8 s avg (max 3.3) vs ~1.9 s before.
+| 2026-11-21 16:54 | render-stills | wi-gta-nosleep  | stills | 3 | 1788 | running (run 44926962631) |
