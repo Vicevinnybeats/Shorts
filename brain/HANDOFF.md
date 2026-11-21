@@ -2,6 +2,9 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
+000000. (owner ~20:20) "make both videos for now" without picking a voice -> kept Kokoro am_liam (default).
+   What If 1 (cuts + am_liam, run 44939643924, 68 s, 1-5 kHz -20.0) SENT. What If 2 render started (GO_FINAL 20cf842).
+   Voice pick from health/voice/compare still open; a different voice = re-render (picture timing follows the voice).
 00000. (owner ~19:25) "use GitHub tools for good voiceovers, it's a loop; fix video 1, then video 2".
    What If 2 render CANCELLED (run 44940497484). tts-compare DONE (6 files in health/voice/compare/, sent 20:17) ->
    -> he picks -> wire engine into render-final -> re-render What If 1 (re-edit 1fac241 already has real cuts) ->
