@@ -2,8 +2,9 @@
 // in the Golden Neon colours with the What-If HUD on top (library/whatif), built like What If #1 (wi-gta-nosleep): same
 // REMY3D puppet + beanie, Blender .glb props (library/models: suitcase, palm_tree, beach_umbrella, sports_car, golf_flag,
 // alligator, flat_tv, couch, game_controller), lit sets (key + fill + rim + motivated practicals: sun, TV glow, porch
-// light, storm flashes), drop + blob shadows, a camera that keeps moving through cuts (linear moves, gentle whip
-// carry-over across the dip at place changes). Florida set pieces: library/stick3d/leonida.tsx (real outline, never the
+// light, storm flashes), drop + blob shadows. EDIT (owner 2026-11-21, What If 1 note "no cuts, one long sequence"): every
+// script line = 1-2 real SHOTS with their own framing (wide / medium / insert) and a short move INSIDE the shot; hard
+// cuts on the line changes, 5 short @remotion/transitions on place changes; sub-shots share the parent's HUD clock. Florida set pieces: library/stick3d/leonida.tsx (real outline, never the
 // game's map). Facts (RESEARCH.md): FWC ~1.3 million alligators in all 67 counties, serious injuries rare; Florida has
 // the most lightning per km2 of any state and has led US lightning deaths for years (97 confirmed 2006-2025, NLSC/NWS);
 // ~40% of US hurricane landfalls are in Florida; NWS slogan "When thunder roars, go indoors". "GTA 6" only as words.
@@ -14,10 +15,14 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame, interpolate, Easing, getInputProps } from "remotion";
 import { ThreeCanvas } from "@remotion/three";
+import { TransitionSeries, linearTiming } from "@remotion/transitions";
+import { fade } from "@remotion/transitions/fade";
+import { slide } from "@remotion/transitions/slide";
+import { wipe } from "@remotion/transitions/wipe";
 import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 import type { Story, SceneProps } from "../../src/engine/EpisodeShort";
-import { shotAt, ShotSpan, cueTime, FPS } from "../../src/engine/timeline";
+import { ShotSpan, cueTime, FPS } from "../../src/engine/timeline";
 import type { Word } from "../../src/captions/Captions";
 import { EASE, arrive } from "../../src/engine25/motion";
 import { NEON, NeonDefs, HudText, StrokeWord, LiveCounter, CompareBars, ChoiceCards, Stamp, NeonPath, NeonText, Digits, drawOn } from "../../library/whatif/kit";
@@ -26,7 +31,11 @@ import { Person, V3, clamp, Grade } from "../../library/stick3d/kit";
 import { REMY3D } from "../../src/tests/Stick3DTest";
 import { Floor, WallDoor, SideWall, Shelf, Lamp, Rug, Shaft, Dust, Plant } from "../../library/stick3d/props";
 import { Cam, Key, Building, StreetLamp } from "../../library/stick3d/extra";
-import { Glb } from "../../library/stick3d/glb";
+import { Glb, useGlb } from "../../library/stick3d/glb";
+import { INK } from "../../library/stick3d/toon";
+import { LineSegments2 } from "three/examples/jsm/lines/LineSegments2.js";
+import { LineSegmentsGeometry } from "three/examples/jsm/lines/LineSegmentsGeometry.js";
+import { LineMaterial } from "three/examples/jsm/lines/LineMaterial.js";
 import { drawPuppet, Look, Pose } from "../../library/stick3d/puppet";
 import { N3, FONT3, Halo, FloorPool, NeonBar, HeroLight, Motes, Panel, NeonSign, NeonClock, NightWindow } from "../../library/stick3d/neon";
 import { FL_PTS, FloridaMap, SkyWall, StormCloud, Bolt, Water, Spiral, Tufts, Rain, COUNTY_DOTS } from "../../library/stick3d/leonida";
@@ -38,15 +47,40 @@ const REMY: Look = { ...REMY3D, beanie: "#2e3658", beanieBand: N3.gold, pom: N3.
 const GHOST: Look = { ...REMY, skin: "#bdf3ff", body: N3.cyan, beanie: "#2a6a80", beanieBand: "#dffaff", pom: "#dffaff", shoe: "#1b4a5a" };
 const { gold: GOLD, coral: CORAL, amber: AMBER, text: CREAM, muted: MUTED, cyan: CYAN } = NEON;
 
-// ---------------------------------------------------------------- shots (cues from content/scripts, places here)
-const PLACE: Record<string, string> = {
-  hook: "home", miami: "street", wish: "wish", golf: "golf", gators: "map", twist: "golf", above: "golf", sky: "beach",
-  strikes: "map", deaths: "map", tv: "home", landfall: "map", rules: "house", respawn: "split", ask: "beach",
-};
-const SHOTS = scenes.shots.map((s) => ({ id: s.id, cue: s.cue }));
-/** [place change INTO this shot, place change OUT of it] -> whip-pan carry-over across the dip */
-const CUT: Record<string, [boolean, boolean]> = Object.fromEntries(SHOTS.map((sh, i) => [sh.id, [
-  i > 0 && PLACE[SHOTS[i - 1].id] !== PLACE[sh.id], i < SHOTS.length - 1 && PLACE[SHOTS[i + 1].id] !== PLACE[sh.id]]]));
+// ---------------------------------------------------------------- shots (each script line = 1-2 shots; cues = narration words)
+type Tr = "fade" | "slide" | "wipe";
+type ShotDef = { id: string; cue: string; parent: string; sub: number; tr?: Tr };
+const DEFS: ShotDef[] = [
+  { id: "hook", cue: "What if you", parent: "hook", sub: 0 },
+  { id: "hookb", cue: "So let's pack", parent: "hook", sub: 1 },
+  { id: "miami", cue: "Day one. Remy", parent: "miami", sub: 0, tr: "slide" },
+  { id: "miamib", cue: "The air feels", parent: "miami", sub: 1 },
+  { id: "wish", cue: "He wants the", parent: "wish", sub: 0 },
+  { id: "wishb", cue: "Swamps.", parent: "wish", sub: 1 },
+  { id: "golf", cue: "Day three. A", parent: "golf", sub: 0 },
+  { id: "golfb", cue: "Something is lying", parent: "golf", sub: 1 },
+  { id: "gators", cue: "Florida has around", parent: "gators", sub: 0, tr: "wipe" },
+  { id: "gatorsb", cue: "Wildlife officials say", parent: "gators", sub: 1 },
+  { id: "twist", cue: "Scared? Here's the", parent: "twist", sub: 0 },
+  { id: "twistb", cue: "Most gators avoid", parent: "twist", sub: 1 },
+  { id: "above", cue: "The bigger danger", parent: "above", sub: 0 },
+  { id: "sky", cue: "Day ten. Every", parent: "sky", sub: 0 },
+  { id: "skyb", cue: "Sunshine at noon", parent: "sky", sub: 1 },
+  { id: "strikes", cue: "Florida gets more", parent: "strikes", sub: 0 },
+  { id: "deaths", cue: "and it has", parent: "deaths", sub: 0 },
+  { id: "tv", cue: "Day thirty. A", parent: "tv", sub: 0, tr: "fade" },
+  { id: "tvb", cue: "A cone appears", parent: "tv", sub: 1 },
+  { id: "landfall", cue: "Roughly forty percent", parent: "landfall", sub: 0 },
+  { id: "landfallb", cue: "make landfall in", parent: "landfall", sub: 1 },
+  { id: "rules", cue: "So Remy learns", parent: "rules", sub: 0, tr: "slide" },
+  { id: "rulesb", cue: "When thunder roars", parent: "rules", sub: 1 },
+  { id: "respawn", cue: "In the game,", parent: "respawn", sub: 0 },
+  { id: "respawnb", cue: "In real life,", parent: "respawn", sub: 1 },
+  { id: "ask", cue: "Would you still", parent: "ask", sub: 0, tr: "fade" },
+];
+const DEF: Record<string, ShotDef> = Object.fromEntries(DEFS.map((d) => [d.id, d]));
+const SHOTS = DEFS.map((d) => ({ id: d.id, cue: d.cue }));
+const TR_FRAMES = 10;
 
 // ---------------------------------------------------------------- helpers (same rig as What If #1)
 const SG = 3.2; // exposure gain for lit walls/floors so sets read behind the characters
@@ -54,24 +88,12 @@ const k = (u: number, a: number, b: number, from: number, to: number, e = EASE.c
   interpolate(u, [a, b], [from, to], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: e });
 const pop = (u: number, at: number, d = 10) => interpolate(u, [at, at + d], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.back(2.2)) });
 const ck = (u: number, pos: V3, look: V3, fov = 46, roll = 0): Key => ({ t: u / FPS, pos, look, fov, roll });
-/** piecewise-LINEAR camera (constant speed, never eased to a stop) so motion carries through the cuts */
-const camLin = (t: number, keys: Key[]): Key => {
-  if (keys.length === 1) return keys[0];
-  let i = 0; while (i < keys.length - 2 && t > keys[i + 1].t) i++;
-  const a = keys[i], b = keys[i + 1], w = clamp((t - a.t) / Math.max(1e-6, b.t - a.t));
-  const L = (x: number, y: number) => x + (y - x) * w;
-  return { t, pos: [L(a.pos[0], b.pos[0]), L(a.pos[1], b.pos[1]), L(a.pos[2], b.pos[2])], look: [L(a.look[0], b.look[0]), L(a.look[1], b.look[1]), L(a.look[2], b.look[2])], fov: L(a.fov ?? 46, b.fov ?? 46), roll: L(a.roll ?? 0, b.roll ?? 0) };
-};
-/** gentle whip at place changes: the old shot speeds its pan up over its last 8 frames, the new one starts mid-whip */
-const WHIP = 8;
-const Shot: React.FC<{ u: number; len?: number; id: string; keys: Key[]; kicks?: number[]; impacts?: [number, number][] }> = ({ u, len = 9999, id, keys, kicks = [], impacts = [] }) => {
-  const cut = CUT[id] ?? [false, false];
-  const c = camLin(u / FPS, keys);
-  const out = cut[1] ? Math.pow(clamp((u - (len - WHIP)) / WHIP), 2) : 0;
-  const inn = cut[0] ? Math.pow(1 - clamp(u / WHIP), 2) : 0;
-  const dx = (inn - out) * 1.1;
-  const look: V3 = [c.look[0] + dx, c.look[1], c.look[2]];
-  return <Cam t={u / FPS} keys={[{ ...c, t: 0, look }]} fovKick={kicks.map((x) => x / FPS)} impacts={impacts.map(([a, b]) => [a / FPS, b] as [number, number])} />;
+/** Camera: one short eased move INSIDE each shot (push / truck / slight arc); nothing carries across a cut.
+ *  `cams[sub]` = [start pos, start look, end pos, end look, fov] for that shot's framing. */
+type CamDef = [V3, V3, V3, V3, number];
+const Shot: React.FC<{ off?: number; us: number; ls: number; sub: number; cams: CamDef[]; kicks?: number[]; impacts?: [number, number][]; roll?: number }> = ({ off = 0, us, ls, sub, cams, kicks = [], impacts = [], roll = 0.01 }) => {
+  const [p0, l0, p1, l1, fov] = cams[Math.min(sub, cams.length - 1)];
+  return <Cam t={us / FPS} keys={[ck(0, p0, l0, fov, roll), ck(Math.max(1, ls), p1, l1, fov, -roll)]} fovKick={kicks.filter((x) => x - off >= 0).map((x) => (x - off) / FPS)} impacts={impacts.map(([a, b]) => [(a - off) / FPS, b] as [number, number])} />;
 };
 /** Lighting rig: warm KEY (shadow caster) front-top-right of the hero, sky/ground FILL, RIM from behind, a soft pool over
  *  the hero, plus motivated practicals as point lights, and the pack's light shaft */
@@ -125,6 +147,31 @@ const Hero: React.FC<{ p: V3; look: Look; pose: Omit<Pose, "t">; f: number; h?: 
   {shadow && p[1] - ground < 0.6 && p[1] - ground > -0.2 ? <DropShadow p={[p[0], ground, p[2]]} h={h} look={look} pose={pose} f={f} /> : null}
   <Person p={p} h={h} look={look} pose={pose} f={f} shadow={shadow && p[1] - ground > -0.2} sy={ground + 0.01} />
 </>);
+/** the Blender couch WITHOUT its coral pillow (it read as a loose red box in this episode's framings); same toon look as Glb */
+const toonRamp = (() => { const d = new Uint8Array([90, 170, 255]); const t = new THREE.DataTexture(d, 3, 1, THREE.RedFormat); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; })();
+const CouchNoPillow: React.FC<{ p: V3 }> = ({ p }) => {
+  const src = useGlb("couch");
+  const { size } = useThree();
+  const obj = React.useMemo(() => {
+    if (!src) return null;
+    const root = src.clone(true);
+    const drop: THREE.Object3D[] = [];
+    root.traverse((o) => { if (o.name.toLowerCase().startsWith("pillow")) drop.push(o); });
+    drop.forEach((o) => o.parent?.remove(o));
+    const lm = new LineMaterial({ color: new THREE.Color(INK).getHex(), linewidth: 3, resolution: new THREE.Vector2(size.width, size.height) });
+    const meshes: THREE.Mesh[] = [];
+    root.traverse((o) => { if ((o as THREE.Mesh).isMesh) meshes.push(o as THREE.Mesh); });
+    for (const m of meshes) {
+      const old = m.material as THREE.MeshStandardMaterial;
+      const em = old.emissive && (old.emissive.r + old.emissive.g + old.emissive.b) > 0.01;
+      m.material = em ? new THREE.MeshBasicMaterial({ color: old.emissive.clone(), toneMapped: false }) : new THREE.MeshToonMaterial({ color: old.color ?? new THREE.Color("#888"), gradientMap: toonRamp });
+      const eg = new LineSegmentsGeometry(); eg.setPositions(new THREE.EdgesGeometry(m.geometry, 35).attributes.position.array as Float32Array);
+      m.add(new LineSegments2(eg, lm));
+    }
+    return root;
+  }, [src, size]);
+  return <>{obj ? <primitive object={obj} position={p} /> : <Box p={[p[0], 0.45, p[2]]} s={[4.8, 0.9, 1.5]} color={N3.navy2} />}</>;
+};
 /** rolling suitcase (Blender) pulled at Remy's right hand */
 const Suitcase: React.FC<{ p: V3; tilt?: number; s?: number }> = ({ p, tilt = 0, s = 0.72 }) => (
   <group position={p} rotation={[0, 0, tilt]}>
@@ -175,7 +222,7 @@ const HomeRoom: React.FC<{ t: number; hero?: V3; tvGlow?: number; map?: number; 
   <Lamp p={[6.8, 0, -3.4]} color={N3.amber} /><Halo p={[6.8, 2.75, -3.4]} r={1.0} color={N3.amber} o={0.7} />
   <Plant p={[-5.4, 0, -3.6]} pot={N3.coral} />
   <Rug p={[0, 0, 0.6]} s={[7.5, 4.4]} a="#120d09" b={N3.gold} />
-  {couch && <Glb name="couch" blob={3.0} p={[0, 0, -1.3]} fallback={<Box p={[0, 0.45, -1.3]} s={[4.8, 0.9, 1.5]} color={N3.navy2} />} />}
+  {couch && <CouchNoPillow p={[0, 0, -1.3]} />}
   <Motes t={t} n={10} c={[0, 0.5, -1]} area={[5, 5, 3]} />
   <Dust t={t} area={[10, 6, 6]} color="rgba(245,185,66,.9)" />
 </>);
@@ -189,26 +236,27 @@ const SunLights: React.FC<{ hero: V3; storm?: number; flash?: number; prac?: Pra
 
 // ---------------------------------------------------------------- shot builder
 type View = { world: React.ReactNode; hud?: React.ReactNode; black?: number; dim?: number };
-const build = (id: string, f: number, u: number, len: number, C: (p: string, fb: number) => number, hide: boolean): View => {
+const build = (id: string, f: number, u: number, len: number, C: (p: string, fb: number) => number, hide: boolean, sub = 0, us = u, ls = len): View => {
   const t = f / FPS;
   switch (id) {
     case "hook": { // Remy at home under a wall map: the cyan dashed (made-up) outline turns solid gold (real); suitcase rolls in
       const GT = C("GTA 6's map", 96), MU = C("made up", 149), PB = C("pack a bag", 209), TR = C("try the real", 251);
       const real = u >= TR ? 1 : 0;
       const sx = k(u, PB - 4, PB + 18, 3.2, 0.75, EASE.arrive);
+      const hx = sub ? 690 : 540; // medium shot: Remy sits left, labels move right
       const world = <>
         <HomeRoom t={t} hero={[-0.6, 0, 1.4]} map={real} mapDraw={k(u, 0, 40, 0.05, 1, EASE.arrive)} couch />
         <Hero p={[-0.6, 0, 1.4]} look={REMY} pose={{ mood: u >= TR ? "grin" : u >= MU ? "smile" : "deadpan", arms: u >= TR ? "up" : u >= MU ? "point" : "down", armK: u >= TR ? 0.9 : 0.8, lookX: u >= PB && u < TR ? 0.8 : -0.4, flip: u >= MU && u < PB }} f={f} rimO={0.45} />
         {u >= PB - 4 && <Suitcase p={[sx, 0, 1.55]} tilt={u < PB + 18 ? -0.15 : 0} />}
         <HeroLight p={[-0.6, 0, 1.4]} h={6.2} r={1.4} t={t} />
-        <Shot u={u} len={len} id={id} kicks={[TR]} keys={[ck(0, [0.6, 3.0, 13.0], [-0.9, 1.75, 0.2], 46, 0.02), ck(len, [-0.6, 2.9, 12.0], [-1.1, 1.75, 0.2], 46, -0.01)]} />
+        <Shot off={u - us} us={us} ls={ls} sub={sub} kicks={[TR]} cams={[[[0.6, 3.0, 13.0], [-0.9, 1.75, 0.2], [-0.2, 2.95, 12.4], [-1.0, 1.75, 0.2], 46], [[3.8, 1.5, 10.8], [0.25, 1.6, 1.4], [3.3, 1.5, 10.2], [0.15, 1.55, 1.4], 44]]} />
       </>;
       const hud = !hide && <>
-        <StrokeWord text="WHAT IF" x={540} y={430} h={112} p={k(u, GT, GT + 34, 0, 1, EASE.arrive)} />
-        <HudText f={u} x={540} y={625} size={40} color={MUTED} enter="rise" at={GT + 10} out={len - 6} spacing={10}>EPISODE 2</HudText>
-        <HudText f={u} x={540} y={725} size={58} color={CYAN} enter="rise" at={MU} out={TR - 4}>LEONIDA: FICTIONAL</HudText>
-        <HudText f={u} x={540} y={725} size={62} color={GOLD} enter="scale" at={TR} out={len - 6}>FLORIDA, USA</HudText>
-        <Stamp f={u} x={540} y={830} text="ONE-WAY TICKET" at={PB} out={len - 6} size={50} rot={-3} color={CORAL} />
+        <StrokeWord text="WHAT IF" x={hx} y={430} h={112} p={k(u, GT, GT + 34, 0, 1, EASE.arrive)} />
+        <HudText f={u} x={hx} y={625} size={40} color={MUTED} enter="rise" at={GT + 10} out={len - 6} spacing={10}>EPISODE 2</HudText>
+        <HudText f={u} x={hx} y={725} size={58} color={CYAN} enter="rise" at={MU} out={TR - 4}>LEONIDA: FICTIONAL</HudText>
+        <HudText f={u} x={hx} y={725} size={62} color={GOLD} enter="scale" at={TR} out={len - 6}>FLORIDA, USA</HudText>
+        <Stamp f={u} x={hx} y={830} text="ONE-WAY TICKET" at={PB} out={len - 6} size={50} rot={-3} color={CORAL} />
       </>;
       return { world, hud };
     }
@@ -238,17 +286,17 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <FloorPool p={[x, 0, 1.2]} r={1.6} color={N3.amber} o={0.3} />
         <Halo p={[0, 1.2, -1]} r={7} color={N3.amber} o={0.1 + 0.12 * heat} />
         <Motes t={t} n={22} c={[0, 0.3, 0]} area={[7, 5, 3]} color={N3.amber} />
-        <Shot u={u} len={len} id={id} keys={[ck(0, [-1.6, 3.0, 12.4], [-2.0, 1.8, 0.4], 46, 0.01), ck(len, [0.1, 2.9, 11.6], [-0.1, 1.8, 0.4], 46, -0.01)]} />
+        <Shot off={u - us} us={us} ls={ls} sub={sub} cams={[[[-1.6, 3.0, 12.4], [-2.0, 1.8, 0.4], [-0.9, 2.95, 12.0], [-1.3, 1.8, 0.4], 46], [[-1.4, 1.6, 9.4], [-0.75, 1.3, 1.2], [-1.0, 1.6, 8.9], [-0.55, 1.28, 1.2], 42]]} />
       </>;
       const hp = drawOn(u, AIR, 14), fill = k(u, AIR + 6, TW + 10, 0, 0.94, EASE.arrive);
       const hud = !hide && <>
         <LiveCounter f={u} label="DAYS IN FLORIDA" from={0} to={1} at={RL + 6} dur={14} />
         {hp > 0 && <g opacity={hp}>
-          <HudText f={u} x={70} y={690} size={46} color={MUTED} enter="rise" at={AIR} anchor="start" spacing={6}>HUMIDITY</HudText>
-          <rect x={70} y={712} width={880} height={64} rx={14} fill="#000" opacity={0.5} />
-          <NeonPath d="M 70 712 L 950 712 L 950 776 L 70 776 Z" w={2.5} p={hp} color={NEON.dim} glow={0.4} />
-          <rect x={76} y={718} width={Math.max(0, 868 * fill)} height={52} rx={10} fill={fill > 0.8 ? CORAL : AMBER} opacity={0.55} />
-          {fill > 0.85 && <g transform={`translate(${76 + 868 * fill - 30} 744)`}><path d="M 0 -22 C 14 -4 16 6 0 18 C -16 6 -14 -4 0 -22 Z" fill={N3.cyan} opacity={0.9} /></g>}
+          <HudText f={u} x={70} y={690} size={42} color={MUTED} enter="rise" at={AIR} anchor="start" spacing={6}>HUMIDITY</HudText>
+          <rect x={70} y={712} width={430} height={64} rx={14} fill="#000" opacity={0.5} />
+          <NeonPath d="M 70 712 L 500 712 L 500 776 L 70 776 Z" w={2.5} p={hp} color={NEON.dim} glow={0.4} />
+          <rect x={76} y={718} width={Math.max(0, 418 * fill)} height={52} rx={10} fill={fill > 0.8 ? CORAL : AMBER} opacity={0.55} />
+          {fill > 0.85 && <g transform={`translate(${76 + 418 * fill - 30} 744)`}><path d="M 0 -22 C 14 -4 16 6 0 18 C -16 6 -14 -4 0 -22 Z" fill={N3.cyan} opacity={0.9} /></g>}
         </g>}
       </>;
       return { world, hud };
@@ -265,6 +313,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <NeonBar p={[0, 6.0, -4.9]} s={[16, 0.07, 0.05]} color={N3.gold} />
         {P.map((p, i) => <group key={i}>
           <Cyl p={[p[0], 0.22, p[2]]} rt={1.75} h={0.44} color="#1b2238" />
+          <Halo p={[p[0], 0.7, p[2]]} r={1.7} color={N3.gold} o={on[i] ? 0 : 0.4} />
           <NeonBar p={[p[0], 0.46, p[2] + 1.74]} s={[1.2, 0.04, 0.04]} color={on[i] ? [N3.amber, N3.gold, N3.cyan][i] : "#3a3020"} glow={on[i] ? 0.5 : 0} />
           {on[i] ? <HeroLight p={[p[0], 0.44, p[2]]} h={5.2} r={1.6} t={t + i} color={[N3.amber, N3.gold, N3.cyan][i]} o={0.8} /> : null}
         </group>)}
@@ -288,7 +337,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <Hero p={[0, 0, 3.0]} look={REMY} pose={{ mood: sel >= 0 ? "grin" : "smile", arms: sel >= 0 ? "point" : "chest", armK: 0.9, flip: sel === 0, lookX: sel < 0 ? 0 : [-1, 0, 1][sel], squash: sel >= 0 ? -0.05 * Math.max(0, 1 - (u - [SW, BE, FC][sel]) / 8) : 0 }} f={f} rimO={0.45} />
         <HeroLight p={[0, 0, 3.0]} h={6} r={1.2} t={t} />
         <Motes t={t} c={[0, 0.5, 0]} area={[6, 4, 2]} />
-        <Shot u={u} len={len} id={id} kicks={[SW, BE, FC]} keys={[ck(0, [1.0, 5.9, 14.6], [0.1, 1.2, 0.0], 46, 0.02), ck(len, [-0.6, 5.6, 13.6], [-0.1, 1.2, 0.0], 46, -0.01)]} />
+        <Shot off={u - us} us={us} ls={ls} sub={sub} cams={[[[1.0, 5.9, 14.6], [0.1, 1.2, 0.0], [0.4, 5.7, 13.9], [0.0, 1.2, 0.0], 46], [[5.6, 2.4, 9.8], [-0.4, 1.3, -0.8], [5.0, 2.3, 9.2], [-0.6, 1.3, -0.8], 44]]} />
       </>;
       const hud = !hide && <>
         <HudText f={u} x={540} y={400} size={58} color={GOLD} enter="rise" at={2} out={len - 6} spacing={4}>THE WISHLIST</HudText>
@@ -340,9 +389,9 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         {A && <pointLight position={[0, 5, -3]} intensity={30} distance={14} decay={1.5} color="#ffe2b0" />}
         <Hero p={[rx + back, 0.35 * jump, 1.2]} look={REMY} pose={{ mood, walk: rx * 2.4, speed: G && u < SL ? 1 : 0, arms: G && u >= NL ? "up" : T && u < MG + 10 ? "chest" : A ? "down" : "down", armK: 0.9, squash: -0.07 * jump, nerv: (G && u >= SL) || (T && u < MG + 10) ? 0.6 : A ? 0.3 : 0, sweat: G && u >= NL ? 0.8 : T && u < MG ? 0.5 : 0.3, lookX: A ? 0 : 0.8, tilt: A ? -0.08 : 0 }} f={f} rimO={0.4} />
         <Motes t={t} c={[0, 0.3, 0]} area={[6, 4, 3]} />
-        {G && <Shot u={u} len={len} id={id} kicks={[NL]} keys={[ck(0, [-0.2, 3.2, 13.2], [-0.8, 1.95, 0.2], 46, 0.01), ck(len, [-0.9, 3.0, 12.2], [-0.8, 1.85, 0.2], 46, -0.01)]} />}
-        {T && <Shot u={u} len={len} id={id} keys={[ck(0, [-0.9, 3.0, 12.2], [-0.8, 1.85, 0.2], 46, -0.01), ck(len, [-0.2, 2.9, 11.6], [-0.5, 1.8, 0.0], 46, 0.01)]} />}
-        {A && <Shot u={u} len={len} id={id} keys={[ck(0, [-0.2, 2.9, 11.6], [-0.5, 1.8, 0.0], 46, 0.01), ck(len * 0.25, [-0.3, 2.8, 11.3], [-0.4, 2.6, -1.0], 46, 0.0), ck(len, [0.0, 2.4, 10.4], [0.0, 7.2, -6.5], 52, -0.01)]} />}
+        {G && <Shot off={u - us} us={us} ls={ls} sub={sub} cams={[[[-0.2, 3.4, 13.6], [-0.6, 1.95, 0.2], [-0.7, 3.3, 13.0], [-0.6, 1.9, 0.2], 46], [[2.2, 1.5, 7.4], [0.0, 0.7, 0.8], [1.8, 1.4, 6.9], [-0.1, 0.7, 0.8], 44]]} />}
+        {T && <Shot off={u - us} us={us} ls={ls} sub={sub} cams={[[[-3.8, 1.8, 9.6], [-1.75, 1.4, 1.2], [-3.3, 1.8, 9.1], [-1.8, 1.32, 1.2], 42], [[4.2, 3.8, 11.0], [1.0, 1.0, 0.0], [3.6, 3.6, 10.4], [0.9, 1.0, 0.0], 46]]} />}
+        {A && <Cam t={us / FPS} keys={[ck(0, [-0.2, 2.9, 11.6], [-0.5, 1.8, 0.0], 46, 0.01), ck(ls * 0.25, [-0.3, 2.8, 11.3], [-0.4, 2.6, -1.0], 46, 0.0), ck(ls, [0.0, 2.4, 10.4], [0.0, 7.2, -6.5], 52, -0.01)]} />}
       </>;
       const hud = !hide && (G ? <>
         <LiveCounter f={u} label="DAYS IN FLORIDA" from={1} to={3} at={GC + 8} dur={16} />
@@ -401,10 +450,10 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <FloorPool p={[-2.7, 0.3, 2.2]} r={1.3} color={N3.amber} o={0.4} />
         {isL && <Rain p={[0, 3, 3.5]} s={[16, 10]} t={t} o={0.25} />}
         <Motes t={t} c={[0, 0.5, 0]} area={[6, 4, 3]} />
-        {isG && <Shot u={u} len={len} id={id} kicks={[OP, SS]} keys={[ck(0, [0.6, 12.4, 14.6], [0.0, 0.0, -2.2], 46, 0.01), ck(len, [-0.4, 12.0, 13.8], [-0.1, 0.0, -2.2], 46, -0.01)]} />}
-        {isS && <Shot u={u} len={len} id={id} impacts={[[TA, 0.03]]} keys={[ck(0, [1.2, 12.6, 14.8], [0.1, 0.0, -2.2], 46, 0.02), ck(len, [0.2, 12.2, 14.0], [0.0, 0.0, -2.2], 46, 0.0)]} />}
-        {isD && <Shot u={u} len={len} id={id} keys={[ck(0, [0.2, 12.2, 14.0], [0.0, 0.0, -2.2], 46, 0.0), ck(len, [-0.8, 11.6, 13.2], [-0.1, 0.1, -2.2], 46, -0.02)]} />}
-        {isL && <Shot u={u} len={len} id={id} keys={[ck(0, [1.4, 12.6, 14.8], [0.3, 0.0, -2.2], 46, 0.02), ck(len, [0.4, 12.0, 13.8], [0.2, 0.0, -2.2], 46, -0.01)]} />}
+        {isG && <Shot off={u - us} us={us} ls={ls} sub={sub} cams={[[[0.6, 12.4, 14.6], [0.0, 0.0, -2.2], [-0.2, 12.1, 14.0], [-0.1, 0.0, -2.2], 46], [[5.2, 6.8, 9.6], [0.4, 0.2, -1.2], [4.6, 6.5, 9.0], [0.3, 0.2, -1.2], 44]]} />}
+        {isS && <Shot off={u - us} us={us} ls={ls} sub={sub} impacts={[[TA, 0.03]]} cams={[[[1.2, 12.6, 14.8], [0.1, 0.0, -2.2], [0.4, 12.3, 14.2], [0.0, 0.0, -2.2], 46]]} />}
+        {isD && <Shot off={u - us} us={us} ls={ls} sub={sub} cams={[[[4.8, 7.4, 10.4], [0.2, 1.4, -1.6], [4.2, 7.1, 9.8], [0.3, 1.4, -1.6], 44]]} />}
+        {isL && <Shot off={u - us} us={us} ls={ls} sub={sub} cams={[[[1.4, 12.6, 14.8], [0.3, 0.0, -2.2], [0.6, 12.2, 14.2], [0.2, 0.0, -2.2], 46], [[6.6, 7.4, 8.8], [2.2, 0.9, -1.4], [6.0, 7.2, 8.2], [2.2, 0.9, -1.4], 44]]} />}
       </>;
       const pct = isL ? k(u, FP, FP + 26, 0, 40, EASE.arrive) : 0;
       const g13 = isG ? k(u, OP, OP + 24, 0, 1.3, EASE.arrive) : 0;
@@ -484,14 +533,14 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           : { mood: "grin", arms: u > 30 ? "point" : "up", armK: u > 30 ? 1 : 0.7 + 0.3 * Math.sin(f * 0.5), tilt: u > 30 ? 0 : 0.04 * Math.sin(f * 0.25) }} f={f} rimO={0.45} />
         <FloorPool p={hero} r={1.5} color={N3.amber} o={0.3} />
         <Motes t={t} c={[0, 0.3, 0]} area={[6, 4, 3]} />
-        {isSky ? <Shot u={u} len={len} id={id} kicks={[TB + 6]} impacts={[[TB + 6, 0.03]]} keys={[ck(0, [1.6, 3.1, 13.0], [0.4, 1.95, 0.2], 46, 0.01), ck(len, [0.2, 3.3, 12.2], [0.2, 2.3, -0.2], 48, -0.01)]} />
-          : <Shot u={u} len={len} id={id} keys={[ck(0, [1.4, 3.2, 13.2], [0.3, 2.0, 0.8], 46, 0.02), ck(len, [0.2, 3.1, 12.4], [0.3, 1.95, 0.8], 46, -0.01)]} />}
+        {isSky ? <Shot off={u - us} us={us} ls={ls} sub={sub} impacts={[[TB + 6, 0.03]]} cams={[[[1.6, 3.1, 13.0], [0.4, 1.95, 0.2], [0.9, 3.15, 12.6], [0.3, 2.0, 0.1], 46], [[-1.8, 0.9, 9.2], [0.0, 1.45, 1.6], [-1.3, 0.95, 8.8], [0.05, 1.4, 1.6], 44]]} />
+          : <Shot off={u - us} us={us} ls={ls} sub={sub} cams={[[[1.4, 3.2, 13.2], [0.3, 2.0, 0.8], [0.2, 3.1, 12.4], [0.3, 1.95, 0.8], 46]]} />}
       </>;
       const hud = !hide && (isSky ? <>
         <LiveCounter f={u} label="DAYS IN FLORIDA" from={3} to={10} at={EA + 4} dur={18} />
         <g opacity={arrive(u, SN - 4, 8)}>
-          <Digits x={540} y={760} text={u < TB ? "12:00" : "4:00"} size={120} color={u < TB ? AMBER : CORAL} anchor="middle" />
-          <NeonText x={540} y={830} size={44} color={MUTED}>{u < TB ? "PM · CLEAR" : "PM · STORM"}</NeonText>
+          <Digits x={300} y={760} text={u < TB ? "12:00" : "4:00"} size={120} color={u < TB ? AMBER : CORAL} anchor="middle" />
+          <NeonText x={300} y={830} size={44} color={MUTED}>{u < TB ? "PM · CLEAR" : "PM · STORM"}</NeonText>
         </g>
       </> : <>
         <HudText f={u} x={540} y={400} size={56} color={CREAM} enter="rise" at={2} out={len + 30}>COMMENT YOUR PICK</HudText>
@@ -529,7 +578,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         </group>
         <FloorPool p={[0.8, 0, 0.6]} r={2.4} color="#cfe6ff" o={0.18 * glow} />
         <pointLight position={[0.6, 2.2, 0.4]} intensity={14 * glow} distance={7} decay={2} color="#cfe6ff" />
-        <Shot u={u} len={len} id={id} keys={[ck(0, [-3.2, 3.4, 10.6], [0.6, 1.75, -0.3], 46, 0.01), ck(len, [-2.4, 3.3, 9.8], [0.8, 1.75, -0.3], 46, -0.01)]} />
+        <Shot off={u - us} us={us} ls={ls} sub={sub} cams={[[[-3.2, 3.4, 10.6], [0.6, 1.75, -0.3], [-2.6, 3.3, 10.0], [0.7, 1.75, -0.3], 46], [[-2.4, 2.2, 6.2], [1.7, 1.75, 1.0], [-2.0, 2.15, 5.7], [1.75, 1.8, 1.0], 40]]} />
       </>;
       const hud = !hide && <>
         <LiveCounter f={u} label="DAYS IN FLORIDA" from={10} to={30} at={AC + 6} dur={20} />
@@ -555,7 +604,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <Palm p={[6.2, 0, -2.6]} s={1.1} rot={0.8} /><Palm p={[-6.4, 0, -3.2]} s={1.2} rot={2.0} />
         <Hero p={[x, 0, z]} look={REMY} pose={{ mood: u >= WT ? "worry" : "deadpan", walk: (x + z) * 2.4, speed: walking ? 1 : 0, arms: "down", lookX: -0.6, sweat: 0.3, nerv: fl ? 0.6 : 0.1, squash: fl ? -0.05 : 0 }} f={f} rimO={0.5} />
         <Rain p={[0, 3.5, 2.5]} s={[18, 10]} t={t} o={0.45} />
-        <Shot u={u} len={len} id={id} impacts={[[40, 0.02], [150, 0.02]]} keys={[ck(0, [3.4, 3.1, 11.8], [1.6, 1.75, -1.0], 46, 0.01), ck(len, [0.8, 3.0, 9.8], [0.2, 2.2, -2.4], 46, -0.01)]} />
+        <Shot off={u - us} us={us} ls={ls} sub={sub} cams={[[[3.4, 3.1, 11.8], [1.6, 1.75, -1.0], [2.6, 3.05, 11.2], [1.3, 1.8, -1.2], 46], [[-3.4, 2.1, 7.4], [0.3, 1.7, -1.8], [-2.9, 2.05, 6.8], [0.2, 1.75, -2.2], 44]]} />
       </>;
       const cp = drawOn(u, 4, 14), r1 = drawOn(u, WS, 10), r2 = drawOn(u, NJ, 10);
       const slogan = u < WT - 2 ? arrive(u, NJ, 10) : 1 - arrive(u, WT - 2, 6); // gone before the voice says it (no double text)
@@ -608,11 +657,11 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <Rain p={[3.6, 3.5, 2.5]} s={[8, 10]} t={t} o={0.5} />
         <Glb name="beach_umbrella" p={[1.6, 0, 0.5]} s={1.3} blob={1.2} />
         <Hero p={[1.6, 0, 1.2]} look={REMY} pose={{ mood: u >= DC ? "shock" : "worry", arms: "head", armK: 0.9, nerv: 0.6, sweat: 0.6, squash: strike > 0 ? -0.06 : 0, lookX: 0.5 }} f={f} rimO={0.45} />
-        <Shot u={u} len={len} id={id} impacts={[[DC, 0.03]]} keys={[ck(0, [0.6, 3.6, 14.2], [0.0, 2.6, 0.2], 46, 0.01), ck(len, [-0.3, 3.4, 13.4], [0.0, 2.55, 0.2], 46, -0.01)]} />
+        <Shot off={u - us} us={us} ls={ls} sub={sub} cams={[[[-3.4, 2.2, 9.6], [-2.15, 1.45, 1.2], [-3.0, 2.2, 9.1], [-2.15, 1.38, 1.2], 40], [[3.6, 2.2, 9.6], [1.05, 1.45, 1.2], [3.2, 2.2, 9.1], [1.05, 1.38, 1.2], 40]]} />
       </>;
       const hud = !hide && <>
-        <HudText f={u} x={290} y={560} size={62} color={CYAN} enter="scale" at={YR + 4} out={len - 6}>+1 LIFE</HudText>
-        <Stamp f={u} x={790} y={560} text="NO RETRIES" at={DC} out={len + 6} size={52} color={CORAL} rot={3} />
+        {sub === 0 && <HudText f={u} x={300} y={560} size={62} color={CYAN} enter="scale" at={YR + 4}>+1 LIFE</HudText>}
+        <Stamp f={u} x={760} y={560} text="NO RETRIES" at={DC} out={len + 6} size={52} color={CORAL} rot={3} />
       </>;
       return { world, hud };
     }
@@ -625,33 +674,46 @@ const renderDpr = () => Number((getInputProps() as { dpr?: number }).dpr ?? 0.5)
 const cueLocal = (words: Word[], phrase: string, span: ShotSpan, fallback: number) => {
   try { return Math.round(cueTime(words, phrase, span.a / FPS - 0.3) * FPS) - span.a; } catch { return fallback; }
 };
-const XF = 6, HALF = 3;
-const Scene: React.FC<SceneProps> = ({ spans, words }) => {
-  const f0 = useCurrentFrame();
-  const span = shotAt(spans, f0);
-  const prev = span.i > 0 ? spans[span.i - 1] : null;
-  const u0 = f0 - span.a;
-  const dip = !!prev && u0 < XF && PLACE[prev.id] !== PLACE[span.id];
-  const show = dip && prev && u0 < HALF ? prev : span;
-  const f = show === span ? f0 : show.b - 1;
-  const u = f - show.a, len = show.b - show.a;
-  const v = build(show.id, f, u, len, (p, fb) => cueLocal(words, p, show, fb), dip);
-  const fade = dip ? (u0 < HALF ? (u0 + 1) / (HALF + 1) : 1 - (u0 - HALF + 1) / (XF - HALF + 1)) : 0;
-  const black = Math.max(fade, v.black ?? 0);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const presentation = (t: Tr): any => t === "fade" ? fade() : t === "slide" ? slide({ direction: "from-right" }) : wipe({ direction: "from-left" });
+/** one shot = its own WebGL canvas + HUD; animation clock = the parent line (u), camera clock = this shot (us) */
+const ShotView: React.FC<{ span: ShotSpan; pa: number; pb: number; words: Word[] }> = ({ span, pa, pb, words }) => {
+  const us = useCurrentFrame();
+  const f = span.a + us, u = f - pa, len = pb - pa, ls = span.b - span.a;
+  const d = DEF[span.id];
+  const parentSpan: ShotSpan = { id: d.parent, a: pa, b: pb, i: span.i };
+  const v = build(d.parent, f, u, len, (p, fb) => cueLocal(words, p, parentSpan, fb), false, d.sub, us, ls);
   return (
     <AbsoluteFill style={{ background: N3.bg }}>
       <ThreeCanvas width={1080} height={1920} dpr={renderDpr()} linear flat shadows="soft" gl={{ antialias: false, stencil: false, powerPreference: "high-performance" }}>
         <color attach="background" args={[N3.bg]} />
-        <group key={show.id}>{v.world}</group>
+        <group>{v.world}</group>
         <ShadowSetup />
       </ThreeCanvas>
       <Grade t={f / FPS} />
       <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.42) 30%, rgba(0,0,0,0) 52%)" }} />
       {v.dim ? <AbsoluteFill style={{ background: "#000", opacity: v.dim }} /> : null}
       <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: "absolute", inset: 0 }}><NeonDefs />{v.hud || null}</svg>
-      {black > 0 ? <AbsoluteFill style={{ background: "#000", opacity: black }} /> : null}
+      {v.black ? <AbsoluteFill style={{ background: "#000", opacity: v.black }} /> : null}
     </AbsoluteFill>
   );
+};
+/** the edit: hard cuts on the line changes, a 10-frame transition where a shot asks for one (the outgoing shot is
+ *  extended by the transition length so every cut still lands on its narration cue) */
+const Scene: React.FC<SceneProps> = ({ spans, words }) => {
+  const parentOf = (id: string) => DEF[id].parent;
+  const range = (p: string) => { const ss = spans.filter((x) => parentOf(x.id) === p); return [ss[0].a, ss[ss.length - 1].b]; };
+  const out: React.ReactNode[] = [];
+  spans.forEach((sp, i) => {
+    const next = spans[i + 1];
+    const tr = next ? DEF[next.id].tr : undefined;
+    const [pa, pb] = range(parentOf(sp.id));
+    out.push(<TransitionSeries.Sequence key={sp.id} durationInFrames={Math.max(1, sp.b - sp.a + (tr ? TR_FRAMES : 0))}>
+      <ShotView span={sp} pa={pa} pb={pb} words={words} />
+    </TransitionSeries.Sequence>);
+    if (tr) out.push(<TransitionSeries.Transition key={sp.id + "-tr"} presentation={presentation(tr)} timing={linearTiming({ durationInFrames: TR_FRAMES })} />);
+  });
+  return <AbsoluteFill style={{ background: N3.bg }}><TransitionSeries>{out}</TransitionSeries></AbsoluteFill>;
 };
 
 const story: Omit<Story, "script"> & { script?: string } = {

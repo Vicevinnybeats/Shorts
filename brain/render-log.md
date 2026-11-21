@@ -290,3 +290,7 @@ library/previews/whatif/wi-gta-leonida-stick3d.png. Note: three's ExtrudeGeometr
 | 2026-11-21 19:12 | health-check | - | audio-mix | 2 | 2065 | success (run 44938853872) |
 | 2026-11-21 19:12 | health-check | - | report | 1 | 2066 | running (run 44938853872) |
 | 2026-11-21 19:14 | render-stills | wi-gta-nosleep  | stills | 4 | 2047 | running (run 44939600514) |
+2026-11-21 wi-gta-leonida RE-EDIT (real shots + cuts): 26 shots (14 lines -> 1-2 shots each: wide / medium / insert, own short
+camera move per shot), hard cuts on line changes, 5 x 10-frame @remotion/transitions (slide miami, wipe gators, fade tv,
+slide rules, fade ask), sub-shots share the parent HUD clock. Couch drawn without its coral pillow. 29 local stills checked;
+contact sheet rebuilt (library/previews/whatif/wi-gta-leonida-stick3d.png).
