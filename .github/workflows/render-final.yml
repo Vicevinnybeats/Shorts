@@ -47,12 +47,46 @@ jobs:
           echo "comp=$(node -p "require('./episodes/$id/episode.json').composition || 'Ep-$id'")" >> "$GITHUB_OUTPUT"
       - uses: ./.github/actions/setup
         with: { render: "false", audio: "true", voice: "true" }
-      - name: Voice (${{ env.NARRATOR_ENGINE }} / ${{ env.NARRATOR_VOICE }})
-        env: { VOICE_KEY: "${{ secrets.VOICE_KEY }}" }
+      # Chatterbox (MIT) needs Python 3.11 in its own venv; the job's main Python (3.12) is left untouched
+      - uses: actions/setup-python@v5
+        id: py311
+        with: { python-version: "3.11", update-environment: false }
+      - uses: actions/cache@v4
+        with: { path: ~/.cache/huggingface, key: hf-chatterbox-v1 }
+      - name: Voice (owner clone via Chatterbox by default; Kokoro fallback)
+        env: { VOICE_KEY: "${{ secrets.VOICE_KEY }}", PY311: "${{ steps.py311.outputs.python-path }}" }
         run: |
-          B=episodes/${{ steps.ep.outputs.id }}/build; mkdir -p $B/voice
-          OWN=$(ls episodes/${{ steps.ep.outputs.id }}/voice.{wav,m4a,mp3,aac,ogg} 2>/dev/null | head -1 || true)
-          if [ -n "$OWN" ]; then
+          id=${{ steps.ep.outputs.id }}
+          B=episodes/$id/build; mkdir -p $B/voice
+          OWN=$(ls episodes/$id/voice.{wav,m4a,mp3,aac,ogg} 2>/dev/null | head -1 || true)
+          # DEFAULT voice = owner's clone (Chatterbox, approved test 4). episode.json "clone": "none" -> Kokoro narrator;
+          # "clone_engine": "openvoice" -> old OpenVoice path. Settings overridable: "exag", "cfg", "ref_start", "pause".
+          CLONE=$(node -p "require('./episodes/$id/episode.json').clone || 'owner'")
+          CENG=$(node -p "require('./episodes/$id/episode.json').clone_engine || 'chatterbox'")
+          if [ -z "$OWN" ] && [ "$CLONE" = "owner" ] && [ -z "$VOICE_KEY" ]; then
+            echo "::warning::owner voice clone wanted but the VOICE_KEY secret is missing - using Kokoro"; CLONE=none
+          fi
+          if [ -z "$OWN" ] && [ "$CLONE" = "owner" ] && [ "$CENG" = "chatterbox" ]; then
+            EX=$(node -p "require('./episodes/$id/episode.json').exag || 0.65")
+            CF=$(node -p "require('./episodes/$id/episode.json').cfg || 0.4")
+            RS=$(node -p "require('./episodes/$id/episode.json').ref_start || 20")
+            export NARRATOR_GAP=$(node -p "require('./episodes/$id/episode.json').pause || 0.42")
+            echo "voice: owner clone (chatterbox) exag $EX cfg $CF pause $NARRATOR_GAP"
+            "$PY311" -m venv /tmp/cb
+            /tmp/cb/bin/pip install -q --upgrade pip
+            /tmp/cb/bin/pip install -q torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+            /tmp/cb/bin/pip install -q chatterbox-tts soundfile
+            openssl enc -d -aes-256-cbc -pbkdf2 -in assets/voice/owner_ref.wav.enc -out $B/voice/ref.wav -pass env:VOICE_KEY
+            /tmp/cb/bin/python pipeline/voice/chatterbox_tts.py episodes/$id/script.txt $B/voice/ref.wav $B/voice \
+              --exag "$EX" --cfg "$CF" --ref-start "$RS"
+            rm -f $B/voice/ref.wav
+            # same voice chain as approved test 4: rumble cut, light denoise, de-ess, compression, -13 LUFS
+            mv $B/voice/voice.wav $B/voice/voice_raw.wav
+            ffmpeg -loglevel error -y -i $B/voice/voice_raw.wav -af "highpass=f=75,afftdn=nf=-30,deesser=i=0.3,acompressor=threshold=-20dB:ratio=3:attack=5:release=80:makeup=2,loudnorm=I=-13:TP=-1:LRA=6" -ac 1 -ar 24000 $B/voice/voice.wav
+            rm -f $B/voice/voice_raw.wav
+            python pipeline/voice/align_words.py $B/voice/voice.wav episodes/$id/script.txt $B/voice/words.json
+            CLONE=done
+          elif [ -n "$OWN" ]; then
             # owner's own recorded narration (default when present): clean mono 24 kHz + word timings from the real voice
             echo "own voice: $OWN"
             ffmpeg -loglevel error -y -i "$OWN" -ac 1 -ar 24000 -af "highpass=f=70,loudnorm=I=-18:TP=-2" $B/voice/voice.wav
@@ -67,8 +101,7 @@ jobs:
             echo "voice: $V speed: $SP pause: $NARRATOR_GAP"
             python pipeline/voice/kokoro_tts.py episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice --voice "$V" --speed "$SP"
           fi
-          CLONE=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').clone || ''")
-          if [ -z "$OWN" ] && [ "$CLONE" = "owner" ]; then
+          if [ -z "$OWN" ] && [ "$CLONE" = "owner" ] && [ "$CENG" = "openvoice" ]; then
             if [ -n "$VOICE_KEY" ]; then
               # owner's voice clone (OpenVoice V2): Kokoro keeps words + pauses, OpenVoice swaps in the owner's timbre
               openssl enc -d -aes-256-cbc -pbkdf2 -in assets/voice/owner_ref.wav.enc -out $B/voice/ref.wav -pass env:VOICE_KEY

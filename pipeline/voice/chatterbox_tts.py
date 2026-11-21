@@ -1,6 +1,6 @@
 """Owner's voice clone with Chatterbox (Resemble AI, MIT licence): text -> voice.wav in the owner's own voice.
 
-usage: python pipeline/voice/chatterbox_tts.py <script.txt> <reference.wav> <out_dir> [--gap 0.42] [--exag 0.5] [--cfg 0.5]
+usage: python pipeline/voice/chatterbox_tts.py <script.txt> <reference.wav> <out_dir> [--gap 0.42] [--exag 0.65] [--cfg 0.4]  (approved test 4)
 Each sentence is generated separately (natural pauses), edge silences trimmed, joined with a constant pause.
 Word timings come afterwards from pipeline/voice/align_words.py (faster-whisper), like any recorded voice.
 """
@@ -12,7 +12,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("script"); ap.add_argument("ref"); ap.add_argument("out")
     ap.add_argument("--gap", type=float, default=float(os.environ.get("NARRATOR_GAP", "0.42")))
-    ap.add_argument("--exag", type=float, default=0.5); ap.add_argument("--cfg", type=float, default=0.5)
+    ap.add_argument("--exag", type=float, default=0.65); ap.add_argument("--cfg", type=float, default=0.4)
     ap.add_argument("--ref-start", type=float, default=20.0); ap.add_argument("--ref-len", type=float, default=12.0)
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)

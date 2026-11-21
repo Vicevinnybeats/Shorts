@@ -12,13 +12,12 @@
   OpenVoice rejected by owner (not his voice); VoiceStudio rejected (non-commercial licence).
 - Owner feedback so far: louder, cleaner, more energy, but don't over-stress single words ("sleep"). Current test 4:
   exag 0.65, cfg 0.4, chain highpass/afftdn/deesser/compressor/loudnorm -13 LUFS, sentence pauses 0.42 s.
-  Test 4 is in Drive "What if/Voice recordings (upload here)" (1F6XSSLmmOwDsKYZEjTQLwjTJO5NjTLoA) - WAITING for verdict.
-- When approved: wire Chatterbox into render-final.yml (episode.json "clone": "owner"; words via align_words.py; same
-  voice chain), then remake What If 1 and 2 when the owner says go.
+  Test 4 APPROVED by the owner (2026-11-21).
+- DONE: Chatterbox wired into render-final.yml as DEFAULT voice (test-4 settings, align_words.py timings). First real
+  check = the What If 1 remake. Next: remake What If 1 and 2 (Stick3D + Golden Neon) only when the owner says go.
 ## After that
-- Blender (Higgsfield Bridge MCP, bl_* tools): owner must open Blender + Higgsfield panel + Connect. Use only FREE tools
-  (no bl_generate_3d / credits). Save new objects + notes in brain/stick3d.
-  2026-11-21: bridge reports Blender connected, but bl_get_scene_summary timed out twice (Blender not answering; read-only, nothing changed).
+- Blender: owner will NOT use his computer and will NOT pay for Higgsfield -> no Higgsfield Bridge. Use free headless
+  Blender (GitHub Actions / cloud), bpy scripts in the repo, save objects + notes in brain/stick3d.
 ## Rules that matter most
 - Free only; never publish; one video at a time; stop after each and wait for the owner.
 - Agent World: PAUSED (don't call it).

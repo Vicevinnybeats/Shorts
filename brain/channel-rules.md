@@ -117,3 +117,10 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   voice chain: highpass 75, afftdn, deesser, compressor, loudnorm -16 LUFS (use the same chain in render-final).
 - 2026-11-21 owner on voice test 3: "the word 'sleep' is too much" + "louder" -> exaggeration 0.65 (not 0.75), no "!" on
   short punchy words (write "No sleep." not "No sleep!"), voice loudness -13 LUFS.
+- 2026-11-21 owner APPROVED voice test 4 ("do voice 4"). Chatterbox owner clone is now the DEFAULT narrator in
+  render-final.yml: exag 0.65, cfg 0.4, ref_start 20, pause 0.42 s, chain highpass75/afftdn/deesser/compressor/-13 LUFS,
+  word timings via align_words.py. episode.json overrides: "clone": "none" (Kokoro), "clone_engine": "openvoice",
+  "exag", "cfg", "ref_start", "pause". Note: Chatterbox ignores "speed" (Kokoro only). Not yet tested in a full render.
+- 2026-11-21 owner: does NOT want to use his own computer and does NOT want to pay for Higgsfield. -> No Higgsfield
+  Bridge / local Blender. 3D objects instead from Blender run HEADLESS for free (GitHub Actions or the cloud container),
+  bpy scripts committed to the repo, results saved in brain/stick3d. Never spend Higgsfield credits.
