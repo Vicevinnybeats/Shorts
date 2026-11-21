@@ -104,7 +104,7 @@ const Table: React.FC<{ z?: number }> = ({ z = 0.9 }) => (
   </group>
 );
 /** Remy's gaming den (navy brick, gold/coral neon, night window, clock, shelf, lamp, couch, table, rug, beanbag) */
-const GamerRoom: React.FC<{ t: number; dawn?: number; clockH?: number; table?: boolean; snacks?: number; tvGlow?: number }> = ({ t, dawn = 0, clockH = 0, table = true, snacks = 8, tvGlow = 1 }) => {
+const GamerRoom: React.FC<{ t: number; dawn?: number; clockH?: number; table?: boolean; snacks?: number; tvGlow?: number; decor?: boolean }> = ({ t, dawn = 0, clockH = 0, table = true, snacks = 8, tvGlow = 1, decor = true }) => {
   const tv = tvGlow * (0.75 + 0.25 * Math.abs(Math.sin(t * 9.3) * Math.cos(t * 3.9)));
   return (<>
     <Lights3 warm={dawn > 0.4 ? "#ffd59a" : "#ffcf9a"} k={0.95 + 0.15 * dawn} />
@@ -114,9 +114,9 @@ const GamerRoom: React.FC<{ t: number; dawn?: number; clockH?: number; table?: b
     <NeonBar p={[0, 6.3, -4.9]} s={[15, 0.07, 0.05]} color={N3.gold} />
     <NeonBar p={[-6.4, 3.2, -4.9]} s={[0.07, 5.2, 0.05]} color={N3.coral} glow={0.4} />
     <NightWindow p={[4.4, 3.9, -4.92]} s={[3.2, 2.5]} dawn={dawn} />
-    <NeonClock p={[-5.0, 3.6, -4.9]} r={0.55} hours={clockH} />
+    {decor && <><NeonClock p={[-5.0, 3.6, -4.9]} r={0.55} hours={clockH} />
     <NeonPoster p={[-3.2, 3.0, -4.92]} s={[1.2, 1.6]} art={0} />
-    <NeonPoster p={[2.2, 2.9, -4.92]} s={[0.9, 1.2]} art={1} />
+    <NeonPoster p={[2.2, 2.9, -4.92]} s={[0.9, 1.2]} art={1} /></>}
     <Shelf p={[-7.3, 0, -4.4]} w={2.4} rows={4} wood="#24180e" cols={[N3.gold, "#2a3355", N3.coral, "#1d2236", N3.amber, "#3a2c52"]} />
     <Lamp p={[7.2, 0, -3.4]} color={N3.amber} /><Halo p={[7.2, 2.75, -3.4]} r={1.0} color={N3.amber} o={0.7} />
     <Ball p={[5.6, 0.55, -1.6]} r={0.75} color={N3.coral} s={[1.2, 0.75, 1.1]} />
@@ -125,7 +125,8 @@ const GamerRoom: React.FC<{ t: number; dawn?: number; clockH?: number; table?: b
     <Monitor p={[-5.6, 1.6, -4.3]} s={0.9} screen="#1a1730" />
     <Rug p={[0, 0, 0.3]} s={[7.5, 4.4]} a="#120d09" b={N3.gold} />
     <Couch />
-    {table && <><Table /><Snacks n={snacks} /></>}
+    {/* snack side table beside the couch (not in the foreground: nothing important in the caption band) */}
+    {table && <><group position={[-1.9, 0, -0.2]} scale={[0.6, 1.75, 0.8]}><Table z={0} /></group><group position={[-1.9, 0, -0.2]} scale={[0.6, 0.6, 0.6]}><Snacks n={snacks} x={0} z={0} y={1.72} /></group></>}
     <pointLight position={[0, 1.8, 4.0]} intensity={6 * tv} distance={10} decay={1.4} color="#ffcf9a" />
     <Halo p={[0, 1.6, 2.6]} r={2.6} color={N3.amber} o={0.05 * tv} />
     <Motes t={t} n={10} c={[0, 0.5, -1]} area={[5, 5, 3]} />
@@ -182,7 +183,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const jump = ready ? Math.max(0, Math.sin(((u - YR) / 14) * Math.PI)) * (u - YR < 14 ? 1 : 0) : 0;
       const world = <>
         <GamerRoom t={t} snacks={nSn} />
-        <group position={[0.9, 0.63, 0.75]} rotation={[-0.35, -0.2, 0]}>
+        <group position={[-1.3, 1.07, 0.05]} rotation={[-0.35, 0.2, 0]}>
           <Box p={[0, 0.3, 0]} s={[0.4, 0.7, 0.05]} color="#11131f" line={3} />
           <Panel p={[0, 0.3, 0.03]} s={[0.34, 0.62]} px={[136, 248]} dep={(silent ? 1 : 0) + Math.floor(u / 6) % 2 * 2} draw={(c, W, H) => {
             c.fillStyle = "#0a0c16"; c.fillRect(0, 0, W, H); c.textAlign = "center"; c.font = `900 26px ${FONT3}`;
@@ -269,8 +270,8 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         {Array.from({ length: 14 }, (_, i) => <NeonBar key={i} p={[0, 0.03, 8 - i * 1.6 + dash]} s={[0.1, 0.03, 0.7]} color={CYAN} glow={0} o={0.8} />)}
         {Array.from({ length: 6 }, (_, i) => <group key={i}><NeonBar p={[i % 2 ? 2.6 : -2.6, 1.4, 4 - i * 3.2]} s={[0.06, 2.8, 0.06]} color={CYAN} glow={0.3} /><Halo p={[i % 2 ? 2.6 : -2.6, 2.85, 4 - i * 3.2]} r={0.5} color={CYAN} o={0.6} /></group>)}
         <FloorPool p={[0, 0, -2]} r={3} color={CYAN} o={0.15} sx={0.6} />
-        <group position={[sway * 0.9, 0, -4.6]} rotation={[0, Math.PI / 2 + 0.35 * Math.cos(u * 0.07), 0]} scale={0.32}><Taxi p={[0, 0, 0]} color={CORAL} /></group>
-        <Halo p={[sway * 0.9, 0.3, -5.1]} r={0.6} color={CORAL} o={0.3} />
+        <group position={[sway * 0.9, 0, -5.6]} rotation={[0, Math.PI / 2 + 0.35 * Math.cos(u * 0.07), 0]} scale={0.32}><Taxi p={[0, 0, 0]} color={CORAL} /></group>
+        <Halo p={[sway * 0.9, 0.3, -6.0]} r={0.6} color={CORAL} o={0.3} />
         <Couch z={-7.5} />
         <Hero p={[0, 0.2, -7.55]} look={REMY} pose={{ arms: "hold", mood: head > 0.5 ? "dizzy" : "tired", lids: 0.3, bags: 0.8, sweat: 0.5, tilt: 0.16 * sway }} f={f} shadow={false} rimO={0.5} />
         <Pad p={[0, 1.2, -7.4]} f={f} />
@@ -329,11 +330,11 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const broken = k(u, FM + 16, FM + 50, 0, 1);
       const sick = u >= FS;
       const world = <>
-        <GamerRoom t={t} table={false} clockH={60} />
-        {[[-1.3, 1.8, 0.4], [1.7, 2.6, -0.6], [-2.2, 3.4, 1.2], [0.9, 3.6, 2.2], [2.6, 1.2, 1.6]].map(([x, z, r], i) =>
+        <GamerRoom t={t} table={false} clockH={60} decor={false} />
+        {[[-2.4, 0.9, 0.4], [2.6, 0.6, -0.6], [1.6, -0.3, 1.2], [-1.6, -0.2, 2.2], [2.0, 1.0, 1.6]].map(([x, z, r], i) =>
           <Box key={i} p={[x, 0.06, z]} s={[0.5, 0.08, 0.36]} rot={[0, r, 0]} color={SNACK_COLS[i % 5]} line={3} />)}
-        {[[-0.6, 3.0], [2.0, 2.2]].map(([x, z], i) => <Cyl key={i} p={[x, 0.1, z]} rt={0.1} h={0.34} rot={[0, 0, Math.PI / 2]} color={i ? N3.coral : N3.gold} line={2} />)}
-        <Pad p={[1.2, 0.1, 2.9]} f={0} rot={[0, 0.5, 0]} />
+        {[[-0.9, 0.8], [1.2, 0.2]].map(([x, z], i) => <Cyl key={i} p={[x, 0.1, z]} rt={0.1} h={0.34} rot={[0, 0, Math.PI / 2]} color={i ? N3.coral : N3.gold} line={2} />)}
+        <Pad p={[1.3, 0.1, 1.0]} f={0} rot={[0, 0.5, 0]} />
         <Hero p={[0, -0.75, 1.5]} look={REMY} pose={{ mood: sick ? "sick" : "tired", lids: 0.45, bags: 1, sweat: sick ? 0.9 : 0.4, hunch: 1, tilt: -0.12 + 0.05 * Math.sin(f * 0.08) * q, arms: "chest", armK: sick ? 1 : 0.3 }} f={f} shadow={false} rim={sick ? N3.coral : N3.amber} rimO={0.45} />
         <FloorPool p={[0, 0, 1.6]} r={1.6} color={sick ? N3.coral : N3.amber} o={0.45} />
         <Panel p={[0, 2.6 + 0.08 * Math.sin(f * 0.1), 1.6]} s={[1.8, 1.8]} px={[256, 256]} additive face o={1 - 0.75 * broken} dep={Math.round(broken * 40)} draw={(c, W) => {
@@ -345,8 +346,8 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       </>;
       const hud = !hide && <>
         <LiveCounter f={u} from={48} to={60} at={2} dur={20} tag="DAY 3" />
-        <HudText f={u} x={540} y={680} size={58} color={CORAL} enter="rise" at={FM + 10} out={len - 6}>MISSION ???</HudText>
-        <HudText f={u} x={540} y={770} size={62} color={AMBER} enter="scale" at={FS} out={len - 6}>YOU FEEL SICK</HudText>
+        <HudText f={u} x={540} y={670} size={56} color={CORAL} enter="rise" at={FM + 10} out={len - 6}>MISSION ???</HudText>
+        <HudText f={u} x={540} y={790} size={60} color={AMBER} enter="scale" at={FS} out={len - 6}>YOU FEEL SICK</HudText>
       </>;
       return { world, hud };
     }
@@ -364,11 +365,11 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <Floor kind="carpet" a="#1a1626" b="#16121f" w={30} d={44} />
         <WallDoor z={-5} W={24} kind="wood" a="#2a1b10" b="#23160c" />
         <SideWall x={-9} kind="wood" a="#24170d" b="#1f140b" />
-        <Panel p={[-2.6, 1.7, -4.88]} s={[1.5, 1.8]} px={[380, 460]} dep={year} draw={(c, W, H) => {
+        {isR && <Panel p={[-2.6, 1.7, -4.88]} s={[1.5, 1.8]} px={[380, 460]} dep={year} draw={(c, W, H) => {
           c.fillStyle = "#f3e7cf"; c.fillRect(0, 0, W, H); c.fillStyle = "#9a3a2a"; c.fillRect(0, 0, W, 110); c.fillStyle = "#fff6e6"; c.textAlign = "center"; c.font = `900 76px ${FONT3}`; c.fillText("JAN", W / 2, 82);
           c.fillStyle = "#2a1b10"; c.font = `900 120px ${FONT3}`; c.fillText(String(year), W / 2, 260);
           c.strokeStyle = "rgba(42,27,16,.35)"; c.lineWidth = 3; for (let r = 0; r < 3; r++) for (let q = 0; q < 6; q++) c.strokeRect(22 + q * 56, 300 + r * 50, 50, 44);
-        }} />
+        }} />}
         <NeonSign p={[0, 6.2, -4.85]} s={[4.2, 1.0]} text="SAN DIEGO" color={N3.gold} box />
         <NightWindow p={[2.8, 1.9, -4.92]} s={[2.2, 1.5]} seed={9} palm />
         <NeonClock p={[-2.8, 6.1, -4.88]} r={0.45} hours={u / 200} />
@@ -513,7 +514,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <Floor kind="carpet" a="#1a1626" b="#16121f" />
         <WallDoor z={-4} W={24} kind="wood" a="#2a1b10" b="#23160c" />
         <NightWindow p={[0.6, 4.7, -3.92]} s={[2.6, 1.8]} dawn={k(u, 0, len, 0, 0.8)} seed={11} />
-        <NeonClock p={[1.75, 1.85, -3.9]} r={0.45} hours={hrs} />
+        <NeonClock p={[-2.3, 2.75, -3.9]} r={0.42} hours={hrs} />
         <Panel p={[-2.2, 1.65, -3.92]} s={[0.9, 1.08]} px={[200, 240]} dep={1964} draw={(c, W, H) => { c.fillStyle = "#f3e7cf"; c.fillRect(0, 0, W, H); c.fillStyle = "#9a3a2a"; c.fillRect(0, 0, W, 60); c.fillStyle = "#2a1b10"; c.textAlign = "center"; c.font = `900 60px ${FONT3}`; c.fillText("1964", W / 2, 150); }} />
         <group position={[0, 0, -1.6]}>
           <Box p={[0, 0.35, 0]} s={[4.4, 0.7, 2.2]} color="#3a2412" />
@@ -527,7 +528,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <Box p={[3.2, 0.5, -2.4]} s={[1.0, 1.0, 0.9]} color="#3a2412" /><Lamp p={[3.2, 1.0, -2.4]} h={0.8} color={N3.amber} /><Halo p={[3.2, 2.0, -2.4]} r={0.8} color={N3.amber} o={0.55} />
         <Rug p={[0, 0, 1.2]} s={[5, 2.4]} a="#2a1410" b={N3.gold} />
         <HeroLight p={[-0.4, 0, -1.4]} h={6} r={1.8} t={t} o={0.7} />
-        {[0, 1, 2].map((i) => { const q = ((f / 70 + i / 3) % 1); return <NeonSign key={i} p={[-1.0 + q * 1.1, 1.75 + q * 0.7, -1.2]} s={[0.7, 0.7]} text="Z" color={N3.amber} face o={Math.min(1, (1 - q) * 3) * Math.min(1, q * 6)} />; })}
+        {[0, 1, 2].map((i) => { const q = ((f / 70 + i / 3) % 1); return <NeonSign key={i} p={[1.0 + q * 0.5, 2.0 + q * 0.5, -1.2]} s={[0.7, 0.7]} text="Z" color={N3.amber} face o={Math.min(1, (1 - q) * 3) * Math.min(1, q * 6)} />; })}
         <Motes t={t} c={[0, 0.5, -1]} area={[4, 4, 2]} />
         <Shot u={u} keys={[ck(0, [1.8, 3.3, 7.9], [0, 1.8, -1.4], 44, 0.02), ck(len, [0.8, 3.2, 7.45], [0, 1.78, -1.4], 44, 0)]} />
       </>;
