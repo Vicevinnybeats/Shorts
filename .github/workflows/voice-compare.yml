@@ -1,0 +1,57 @@
+name: voice-compare
+# Side-by-side voice test (never published): the same What If 1 lines read by
+#   A = owner clone, current settings (Chatterbox, one sentence at a time, heavy clean-up chain)
+#   B = owner clone, NATURAL (Chatterbox, several sentences per take, longer reference, light clarity chain)
+#   C = Kokoro bm_george (stock narrator, clarity reference)
+# -> artifact final-voicecompare/voicecompare.mp4 (A, beep, B, beep, C). Plain audio is never committed (public repo).
+on:
+  workflow_dispatch:
+  push:
+    paths: [".github/workflows/voice-compare.yml"]
+permissions: { contents: read }
+env:
+  TEXT: "What if you played GTA 6 for thirty days straight? No sleep. No breaks. Let's see how far you'd really get. Hour seventeen. You feel fine. You're not. In one study, after seventeen to nineteen hours awake, people did as badly on some tests as someone at the drink drive limit in many countries."
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with: { render: "false", audio: "true", voice: "true" }
+      - uses: actions/setup-python@v5
+        id: py311
+        with: { python-version: "3.11", update-environment: false }
+      - uses: actions/cache@v4
+        with: { path: ~/.cache/huggingface, key: hf-chatterbox-v1 }
+      - name: Voices A, B, C
+        env: { VOICE_KEY: "${{ secrets.VOICE_KEY }}", PY311: "${{ steps.py311.outputs.python-path }}" }
+        run: |
+          set -e
+          [ -n "$VOICE_KEY" ] || { echo "::error::VOICE_KEY secret missing"; exit 1; }
+          mkdir -p t/a t/b t/c final; printf '%s\n' "$TEXT" > t/script.txt
+          "$PY311" -m venv /tmp/cb
+          /tmp/cb/bin/pip install -q --upgrade pip
+          /tmp/cb/bin/pip install -q torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+          /tmp/cb/bin/pip install -q chatterbox-tts soundfile
+          openssl enc -d -aes-256-cbc -pbkdf2 -in assets/voice/owner_ref.wav.enc -out t/ref.wav -pass env:VOICE_KEY
+          # A: current render settings
+          /tmp/cb/bin/python pipeline/voice/chatterbox_tts.py t/script.txt t/ref.wav t/a --exag 0.65 --cfg 0.4 --gap 0.42
+          ffmpeg -loglevel error -y -i t/a/voice.wav -af "highpass=f=75,afftdn=nf=-30,deesser=i=0.3,acompressor=threshold=-20dB:ratio=3:attack=5:release=80:makeup=2,loudnorm=I=-13:TP=-1:LRA=6" -ac 1 -ar 24000 t/A.wav
+          # B: natural flow - 2-3 sentences per take, calmer emotion, longer voice prompt, no denoise (it smears), clarity EQ
+          /tmp/cb/bin/python pipeline/voice/chatterbox_tts.py t/script.txt t/ref.wav t/b --exag 0.5 --cfg 0.5 --gap 0.35 --chunk-chars 160 --ref-len 20
+          ffmpeg -loglevel error -y -i t/b/voice.wav -af "highpass=f=80,equalizer=f=220:t=q:w=1:g=-2,equalizer=f=3500:t=q:w=1.2:g=3,acompressor=threshold=-18dB:ratio=2.5:attack=8:release=120:makeup=2,loudnorm=I=-13:TP=-1:LRA=7" -ac 1 -ar 24000 t/B.wav
+          rm -f t/ref.wav
+          # C: Kokoro stock narrator
+          NARRATOR_GAP=0.42 python pipeline/voice/kokoro_tts.py t/script.txt t/c --voice bm_george --speed 0.92
+          ffmpeg -loglevel error -y -i t/c/voice.wav -af "loudnorm=I=-13:TP=-1:LRA=7" -ac 1 -ar 24000 t/C.wav
+          # A, beep, B, beep, C
+          ffmpeg -loglevel error -y -f lavfi -i "sine=f=880:d=0.25:sample_rate=24000,volume=0.3" -ac 1 t/beep0.wav
+          ffmpeg -loglevel error -y -f lavfi -i "anullsrc=r=24000:cl=mono" -t 0.8 t/gap.wav
+          ffmpeg -loglevel error -y -i t/gap.wav -i t/beep0.wav -i t/gap.wav -filter_complex "[0][1][2]concat=n=3:v=0:a=1" t/beep.wav
+          ffmpeg -loglevel error -y -i t/A.wav -i t/beep.wav -i t/B.wav -i t/beep.wav -i t/C.wav -filter_complex "[0][1][2][3][4]concat=n=5:v=0:a=1" t/all.wav
+          ffmpeg -loglevel error -y -f lavfi -i color=c=black:s=720x1280:r=30 -i t/all.wav -shortest -c:v libx264 -pix_fmt yuv420p -c:a aac -b:a 192k final/voicecompare.mp4
+          for x in A B C; do ffmpeg -nostats -i t/$x.wav -af ebur128 -f null - 2>&1 | grep -E "^ +I:" | sed "s/^/$x /"; done
+          ls -la final
+      - uses: actions/upload-artifact@v4
+        with: { name: final-voicecompare, path: final/voicecompare.mp4, retention-days: 7 }

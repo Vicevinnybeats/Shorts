@@ -14,6 +14,8 @@ def main():
     ap.add_argument("--gap", type=float, default=float(os.environ.get("NARRATOR_GAP", "0.42")))
     ap.add_argument("--exag", type=float, default=0.65); ap.add_argument("--cfg", type=float, default=0.4)
     ap.add_argument("--ref-start", type=float, default=20.0); ap.add_argument("--ref-len", type=float, default=12.0)
+    # natural flow: several sentences per generation (prosody carries across them); 0 = one sentence at a time
+    ap.add_argument("--chunk-chars", type=int, default=0)
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     import torch
@@ -26,6 +28,13 @@ def main():
     model = ChatterboxTTS.from_pretrained(device="cuda" if torch.cuda.is_available() else "cpu")
     text = " ".join(open(a.script, encoding="utf-8").read().split())
     sents = [s for s in re.split(r"(?<=[.!?])\s+", text) if s.strip()]
+    if a.chunk_chars > 0:  # group whole sentences into chunks of up to chunk_chars characters
+        groups, cur = [], ""
+        for s in sents:
+            if cur and len(cur) + 1 + len(s) > a.chunk_chars: groups.append(cur); cur = s
+            else: cur = (cur + " " + s).strip()
+        if cur: groups.append(cur)
+        sents = groups
     out, SR = [], model.sr
     for i, s in enumerate(sents):
         w = model.generate(s, audio_prompt_path=prompt, exaggeration=a.exag, cfg_weight=a.cfg).squeeze().cpu().numpy()
