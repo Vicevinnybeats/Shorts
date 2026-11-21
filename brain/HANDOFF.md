@@ -2,9 +2,8 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
-0. VOICE = Kokoro bm_george for EVERY video (owner pick, now render-final default). What If 1 re-render STOPPED by
-   owner (run 44924099314 cancelled 16:2x). Do not restart until the owner says so. Was:
-   (GO_FINAL, clone none, speed 0.92, pause 0.42, music -16). When done: git pull, check preview, send to owner.
+0. What If 1 REDO (owner 2026-11-21 ~16:40): Kokoro bm_george + better lighting + real shadows + camera that moves through
+   cuts. Builder agent upgrades story.tsx/kit, stills checked, then GO_FINAL render -> preview to owner.
    Items 1-3 below are history (owner dropped his clone).
 1. What If 1 sound fix DONE (remix 2, run 44922935325): clarity band 1-5 kHz -28.3 -> -23.4 LUFS (old What If 2 -23.7,
    gta-radio -21.2), bass -17.0, master -14.1; voice_eq in episode.json, music level_lu -19. Preview sent to owner,

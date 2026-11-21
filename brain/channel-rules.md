@@ -142,3 +142,13 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
 - 2026-11-21 owner: "kokoro bm_george is the best, use it for EVERY video". DEFAULT narrator = Kokoro bm_george (render-final
   default clone "none", NARRATOR_VOICE bm_george). What If pace: speed 0.92, pause 0.42. Owner clone only if an episode
   explicitly sets "clone": "owner". Stock TTS voice -> metadata contains_synthetic_media false (as old videos).
+- 2026-11-21 owner (What If 1 redo): voice = Kokoro bm_george (his pick). Make LIGHTING better + real SHADOWS (characters
+  and props cast soft shadows on floor/walls; no floating look) + CAMERA that keeps moving THROUGH cuts into the next scene
+  (motivated moves: push-in, orbit, whip/carry-over; no static shots, no hard jumps unless on purpose). Applies to EVERY video.
+- MISTAKES NOT TO REPEAT (owner feedback 2026-11-21):
+  1. Owner voice clone (Chatterbox/OpenVoice) = rejected: muddy, glued phrases, unnatural. Use Kokoro bm_george.
+  2. Never denoise a voice that is already clean (afftdn smears it). Check the 1-5 kHz band vs old videos (~-21..-24 LUFS).
+  3. Rooms were too dark: characters lit but sets murky. Keep sets readable, not just the hero.
+  4. Frame-check stills before rendering; text never under captions or the counter card.
+  5. Never use non-commercial licences (VoiceStudio/OmniVoice) and never spend credits.
+  6. Keep the state in brain/HANDOFF.md, not in chat (tokens).
