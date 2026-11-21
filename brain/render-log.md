@@ -164,3 +164,9 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-21 10:06 | render-final | wi-gta-nosleep | assemble | 2 | 1566 | success (run 44892202134) |
 | 2026-11-21 10:06 | render-final | wi-gta-nosleep | log | 1 | 1567 | success (run 44892202134) |
 | 2026-11-21 | local stills | wi-gta-leonida | 20 stills @0.4 (fixed Golden Neon kit, 1 fix round) | - | - | ~1.4 s/still; tsc ok; contact sheet scratchpad wi2/r2/sheet.jpg; voice bm_george pending in CI |
+| 2026-11-21 10:39 | render-final | wi-gta-leonida | voice-and-mix | 3 | 1570 | success (run 44894907117) |
+| 2026-11-21 10:39 | render-final | wi-gta-leonida | render (0-713) | 2 | 1572 | success (run 44894907117) |
+| 2026-11-21 10:39 | render-final | wi-gta-leonida | render (714-1427) | 2 | 1574 | success (run 44894907117) |
+| 2026-11-21 10:39 | render-final | wi-gta-leonida | render (1428-2140) | 2 | 1576 | success (run 44894907117) |
+| 2026-11-21 10:39 | render-final | wi-gta-leonida | assemble | 2 | 1578 | success (run 44894907117) |
+| 2026-11-21 10:39 | render-final | wi-gta-leonida | log | 1 | 1579 | success (run 44894907117) |
