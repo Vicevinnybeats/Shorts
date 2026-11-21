@@ -139,3 +139,6 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
 - 2026-11-21 owner: DROPS his own voice clone ("still not what I want") -> use a normal stock voice. VoiceStudio refused
   (non-commercial licence); owner chose "Kokoro, other voice" -> sent samples am_michael, am_fenrir, bm_george, af_heart
   (health/voice/). Waiting for his pick; then What If 1 re-render with episode.json "clone": "none" + "voice": <pick>.
+- 2026-11-21 owner: "kokoro bm_george is the best, use it for EVERY video". DEFAULT narrator = Kokoro bm_george (render-final
+  default clone "none", NARRATOR_VOICE bm_george). What If pace: speed 0.92, pause 0.42. Owner clone only if an episode
+  explicitly sets "clone": "owner". Stock TTS voice -> metadata contains_synthetic_media false (as old videos).

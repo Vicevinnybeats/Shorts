@@ -20,7 +20,7 @@ concurrency:
 
 env:
   NARRATOR_ENGINE: ${{ vars.NARRATOR_ENGINE || 'kokoro' }}
-  NARRATOR_VOICE: ${{ vars.NARRATOR_VOICE || 'am_michael' }}
+  NARRATOR_VOICE: ${{ vars.NARRATOR_VOICE || 'bm_george' }}
 
 jobs:
   voice-and-mix:
@@ -53,15 +53,15 @@ jobs:
         with: { python-version: "3.11", update-environment: false }
       - uses: actions/cache@v4
         with: { path: ~/.cache/huggingface, key: hf-chatterbox-v1 }
-      - name: Voice (owner clone via Chatterbox by default; Kokoro fallback)
+      - name: Voice (Kokoro bm_george by default; owner clone only if episode.json clone=owner)
         env: { VOICE_KEY: "${{ secrets.VOICE_KEY }}", PY311: "${{ steps.py311.outputs.python-path }}" }
         run: |
           id=${{ steps.ep.outputs.id }}
           B=episodes/$id/build; mkdir -p $B/voice
           OWN=$(ls episodes/$id/voice.{wav,m4a,mp3,aac,ogg} 2>/dev/null | head -1 || true)
-          # DEFAULT voice = owner's clone (Chatterbox, approved test 4). episode.json "clone": "none" -> Kokoro narrator;
+          # DEFAULT voice = Kokoro bm_george (owner 2026-11-21). episode.json "clone": "owner" -> owner's Chatterbox clone;
           # "clone_engine": "openvoice" -> old OpenVoice path. Settings overridable: "exag", "cfg", "ref_start", "pause".
-          CLONE=$(node -p "require('./episodes/$id/episode.json').clone || 'owner'")
+          CLONE=$(node -p "require('./episodes/$id/episode.json').clone || 'none'")
           CENG=$(node -p "require('./episodes/$id/episode.json').clone_engine || 'chatterbox'")
           if [ -z "$OWN" ] && [ "$CLONE" = "owner" ] && [ -z "$VOICE_KEY" ]; then
             echo "::warning::owner voice clone wanted but the VOICE_KEY secret is missing - using Kokoro"; CLONE=none
