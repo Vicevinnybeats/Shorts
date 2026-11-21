@@ -6,7 +6,10 @@ Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on thi
    What If 1 fix (no double text, microsleep framing, calm motion graphics) + What If 2 (wi-gta-leonida) remake in Stick3D
    + Blender props + lighting/shadows/camera carry-over, am_liam. One builder agent per video. Then GO_FINAL each,
    previews to owner. Items below are history.
-   STATUS: What If 1 fixes done (ec94d17), final render started (GO_FINAL 4c8759e). What If 2 builder running.
+   STATUS: What If 1 RENDERED (run 44936176684): 54.6 s, am_liam ~3.9 words/s (same rate as the sample owner chose),
+   master -14.1, 1-5 kHz -20.0 (clearest so far). Preview sent, WAITING for verdict.
+   What If 2 rebuilt (75f8ed6, 7 new Blender models, stills checked) -> GO_FINAL render started.
+   Lesson: two builders on one checkout -> a stale-index commit deleted files; use a worktree on a SEPARATE local branch.
 00. OWNER: bm_george "not natural, too slow" -> voice-samples.yml makes 11 Kokoro voices (natural flow, speed 1.05)
    into health/voice/samples/*.mp3 -> send to owner, he picks -> set render-final default + episode.json
    (NARRATOR_FLOW natural must be wired into render-final's Kokoro step), then re-render What If 1, then What If 2.
