@@ -115,3 +115,5 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   before wiring it into render-final (then: "clone": "owner" + engine chatterbox, words via align_words.py).
 - 2026-11-21 owner on Chatterbox test 1: "louder, cleaner, more emotion and energy" -> exaggeration 0.75, cfg 0.4,
   voice chain: highpass 75, afftdn, deesser, compressor, loudnorm -16 LUFS (use the same chain in render-final).
+- 2026-11-21 owner on voice test 3: "the word 'sleep' is too much" + "louder" -> exaggeration 0.65 (not 0.75), no "!" on
+  short punchy words (write "No sleep." not "No sleep!"), voice loudness -13 LUFS.
