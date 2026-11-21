@@ -170,3 +170,9 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 | 2026-11-21 10:39 | render-final | wi-gta-leonida | render (1428-2140) | 2 | 1576 | success (run 44894907117) |
 | 2026-11-21 10:39 | render-final | wi-gta-leonida | assemble | 2 | 1578 | success (run 44894907117) |
 | 2026-11-21 10:39 | render-final | wi-gta-leonida | log | 1 | 1579 | success (run 44894907117) |
+| 2026-11-21 13:33 | health-check | - | voice-kokoro | 5 | 1584 | success (run 44908447024) |
+| 2026-11-21 13:33 | health-check | - | render | 13 | 1597 | success (run 44908447024) |
+| 2026-11-21 13:33 | health-check | - | voice-voicestudio | 5 | 1602 | failure (run 44908447024) |
+| 2026-11-21 13:33 | health-check | - | drive | 1 | 1603 | success (run 44908447024) |
+| 2026-11-21 13:33 | health-check | - | audio-mix | 1 | 1604 | success (run 44908447024) |
+| 2026-11-21 13:33 | health-check | - | report | 1 | 1605 | running (run 44908447024) |
