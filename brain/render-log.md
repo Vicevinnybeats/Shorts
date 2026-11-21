@@ -189,3 +189,6 @@ Private repos get 2,000 free Linux minutes per month; the workflows warn at 1,50
 - ~2 s per half-scale still locally (swangle). Real timing comes from words.json at render time (all beats cue-driven).
 | 2026-11-21 13:49 | render-stills | wi-gta-nosleep  | stills | 2 | 1607 | running (run 44910624186) |
 | 2026-11-21 13:59 | render-stills | wi-gta-nosleep  | stills | 1 | 1608 | running (run 44911562601) |
+- 2026-11-21 (later): What If #1 now uses 12 Blender props (library/models, built by workflow blender-models) via
+  library/stick3d/glb.tsx, and a per-scene lighting rig (key + fill + gold rim + hero pool + motivated practicals:
+  lamp/TV/neon/window, cyan game light on the road, footlights on stage, gold calendar/blocks, coral stations).

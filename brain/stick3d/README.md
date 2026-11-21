@@ -32,3 +32,24 @@ in the Golden Neon colour theme (black/navy rooms, gold #f5b942 + coral #ff7a59 
 - Owner may record his own narration (more real than TTS). Upload folder: Drive "What if/Voice recordings (upload here)"
   id 1F6XSSLmmOwDsKYZEjTQLwjTJO5NjTLoA. Pipeline path to add when the first file arrives: use the uploaded file as
   voice.wav and run pipeline/voice/align_words.py (word timings) instead of Kokoro; captions follow the real voice.
+## Blender objects (built headless on GitHub Actions, saved for reuse in every later video)
+How: write blender/models/<name>.py (helpers in blender/models/_lib.py: palette, box/cyl/ball/torus, export, preview), push ->
+workflow blender-models (Blender 4.2.3 LTS tarball, cached) writes library/models/<name>.glb + previews/<name>.png +
+BUILD-LOG.txt and commits them back ([skip ci]). Use in Remotion: `<Glb name="couch" p=... fallback={...} />`
+(library/stick3d/glb.tsx: toon material + ink outlines, emissive parts unlit; served via public/models -> ../library/models).
+Units: 1 = scene unit (puppet h 2.5); origin at floor centre unless noted; front faces the camera (+Z in three).
+
+| name | file | what it is | colours | used in |
+|---|---|---|---|---|
+| couch | library/models/couch.glb | 3-seat couch, seat top 0.92, puppet sits inside the seat (legs hidden) | navy #252d48/#2e3758, coral pillow, gold emissive base strip | wi-gta-nosleep den (hook, crash, hour0, hour17, hour24, micro, ask) |
+| side_table | library/models/side_table.glb | snack side table, top at 1.0, lower shelf | dark wood #3a2717/#24180e, gold emissive edge | den |
+| game_controller | library/models/game_controller.glb | controller 0.56 wide (origin centre) | dark #1c2032, coral/gold/amber buttons, gold light bar | Remy's hands, speedrun station |
+| chips_bag | library/models/chips_bag.glb | chips bag 0.62 tall | coral, gold band | den snacks |
+| soda_can | library/models/soda_can.glb | can 0.34 tall | gold metal, coral band | den snacks |
+| pizza_box | library/models/pizza_box.glb | pizza box 0.95 square | cardboard #b9772e, coral logo | den snacks |
+| smartphone | library/models/smartphone.glb | phone on a stand (origin centre), screen drawn in scene | dark, ink screen | hour0 (SILENT) |
+| toy_car | library/models/toy_car.glb | toy car 1.35 long along +X | coral, dark glass/wheels, cyan headlights, gold roof light | hour24 game road |
+| mic_stand | library/models/mic_stand.glb | mic stand, mic at ~1.95 | dark base, steel pole, gold ring | day2 stage |
+| radio_1964 | library/models/radio_1964.glb | 1960s table radio | walnut #5a3a1e, amber dial/grille | 1964 room |
+| tv_1964 | library/models/tv_1964.glb | 1960s console TV with rabbit ears (top ~2.9) | wood, dark screen, cream knobs | 1964 room (OFF) |
+| bed_1964 | library/models/bed_1964.glb | wooden bed 4.4 long, headboard at -X, mattress top 0.95 | wood, cream mattress, white pillow, gold trim | Randy sleeps 14 h |
