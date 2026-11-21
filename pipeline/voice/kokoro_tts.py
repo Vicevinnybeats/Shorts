@@ -37,7 +37,12 @@ def main():
     GAP, PAD = float(os.environ.get("NARRATOR_GAP", "0.42")), 0.04
     # NARRATOR_FLOW=natural (owner 2026-11-21: "not natural, too slow"): whole paragraphs per take, Kokoro keeps its
     # own sentence rhythm; GAP only between paragraphs. Default stays "sentence" for old episodes.
-    split = r"\n\n+" if os.environ.get("NARRATOR_FLOW", "sentence") == "natural" else r"\n\n+|(?<=[.!?])\s+"
+    # owner 2026-11-21 (3rd note): natural flow without any breaks sounded "all pasted together" -> natural = one take
+    # per script LINE (a line = one beat), natural rhythm inside the line, a real pause (GAP) between beats.
+    natural = os.environ.get("NARRATOR_FLOW", "sentence") == "natural"
+    if natural:
+        flow = "\n".join(l.strip() for l in text.splitlines() if l.strip())
+    split = r"\n+" if natural else r"\n\n+|(?<=[.!?])\s+"
     for res in pipe(flow, voice=a.voice, speed=a.speed, split_pattern=split):
         chunk = res.audio.cpu().numpy() if hasattr(res.audio, "cpu") else np.asarray(res.audio)
         loud = np.flatnonzero(np.abs(chunk) > 0.02 * (np.abs(chunk).max() + 1e-9))

@@ -2,6 +2,9 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
+0000. (owner ~19:05) "No cuts, everything pasted together" -> What If 2 render CANCELLED (run 44938267008).
+   Voice: natural = per-line takes + 0.45 s pauses (kokoro_tts.py, render-final default). Picture: builder re-edits
+   What If 1 into real shots + cuts with @remotion/transitions; then the same for What If 2. Then render both, previews.
 000. (owner 2026-11-21 ~18:30) Voice am_liam natural 1.05 = default. BOTH videos in progress (owner asked for both):
    What If 1 fix (no double text, microsleep framing, calm motion graphics) + What If 2 (wi-gta-leonida) remake in Stick3D
    + Blender props + lighting/shadows/camera carry-over, am_liam. One builder agent per video. Then GO_FINAL each,

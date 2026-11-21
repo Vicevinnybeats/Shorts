@@ -161,3 +161,12 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   captions at the same time (e.g. red "YOU'RE NOT." stamp while the caption says "You're not."). On-screen text only
   adds NEW info (numbers, labels, counters, choices) or is timed so it does not overlap the caption saying it.
   Motion graphics: yes, smooth and purposeful, NOT extreme (no constant shaking, flashing, glitch spam).
+- 2026-11-21 owner on What If 1 (am_liam): "no cuts, everything pasted together in a sequence". Two causes:
+  (a) voice had no breaks at all (one paragraph take) -> natural flow now = one take per script LINE + 0.45 s pause
+      between lines (beats). Inside a line it stays natural. Each script line = one beat.
+  (b) picture was one continuous drifting camera with carry-over whips -> felt like one long sequence.
+  RULE: edit like a real Short: distinct SHOTS with real CUTS (hard cuts on the beat/line change, mostly), a few
+  purposeful transitions (slide/wipe/fade/zoom via the official @remotion/transitions TransitionSeries), different
+  framings per shot (wide / medium / close-up / insert), camera motion INSIDE a shot only. Not one continuous move.
+  Tool found on GitHub: @remotion/transitions (official Remotion package, same version as remotion). Others seen:
+  Remocn/remocn, av/remotion-bits (not added; check licence first).

@@ -100,7 +100,7 @@ jobs:
             V=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').voice || process.env.NARRATOR_VOICE")
             # owner 2026-11-21: am_liam, natural flow (paragraph takes), speed 1.05 = defaults
             SP=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').speed || 1.05")
-            export NARRATOR_GAP=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').pause || 0.3")
+            export NARRATOR_GAP=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').pause || 0.45")
             export NARRATOR_FLOW=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').flow || 'natural'")
             echo "voice: $V speed: $SP pause: $NARRATOR_GAP flow: $NARRATOR_FLOW"
             python pipeline/voice/kokoro_tts.py episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice --voice "$V" --speed "$SP"
