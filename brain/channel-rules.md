@@ -132,3 +132,7 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   ("Blender objects": name, what it is, colours, which video used it). Reuse before making a new one.
 - 2026-11-21 owner: EVERY scene needs DECENT LIGHTING (key + fill + rim on the characters, motivated practical lights,
   no flat/dark scenes) and What If videos use Blender .glb assets (headless Blender on Actions) for the main props.
+- 2026-11-21 owner on What If 1 render (Chatterbox test-4 settings): "not natural, not loud enough, not clear; should be
+  natural flow and clear". Asked to compare with VoiceStudio. VoiceStudio = OmniVoice CC-BY-NC (non-commercial, API refuses
+  until licence accepted, health checks fail) -> not usable on a monetized channel unless the owner decides otherwise.
+  Test voice-compare.yml: A current, B natural (multi-sentence takes, exag 0.5, cfg 0.5, ref 20 s, no denoise, clarity EQ), C Kokoro.
