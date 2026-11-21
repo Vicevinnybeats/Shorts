@@ -65,6 +65,10 @@ export const NeonText: React.FC<{ x: number; y: number; size: number; color?: st
   };
 
 type Enter = "rise" | "scale" | "words" | "type" | "present";
+/** max frames a "type"/"words" entrance may take (motion fix 2026-11-21: labels finish typing within ~0.35 s) */
+export const TYPE_MAX = 10;
+/** layout guards (owner rules): text box, caption band, lowest allowed figure pixel (screen space) */
+export const WI_SAFE = { top: 300, bottom: 1350, left: 60, right: 960, captionTop: 1440, captionBottom: 1640, figureMax: 1430 } as const;
 /** A HUD label with a deliberate entrance AND exit (motion rules). f/at/out in shot frames; hidden during crossfades. */
 export const HudText: React.FC<{ f: number; x: number; y: number; size: number; color?: string; enter?: Enter; at: number; out?: number; children: string;
   hidden?: boolean; tube?: boolean; anchor?: "start" | "middle" | "end"; spacing?: number }> =
@@ -73,8 +77,9 @@ export const HudText: React.FC<{ f: number; x: number; y: number; size: number; 
     const ex = Number.isFinite(out) ? leave(f, out) : 0;
     if (ex >= 1) return null;
     let txt = children, p = arrive(f, at, 12), s = 1, dy = 0;
-    if (enter === "type") { const n = Math.ceil(children.length * Math.min(1, (f - at + 1) / Math.max(6, children.length * 1.2))); txt = children.slice(0, n); p = 1; }
-    if (enter === "words") { const ws = children.split(" "); const n = Math.min(ws.length, 1 + Math.floor((f - at) / 3)); txt = ws.slice(0, n).join(" "); p = arrive(f, at, 8); }
+    // motion fix 2026-11-21: type/words always FINISH within TYPE_MAX frames (~0.33 s) - no half word on a held frame
+    if (enter === "type") { const n = Math.ceil(children.length * Math.min(1, (f - at + 1) / TYPE_MAX)); txt = children.slice(0, n); p = 1; }
+    if (enter === "words") { const ws = children.split(" "); const step = Math.min(3, TYPE_MAX / ws.length); const n = Math.min(ws.length, 1 + Math.floor((f - at) / step)); txt = ws.slice(0, n).join(" "); p = arrive(f, at, 8); }
     if (enter === "scale") s = 1.25 - 0.25 * backE(f, at, 12);
     if (enter === "rise") dy = (1 - p) * 30;
     if (enter === "present") p = 1;
