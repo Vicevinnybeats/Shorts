@@ -1,0 +1,42 @@
+{
+ "id": "wi-gta-leonida",
+ "title": "What If You Moved to the Real Leonida?",
+ "series": "WHAT IF #2",
+ "words": 214,
+ "cast": {
+  "remy": "LOOKS.remy (library/whatif/figure.tsx): neon silhouette, hoodie + beanie tuft"
+ },
+ "shots": [
+  {"id": "hook", "cue": "What if you", "place": "map", "narration": "What if you moved to the real Leonida? GTA 6's map is a made up Florida. So let's pack a bag and try the real one.",
+   "onScreenText": ["WHAT IF (draws on)", "DAY 001", "MOVE TO THE REAL LEONIDA?", "FAKE -> REAL", "PACK A BAG"]},
+  {"id": "miami", "cue": "Day one. Remy", "place": "miami", "narration": "Day one. Remy lands in Miami. The air feels like a warm, wet towel.",
+   "onScreenText": ["DAY 001", "MIAMI", "HUMIDITY meter", "WARM WET TOWEL"]},
+  {"id": "wish", "cue": "He wants the", "place": "wish", "narration": "He wants the full game experience. Swamps. Beaches. Fast cars.",
+   "onScreenText": ["WISHLIST", "SWAMPS", "BEACHES", "FAST CARS"]},
+  {"id": "golf", "cue": "Day three. A", "place": "golf", "narration": "Day three. A golf course. Something is lying next to the pond. It's not a log.",
+   "onScreenText": ["DAY 003", "GOLF COURSE", "NOT A LOG"]},
+  {"id": "gators", "cue": "Florida has around", "place": "count", "narration": "Florida has around one point three million alligators. Wildlife officials say they live in all sixty seven counties.",
+   "onScreenText": ["~1,300,000", "ALLIGATORS", "ALL 67 COUNTIES"]},
+  {"id": "twist", "cue": "Scared? Here's the", "place": "twist", "narration": "Scared? Here's the twist. Serious alligator injuries are rare. Most gators avoid people.",
+   "onScreenText": ["SCARED?", "SERIOUS INJURIES: RARE", "MOST AVOID PEOPLE"]},
+  {"id": "above", "cue": "The bigger danger", "place": "above", "narration": "The bigger danger is above you.",
+   "onScreenText": ["LOOK UP"]},
+  {"id": "sky", "cue": "Day ten. Every", "place": "sky", "narration": "Day ten. Every afternoon, the same sky. Sunshine at noon. Thunder by four.",
+   "onScreenText": ["DAY 010", "NOON", "4 PM"]},
+  {"id": "strikes", "cue": "Florida gets more", "place": "bolts", "narration": "Florida gets more lightning per square kilometer than any other state,",
+   "onScreenText": ["LIGHTNING PER KM²", "FLORIDA #1", "OTHER STATES"]},
+  {"id": "deaths", "cue": "and it has", "place": "rank", "narration": "and it has led the country in lightning deaths for years.",
+   "onScreenText": ["LIGHTNING DEATHS", "#1 STATE"]},
+  {"id": "tv", "cue": "Day thirty. A", "place": "tv", "narration": "Day thirty. A cone appears on every TV. Hurricane season.",
+   "onScreenText": ["DAY 030", "HURRICANE SEASON"]},
+  {"id": "landfall", "cue": "Roughly forty percent", "place": "donut", "narration": "Roughly forty percent of all hurricanes that hit the United States make landfall in Florida.",
+   "onScreenText": ["~40%", "OF US HURRICANE LANDFALLS"]},
+  {"id": "rules", "cue": "So Remy learns", "place": "rules", "narration": "So Remy learns the real rules. Watch the sky, not just the water. When thunder roars, go indoors.",
+   "onScreenText": ["REAL RULES", "WATCH THE SKY", "WHEN THUNDER ROARS, GO INDOORS"]},
+  {"id": "respawn", "cue": "In the game,", "place": "respawn", "narration": "In the game, you respawn. In real life, the weather doesn't care.",
+   "onScreenText": ["RESPAWN?", "NO RESPAWN"]},
+  {"id": "ask", "cue": "Would you still", "place": "cards", "narration": "Would you still move to Leonida? A, for the beaches. B, for the gators. C, never. D, I already live there.",
+   "onScreenText": ["STILL MOVE?", "A BEACHES", "B GATORS", "C NEVER", "D I LIVE THERE"]}
+ ],
+ "look": "Golden Neon (library/whatif/kit.tsx, brain/style-whatif.md)"
+}
