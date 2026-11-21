@@ -50,7 +50,13 @@ jobs:
       - name: Voice (${{ env.NARRATOR_ENGINE }} / ${{ env.NARRATOR_VOICE }})
         run: |
           B=episodes/${{ steps.ep.outputs.id }}/build; mkdir -p $B/voice
-          if [ "$NARRATOR_ENGINE" = "voicestudio" ]; then
+          OWN=$(ls episodes/${{ steps.ep.outputs.id }}/voice.{wav,m4a,mp3,aac,ogg} 2>/dev/null | head -1 || true)
+          if [ -n "$OWN" ]; then
+            # owner's own recorded narration (default when present): clean mono 24 kHz + word timings from the real voice
+            echo "own voice: $OWN"
+            ffmpeg -loglevel error -y -i "$OWN" -ac 1 -ar 24000 -af "highpass=f=70,loudnorm=I=-18:TP=-2" $B/voice/voice.wav
+            python pipeline/voice/align_words.py $B/voice/voice.wav episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice/words.json
+          elif [ "$NARRATOR_ENGINE" = "voicestudio" ]; then
             bash pipeline/voice/voicestudio_tts.sh episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice
             python pipeline/voice/align_words.py $B/voice/voice.wav episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice/words.json
           else

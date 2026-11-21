@@ -87,3 +87,8 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
 - 2026-11-21 owner: ONLY video 2 for now. #3 (wi-gta-physics) script is ready but must NOT be built until the owner says so.
 - 2026-11-21: Stick3D pack installed (brain/stick3d/README.md). What If 1+2 deleted from Drive; remake both with Stick3D
   in Golden Neon colours when the owner says go. Voice: sentence pauses 0.42 s, speed 0.92 for What If.
+- VOICE ORDER (owner 2026-11-21): 1) owner's OWN recorded voice first (always, when a recording exists),
+  2) Kokoro bm_george only as fallback. Then use Blender MCP for better 3D objects (save them in brain/stick3d).
+  How it works: owner uploads <episode-id>.m4a to Drive "What if/Voice recordings (upload here)"
+  (1F6XSSLmmOwDsKYZEjTQLwjTJO5NjTLoA) -> Claude downloads it to episodes/<id>/voice.m4a -> render-final uses it
+  (ffmpeg clean + loudnorm, faster-whisper word timings) instead of TTS. Repo is public: the recording becomes public too.
