@@ -92,3 +92,9 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   How it works: owner uploads <episode-id>.m4a to Drive "What if/Voice recordings (upload here)"
   (1F6XSSLmmOwDsKYZEjTQLwjTJO5NjTLoA) -> Claude downloads it to episodes/<id>/voice.m4a -> render-final uses it
   (ffmpeg clean + loudnorm, faster-whisper word timings) instead of TTS. Repo is public: the recording becomes public too.
+- 2026-11-21 owner: ONE long recording of his voice, reused for ALL videos (not per video) -> plan: free open-source
+  voice cloning from a clean reference clip. Preferred engine: Chatterbox TTS (Resemble AI, MIT licence, CPU OK,
+  zero-shot from ~10-30 s reference). Avoid non-commercial licences (Coqui XTTS CPML, F5-TTS CC-BY-NC weights).
+  Upload goes to Drive "What if/Voice recordings (upload here)". Not built yet: waits for the upload.
+  Privacy: repo is public -> keep the reference clip out of the repo if the owner wants (options: private assets repo
+  + token secret, or accept it being public). Metadata must still say the narration is a synthetic copy of his voice.
