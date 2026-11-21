@@ -113,3 +113,5 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   CC-BY-NC non-commercial). Owner: "take the best one" -> Chatterbox (MIT) test made: pipeline/voice/chatterbox_tts.py,
   workflow voice-test-chatterbox (own venv, Python 3.11, encrypted ref + VOICE_KEY). Waiting for owner's verdict
   before wiring it into render-final (then: "clone": "owner" + engine chatterbox, words via align_words.py).
+- 2026-11-21 owner on Chatterbox test 1: "louder, cleaner, more emotion and energy" -> exaggeration 0.75, cfg 0.4,
+  voice chain: highpass 75, afftdn, deesser, compressor, loudnorm -16 LUFS (use the same chain in render-final).

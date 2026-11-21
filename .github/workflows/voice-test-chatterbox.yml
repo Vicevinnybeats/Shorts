@@ -33,7 +33,9 @@ jobs:
           openssl enc -d -aes-256-cbc -pbkdf2 -in assets/voice/owner_ref.wav.enc -out t/ref.wav -pass env:VOICE_KEY
           python pipeline/voice/chatterbox_tts.py t/script.txt t/ref.wav t --exag "${{ inputs.exag }}" --cfg "${{ inputs.cfg }}" --ref-start "${{ inputs.ref_start }}"
           rm -f t/ref.wav
-          ffmpeg -loglevel error -y -f lavfi -i color=c=black:s=720x1280:r=30 -i t/voice.wav -shortest -c:v libx264 -pix_fmt yuv420p -c:a aac -b:a 192k final/voicetest2.mp4
+          # louder + cleaner: rumble cut, light denoise, gentle de-ess, compression, loudness -16 LUFS
+          ffmpeg -loglevel error -y -i t/voice.wav -af "highpass=f=75,afftdn=nf=-30,deesser=i=0.3,acompressor=threshold=-20dB:ratio=3:attack=5:release=80:makeup=2,loudnorm=I=-16:TP=-1.5:LRA=7" -ar 24000 t/voice_clean.wav
+          ffmpeg -loglevel error -y -f lavfi -i color=c=black:s=720x1280:r=30 -i t/voice_clean.wav -shortest -c:v libx264 -pix_fmt yuv420p -c:a aac -b:a 192k final/voicetest2.mp4
           ls -la final
       - uses: actions/upload-artifact@v4
         with: { name: final-voicetest2, path: final/voicetest2.mp4, retention-days: 7 }
