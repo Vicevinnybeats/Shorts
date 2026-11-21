@@ -28,3 +28,7 @@ in the Golden Neon colour theme (black/navy rooms, gold #f5b942 + coral #ff7a59 
 ## Next (NOT started, owner: "don't start yet")
 - What If 1 (wi-gta-nosleep) + 2 (wi-gta-leonida): deleted from Drive (trash) -> REMAKE both with Stick3D in Golden Neon.
 - Owner wants better 3D objects made with Blender (MCP) and saved here -> see "Blender objects" when done.
+## Own voice (owner asked 2026-11-21)
+- Owner may record his own narration (more real than TTS). Upload folder: Drive "What if/Voice recordings (upload here)"
+  id 1F6XSSLmmOwDsKYZEjTQLwjTJO5NjTLoA. Pipeline path to add when the first file arrives: use the uploaded file as
+  voice.wav and run pipeline/voice/align_words.py (word timings) instead of Kokoro; captions follow the real voice.
