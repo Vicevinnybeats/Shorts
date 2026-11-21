@@ -2,6 +2,10 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
+000. (owner 2026-11-21 ~18:30) Voice am_liam natural 1.05 = default. BOTH videos in progress (owner asked for both):
+   What If 1 fix (no double text, microsleep framing, calm motion graphics) + What If 2 (wi-gta-leonida) remake in Stick3D
+   + Blender props + lighting/shadows/camera carry-over, am_liam. One builder agent per video. Then GO_FINAL each,
+   previews to owner. Items below are history.
 00. OWNER: bm_george "not natural, too slow" -> voice-samples.yml makes 11 Kokoro voices (natural flow, speed 1.05)
    into health/voice/samples/*.mp3 -> send to owner, he picks -> set render-final default + episode.json
    (NARRATOR_FLOW natural must be wired into render-final's Kokoro step), then re-render What If 1, then What If 2.

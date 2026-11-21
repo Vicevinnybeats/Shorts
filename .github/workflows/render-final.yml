@@ -20,7 +20,7 @@ concurrency:
 
 env:
   NARRATOR_ENGINE: ${{ vars.NARRATOR_ENGINE || 'kokoro' }}
-  NARRATOR_VOICE: ${{ vars.NARRATOR_VOICE || 'bm_george' }}
+  NARRATOR_VOICE: ${{ vars.NARRATOR_VOICE || 'am_liam' }}
 
 jobs:
   voice-and-mix:
@@ -53,13 +53,13 @@ jobs:
         with: { python-version: "3.11", update-environment: false }
       - uses: actions/cache@v4
         with: { path: ~/.cache/huggingface, key: hf-chatterbox-v1 }
-      - name: Voice (Kokoro bm_george by default; owner clone only if episode.json clone=owner)
+      - name: Voice (Kokoro am_liam by default; owner clone only if episode.json clone=owner)
         env: { VOICE_KEY: "${{ secrets.VOICE_KEY }}", PY311: "${{ steps.py311.outputs.python-path }}" }
         run: |
           id=${{ steps.ep.outputs.id }}
           B=episodes/$id/build; mkdir -p $B/voice
           OWN=$(ls episodes/$id/voice.{wav,m4a,mp3,aac,ogg} 2>/dev/null | head -1 || true)
-          # DEFAULT voice = Kokoro bm_george (owner 2026-11-21). episode.json "clone": "owner" -> owner's Chatterbox clone;
+          # DEFAULT voice = Kokoro am_liam, natural flow, speed 1.05 (owner 2026-11-21). episode.json "clone": "owner" -> owner's Chatterbox clone;
           # "clone_engine": "openvoice" -> old OpenVoice path. Settings overridable: "exag", "cfg", "ref_start", "pause".
           CLONE=$(node -p "require('./episodes/$id/episode.json').clone || 'none'")
           CENG=$(node -p "require('./episodes/$id/episode.json').clone_engine || 'chatterbox'")
@@ -98,9 +98,11 @@ jobs:
             python pipeline/voice/align_words.py $B/voice/voice.wav episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice/words.json
           else
             V=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').voice || process.env.NARRATOR_VOICE")
-            SP=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').speed || 1.0")
-            export NARRATOR_GAP=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').pause || 0.42")
-            echo "voice: $V speed: $SP pause: $NARRATOR_GAP"
+            # owner 2026-11-21: am_liam, natural flow (paragraph takes), speed 1.05 = defaults
+            SP=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').speed || 1.05")
+            export NARRATOR_GAP=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').pause || 0.3")
+            export NARRATOR_FLOW=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').flow || 'natural'")
+            echo "voice: $V speed: $SP pause: $NARRATOR_GAP flow: $NARRATOR_FLOW"
             python pipeline/voice/kokoro_tts.py episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice --voice "$V" --speed "$SP"
           fi
           if [ -z "$OWN" ] && [ "$CLONE" = "owner" ] && [ "$CENG" = "openvoice" ]; then

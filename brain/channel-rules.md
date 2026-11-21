@@ -155,3 +155,9 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
 - 2026-11-21 owner on What If 1 redo: bm_george "not natural and too slow" (speed 0.92 + 0.42 s per-sentence pauses).
   -> new Kokoro option NARRATOR_FLOW=natural (paragraph takes), samples of 11 voices at speed 1.05 (voice-samples.yml ->
   health/voice/samples/). Owner picks a voice BEFORE What If 2. Never again speed < 1.0 or per-sentence pauses by default.
+- 2026-11-21 owner: VOICE = Kokoro am_liam for EVERY video (render-final default), natural flow (paragraph takes),
+  speed 1.05, pause 0.3. bm_george (slow, per-sentence) rejected.
+- ANIMATION RULE (owner 2026-11-21): NO DOUBLE TEXT. On-screen text/stamps must never show the same words as the
+  captions at the same time (e.g. red "YOU'RE NOT." stamp while the caption says "You're not."). On-screen text only
+  adds NEW info (numbers, labels, counters, choices) or is timed so it does not overlap the caption saying it.
+  Motion graphics: yes, smooth and purposeful, NOT extreme (no constant shaking, flashing, glitch spam).

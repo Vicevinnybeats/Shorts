@@ -34,7 +34,6 @@
   "publish": false,
   "clone": "none",
   "gl": "swangle",
-  "voice": "bm_george",
-  "speed": 0.92,
-  "pause": 0.42
+  "voice": "am_liam",
+  "flow": "natural"
 }
