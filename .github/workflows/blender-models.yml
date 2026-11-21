@@ -1,0 +1,61 @@
+name: blender-models
+# Headless Blender (free, no owner computer): builds every blender/models/<name>.py into library/models/<name>.glb
+# + a small preview library/models/previews/<name>.png, logs to library/models/BUILD-LOG.txt and commits the results
+# back to the same branch ([skip ci], GITHUB_TOKEN pushes never trigger other workflows). Models are kept for reuse.
+on:
+  workflow_dispatch:
+  push:
+    paths: ["blender/models/**", ".github/workflows/blender-models.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: blender-models-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  models:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      BLENDER_VER: "4.2.3"
+      BLENDER_DIR: /home/runner/blender-bin
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: System libraries for Blender
+        run: sudo apt-get update -q && sudo apt-get install -y -q libxi6 libxkbcommon0 libsm6 libgl1 libegl1 libxrender1 libxxf86vm1 libxfixes3 xz-utils >/dev/null
+      - name: Cache Blender
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.BLENDER_DIR }}
+          key: blender-${{ env.BLENDER_VER }}-linux-x64
+      - name: Install Blender (official LTS tarball, apt fallback)
+        run: |
+          set -u
+          B="$BLENDER_DIR/blender-$BLENDER_VER-linux-x64/blender"
+          if [ ! -x "$B" ]; then
+            mkdir -p "$BLENDER_DIR"
+            url="https://download.blender.org/release/Blender${BLENDER_VER%.*}/blender-$BLENDER_VER-linux-x64.tar.xz"
+            if curl -fsSL --retry 3 "$url" -o /tmp/blender.tar.xz && tar -xJf /tmp/blender.tar.xz -C "$BLENDER_DIR"; then echo "tarball ok"
+            else echo "::warning::tarball failed, using apt blender"; sudo apt-get install -y -q blender >/dev/null; B=$(command -v blender); fi
+          fi
+          echo "BLENDER=$B" >> "$GITHUB_ENV"
+          "$B" -b --factory-startup --version | head -3
+      - name: Build models + previews
+        run: |
+          mkdir -p library/models/previews
+          log=library/models/BUILD-LOG.txt
+          { echo "build $(date -u +%FT%TZ) commit ${GITHUB_SHA::7} blender $("$BLENDER" -b --factory-startup --version 2>/dev/null | head -1)"; } > "$log"
+          for f in blender/models/*.py; do
+            n=$(basename "$f" .py); case "$n" in _*) continue;; esac
+            out="library/models/$n.glb"; prev="library/models/previews/$n.png"
+            if timeout 300 "$BLENDER" -b --factory-startup --python-exit-code 1 -P "$f" -- "$out" "$prev" > "/tmp/$n.log" 2>&1; then st=ok; else st=FAIL; fi
+            sz=$( [ -f "$out" ] && stat -c %s "$out" || echo 0 )
+            echo "$n: $st glb=${sz}B preview=$( [ -f "$prev" ] && echo yes || echo no )" | tee -a "$log"
+            grep -E "MODEL|PREVIEW|Error|error|Traceback|line [0-9]+" "/tmp/$n.log" | tail -15 | sed 's/^/    /' >> "$log" || true
+          done
+          cat "$log"
+      - name: Commit models back
+        run: bash scripts/commit-push.sh "models: headless Blender build (${GITHUB_SHA::7})" library/models
