@@ -25,3 +25,15 @@
 ## 2026-11-20 scheduled post-launch fact check (GTA 6)
 - Verified: Metacritic 99 (ties highest ever). Not verified: sales (only Sensor Tower estimates; Take-Two gave no figure yet).
 - All 3 post-launch scripts still accurate. Suggested addition to gta-hype: the 99 Metacritic line. Re-check sales after Take-Two reports.
+
+## 2026-11-21 owner on What If 1: "some animations are wrong" + "the voice pauses too much, should be natural" (REMEMBER)
+Problems found in wi-gta-nosleep (never repeat them):
+1. Typewriter labels held half-typed ("LAUNCH NIG", "PLAY · SLEEP · REPEA") -> labels finish in <=0.35 s, no cut words on held frames.
+2. Choice cards shown half-built at the start AND at the end -> once, at the end, fully built fast.
+3. Character close-ups ran behind the captions -> bodies always above y 1430.
+4. Empty black frames with tiny HUD -> bigger counters/bars, fill y 300-1350, add environment.
+5. Chapter screens overlapping subtitles/counter -> clear spacing, hide counter during chapters.
+6. Leftover glitch grid over the next beat (microsleep eyes) -> clean transitions.
+7. End text repeating the narration word for word -> on-screen text 2-4 words.
+Voice: pipeline/voice/kokoro_tts.py now reads lines as flowing paragraphs, trims chunk silences, 0.16 s breath gap.
+Kit fixes + rules live in library/whatif and brain/style-whatif.md ("Motion fixes 2026-11-21").
