@@ -63,7 +63,7 @@
    "id": "study",
    "cue": "In one study,",
    "place": "bars",
-   "narration": "In one study, after seventeen to nineteen hours awake, people did as badly on some tests as someone over the drink drive limit in many countries.",
+   "narration": "In one study, after seventeen to nineteen hours awake, people did as badly on some tests as someone at the drink drive limit in many countries.",
    "onScreenText": [
     "ONE STUDY (2000)",
     "17-19 H AWAKE",
@@ -89,7 +89,7 @@
    "id": "day2",
    "cue": "Day two. You",
    "place": "bubbles",
-   "narration": "Day two. You stumble over simple words.",
+   "narration": "Day two. You stumble over tongue twisters.",
    "onScreenText": [
     "DAY 2",
     "HOURS AWAKE 036",
