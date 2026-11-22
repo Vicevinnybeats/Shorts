@@ -339,3 +339,12 @@ contact sheet rebuilt (library/previews/whatif/wi-gta-leonida-stick3d.png).
   floods with the next scene colour, next shot 93 -> 100 %); HUD text word-by-word soft-to-sharp with rise; camera
   fast-then-slow inside each shot. 6 new Blender models. Stills ~4.1 s avg (max ~7 s on morph frames: 2 canvases).
 | 2026-11-22 20:47 | render-stills | wi-gta-nosleep  | stills | 4 | 2540 | running (run 45068120430) |
+| 2026-11-22 21:17 | render-final | wi-gta-nosleep | voice-and-mix | 4 | 2540 | success (run 45068163389) |
+| 2026-11-22 21:17 | render-final | wi-gta-nosleep | render (1260-1679) | 28 | 2568 | success (run 45068163389) |
+| 2026-11-22 21:17 | render-final | wi-gta-nosleep | render (420-839) | 27 | 2595 | success (run 45068163389) |
+| 2026-11-22 21:17 | render-final | wi-gta-nosleep | render (2100-2515) | 18 | 2613 | success (run 45068163389) |
+| 2026-11-22 21:17 | render-final | wi-gta-nosleep | render (840-1259) | 25 | 2638 | success (run 45068163389) |
+| 2026-11-22 21:17 | render-final | wi-gta-nosleep | render (1680-2099) | 19 | 2657 | success (run 45068163389) |
+| 2026-11-22 21:17 | render-final | wi-gta-nosleep | render (0-419) | 20 | 2677 | success (run 45068163389) |
+| 2026-11-22 21:17 | render-final | wi-gta-nosleep | assemble | 2 | 2679 | success (run 45068163389) |
+| 2026-11-22 21:17 | render-final | wi-gta-nosleep | log | 1 | 2680 | success (run 45068163389) |
