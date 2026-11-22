@@ -194,3 +194,6 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   until the owner says go.
 - Blender answer given: Blender MCP works with Claude Desktop / Claude Code ON HIS COMPUTER without Higgsfield (e.g. the
   "MCP for Blender" add-on), but needs his computer on. In the cloud we use headless Blender on GitHub Actions (free).
+- 2026-11-22 owner picked Gemini voice ALGIEBA (default for every video; render-final: episode.json "tts" default
+  "gemini", "gemini_voice" default "Algieba", Kokoro am_liam only as fallback). Some Gemini voices paused too long ->
+  style prompt now asks for brief natural breaths only (pipeline/voice/gemini_tts.py STYLE).

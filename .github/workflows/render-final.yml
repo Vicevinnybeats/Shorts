@@ -53,8 +53,8 @@ jobs:
         with: { python-version: "3.11", update-environment: false }
       - uses: actions/cache@v4
         with: { path: ~/.cache/huggingface, key: hf-chatterbox-v1 }
-      - name: Voice (Kokoro am_liam by default; owner clone only if episode.json clone=owner)
-        env: { VOICE_KEY: "${{ secrets.VOICE_KEY }}", PY311: "${{ steps.py311.outputs.python-path }}" }
+      - name: Voice (Google AI Studio Gemini "Algieba" by default; Kokoro am_liam fallback)
+        env: { VOICE_KEY: "${{ secrets.VOICE_KEY }}", PY311: "${{ steps.py311.outputs.python-path }}", GEMINI_API_KEY: "${{ secrets.GEMINI_API_KEY }}" }
         run: |
           id=${{ steps.ep.outputs.id }}
           B=episodes/$id/build; mkdir -p $B/voice
@@ -97,6 +97,21 @@ jobs:
             bash pipeline/voice/voicestudio_tts.sh episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice
             python pipeline/voice/align_words.py $B/voice/voice.wav episodes/${{ steps.ep.outputs.id }}/script.txt $B/voice/words.json
           else
+            # owner 2026-11-22: DEFAULT = Google AI Studio (Gemini TTS) voice Algieba; episode.json "tts": "kokoro" opts out,
+            # "gemini_voice" overrides. Kokoro below only runs if Gemini is off, has no key, or fails (quota).
+            TTS=$(node -p "require('./episodes/$id/episode.json').tts || 'gemini'")
+            GDONE=0
+            if [ "$TTS" = "gemini" ] && [ -n "$GEMINI_API_KEY" ]; then
+              GV=$(node -p "require('./episodes/$id/episode.json').gemini_voice || 'Algieba'")
+              echo "voice: gemini $GV"
+              if python pipeline/voice/gemini_tts.py episodes/$id/script.txt $B/voice --voice "$GV"; then
+                python pipeline/voice/align_words.py $B/voice/voice.wav episodes/$id/script.txt $B/voice/words.json && GDONE=1
+              else
+                echo "::warning::Gemini TTS failed - falling back to Kokoro"
+              fi
+            fi
+          fi
+          if [ -z "$OWN" ] && [ "$CLONE" != "owner" ] && [ "$NARRATOR_ENGINE" != "voicestudio" ] && [ "$GDONE" = "0" ]; then
             V=$(node -p "require('./episodes/${{ steps.ep.outputs.id }}/episode.json').voice || process.env.NARRATOR_VOICE")
             # owner 2026-11-21: am_liam, natural flow (paragraph takes), speed 1.05 = defaults
             # owner 2026-11-22: slower + a space after every sentence, longer pause between beats (script lines)

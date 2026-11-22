@@ -14,8 +14,9 @@ import numpy as np, soundfile as sf
 
 SR = 24000
 API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-STYLE = ("Read this as a calm, clear documentary narrator for a YouTube Short. Speak slightly slowly, natural and "
-         "friendly, with a short pause after every sentence and a longer pause between lines. Do not add any words.")
+# owner 2026-11-22: pauses were too long on some voices -> natural pace, only brief breaths between sentences.
+STYLE = ("Read this as a calm, clear documentary narrator for a YouTube Short. Natural, friendly, unhurried pace. "
+         "Leave only a brief, natural breath between sentences, never a long pause. Do not add any words.")
 
 
 def tts(text, voice, model, key, tries=6):
@@ -48,7 +49,7 @@ def trim(w, pad=0.04):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("script"); ap.add_argument("out")
-    ap.add_argument("--voice", default=os.environ.get("NARRATOR_VOICE_GEMINI", "Charon"))
+    ap.add_argument("--voice", default=os.environ.get("NARRATOR_VOICE_GEMINI", "Algieba"))
     ap.add_argument("--model", default="gemini-2.5-flash-preview-tts")
     ap.add_argument("--style", default=STYLE)
     ap.add_argument("--gap", type=float, default=0.38); ap.add_argument("--line-gap", type=float, default=0.65)
