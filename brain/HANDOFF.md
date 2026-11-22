@@ -2,6 +2,9 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
+000000000. (2026-11-22 20:20) GEMINI_API_KEY secret ADDED. Gemini = default voice for all videos (after owner picks a
+   voice from the samples). Next build (on "go" only): What If 1 GTA story in the bright daylight big-3D-world look
+   (owner reference stills) with Remy. Not started.
 00000000. (2026-11-22) Gemini TTS option: pipeline/voice/gemini_tts.py + gemini-voices.yml (committed [skip ci]).
    WAITING: owner adds GitHub secret GEMINI_API_KEY -> dispatch gemini-voices on this branch -> send samples -> pick ->
    wire "tts": "gemini" into render-final (voice -> align_words.py) -> re-render What If 1 + 2 if he wants.

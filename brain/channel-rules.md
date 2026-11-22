@@ -188,3 +188,9 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   with steam train, deep blue canyon with half-built bridges), big scale/depth, 2D bean puppet composited in 3D, one big
   word-by-word caption. Owner asks: same look but KEEP our own character (Remy). Plan: test ONE scene first (sky + fog
   + large Blender environment), compare with current look, then decide. Never copy their characters or scenes 1:1.
+- 2026-11-22 owner: VOICE DEFAULT = Google AI Studio (Gemini TTS) for EVERY video from now on (voice name: owner picks
+  from health/voice/gemini samples; wire into render-final as default engine, Kokoro only as fallback if the key/quota fails).
+- 2026-11-22 owner: the new bright 3D look test = What If 1's GTA story (same script), not a new topic. DO NOT START
+  until the owner says go.
+- Blender answer given: Blender MCP works with Claude Desktop / Claude Code ON HIS COMPUTER without Higgsfield (e.g. the
+  "MCP for Blender" add-on), but needs his computer on. In the cloud we use headless Blender on GitHub Actions (free).
