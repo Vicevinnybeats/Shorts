@@ -1,4 +1,4 @@
-build 2026-11-21T18:34:18Z commit ce0de1a blender Blender 4.2.3 LTS (hash 0e22e4fcea03 built 2024-10-14 23:31:34)
+build 2026-11-22T20:31:36Z commit 1c3d131 blender Blender 4.2.3 LTS (hash 0e22e4fcea03 built 2024-10-14 23:31:34)
 alligator: ok glb=246648B preview=yes
     EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
     MODEL OK library/models/alligator.glb 246648 bytes
@@ -11,14 +11,30 @@ bed_1964: ok glb=41912B preview=yes
     EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
     MODEL OK library/models/bed_1964.glb 41912 bytes
     PREVIEW OK library/models/previews/bed_1964.png
+cactus: ok glb=35924B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/cactus.glb 35924 bytes
+    PREVIEW OK library/models/previews/cactus.png
 chips_bag: ok glb=24476B preview=yes
     EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
     MODEL OK library/models/chips_bag.glb 24476 bytes
     PREVIEW OK library/models/previews/chips_bag.png
+city_block: ok glb=166444B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/city_block.glb 166444 bytes
+    PREVIEW OK library/models/previews/city_block.png
+cloud_puff: ok glb=38712B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/cloud_puff.glb 38712 bytes
+    PREVIEW OK library/models/previews/cloud_puff.png
 couch: ok glb=85428B preview=yes
     EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
     MODEL OK library/models/couch.glb 85428 bytes
     PREVIEW OK library/models/previews/couch.png
+desert_mesa: ok glb=78680B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/desert_mesa.glb 78680 bytes
+    PREVIEW OK library/models/previews/desert_mesa.png
 flat_tv: ok glb=69504B preview=yes
     EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
     MODEL OK library/models/flat_tv.glb 69504 bytes
@@ -39,6 +55,10 @@ palm_tree: ok glb=242904B preview=yes
     EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
     MODEL OK library/models/palm_tree.glb 242904 bytes
     PREVIEW OK library/models/previews/palm_tree.png
+palm_tree_day: ok glb=79132B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/palm_tree_day.glb 79132 bytes
+    PREVIEW OK library/models/previews/palm_tree_day.png
 pizza_box: ok glb=12364B preview=yes
     EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
     MODEL OK library/models/pizza_box.glb 12364 bytes
@@ -75,3 +95,7 @@ tv_1964: ok glb=65760B preview=yes
     EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
     MODEL OK library/models/tv_1964.glb 65760 bytes
     PREVIEW OK library/models/previews/tv_1964.png
+window_frame: ok glb=43960B preview=yes
+    EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+    MODEL OK library/models/window_frame.glb 43960 bytes
+    PREVIEW OK library/models/previews/window_frame.png
