@@ -1,6 +1,6 @@
 name: gemini-voices
 # Gemini TTS samples (Google AI Studio free tier, owner's idea 2026-11-22) for the owner to pick from.
-# Needs the GitHub Actions secret GEMINI_API_KEY. Stock voices only -> mp3s committed to health/voice/gemini/.
+# Needs the GitHub Actions secret GEMINI_API_KEY (added by the owner 2026-11-22). Stock voices only -> mp3s committed to health/voice/gemini/.
 on:
   workflow_dispatch:
   push:
