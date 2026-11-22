@@ -2,6 +2,8 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
+0000000. (owner 2026-11-22) slower voice + spaces between sentences -> flow "spaced" (speed 0.97, 0.38 s / 0.65 s).
+   Re-rendering BOTH What If 1 and 2 (separate GO_FINAL pushes). Next topic = #3 wi-gta-physics (script ready, not built).
 000000. (owner ~20:20) "make both videos for now" without picking a voice -> kept Kokoro am_liam (default).
    What If 1 (cuts + am_liam, run 44939643924, 68 s, 1-5 kHz -20.0) SENT. What If 2 RENDERED (run 44947593679, 69 s, 1-5 kHz -20.1) and SENT 21:18. Both waiting for owner verdict;
    approved -> Drive 'What if' folder via Zapier + drive-put (brain/drive.md).

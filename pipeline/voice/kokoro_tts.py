@@ -43,15 +43,31 @@ def main():
     if natural:
         flow = "\n".join(l.strip() for l in text.splitlines() if l.strip())
     split = r"\n+" if natural else r"\n\n+|(?<=[.!?])\s+"
-    for res in pipe(flow, voice=a.voice, speed=a.speed, split_pattern=split):
+    # NARRATOR_FLOW=spaced (owner 2026-11-22: "speak slower, leave spaces between sentences"): one take per sentence,
+    # GAP after each sentence, NARRATOR_LINE_GAP (longer) after the last sentence of a script line (= beat change).
+    spaced = os.environ.get("NARRATOR_FLOW", "sentence") == "spaced"
+    LINE_GAP = float(os.environ.get("NARRATOR_LINE_GAP", str(GAP)))
+    if spaced:
+        units = []
+        for line in (l.strip() for l in text.splitlines() if l.strip()):
+            sents = [x for x in re.split(r"(?<=[.!?])\s+", line) if x.strip()]
+            units += [(x, i == len(sents) - 1) for i, x in enumerate(sents)]
+    else:
+        units = [(flow, False)]
+    gap_next = GAP
+    def takes():
+        for u, line_end in units:
+            for r in pipe(u, voice=a.voice, speed=a.speed, split_pattern=None if spaced else split):
+                yield r, line_end
+    for res, line_end in takes():
         chunk = res.audio.cpu().numpy() if hasattr(res.audio, "cpu") else np.asarray(res.audio)
         loud = np.flatnonzero(np.abs(chunk) > 0.02 * (np.abs(chunk).max() + 1e-9))
         lead = max(0, loud[0] - int(PAD * SR)) if loud.size else 0
         tail = min(len(chunk), loud[-1] + int(PAD * SR)) if loud.size else len(chunk)
         chunk = chunk[lead:tail]
-        if audio:  # one short breath between chunks
-            audio.append(np.zeros(int(GAP * SR), dtype=chunk.dtype))
-            offset += GAP
+        if audio:  # one short breath between chunks (longer after a script line in "spaced" mode)
+            audio.append(np.zeros(int(gap_next * SR), dtype=chunk.dtype))
+            offset += gap_next
         shift = offset - lead / SR
         end = offset + len(chunk) / SR
         for tok in (res.tokens or []):
@@ -61,6 +77,7 @@ def main():
             words.append({"w": tok.text, "s": round(s0, 3), "e": round(min(max(s0, shift + tok.end_ts), end), 3)})
         audio.append(chunk)
         offset = end
+        gap_next = LINE_GAP if (spaced and line_end) else GAP
     # Kokoro tokenises punctuation separately: re-attach it to the previous word so captions read naturally
     wav = np.concatenate(audio) if audio else np.zeros(SR, dtype=np.float32)
     sf.write(os.path.join(a.out, "voice.wav"), wav, SR, subtype="PCM_16")

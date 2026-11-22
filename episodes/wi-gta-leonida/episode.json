@@ -40,6 +40,6 @@
   "status": "remake-stick3d",
   "publish": false,
   "clone": "none",
-  "flow": "natural",
+  "flow": "spaced",
   "gl": "swangle"
 }

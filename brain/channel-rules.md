@@ -176,3 +176,7 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   KittenML/KittenTTS (Apache-2.0). Rejected: VoiceStudio/OmniVoice (non-commercial), voice-pro (GPL), MisoTTS/neutts
   (unclear licence), VibeVoice/Zonos/Orpheus/Dia (need a GPU for good speed). Test: .github/workflows/tts-compare.yml
   -> health/voice/compare/*.mp3. ORDER: fix What If 1 completely first, THEN What If 2 (owner: "after 1 make 2").
+- 2026-11-22 owner: "speak slower, leave spaces between sentences" (for every video). Voice default now
+  NARRATOR_FLOW=spaced: one take per sentence, 0.38 s pause after each sentence, 0.65 s after each script line (beat),
+  speed 0.97 (am_liam). History: 0.92 + per-sentence 0.42 = "too slow/not natural"; one paragraph take = "pasted
+  together"; 1.05 per-line = "too fast, no spaces". Stay near 0.97 / 0.38 / 0.65 unless the owner says otherwise.
