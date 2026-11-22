@@ -184,3 +184,7 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   it in the repo: pipeline/voice/gemini_tts.py (REST, key from env GEMINI_API_KEY = GitHub Actions secret, never in chat
   or repo), samples via gemini-voices.yml -> health/voice/gemini/. Word timings via align_words.py. Not yet wired into
   render-final (do after the owner picks a Gemini voice). Free tier = rate limits + Google may use free-tier data.
+- 2026-11-22 owner shared reference stills (not ours, style only): bright daylight full 3D worlds (red canyon, railway
+  with steam train, deep blue canyon with half-built bridges), big scale/depth, 2D bean puppet composited in 3D, one big
+  word-by-word caption. Owner asks: same look but KEEP our own character (Remy). Plan: test ONE scene first (sky + fog
+  + large Blender environment), compare with current look, then decide. Never copy their characters or scenes 1:1.
