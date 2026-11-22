@@ -3,6 +3,8 @@ Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on thi
 
 ## NOW (open items, in order)
 0000000000. PAUSED by owner (~21:00, "don't make the video yet"; motion skill added: brain/motion-design.md).
+   Builder stopped; only done: 6 bright-look Blender scripts (city_block, desert_mesa, cloud_puff, cactus,
+   window_frame, palm_tree_day; palm_tree.py restored for What If 2). daylight.tsx + story restyle NOT started.
    Was: (2026-11-22 ~20:45) GO for What If 1 in the BRIGHT big-3D-world daylight look (cloud only), Gemini Algieba.
    Builder agent re-styles episodes/wi-gta-nosleep (keep script, cuts, Remy, no double text). Then GO_FINAL, preview.
    What If 2: owner tests Blender MCP locally first; wait for his models/feedback.
