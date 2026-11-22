@@ -2,6 +2,9 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
+00000000. (2026-11-22) Gemini TTS option: pipeline/voice/gemini_tts.py + gemini-voices.yml (committed [skip ci]).
+   WAITING: owner adds GitHub secret GEMINI_API_KEY -> dispatch gemini-voices on this branch -> send samples -> pick ->
+   wire "tts": "gemini" into render-final (voice -> align_words.py) -> re-render What If 1 + 2 if he wants.
 0000000. (owner 2026-11-22) slower voice + spaces between sentences -> flow "spaced" (speed 0.97, 0.38 s / 0.65 s).
    What If 1 slower DONE+SENT (run 45038579654, 90 s, 1-5 kHz -20.3; small issue: DAY 2 chapter overlaps the
    SHE SELLS bubble for a moment). What If 2 slower DONE+SENT (run 45038587691, 93 s, 1-5 kHz -20.3).

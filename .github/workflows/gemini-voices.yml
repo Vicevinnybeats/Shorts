@@ -1,0 +1,34 @@
+name: gemini-voices
+# Gemini TTS samples (Google AI Studio free tier, owner's idea 2026-11-22) for the owner to pick from.
+# Needs the GitHub Actions secret GEMINI_API_KEY. Stock voices only -> mp3s committed to health/voice/gemini/.
+on:
+  workflow_dispatch:
+  push:
+    paths: [".github/workflows/gemini-voices.yml"]
+permissions: { contents: write }
+jobs:
+  samples:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env: { GITHUB_TOKEN: "${{ github.token }}", GEMINI_API_KEY: "${{ secrets.GEMINI_API_KEY }}" }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Samples
+        run: |
+          [ -n "$GEMINI_API_KEY" ] || { echo "::error::GEMINI_API_KEY secret missing"; exit 1; }
+          sudo apt-get install -y -qq ffmpeg >/dev/null; pip install -q numpy soundfile
+          mkdir -p t health/voice/gemini
+          printf '%s\n' "What if you played GTA 6 for thirty days straight? No sleep. No breaks. Let's see how far you'd really get." \
+            "Hour zero. Launch night. Snacks stacked. Phone on silent. You're ready." \
+            "Hour seventeen. You feel fine. You're not. In one study, after seventeen to nineteen hours awake, people did as badly on some tests as someone at the drink drive limit in many countries." > t/script.txt
+          for v in Charon Orus Iapetus Algieba Sadaltager Puck; do
+            python pipeline/voice/gemini_tts.py t/script.txt t/$v --voice $v || { echo "::warning::$v failed"; continue; }
+            ffmpeg -loglevel error -y -i t/$v/voice.wav -af "loudnorm=I=-14:TP=-1:LRA=7" -ac 1 -b:a 96k health/voice/gemini/$v.mp3
+            sleep 10
+          done
+          ls -la health/voice/gemini
+      - name: Commit
+        if: always()
+        run: bash scripts/commit-push.sh "gemini voice samples (run ${{ github.run_id }})" health/voice/gemini

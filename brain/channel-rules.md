@@ -180,3 +180,7 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   NARRATOR_FLOW=spaced: one take per sentence, 0.38 s pause after each sentence, 0.65 s after each script line (beat),
   speed 0.97 (am_liam). History: 0.92 + per-sentence 0.42 = "too slow/not natural"; one paragraph take = "pasted
   together"; 1.05 per-line = "too fast, no spaces". Stay near 0.97 / 0.38 / 0.65 unless the owner says otherwise.
+- 2026-11-22 owner: has a local Gemini TTS script (gemini-2.5-flash-preview-tts, Google AI Studio free tier). We rebuilt
+  it in the repo: pipeline/voice/gemini_tts.py (REST, key from env GEMINI_API_KEY = GitHub Actions secret, never in chat
+  or repo), samples via gemini-voices.yml -> health/voice/gemini/. Word timings via align_words.py. Not yet wired into
+  render-final (do after the owner picks a Gemini voice). Free tier = rate limits + Google may use free-tier data.
