@@ -322,15 +322,15 @@ contact sheet rebuilt (library/previews/whatif/wi-gta-leonida-stick3d.png).
 | 2026-11-22 15:59 | render-final | wi-gta-nosleep | render (454-907) | 26 | 2415 | success (run 45038579654) |
 | 2026-11-22 15:59 | render-final | wi-gta-nosleep | assemble | 3 | 2418 | success (run 45038579654) |
 | 2026-11-22 15:59 | render-final | wi-gta-nosleep | log | 1 | 2419 | success (run 45038579654) |
-| 2026-11-22 16:34 | render-final | wi-gta-leonida | voice-and-mix | 4 | 2306 | success (run 45038587691) |
-| 2026-11-22 16:34 | render-final | wi-gta-leonida | render (0-465) | 24 | 2330 | success (run 45038587691) |
-| 2026-11-22 16:34 | render-final | wi-gta-leonida | render (2330-2792) | 12 | 2342 | success (run 45038587691) |
-| 2026-11-22 16:34 | render-final | wi-gta-leonida | render (1398-1863) | 17 | 2359 | success (run 45038587691) |
-| 2026-11-22 16:34 | render-final | wi-gta-leonida | render (932-1397) | 15 | 2374 | success (run 45038587691) |
-| 2026-11-22 16:34 | render-final | wi-gta-leonida | render (1864-2329) | 29 | 2403 | success (run 45038587691) |
-| 2026-11-22 16:34 | render-final | wi-gta-leonida | render (466-931) | 12 | 2415 | success (run 45038587691) |
-| 2026-11-22 16:34 | render-final | wi-gta-leonida | assemble | 3 | 2418 | success (run 45038587691) |
-| 2026-11-22 16:34 | render-final | wi-gta-leonida | log | 1 | 2419 | success (run 45038587691) |
+| 2026-11-22 16:34 | render-final | wi-gta-leonida | voice-and-mix | 4 | 2423 | success (run 45038587691) |
+| 2026-11-22 16:34 | render-final | wi-gta-leonida | render (0-465) | 24 | 2447 | success (run 45038587691) |
+| 2026-11-22 16:34 | render-final | wi-gta-leonida | render (2330-2792) | 12 | 2459 | success (run 45038587691) |
+| 2026-11-22 16:34 | render-final | wi-gta-leonida | render (1398-1863) | 17 | 2476 | success (run 45038587691) |
+| 2026-11-22 16:34 | render-final | wi-gta-leonida | render (932-1397) | 15 | 2491 | success (run 45038587691) |
+| 2026-11-22 16:34 | render-final | wi-gta-leonida | render (1864-2329) | 29 | 2520 | success (run 45038587691) |
+| 2026-11-22 16:34 | render-final | wi-gta-leonida | render (466-931) | 12 | 2532 | success (run 45038587691) |
+| 2026-11-22 16:34 | render-final | wi-gta-leonida | assemble | 3 | 2535 | success (run 45038587691) |
+| 2026-11-22 16:34 | render-final | wi-gta-leonida | log | 1 | 2536 | success (run 45038587691) |
 - 2026-11-22 What If 1 BRIGHT DAYLIGHT restyle (owner go + Motion Design rules): library/stick3d/daylight.tsx (DaySky +
   haze fog + sun sprite, SunRig = one warm sun + sky fill, DayGround, CityBackdrop, Palms, Clouds, WindowWall,
   SunPatch, disp() for `linear flat` colours). Every set re-done in daylight (sunny den with window onto a hazy city,
@@ -338,3 +338,4 @@ contact sheet rebuilt (library/previews/whatif/wi-gta-leonida-stick3d.png).
   bright calendar set, dawn bedroom, outdoor plaza). Place changes = SHAPE MORPH (key object squashes 8 %, grows,
   floods with the next scene colour, next shot 93 -> 100 %); HUD text word-by-word soft-to-sharp with rise; camera
   fast-then-slow inside each shot. 6 new Blender models. Stills ~4.1 s avg (max ~7 s on morph frames: 2 canvases).
+| 2026-11-22 20:47 | render-stills | wi-gta-nosleep  | stills | 4 | 2540 | running (run 45068120430) |
