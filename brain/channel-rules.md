@@ -201,3 +201,5 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   GitHub / local config). What If 1 = built in the CLOUD (no owner computer, headless Blender) in the new BRIGHT
   daylight big-3D-world look (owner reference stills) with Remy, Gemini Algieba voice. What If 2 = owner will test
   live with Blender MCP + Claude Desktop on his PC (models exported as .glb into this repo -> same renderer).
+- 2026-11-22 owner gave his Motion Design skill (library/skills/motion-design) "for better animations". Summary of how
+  we apply it: brain/motion-design.md. Owner: don't make the video yet - What If 1 bright restyle PAUSED until he says go.
