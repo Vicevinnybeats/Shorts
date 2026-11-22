@@ -203,3 +203,5 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   live with Blender MCP + Claude Desktop on his PC (models exported as .glb into this repo -> same renderer).
 - 2026-11-22 owner gave his Motion Design skill (library/skills/motion-design) "for better animations". Summary of how
   we apply it: brain/motion-design.md. Owner: don't make the video yet - What If 1 bright restyle PAUSED until he says go.
+- 2026-11-22 bug: caption "SLEEP." missing in "Play. Sleep. Repeat." (Gemini said it fast, aligner gave ~0 s). Fix:
+  align_words.py now gives every word >= 0.18 s on screen with increasing starts. Check fast word lists in every video.

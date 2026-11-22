@@ -25,6 +25,14 @@ def main():
     heard = [{"w": w.word.strip(), "s": round(w.start, 3), "e": round(w.end, 3)} for s in segs for w in s.words]
     script = open(a.script, encoding="utf-8").read().split()
     out = map_script(script, heard)
+    # owner 2026-11-22: "Play. Sleep. Repeat." showed PLAY then REPEAT - a fast/unheard word got (almost) zero time.
+    # Give every word at least MIN seconds on screen and keep starts strictly increasing.
+    MIN = 0.18
+    for i, w in enumerate(out):
+        if i and w["s"] < out[i - 1]["s"] + MIN:
+            w["s"] = round(out[i - 1]["s"] + MIN, 3)
+        if w["e"] < w["s"] + MIN:
+            w["e"] = round(w["s"] + MIN, 3)
     json.dump(out, open(a.out, "w"), indent=0)
     print(json.dumps({"aligned": len(out), "heard": len(heard)}))
 
