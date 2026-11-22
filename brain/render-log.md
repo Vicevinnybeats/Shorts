@@ -313,3 +313,12 @@ contact sheet rebuilt (library/previews/whatif/wi-gta-leonida-stick3d.png).
 | 2026-11-21 21:07 | render-final | wi-gta-leonida | render (1038-1383) | 20 | 2299 | success (run 44947593679) |
 | 2026-11-21 21:07 | render-final | wi-gta-leonida | assemble | 2 | 2301 | success (run 44947593679) |
 | 2026-11-21 21:07 | render-final | wi-gta-leonida | log | 1 | 2302 | success (run 44947593679) |
+| 2026-11-22 15:59 | render-final | wi-gta-nosleep | voice-and-mix | 3 | 2305 | success (run 45038579654) |
+| 2026-11-22 15:59 | render-final | wi-gta-nosleep | render (1362-1815) | 11 | 2316 | success (run 45038579654) |
+| 2026-11-22 15:59 | render-final | wi-gta-nosleep | render (2270-2718) | 17 | 2333 | success (run 45038579654) |
+| 2026-11-22 15:59 | render-final | wi-gta-nosleep | render (908-1361) | 21 | 2354 | success (run 45038579654) |
+| 2026-11-22 15:59 | render-final | wi-gta-nosleep | render (0-453) | 25 | 2379 | success (run 45038579654) |
+| 2026-11-22 15:59 | render-final | wi-gta-nosleep | render (1816-2269) | 10 | 2389 | success (run 45038579654) |
+| 2026-11-22 15:59 | render-final | wi-gta-nosleep | render (454-907) | 26 | 2415 | success (run 45038579654) |
+| 2026-11-22 15:59 | render-final | wi-gta-nosleep | assemble | 3 | 2418 | success (run 45038579654) |
+| 2026-11-22 15:59 | render-final | wi-gta-nosleep | log | 1 | 2419 | success (run 45038579654) |
