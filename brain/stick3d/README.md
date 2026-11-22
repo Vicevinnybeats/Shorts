@@ -61,3 +61,9 @@ Units: 1 = scene unit (puppet h 2.5); origin at floor centre unless noted; front
 | alligator | library/models/alligator.glb | Florida alligator ~3.6 long, snout +X, belly on the ground | olive #4c6b34/#3a5428, cream belly/teeth, gold emissive eyes | wi-gta-leonida golf/twist/above, wish swamp, map (s 0.26) |
 | flat_tv | library/models/flat_tv.glb | flat TV on a media console, screen centre z 1.95 (2.4x1.36, picture drawn by the scene on a Panel just in front) | wood console + gold strip, ink frame, coral LED | wi-gta-leonida tv (hurricane cone) |
 Florida set pieces (code, not .glb): library/stick3d/leonida.tsx - FloridaMap (real outline slab + 67 county dots), SkyWall, StormCloud, Bolt, Water, Spiral, Tufts, Rain.
+| city_block | library/models/city_block.glb | cluster of 6 pastel towers (up to ~22 tall) with glassy window bands, for skylines | cream/peach/sky-blue/terracotta, blue glass | wi-gta-nosleep daylight (window views, plaza) |
+| desert_mesa | library/models/desert_mesa.glb | layered red-rock mesa ~24 wide, 11 tall (scale wide/flat) | rust/orange rock bands | wi-gta-nosleep desert highway |
+| cloud_puff | library/models/cloud_puff.glb | soft low-poly cloud ~7 wide | white | daylight skies |
+| palm_tree_day | library/models/palm_tree_day.glb | curved palm ~6 tall (What If 2 keeps its own palm_tree) | brown trunk, green fronds | wi-gta-nosleep daylight (den view, 1964 San Diego, plaza) |
+| window_frame | library/models/window_frame.glb | open window frame 6x4 with mullions + sill (scale to the opening) | warm white | daylight interiors (WindowWall in library/stick3d/daylight.tsx) |
+| cactus | library/models/cactus.glb | saguaro ~4 tall | green | wi-gta-nosleep desert highway |

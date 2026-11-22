@@ -12,9 +12,7 @@ import React from "react";
 import { AbsoluteFill, useCurrentFrame, interpolate, Easing, getInputProps } from "remotion";
 import { ThreeCanvas } from "@remotion/three";
 import { TransitionSeries, linearTiming } from "@remotion/transitions";
-import { fade } from "@remotion/transitions/fade";
-import { slide } from "@remotion/transitions/slide";
-import { wipe } from "@remotion/transitions/wipe";
+import type { TransitionPresentation, TransitionPresentationComponentProps } from "@remotion/transitions";
 import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 import type { Story, SceneProps } from "../../src/engine/EpisodeShort";
@@ -22,16 +20,17 @@ import { shotAt, ShotSpan, cueTime, FPS } from "../../src/engine/timeline";
 import type { Word } from "../../src/captions/Captions";
 import { EASE, arrive } from "../../src/engine25/motion";
 import {
-  NEON, NeonDefs, HudText, StrokeWord, LiveCounter, CompareBars, ChapterScreen, ChoiceCards, Stamp, NeonPath, NeonText, Digits, RepeatIcon, drawOn, rnd,
+  NEON, NeonDefs, StrokeWord, LiveCounter, CompareBars, ChoiceCards, NeonPath, WI_FONT, NeonText, Digits, RepeatIcon, drawOn, rnd,
 } from "../../library/whatif/kit";
-import { Box, Cyl, Ball } from "../../library/stick3d/toon";
-import { Person, V3, clamp, Lights, Grade } from "../../library/stick3d/kit";
+import { Box, Cyl, Ball, Surface } from "../../library/stick3d/toon";
+import { Person, V3, clamp, Lights, Grade, Sign } from "../../library/stick3d/kit";
 import { NEON3D, REMY3D } from "../../src/tests/Stick3DTest";
-import { Floor, WallDoor, SideWall, Shelf, Lamp, Monitor, Cabinet, Rug, Shaft, Dust } from "../../library/stick3d/props";
+import { Floor, WallDoor, SideWall, Shelf, Lamp, Monitor, Cabinet, Rug, Shaft, Dust, Frame } from "../../library/stick3d/props";
 import { Cam, Key, Taxi, Barrier, Curtain } from "../../library/stick3d/extra";
 import { Glb } from "../../library/stick3d/glb";
+import { DaySky, SunRig, DayGround, CityBackdrop, Palms, Clouds, WindowWall, SunPatch, disp, DAY } from "../../library/stick3d/daylight";
 import { drawPuppet, Look, Pose } from "../../library/stick3d/puppet";
-import { N3, FONT3, Halo, FloorPool, NeonBar, HeroLight, Motes, Panel, NeonSign, NeonClock, NightWindow, NeonPoster } from "../../library/stick3d/neon";
+import { N3, FONT3, Halo, FloorPool, NeonBar, HeroLight as NeonHeroLight, Motes, Panel, NeonSign, NeonClock, NightWindow, NeonPoster } from "../../library/stick3d/neon";
 
 // ---------------------------------------------------------------- cast
 // Remy = the installed pack look REMY3D (src/tests/Stick3DTest.tsx: gold hoodie puppet) + the series beanie (gold band/pom)
@@ -53,28 +52,45 @@ const DEFS: ShotDef[] = [
   { id: "hour0", cue: "Hour zero. Launch", parent: "hour0", sub: 0 },
   { id: "hour0b", cue: "Phone on silent", parent: "hour0", sub: 1 },
   { id: "hour17", cue: "Hour seventeen. You", parent: "hour17", sub: 0 },
-  { id: "study", cue: "In one study,", parent: "study", sub: 0, tr: "slide" },
+  { id: "study", cue: "In one study,", parent: "study", sub: 0 },
   { id: "studyb", cue: "as badly on", parent: "study", sub: 1 },
   { id: "hour24", cue: "Hour twenty four.", parent: "hour24", sub: 0 },
   { id: "hour24b", cue: "In the game,", parent: "hour24", sub: 1 },
   { id: "day2", cue: "Day two. You", parent: "day2", sub: 0 },
   { id: "day3", cue: "Day three. You", parent: "day3", sub: 0 },
   { id: "day3b", cue: "You feel sick", parent: "day3", sub: 1 },
-  { id: "real", cue: "That's not a", parent: "real", sub: 0, tr: "fade" },
+  { id: "real", cue: "That's not a", parent: "real", sub: 0 },
   { id: "realb", cue: "named Randy Gardner", parent: "real", sub: 1 },
   { id: "symptoms", cue: "His memory slipped,", parent: "symptoms", sub: 0 },
   { id: "symptomsb", cue: "some reports say", parent: "symptoms", sub: 1 },
   { id: "record", cue: "He stopped after", parent: "record", sub: 0 },
   { id: "recordb", cue: "Guinness later", parent: "record", sub: 1 },
-  { id: "day30", cue: "So day thirty?", parent: "day30", sub: 0, tr: "wipe" },
+  { id: "day30", cue: "So day thirty?", parent: "day30", sub: 0 },
   { id: "micro", cue: "Your brain starts", parent: "micro", sub: 0 },
-  { id: "slept", cue: "When Randy finally", parent: "slept", sub: 0, tr: "fade" },
+  { id: "slept", cue: "When Randy finally", parent: "slept", sub: 0 },
   { id: "speedrun", cue: "So here's the", parent: "speedrun", sub: 0 },
-  { id: "ask", cue: "What's the longest", parent: "ask", sub: 0, tr: "slide" },
+  { id: "ask", cue: "What's the longest", parent: "ask", sub: 0 },
 ];
 const DEF: Record<string, ShotDef> = Object.fromEntries(DEFS.map((d) => [d.id, d]));
 const SHOTS = DEFS.map((d) => ({ id: d.id, cue: d.cue }));
-const TR_FRAMES = 10;
+const TR_FRAMES = 14;
+/** place of each scene (parent): a PLACE change = shape-morph transition, everything else = hard cut */
+const PLACE: Record<string, string> = {
+  hook: "den", crash: "den", hour0: "den", hour17: "den", study: "lab", hour24: "road", day2: "stage", day3: "den",
+  real: "y1964", symptoms: "y1964", record: "studio", day30: "calendar", micro: "den", slept: "bed", speedrun: "plaza", ask: "den",
+};
+/** background colour of each scene = the flood colour of the morph INTO it */
+const BG: Record<string, string> = {
+  hook: "#f4e8d4", crash: "#f4e8d4", hour0: "#f4e8d4", hour17: "#f4e8d4", study: "#eef3f8", hour24: "#f3dcc0", day2: "#c43a2e",
+  day3: "#f4e8d4", real: "#c08a58", symptoms: "#c08a58", record: "#e9eef4", day30: "#f6efe2", micro: "#f4e8d4", slept: "#ffd9a6", speedrun: "#cfe9fb", ask: "#f4e8d4",
+};
+/** key object of the OUTGOING shot that becomes the transition shape (screen rect, radius); default = the HUD counter card */
+const KEY_CARD = { cx: 374, cy: 436, w: 608, h: 240, r: 22 };
+const KEY_OBJ: Record<string, typeof KEY_CARD> = {
+  studyb: { cx: 540, cy: 1080, w: 320, h: 320, r: 160 }, symptomsb: { cx: 540, cy: 1000, w: 300, h: 300, r: 150 },
+  recordb: { cx: 760, cy: 1240, w: 420, h: 120, r: 18 }, day30: { cx: 470, cy: 1080, w: 520, h: 430, r: 12 },
+  micro: { cx: 540, cy: 980, w: 360, h: 360, r: 180 }, speedrun: { cx: 540, cy: 1150, w: 520, h: 260, r: 130 },
+};
 
 // ---------------------------------------------------------------- helpers
 /** exposure gain for the lit walls/floors (linear canvas output is dark): sets read clearly behind the characters */
@@ -83,28 +99,73 @@ const k = (u: number, a: number, b: number, from: number, to: number, e = EASE.c
   interpolate(u, [a, b], [from, to], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: e });
 const pop = (u: number, at: number, d = 10) => interpolate(u, [at, at + d], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.back(2.2)) });
 const ck = (u: number, pos: V3, look: V3, fov = 46, roll = 0): Key => ({ t: u / FPS, pos, look, fov, roll });
-/** Camera: one short, eased move INSIDE each shot (push / pan / slight orbit); nothing carries across a cut */
-const Shot: React.FC<{ u: number; keys: Key[]; kicks?: number[]; impacts?: [number, number][] }> = ({ u, keys, kicks = [], impacts = [] }) =>
-  <Cam t={u / FPS} keys={keys} fovKick={kicks.map((x) => x / FPS)} impacts={impacts.map(([a, b]) => [a / FPS, b] as [number, number])} />;
+/** Camera: one short move INSIDE each shot, one continuous curve, FAST first then slow (cubic ease-out), never reversing */
+const Shot: React.FC<{ u: number; keys: Key[]; kicks?: number[]; impacts?: [number, number][] }> = ({ u, keys, kicks = [], impacts = [] }) => {
+  const a = keys[0], b = keys[keys.length - 1], x = clamp((u / FPS - a.t) / Math.max(1e-6, b.t - a.t)), e = 1 - Math.pow(1 - x, 3);
+  const L = (p: number, q: number) => p + (q - p) * e;
+  const k0: Key = { t: 0, pos: [L(a.pos[0], b.pos[0]), L(a.pos[1], b.pos[1]), L(a.pos[2], b.pos[2])], look: [L(a.look[0], b.look[0]), L(a.look[1], b.look[1]), L(a.look[2], b.look[2])], fov: L(a.fov ?? 46, b.fov ?? 46), roll: L(a.roll ?? 0, b.roll ?? 0) };
+  return <Cam t={u / FPS} keys={[k0]} fovKick={kicks.map((q) => q / FPS)} impacts={impacts.map(([p, q]) => [p / FPS, q] as [number, number])} />;
+};
+let mctx: CanvasRenderingContext2D | null = null;
+const measure = (w: string, size: number) => {
+  if (!mctx) mctx = document.createElement("canvas").getContext("2d");
+  if (!mctx) return w.length * size * 0.76;
+  mctx.font = `900 ${size}px CaptionSans, Arial, sans-serif`; return mctx.measureText(w).width;
+};
+/** HUD text, motion-design rules: word by word, each word fades up from soft (blurred) to sharp with a small rise,
+ *  0.08 s stagger, and leaves the same way; no bounces/pops. Ink outline keeps it readable on bright daylight. */
+const HudText: React.FC<{ f: number; x: number; y: number; size: number; color?: string; enter?: string; at: number; out?: number; children: string; anchor?: "start" | "middle" | "end"; spacing?: number; tube?: boolean }> =
+  ({ f, x, y, size, color = NEON.gold, at, out = Infinity, children, anchor = "middle", spacing = 0 }) => {
+    if (f < at) return null;
+    const ws = children.split(" "), cw = (w: string) => measure(w, size) + spacing * w.length, gap = size * 0.3;
+    const total = ws.reduce((t2, w) => t2 + cw(w), 0) + gap * (ws.length - 1);
+    let cx = anchor === "middle" ? x - total / 2 : anchor === "end" ? x - total : x;
+    return <g>{ws.map((w, i) => {
+      const x0 = cx; cx += cw(w) + gap;
+      const p = arrive(f, at + i * 2.4, 11), ex = Number.isFinite(out) ? clamp((f - out - i * 2.4) / 9) : 0;
+      const o = p * (1 - ex); if (o <= 0.01) return null;
+      const dy = (1 - p) * 16 - ex * 12;
+      const c = { x: x0, y: y + dy, fontFamily: WI_FONT, fontWeight: 900, fontSize: size, letterSpacing: spacing };
+      return <g key={i} opacity={o}>
+        <text {...c} fill="none" stroke={color} strokeWidth={size * 0.35} opacity={0.35 * (1 - p + ex)} strokeLinejoin="round">{w}</text>
+        <text {...c} fill={color} stroke="#0b0d1a" strokeWidth={size * 0.13} paintOrder="stroke" strokeLinejoin="round">{w}</text>
+      </g>;
+    })}</g>;
+  };
+/** payoff stamp: the words (as above) + an outline that draws on + a small tick; no scale slam */
+const Stamp: React.FC<{ f: number; x: number; y: number; text: string; at: number; out?: number; color?: string; size?: number; rot?: number }> = ({ f, x, y, text, at, out, color = NEON.coral, size = 56 }) => {
+  if (f < at) return null;
+  const w = measure(text, size) + 140, p = drawOn(f, at, 14), ex = out !== undefined && Number.isFinite(out) ? clamp((f - out) / 9) : 0;
+  return <g opacity={1 - ex}>
+    <rect x={x - w / 2} y={y - size * 0.95} width={w} height={size * 1.35} rx={14} fill="#0b0d1a" opacity={0.55 * p} />
+    <NeonPath d={`M ${x - w / 2} ${y - size * 0.95} L ${x + w / 2} ${y - size * 0.95} L ${x + w / 2} ${y + size * 0.4} L ${x - w / 2} ${y + size * 0.4} Z`} p={p} w={4} color={color} />
+    <NeonPath d={`M ${x - w / 2 + 22} ${y - size * 0.3} l 12 14 l 24 -30`} p={drawOn(f, at + 8, 8)} w={6} color={color} hot />
+    <HudText f={f} x={x + 24} y={y + size * 0.12} size={size} color={color} at={at + 4} out={out}>{text}</HudText>
+  </g>;
+};
+/** chapter title: corner brackets draw on, the title words rise in (no punch-in); a slow light sweep is the payoff */
+const ChapterScreen: React.FC<{ f: number; id: string; big: string; small?: string; at?: number; out?: number; x?: number; y?: number; size?: number; glitch?: number }> = ({ f, big, at = 0, out, x = 540, y = 760, size = 200 }) => {
+  if (f < at - 4) return null;
+  const ex = out !== undefined && Number.isFinite(out) ? clamp((f - out) / 9) : 0; if (ex >= 1) return null;
+  const bw = measure(big, size) + 120, top = y - size * 0.95, bot = y + size * 0.25, bp = drawOn(f, at - 4, 16);
+  return <g opacity={1 - ex}>
+    {[`M ${x - bw / 2} ${top + 60} L ${x - bw / 2} ${top} L ${x - bw / 2 + 60} ${top}`, `M ${x + bw / 2 - 60} ${top} L ${x + bw / 2} ${top} L ${x + bw / 2} ${top + 60}`,
+      `M ${x - bw / 2} ${bot - 60} L ${x - bw / 2} ${bot} L ${x - bw / 2 + 60} ${bot}`, `M ${x + bw / 2 - 60} ${bot} L ${x + bw / 2} ${bot} L ${x + bw / 2} ${bot - 60}`]
+      .map((d, i) => <NeonPath key={i} d={d} p={bp} w={5} color={NEON.coral} />)}
+    <HudText f={f} x={x} y={y} size={size} color={NEON.gold} at={at} out={out}>{big}</HudText>
+  </g>;
+};
 /** Lighting rig for every scene: warm KEY from front-top, cool sky/ground FILL, gold RIM from behind the hero, a soft
  *  pool over the hero, plus motivated practicals (lamp, TV/game glow, neon, window) as point lights; the pack's Shaft. */
 type Prac = [V3, string, number];
-const Lights3: React.FC<{ warm?: string; k?: number; hero?: V3; prac?: Prac[]; rim?: string; heroI?: number }> = ({ warm = "#ffd59a", k: kk = 1, hero = [0, 0, 0], prac = [], rim = N3.gold, heroI = 7 }) => (<>
-  <ambientLight intensity={0.85 * kk} />
-  {/* sky/ground fill = bounce light so walls, floor and props read (owner: sets were murky) */}
-  <hemisphereLight args={["#9fb2e8", "#5a3a22", 1.0 * kk]} />
-  {/* KEY: warm, front-top-right, the one shadow-casting light (PCF soft, 1024 map, frustum around the hero) */}
-  <directionalLight position={[hero[0] + 6, hero[1] + 8, hero[2] + 4.5]} intensity={1.6 * kk} color={warm} castShadow
-    shadow-mapSize={[1024, 1024]} shadow-bias={-0.0004} shadow-normalBias={0.03} shadow-radius={4}
-    shadow-camera-left={-9} shadow-camera-right={9} shadow-camera-top={9} shadow-camera-bottom={-9} shadow-camera-near={0.5} shadow-camera-far={40}>
-    <object3D attach="target" position={hero} />
-  </directionalLight>
-  {/* RIM / back light (gold) */}
-  <directionalLight position={[hero[0] - 3, hero[1] + 5, hero[2] - 8]} intensity={1.1} color={rim}><object3D attach="target" position={hero} /></directionalLight>
-  <pointLight position={[hero[0], hero[1] + 3.4, hero[2] + 0.8]} intensity={heroI} distance={7} decay={2} color={N3.amber} />
-  {prac.map(([pp, c, i], j) => <pointLight key={j} position={pp} intensity={i} distance={9} decay={2} color={c} />)}
-  <Shaft p={[0, 4, -1]} s={[3, 9]} color="245,185,66" o={0.14} />
+const Lights3: React.FC<{ warm?: string; k?: number; hero?: V3; prac?: Prac[]; rim?: string; heroI?: number }> = ({ k: kk = 1, hero = [0, 0, 0], prac = [] }) => (<>
+  {/* DAYLIGHT (owner 2026-11-22): one warm sun (soft shadow map) + sky/ground fill; practicals only as soft accents */}
+  <SunRig target={hero} k={kk} />
+  {prac.map(([pp, c, i], j) => <pointLight key={j} position={pp} intensity={i * 0.35} distance={7} decay={2} color={c} />)}
 </>);
+/** daylight version of the hero light: no dark-room cone, just a soft warm sun patch under the hero */
+const HeroLight: React.FC<{ p: V3; h?: number; r?: number; color?: string; o?: number; t?: number }> = ({ p, r = 1.5, o = 1 }) => <SunPatch p={p} s={[r * 3, r * 2]} o={0.18 * o} />;
+void NeonHeroLight;
 /** shadows: every solid mesh casts + receives (puppet billboards cast a cut-out shadow through their alphaTest);
  *  glows, cones, shafts, outlines and transparent planes are skipped */
 const ShadowSetup: React.FC = () => {
@@ -140,7 +201,7 @@ const DropShadow: React.FC<{ p: V3; h: number; look: Look; pose: Omit<Pose, "t">
 /** puppet (Person) with a warm rim halo behind it so it separates from the dark room; standing puppets (shadow) also
  *  get the contact blob (pack Shadow) + a drop shadow on the floor */
 const Hero: React.FC<{ p: V3; look: Look; pose: Omit<Pose, "t">; f: number; h?: number; rim?: string; shadow?: boolean; rimO?: number }> = ({ p, look, pose, f, h = 2.5, rim = N3.amber, shadow = true, rimO = 0.35 }) => (<>
-  <Halo p={[p[0], p[1] + h * 0.62, p[2] - 0.25]} r={h * 0.72} color={rim} o={rimO} />
+  <Halo p={[p[0], p[1] + h * 0.62, p[2] - 0.25]} r={h * 0.72} color={rim === N3.amber ? "#ffffff" : rim} o={rimO * 0.6} />
   {shadow && p[1] < 0.6 ? <DropShadow p={p} h={h} look={look} pose={pose} f={f} /> : null}
   <Person p={p} h={h} look={look} pose={pose} f={f} shadow={shadow} />
 </>);
@@ -191,36 +252,30 @@ const Table: React.FC<{ z?: number }> = ({ z = 0.9 }) => (
     {[-1.6, 1.6].map((x) => <Box key={x} p={[x, 0.27, 0]} s={[0.14, 0.54, 1.1]} color="#24180e" line={3} />)}
   </group>
 );
-/** Remy's gaming den (navy brick, gold/coral neon, night window, clock, shelf, lamp, couch, table, rug, beanbag) */
-const GamerRoom: React.FC<{ t: number; dawn?: number; clockH?: number; table?: boolean; snacks?: number; tvGlow?: number; decor?: boolean; hero?: V3 }> = ({ t, dawn = 0, clockH = 0, table = true, snacks = 8, tvGlow = 1, decor = true, hero = [0, 0, -1.35] }) => {
-  const tv = tvGlow * (0.75 + 0.25 * Math.abs(Math.sin(t * 9.3) * Math.cos(t * 3.9)));
-  return (<>
-    <Lights3 warm={dawn > 0.4 ? "#ffd59a" : "#ffcf9a"} k={0.95 + 0.15 * dawn} hero={hero} prac={[[[7.2, 2.6, -2.9], N3.amber, 14], [[4.4, 3.9, -4.2], dawn > 0.3 ? N3.amber : "#7d8fd8", 6 + 14 * dawn], [[0, 5.9, -4.3], N3.gold, 8], [[-6.0, 3.0, -4.3], N3.coral, 6]]} />
-    <Floor lit gain={SG} kind="tile" a="#30354c" b="#282c40" w={30} d={44} />
-    <WallDoor lit gain={SG} z={-5} W={24} kind="brick" a="#2b3252" b="#232945" />
-    <SideWall lit gain={SG} x={-9} kind="plain" a="#20263c" b="#20263c" />
-    <NeonBar p={[0, 6.3, -4.9]} s={[15, 0.07, 0.05]} color={N3.gold} />
-    <NeonBar p={[-6.4, 3.2, -4.9]} s={[0.07, 5.2, 0.05]} color={N3.coral} glow={0.4} />
-    <NightWindow p={[4.4, 3.9, -4.92]} s={[3.2, 2.5]} dawn={dawn} />
-    {decor && <><NeonClock p={[-5.0, 3.6, -4.9]} r={0.55} hours={clockH} />
-    <NeonPoster p={[-3.2, 3.0, -4.92]} s={[1.2, 1.6]} art={0} />
-    <NeonPoster p={[2.2, 2.9, -4.92]} s={[0.9, 1.2]} art={1} /></>}
-    <Shelf p={[-7.3, 0, -4.4]} w={2.4} rows={4} wood="#24180e" cols={[N3.gold, "#2a3355", N3.coral, "#1d2236", N3.amber, "#3a2c52"]} />
-    <Lamp p={[7.2, 0, -3.4]} color={N3.amber} /><Halo p={[7.2, 2.75, -3.4]} r={1.0} color={N3.amber} o={0.7} />
-    <Ball p={[5.6, 0.55, -1.6]} r={0.75} color={N3.coral} s={[1.2, 0.75, 1.1]} />
-    {[0, 1, 2, 3].map((i) => <Box key={i} p={[6.3 + (i % 2) * 0.05, 0.12 + i * 0.22, 0.8]} s={[1.0, 0.2, 0.7]} rot={[0, i * 0.15, 0]} color={[N3.gold, "#2a3355", N3.coral, "#1d2236"][i]} line={3} />)}
-    <Cabinet p={[-5.6, 0, -4.3]} w={1.4} h={1.6} color="#1d2236" />
-    <Monitor p={[-5.6, 1.6, -4.3]} s={0.9} screen="#1a1730" />
-    <Rug p={[0, 0, 0.3]} s={[7.5, 4.4]} a="#120d09" b={N3.gold} />
-    <Couch />
-    {/* snack side table beside the couch (not in the foreground: nothing important in the caption band) */}
-    {table && <><Glb name="side_table" blob={1.4} p={[-1.9, 0, -0.2]} fallback={<group position={[-1.9, 0, -0.2]} scale={[0.6, 1.75, 0.8]}><Table z={0} /></group>} /><group position={[-1.9, 0, -0.2]} scale={[0.6, 0.6, 0.6]}><Snacks n={snacks} x={0} z={0} y={1.72} /></group></>}
-    <pointLight position={[0, 1.8, 4.0]} intensity={6 * tv} distance={10} decay={1.4} color="#ffcf9a" />
-    <Halo p={[0, 1.6, 2.6]} r={2.6} color={N3.amber} o={0.05 * tv} />
-    <Motes t={t} n={10} c={[0, 0.5, -1]} area={[5, 5, 3]} />
-    <Dust t={t} area={[10, 6, 6]} color="rgba(245,185,66,.9)" />
-  </>);
-};
+/** Remy's den in DAYLIGHT: warm plaster walls, a big window onto a sunny city with palms (sky, haze, clouds), wood floor */
+const GamerRoom: React.FC<{ t: number; dawn?: number; clockH?: number; table?: boolean; snacks?: number; tvGlow?: number; decor?: boolean; hero?: V3 }> = ({ t, dawn = 0, clockH = 0, table = true, snacks = 8, decor = true, hero = [0, 0, -1.35] }) => (<>
+  <DaySky warm={dawn} fogNear={25} fogFar={135} />
+  <Lights3 hero={hero} prac={[[[7.2, 2.6, -2.9], N3.amber, 8]]} />
+  <Surface lit gain={1.0} p={[0, 0, 7.5]} s={[30, 25]} rot={[-Math.PI / 2, 0, 0]} kind="plank" a={disp(DAY.wood)} b={disp(DAY.wood2)} unit={2.2} />
+  <WindowWall z={-5} win={{ x: 0, y: 1.6, w: 9, h: 4.6 }} a={DAY.plaster} b="#efe0c8" kind="plain" />
+  <SideWall lit gain={1.0} x={-9} kind="plain" a={disp("#f0dfc6")} b={disp("#f0dfc6")} />
+  <DayGround base={DAY.grass} speck="#6fae52" y={-0.05} />
+  <Palms at={[[-6, 0, -14], [5.5, 0, -12], [9, 0, -18], [-10, 0, -20]]} s={1.2} />
+  <CityBackdrop z={-125} spread={190} />
+  <Clouds t={t} at={[[-20, 26, -90], [14, 32, -110], [40, 24, -100], [-45, 30, -120]]} s={4} />
+  {decor && <><NeonClock p={[-6.2, 4.4, -4.9]} r={0.55} hours={clockH} />
+    <Frame p={[-6.4, 2.6, -4.92]} s={[1.6, 1.1]} art={0} /><Frame p={[6.3, 3.4, -4.92]} s={[1.4, 1.8]} art={2} /></>}
+  <Shelf p={[-7.6, 0, -4.4]} w={2.0} rows={4} wood="#9c6a3e" cols={[N3.gold, "#4f86b8", N3.coral, "#f3e2c4", "#6fae52", "#d9743a"]} />
+  <Lamp p={[7.2, 0, -3.4]} color="#fff3d0" />
+  <Ball p={[5.6, 0.55, -1.6]} r={0.75} color={N3.coral} s={[1.2, 0.75, 1.1]} />
+  {[0, 1, 2, 3].map((i) => <Box key={i} p={[6.3 + (i % 2) * 0.05, 0.12 + i * 0.22, 0.8]} s={[1.0, 0.2, 0.7]} rot={[0, i * 0.15, 0]} color={[N3.gold, "#4f86b8", N3.coral, "#f3e2c4"][i]} line={3} />)}
+  <Glb name="flat_tv" p={[-5.4, 0, -4.3]} s={0.8} blob={1.2} />
+  <Rug p={[0, 0, 0.3]} s={[7.5, 4.4]} a="#e8b98a" b={N3.coral} />
+  <SunPatch p={[0.5, 0, 0.6]} s={[7, 4]} o={0.25} />
+  <Couch />
+  {table && <><Glb name="side_table" blob={1.4} p={[-1.9, 0, -0.2]} fallback={<group position={[-1.9, 0, -0.2]} scale={[0.6, 1.75, 0.8]}><Table z={0} /></group>} /><group position={[-1.9, 0, -0.2]} scale={[0.6, 0.6, 0.6]}><Snacks n={snacks} x={0} z={0} y={1.72} /></group></>}
+  <Dust t={t} area={[8, 6, 5]} color="rgba(255,245,220,.9)" />
+</>);
 
 // ---------------------------------------------------------------- shot builder
 type View = { world: React.ReactNode; hud?: React.ReactNode; black?: number; dim?: number };
@@ -309,15 +364,15 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const slump = k(u, AS, AS + 16, 0, 1, EASE.arrive);
       const world = <>
         <Lights3 hero={[0, 0, 0.6]} prac={[[[-3.6, 1.8, -2.9], N3.gold, 7], [[3.6, 1.8, -2.9], N3.gold, 7], [[0, 1.4, -4.3], N3.coral, 5], [[0, 5.3, -4.3], N3.gold, 8]]} />
-        <Floor lit gain={SG} kind="tile" a="#2e3550" b="#262c44" w={30} d={44} />
-        <WallDoor lit gain={SG} z={-5} W={24} kind="plain" a="#2a3150" b="#2a3150" />
-        <NeonBar p={[0, 5.6, -4.9]} s={[13, 0.07, 0.05]} color={N3.gold} />
+        <DaySky fogNear={25} fogFar={135} /><DayGround base={DAY.grass} speck="#6fae52" y={-0.05} /><CityBackdrop z={-125} spread={190} /><Clouds t={t} at={[[-20, 26, -90], [14, 32, -110], [40, 24, -100]]} s={4} />
+        <Surface lit p={[0, 0, 7.5]} s={[30, 25]} rot={[-Math.PI / 2, 0, 0]} kind="tile" a={disp("#cfd8e2")} b={disp("#c2ccd8")} unit={2.2} />
+        <WindowWall z={-5} win={{ x: 0, y: 2.4, w: 10, h: 3.8 }} a="#eef3f8" kind="plain" />
         <Panel p={[0, 0.95, -4.9]} s={[2.6, 1.3]} px={[440, 220]} dep={Math.floor(u / 8)} draw={(c, W, H) => {
-          c.fillStyle = "#0a0d18"; c.fillRect(0, 0, W, H); c.strokeStyle = GOLD; c.lineWidth = 6; c.strokeRect(6, 6, W - 12, H - 12);
+          c.fillStyle = "#1d2a3a"; c.fillRect(0, 0, W, H); c.strokeStyle = "#ffffff"; c.lineWidth = 6; c.strokeRect(6, 6, W - 12, H - 12);
           c.strokeStyle = "rgba(245,185,66,.25)"; c.lineWidth = 2; for (let i = 1; i < 6; i++) { c.beginPath(); c.moveTo(0, (H * i) / 6); c.lineTo(W, (H * i) / 6); c.stroke(); }
           const ph = Math.floor(u / 8); c.fillStyle = CORAL; c.beginPath(); c.arc(60 + ((ph * 97) % (W - 120)), 50 + ((ph * 53) % (H - 100)), 18, 0, 7); c.fill();
         }} />
-        {[-3.6, 3.6].map((x) => <group key={x}><Box p={[x, 0.55, -3.6]} s={[2.4, 1.1, 1.1]} color="#1d2236" /><Monitor p={[x, 1.1, -3.7]} s={1.0} screen="#2a2210" /></group>)}
+        {[-3.6, 3.6].map((x) => <group key={x}><Box p={[x, 0.55, -3.6]} s={[2.4, 1.1, 1.1]} color="#dfe6ee" /><Monitor p={[x, 1.1, -3.7]} s={1.0} screen="#4f86b8" /></group>)}
         <Cabinet p={[-6.5, 0, -4.4]} w={1.6} h={2.4} color="#1d2236" />
         <Shelf p={[6.6, 0, -4.4]} w={2.4} rows={3} wood="#24180e" cols={[N3.gold, "#2a3355", N3.coral, "#1d2236"]} />
         <NeonClock p={[5.2, 4.7, -4.9]} r={0.5} hours={5 + u / 400} />
@@ -329,6 +384,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       </>;
       const hud = !hide && <>
         <HudText f={u} x={540} y={410} size={60} color={CREAM} enter="rise" at={2} out={len - 6}>RESEARCH · 2000</HudText>
+        <rect x={50} y={455} width={980} height={400} rx={26} fill="#0b0d1a" opacity={0.5 * arrive(u, 2, 12)} />
         <CompareBars f={u} y={530} gap={190} bh={70} labelSize={46} out={len - 6} rows={[
           { label: "17-19 H AWAKE", fill: 0.74, at: PD },
           { label: "BLOOD ALCOHOL 0.05%", fill: 0.74, color: CORAL, at: AS },
@@ -345,13 +401,17 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const dash = (u * 0.09) % 1.6;
       const world = <>
         <Lights3 k={0.75} hero={[0, 0, -7.5]} rim={N3.cyan} prac={[[[0, 0.6, -3], N3.cyan, 10], [[-2.6, 2.6, -5.6], N3.cyan, 8], [[2.6, 2.6, -2.4], N3.cyan, 8], [[sway * 0.9, 0.6, -4.9], N3.coral, 4]]} />
-        <Floor lit gain={SG} kind="tile" a="#07080e" b="#090b12" w={30} d={40} />
-        <mesh position={[0, 0.01, -2]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[3.2, 30]} /><meshBasicMaterial color="#0d1220" /></mesh>
-        {[-1.6, 1.6].map((x) => <NeonBar key={x} p={[x, 0.04, -2]} s={[0.06, 0.04, 30]} color={CYAN} glow={0} />)}
-        {Array.from({ length: 14 }, (_, i) => <NeonBar key={i} p={[0, 0.03, 8 - i * 1.6 + dash]} s={[0.1, 0.03, 0.7]} color={CYAN} glow={0} o={0.8} />)}
+        <DaySky fogNear={30} fogFar={180} horizon="#f6e1c4" haze="#f3dcc0" />
+        <DayGround base={DAY.sand} speck="#c99a62" />
+        <mesh position={[0, 0.01, -60]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow><planeGeometry args={[3.6, 160]} /><meshLambertMaterial color={disp(DAY.asphalt)} /></mesh>
+        {[[-40, -90, 3.2], [35, -120, 3.6], [-14, -150, 2.6], [60, -80, 2.4]].map(([x, z, sc], i) => <Glb key={i} name="desert_mesa" p={[x, 0, z]} rot={[0, i * 0.8, 0]} s={[sc * 1.4, sc, sc * 0.9]} line={2} />)}
+        {[[-4.5, -10], [4.8, -18], [-5.5, -30], [6, -42], [-7, -60]].map(([x, z], i) => <Glb key={i} name="cactus" p={[x, 0, z]} rot={[0, i, 0]} s={0.9 + (i % 2) * 0.3} blob={0.6} />)}
+        <Clouds t={t} at={[[-30, 30, -120], [20, 36, -150], [50, 28, -110]]} s={5} />
+        {[-1.6, 1.6].map((x) => <NeonBar key={x} p={[x, 0.04, -40]} s={[0.06, 0.04, 100]} color={CYAN} glow={0} />)}
+        {Array.from({ length: 14 }, (_, i) => <NeonBar key={i} p={[0, 0.03, 8 - i * 1.6 + dash]} s={[0.1, 0.03, 0.7]} color="#fff6d8" glow={0} />)}
         {Array.from({ length: 6 }, (_, i) => <group key={i}><NeonBar p={[i % 2 ? 2.6 : -2.6, 1.4, 4 - i * 3.2]} s={[0.06, 2.8, 0.06]} color={CYAN} glow={0.3} /><Halo p={[i % 2 ? 2.6 : -2.6, 2.85, 4 - i * 3.2]} r={0.5} color={CYAN} o={0.6} /></group>)}
-        <FloorPool p={[0, 0, -2]} r={3} color={CYAN} o={0.15} sx={0.6} />
-        {!sub && <group position={[sway * 0.9 - k(u, IG, IG + 36, 0, 5, Easing.in(Easing.quad)), 0, -5.6]} rotation={[0, Math.PI / 2 + 0.35 * Math.cos(u * 0.07), 0]}><Glb name="toy_car" blob={0.9} fallback={<group scale={0.32}><Taxi p={[0, 0, 0]} color={CORAL} /></group>} /></group>}
+        
+        {!sub && <group position={[sway * 0.9 - k(u, IG, IG + 36, 0, 5, Easing.in(Easing.quad)), 0, -6.1]} rotation={[0, Math.PI / 2 + 0.35 * Math.cos(u * 0.07), 0]}><Glb name="toy_car" blob={0.9} fallback={<group scale={0.32}><Taxi p={[0, 0, 0]} color={CORAL} /></group>} /></group>}
         <Halo p={[sway * 0.9, 0.3, -6.0]} r={0.6} color={CORAL} o={0.3} />
         <Couch z={-7.5} />
         <Hero p={[0, 0.2, -7.55]} look={REMY} pose={{ arms: "hold", mood: head > 0.5 ? "dizzy" : "tired", lids: 0.3, bags: 0.8, sweat: 0.5, tilt: 0.16 * sway }} f={f} shadow={false} rimO={0.5} />
@@ -377,9 +437,10 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const wob = Math.sin(f * 0.13) * 0.08 * k(u, BS, BS + 20, 0.3, 1);
       const world = <>
         <Lights3 k={0.85} hero={[0.15, 0.5, 0.5]} rim={N3.coral} prac={[[[0, 0.9, 2.4], N3.amber, 12], [[-4.2, 4.6, -2.1], N3.coral, 6], [[4.2, 4.6, -2.1], N3.coral, 6], [[0, 3, -3.8], N3.coral, 5]]} />
-        <Floor lit gain={SG} kind="plank" a="#3e2c1c" b="#352516" w={30} d={44} />
-        <Curtain p={[0, 4.2, -4.6]} s={[16, 8.6]} color="#3a1612" folds={12} />
-        <Box p={[0, 0.25, -0.5]} s={[9, 0.5, 5]} color="#1b1410" />
+        <Floor lit gain={1.0} kind="plank" a={disp("#c8925e")} b={disp("#b5804f")} w={30} d={44} />
+        <Curtain p={[0, 4.2, -4.6]} s={[16, 8.6]} color="#c43a2e" folds={12} />
+        <Box p={[0, 0.25, -0.5]} s={[9, 0.5, 5]} color="#d9a066" />
+        <DaySky fogNear={30} fogFar={140} />
         <NeonBar p={[0, 0.52, 2.02]} s={[9, 0.06, 0.06]} color={N3.gold} />
         {Array.from({ length: 7 }, (_, i) => <Halo key={i} p={[-3.6 + i * 1.2, 0.62, 2.05]} r={0.32} color={N3.amber} o={0.7} />)}
         <Glb name="mic_stand" blob={0.45} p={[0.85, 0.5, 0.75]} rot={[0, -0.5, 0]} fallback={<>
@@ -388,11 +449,11 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           <Ball p={[0.76, 2.35, 0.78]} r={0.12} color="#3a3f55" /></>} />
         <Hero p={[0.15, 0.5, 0.5]} look={REMY} pose={{ mood: scr ? "dizzy" : "worry", nerv: 0.6, sweat: 0.6, lids: 0.25, bags: 0.8, tilt: wob, arms: scr ? "head" : "chest", armK: 0.9 }} f={f} rimO={0.5} />
         <HeroLight p={[0.15, 0.5, 0.5]} h={6} r={1.4} t={t} />
-        {[-4.2, 4.2].map((x) => <group key={x}><Cyl p={[x, 2.2, -2.5]} rt={0.5} h={4.4} color="#1d2236" /><NeonBar p={[x, 4.45, -2.5]} s={[1.0, 0.06, 1.0]} color={N3.coral} glow={0.3} /></group>)}
+        {[-4.2, 4.2].map((x) => <group key={x}><Cyl p={[x, 2.2, -2.5]} rt={0.5} h={4.4} color="#f3e2c4" /><NeonBar p={[x, 4.45, -2.5]} s={[1.0, 0.06, 1.0]} color={N3.coral} glow={0.3} /></group>)}
         {bp > 0 && <group scale={[bp, bp, bp]} position={[-0.5, 3.35, 0.4]}><Panel p={[0, 0, 0]} s={[3.0, 1.42]} px={[540, 255]} face dep={line1 + line2} draw={(c, W, H) => {
-          c.fillStyle = "#0b0d16"; c.strokeStyle = GOLD; c.lineWidth = 8; c.beginPath(); c.roundRect(8, 8, W - 16, H - 50, 34); c.fill(); c.stroke();
+          c.fillStyle = "#fffaf0"; c.strokeStyle = "#1b2238"; c.lineWidth = 8; c.beginPath(); c.roundRect(8, 8, W - 16, H - 50, 34); c.fill(); c.stroke();
           c.beginPath(); c.moveTo(W * 0.62, H - 44); c.lineTo(W * 0.7, H - 4); c.lineTo(W * 0.74, H - 44); c.fill(); c.stroke();
-          c.fillStyle = CREAM; c.textAlign = "center"; c.font = `900 66px ${FONT3}`; c.fillText(line1, W / 2, 92); c.fillStyle = scr ? CORAL : CREAM; c.fillText(line2, W / 2, 166);
+          c.fillStyle = "#1b2238"; c.textAlign = "center"; c.font = `900 66px ${FONT3}`; c.fillText(line1, W / 2, 92); c.fillStyle = scr ? "#d9452e" : "#1b2238"; c.fillText(line2, W / 2, 166);
         }} /></group>}
         <Motes t={t} c={[0, 1, 0]} area={[4, 5, 2]} />
         <Shot u={us} keys={[ck(0, [1.6, 2.7, 11.3], [0.15, 2.6, 0.5], 46, 0.02), ck(ls, [0.65, 2.6, 10.9], [0.15, 2.58, 0.5], 46, -0.04)]} />
@@ -440,16 +501,17 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const randyMood: Pose["mood"] = isR ? (u >= NG ? "deadpan" : u >= RG ? "smile" : "deadpan") : (u >= ST ? "shock" : u >= MO_ ? "worry" : "tired");
       const world = <>
         <Lights3 warm="#ffd7a0" hero={[isR ? 0 : 1.2, 0, 0.6]} prac={[[[4.6, 2.6, -1.2], N3.amber, 12], [[0, 5.8, -4.2], N3.gold, 9], [[-1.2, 1.6, -3.6], N3.amber, 5], [[2.8, 1.9, -4.4], "#7d8fd8", 5], ...(!isR ? [[[1.2, 2.4, -0.8], N3.cyan, 10 * gp] as Prac] : [])]} />
-        <Floor lit gain={SG} kind="carpet" a="#3a3048" b="#31283e" w={30} d={44} />
-        <WallDoor lit gain={SG} z={-5} W={24} kind="wood" a="#5a3a22" b="#4c311c" />
-        <SideWall lit gain={SG} x={-9} kind="wood" a="#4c311c" b="#432b18" />
+        <Surface lit p={[0, 0, 7.5]} s={[30, 25]} rot={[-Math.PI / 2, 0, 0]} kind="carpet" a={disp("#c9a27a")} b={disp("#bd946c")} unit={2.2} />
+        <WindowWall z={-5} win={{ x: 0.2, y: 2.0, w: 4.2, h: 3.4 }} a="#c08a58" b="#b27c4c" kind="wood" />
+        <SideWall lit gain={1.0} x={-9} kind="wood" a={disp("#b27c4c")} b={disp("#a8744a")} />
+        <DaySky fogNear={25} fogFar={120} warm={0.3} /><DayGround base={DAY.grass} speck="#6fae52" y={-0.05} /><Palms at={[[-3, 0, -14], [4, 0, -18], [9, 0, -26]]} s={1.3} />
         {isR && <Panel p={[-2.6, 1.7, -4.88]} s={[1.5, 1.8]} px={[380, 460]} dep={year} draw={(c, W, H) => {
           c.fillStyle = "#f3e7cf"; c.fillRect(0, 0, W, H); c.fillStyle = "#9a3a2a"; c.fillRect(0, 0, W, 110); c.fillStyle = "#fff6e6"; c.textAlign = "center"; c.font = `900 76px ${FONT3}`; c.fillText("JAN", W / 2, 82);
           c.fillStyle = "#2a1b10"; c.font = `900 120px ${FONT3}`; c.fillText(String(year), W / 2, 260);
           c.strokeStyle = "rgba(42,27,16,.35)"; c.lineWidth = 3; for (let r = 0; r < 3; r++) for (let q = 0; q < 6; q++) c.strokeRect(22 + q * 56, 300 + r * 50, 50, 44);
         }} />}
-        <NeonSign p={[0, 6.2, -4.85]} s={[4.2, 1.0]} text="SAN DIEGO" color={N3.gold} box />
-        <NightWindow p={[2.8, 1.9, -4.92]} s={[2.2, 1.5]} seed={9} palm />
+        <Sign p={[0, 6.3, -4.85]} s={[4.0, 0.9]} text="SAN DIEGO" bg="#f3e2c4" fg="#c0392b" size={120} frame="#7a4a2a" />
+        
         <NeonClock p={[-2.8, 6.1, -4.88]} r={0.45} hours={u / 200} />
         {isR && <group position={[-1.5, 0, -4.2]}><Box p={[0, 0.55, 0]} s={[1.6, 1.1, 0.9]} color="#3a2412" /><Glb name="radio_1964" p={[0, 1.1, 0.05]} fallback={<><Box p={[0, 1.45, 0.05]} s={[1.4, 0.7, 0.6]} color="#5a3a1e" />
           <Panel p={[0, 1.45, 0.36]} s={[1.0, 0.45]} px={[200, 90]} dep={1} draw={(c, W, H) => { c.fillStyle = "#1a1008"; c.fillRect(0, 0, W, H); c.strokeStyle = N3.amber; c.lineWidth = 3; for (let x = 10; x < W * 0.6; x += 10) { c.beginPath(); c.moveTo(x, 8); c.lineTo(x, H - 8); c.stroke(); } c.fillStyle = N3.amber; c.beginPath(); c.arc(W * 0.8, H / 2, 18, 0, 7); c.fill(); }} /></>} />
@@ -459,7 +521,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           {isR && u >= NG && <NeonSign p={[-0.15, 1.6, 0.6]} s={[1.0, 0.5]} text="OFF" color={N3.coral} />}</group>
         <group position={[-4.4, 0, -1.6]} rotation={[0, 0.5, 0]}><Box p={[0, 0.45, 0]} s={[1.5, 0.9, 1.4]} color="#5a2a20" /><Box p={[0, 1.25, -0.6]} s={[1.5, 1.3, 0.3]} color="#5a2a20" /><Box p={[-0.7, 0.9, 0]} s={[0.24, 0.6, 1.4]} color="#4a2018" /><Box p={[0.7, 0.9, 0]} s={[0.24, 0.6, 1.4]} color="#4a2018" /></group>
         <Lamp p={[4.6, 0, -1.6]} color={N3.amber} /><Halo p={[4.6, 2.75, -1.6]} r={0.9} color={N3.amber} o={0.6} />
-        <Rug p={[0, 0, 0.6]} s={[6, 3.6]} a="#2a1410" b={N3.coral} />
+        <Rug p={[0, 0, 0.6]} s={[6, 3.6]} a="#e0b07a" b="#c0392b" />
         <Hero p={[isR ? 0 : 1.2, 0, 0.6]} look={RANDY} pose={{ mood: randyMood, arms: isR && u >= RG && u < NG ? "up" : isR ? "down" : u >= ST ? "head" : "chest", armK: 0.85, lids: isR ? 0 : 0.35, bags: isR ? 0.2 : 0.8, sweat: isR ? 0 : 0.5, nerv: !isR && u >= ST ? 0.7 : 0, lookX: !isR && u >= ST ? Math.sin(f * 0.2) : 0 }} f={f} rim={N3.amber} rimO={0.45} />
         <HeroLight p={[isR ? 0 : 1.2, 0, 0.6]} h={6} r={1.3} t={t} />
         {!isR && gp > 0 && [[-0.3, 1.2, -0.4], [2.4, 1.3, -0.2], [-1.6, 0.7, -2.6]].map(([x, y, z], i) => (
@@ -499,20 +561,20 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const BA = GU + 26;
       const by = u < BA - 10 ? 6 : u < BA ? k(u, BA - 10, BA, 6, 0, Easing.in(Easing.quad)) : Math.abs(Math.sin((u - BA) * 0.35)) * 0.4 * Math.exp(-(u - BA) * 0.12);
       const world = <>
-        <Lights3 k={0.9} hero={[-1.5, 0, 0.6]} prac={[[[0, 1.8, -1.4], N3.gold, 3 + 9 * clamp(v / 264)], [[1.4, 1.8, 2.0], N3.coral, u >= BA ? 9 : 0]]} />
+        <DaySky fogNear={20} fogFar={90} /><Lights3 k={0.9} hero={[-1.5, 0, 0.6]} prac={[[[0, 1.8, -1.4], N3.gold, 3 + 9 * clamp(v / 264)], [[1.4, 1.8, 2.0], N3.coral, u >= BA ? 9 : 0]]} />
         <Panel p={[0, 0, 2]} s={[40, 40]} rot={[-Math.PI / 2, 0, 0]} px={[800, 800]} dep={1} draw={(c, W, H) => {
-          c.fillStyle = "#1a1e30"; c.fillRect(0, 0, W, H); c.strokeStyle = "rgba(245,185,66,.32)"; c.lineWidth = 2; for (let i = 0; i <= 30; i++) { c.beginPath(); c.moveTo((i * W) / 30, 0); c.lineTo((i * W) / 30, H); c.moveTo(0, (i * H) / 30); c.lineTo(W, (i * H) / 30); c.stroke(); }
+          c.fillStyle = "#e9eef4"; c.fillRect(0, 0, W, H); c.strokeStyle = "rgba(120,140,170,.35)"; c.lineWidth = 2; for (let i = 0; i <= 30; i++) { c.beginPath(); c.moveTo((i * W) / 30, 0); c.lineTo((i * W) / 30, H); c.moveTo(0, (i * H) / 30); c.lineTo(W, (i * H) / 30); c.stroke(); }
         }} />
         {Array.from({ length: 11 }, (_, i) => {
           const g = clamp(v / 24 - i), h = 0.15 + 1.1 * g, x = -2.75 + i * 0.55, z = -1.6 - 0.08 * Math.abs(i - 5) ** 1.5;
-          return <group key={i}><Box p={[x, h / 2, z]} s={[0.42, h, 0.42]} color={g >= 1 ? "#3a2c14" : "#1b2238"} line={3} />
+          return <group key={i}><Box p={[x, h / 2, z]} s={[0.42, h, 0.42]} color={g >= 1 ? "#f5b942" : "#c9d3df"} line={3} />
             {g >= 1 && <NeonBar p={[x, h + 0.04, z]} s={[0.44, 0.06, 0.44]} color={N3.gold} glow={0} />}
             {g >= 1 && <Halo p={[x, h + 0.1, z]} r={0.3} color={N3.gold} o={0.5} />}</group>;
         })}
         <Hero p={[-1.5, 0, 0.6]} look={RANDY} pose={{ mood: u >= BA ? "worry" : "tired", lids: 0.55, bags: 1, sweat: 0.5, hunch: 0.5, tilt: 0.04 * Math.sin(f * 0.1) }} f={f} rimO={0.45} />
         <HeroLight p={[-1.5, 0, 0.6]} h={6} r={1.3} t={t} />
         {u >= BA - 10 && <group position={[1.4, by, 1.4]}><Barrier p={[0, 0, 0]} w={2.4} /></group>}
-        {u >= BA - 10 && <NeonSign p={[1.4, 1.55 + by, 1.45]} s={[2.6, 0.55]} text="CLOSED" color={N3.coral} box />}
+        {u >= BA - 10 && <Sign p={[1.4, 1.55 + by, 1.45]} s={[2.6, 0.6]} text="CLOSED" bg="#e2543c" fg="#ffffff" size={96} frame="#7a2018" />}
         <Motes t={t} c={[0, 0.3, 0]} area={[5, 4, 2]} />
         <Shot u={us} impacts={[[BA, 0.015]]} keys={sub ? [ck(0, [2.0, 2.2, 13.6], [0, 2.2, 1.2], 42, 0), ck(ls, [1.5, 2.2, 13.35], [0, 2.2, 1.2], 42, 0)] : [ck(0, [0.6, 3.3, 14.6], [-0.55, 2.62, 0.6], 44, 0), ck(ls, [-0.6, 3.2, 14.2], [-0.7, 2.6, 0.6], 44, -0.01)]} />
       </>;
@@ -536,15 +598,16 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const nod = 0.5 + 0.5 * Math.sin(f * 0.12);
       const world = <>
         <Lights3 k={0.85} hero={[2.4, 0, 0.4]} prac={[[[-0.3, 2.0, -3.0], N3.gold, 10], [[1.0, 0.9, -3.2], Math.floor(u / 15) % 2 ? N3.cyan : N3.coral, 4]]} />
-        <Floor lit gain={SG} kind="tile" a="#252a3c" b="#2c3247" w={30} d={44} />
-        <WallDoor lit gain={SG} z={-4} W={24} kind="plain" a="#272d46" b="#272d46" />
+        <Floor lit gain={1.0} kind="tile" a={disp("#e9eef4")} b={disp("#dde4ec")} w={30} d={44} />
+        <WallDoor lit gain={1.0} z={-4} W={24} kind="plain" a={disp("#f6efe2")} b={disp("#f6efe2")} />
+        <DaySky fogNear={30} fogFar={140} />
         <Panel p={[-0.3, 2.0, -3.9]} s={[4.2, 3.5]} px={[660, 550]} dep={lit * 10 + (cross ? 1 : 0) + Math.floor(u / 15) * 100} draw={(c, W, H) => {
-          c.fillStyle = "#080a12"; c.fillRect(0, 0, W, H); c.strokeStyle = GOLD; c.lineWidth = 6; c.strokeRect(4, 4, W - 8, H - 8);
+          c.fillStyle = "#fffaf0"; c.fillRect(0, 0, W, H); c.strokeStyle = "#1b2238"; c.lineWidth = 6; c.strokeRect(4, 4, W - 8, H - 8);
           const cw = W / 6, ch = H / 5; c.textAlign = "center"; c.textBaseline = "middle"; c.font = `900 40px ${FONT3}`;
           for (let i = 0; i < 30; i++) { const x = (i % 6) * cw, y = Math.floor(i / 6) * ch, on = i < lit, last = i === 29;
-            c.fillStyle = on ? "rgba(245,185,66,.28)" : "#0d1020"; c.fillRect(x + 8, y + 8, cw - 16, ch - 16);
-            c.strokeStyle = on ? GOLD : "#2a2f45"; c.lineWidth = 3; c.strokeRect(x + 8, y + 8, cw - 16, ch - 16);
-            c.fillStyle = last ? (Math.floor(u / 15) % 2 ? CYAN : CORAL) : on ? N3.hot : "#3a3f55"; c.fillText(String(i + 1), x + cw / 2 + (last ? (rnd(Math.floor(u / 15)) - 0.5) * 8 : 0), y + ch / 2);
+            c.fillStyle = on ? "rgba(245,185,66,.55)" : "#eef1f5"; c.fillRect(x + 8, y + 8, cw - 16, ch - 16);
+            c.strokeStyle = on ? "#c98a1a" : "#b8c2cf"; c.lineWidth = 3; c.strokeRect(x + 8, y + 8, cw - 16, ch - 16);
+            c.fillStyle = last ? (Math.floor(u / 15) % 2 ? CYAN : CORAL) : on ? "#1b2238" : "#9aa6b5"; c.fillText(String(i + 1), x + cw / 2 + (last ? (rnd(Math.floor(u / 15)) - 0.5) * 8 : 0), y + ch / 2);
             if (cross && i >= 11) { c.strokeStyle = CORAL; c.lineWidth = 5; c.beginPath(); c.moveTo(x + 22, y + 22); c.lineTo(x + cw - 22, y + ch - 22); c.moveTo(x + cw - 22, y + 22); c.lineTo(x + 22, y + ch - 22); c.stroke(); } }
         }} />
         <Halo p={[-0.3, 2.0, -3.6]} r={3.2} color={N3.gold} o={0.1} />
@@ -584,9 +647,9 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const hrs = k(u, 0, len, 0, 14, EASE.camera);
       const world = <>
         <Lights3 warm="#ffd7a0" k={0.8} heroI={2} hero={[-0.4, 0, -1.4]} prac={[[[3.2, 2.0, -2.0], N3.amber, 5], [[0.6, 4.5, -3.3], k(u, 0, len, 0, 1) > 0.4 ? N3.amber : "#7d8fd8", 4 + 10 * k(u, 0, len, 0, 0.8)]]} />
-        <Floor lit gain={SG} kind="carpet" a="#3a3048" b="#31283e" />
-        <WallDoor lit gain={SG} z={-4} W={24} kind="wood" a="#5a3a22" b="#4c311c" />
-        <NightWindow p={[0.6, 4.7, -3.92]} s={[2.6, 1.8]} dawn={k(u, 0, len, 0, 0.8)} seed={11} />
+        <Surface lit p={[0, 0, 8]} s={[30, 24]} rot={[-Math.PI / 2, 0, 0]} kind="carpet" a={disp("#c9a27a")} b={disp("#bd946c")} unit={2.2} />
+        <WindowWall z={-4} win={{ x: 0.6, y: 3.6, w: 3.2, h: 2.2 }} a="#c08a58" b="#b27c4c" kind="wood" />
+        <DaySky fogNear={25} fogFar={120} warm={1} top="#7fa8e0" horizon="#ffd9a6" haze="#ffe2bc" sun={[20, 14, -120]} /><DayGround base={DAY.grass} speck="#6fae52" y={-0.05} /><Palms at={[[-2, 0, -12], [5, 0, -16]]} s={1.2} />
         <NeonClock p={[-2.3, 2.75, -3.9]} r={0.42} hours={hrs} />
         <Panel p={[-2.2, 1.65, -3.92]} s={[0.9, 1.08]} px={[200, 240]} dep={1964} draw={(c, W, H) => { c.fillStyle = "#f3e7cf"; c.fillRect(0, 0, W, H); c.fillStyle = "#9a3a2a"; c.fillRect(0, 0, W, 60); c.fillStyle = "#2a1b10"; c.textAlign = "center"; c.font = `900 60px ${FONT3}`; c.fillText("1964", W / 2, 150); }} />
         <group position={[0, 0, -1.6]}>
@@ -600,7 +663,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           <Box p={[0.65, 1.3 + 0.02 * Math.sin(f * 0.1), 0.35]} s={[2.72, 0.04, 1.52]} color={N3.gold} line={2} />
         </group>
         <Box p={[3.2, 0.5, -2.4]} s={[1.0, 1.0, 0.9]} color="#3a2412" /><Lamp p={[3.2, 1.0, -2.4]} h={0.8} color={N3.amber} /><Halo p={[3.2, 2.0, -2.4]} r={0.8} color={N3.amber} o={0.55} />
-        <Rug p={[0, 0, 1.2]} s={[5, 2.4]} a="#2a1410" b={N3.gold} />
+        <Rug p={[0, 0, 1.2]} s={[5, 2.4]} a="#e0b07a" b="#c0392b" />
         <HeroLight p={[-0.4, 0, -1.4]} h={6} r={1.8} t={t} o={0.35} />
         {[0, 1, 2].map((i) => { const q = ((f / 70 + i / 3) % 1); return <NeonSign key={i} p={[1.0 + q * 0.5, 2.0 + q * 0.5, -1.2]} s={[0.7, 0.7]} text="Z" color={N3.amber} face o={Math.min(1, (1 - q) * 3) * Math.min(1, q * 6)} />; })}
         <Motes t={t} c={[0, 0.5, -1]} area={[4, 4, 2]} />
@@ -625,12 +688,13 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const oa = interpolate(u, [0, len], [0.35, -0.35]);
       const world = <>
         <Lights3 k={0.9} hero={[0, 0, 0]} prac={st.map((x) => { const q = at(x.a); return [[q[0], 1.3, q[2]], u >= x.c ? N3.coral : N3.dim, u >= x.c ? 7 : 2] as Prac; })} />
-        <Floor lit gain={SG} kind="tile" a="#20253a" b="#1a1e30" w={30} d={44} />
+        <Floor lit gain={1.0} kind="tile" a={disp("#ecdcc0")} b={disp("#e0cfb0")} w={44} d={44} />
+        <DaySky fogNear={30} fogFar={170} /><DayGround base={DAY.grass} speck="#6fae52" y={-0.05} /><CityBackdrop z={-130} spread={200} /><Palms at={[[-9, 0, -8], [9, 0, -10], [-14, 0, 2], [14, 0, 0]]} s={1.3} /><Clouds t={t} at={[[-30, 30, -110], [25, 34, -130]]} s={5} />
         <mesh position={[0, 0.04, 0]} rotation={[-Math.PI / 2, 0, 0]}><torusGeometry args={[R, 0.05, 8, 120, Math.PI * 2 * ring]} /><meshBasicMaterial color={N3.gold} toneMapped={false} /></mesh>
         <FloorPool p={[0, 0, 0]} r={R * 1.25} color={N3.gold} o={0.12} />
         <Ball p={[D[0], 0.12, D[2]]} r={0.12} color={N3.hot} ink={0.02} /><Halo p={[D[0], 0.2, D[2]]} r={0.6} color={N3.amber} o={0.8} />
         {st.map((s, i) => { const p = at(s.a), on = u >= s.c; return <group key={i} position={[p[0], 0, p[2]]}>
-          <Cyl p={[0, 0.35, 0]} rt={0.55} h={0.7} color="#1b2238" />
+          <Cyl p={[0, 0.35, 0]} rt={0.55} h={0.7} color="#e2d6c0" />
           <NeonBar p={[0, 0.72, 0]} s={[1.1, 0.04, 1.1]} color={on ? N3.coral : "#5a4520"} glow={0} />
           <Halo p={[0, 1.3, 0]} r={on ? 1.1 : 0.5} color={on ? N3.coral : N3.dim} o={on ? 0.55 : 0.25} />
           {i === 0 && <Pad p={[0, 1.1, 0]} f={on ? f : 0} rot={[0.5, 0.3, 0]} />}
@@ -646,7 +710,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         {mode === 1 && <Pad p={[0, 0.95, 0.12]} f={f} />}
         <HeroLight p={[0, 0, 0]} h={6.5} r={1.2} t={t} />
         <Motes t={t} c={[0, 0.3, 0]} area={[4, 4, 3]} />
-        <Shot u={us} keys={[ck(0, [12.5 * Math.sin(oa), 8, 12.5 * Math.cos(oa)], [0, 0.6, 0], 40, 0), ck(ls, [12.5 * Math.sin(oa), 8, 12.5 * Math.cos(oa)], [0, 0.6, 0], 40, 0)]} />
+        <Shot u={us} keys={[ck(0, [11.5 * Math.sin(oa), 4.4, 11.5 * Math.cos(oa)], [0, 1.8, -1], 44, 0), ck(ls, [11.5 * Math.sin(oa), 4.4, 11.5 * Math.cos(oa)], [0, 1.8, -1], 44, 0)]} />
       </>;
       const hud = !hide && <>
       </>;
@@ -681,8 +745,23 @@ const renderDpr = () => Number((getInputProps() as { dpr?: number }).dpr ?? 0.5)
 const cueLocal = (words: Word[], phrase: string, span: ShotSpan, fallback: number) => {
   try { return Math.round(cueTime(words, phrase, span.a / FPS - 0.3) * FPS) - span.a; } catch { return fallback; }
 };
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const presentation = (t: Tr): any => t === "fade" ? fade() : t === "slide" ? slide({ direction: "from-right" }) : wipe({ direction: "from-left" });
+/** SHAPE MORPH (motion-design rule for every place change): the outgoing key object (counter card, calendar, ring...)
+ *  squashes ~8%, grows to fill the frame and floods with the next scene's background colour; the next shot eases in
+ *  from 93% to 100% while the flood clears. No cross dissolve. */
+type MorphProps = { cx: number; cy: number; w: number; h: number; r: number; color: string };
+const MorphPres: React.FC<TransitionPresentationComponentProps<MorphProps>> = ({ children, presentationDirection, presentationProgress: p, passedProps: m }) => {
+  if (presentationDirection === "exiting") {
+    const sq = p < 0.18 ? Math.sin((p / 0.18) * Math.PI) * 0.08 : 0;
+    const g = Easing.in(Easing.cubic)(clamp((p - 0.18) / 0.42));
+    const sc = 1 + g * (2600 / Math.min(m.w, m.h));
+    const w = m.w * sc * (1 + sq), h = m.h * sc * (1 - sq);
+    return <AbsoluteFill>{children}<div style={{ position: "absolute", left: m.cx - w / 2, top: m.cy - h / 2, width: w, height: h, borderRadius: m.r * sc, background: disp(m.color) === m.color ? m.color : m.color, opacity: clamp(p / 0.12) }} /></AbsoluteFill>;
+  }
+  if (p < 0.6) return <AbsoluteFill style={{ opacity: 0 }}>{children}</AbsoluteFill>;
+  const q = Easing.out(Easing.cubic)(clamp((p - 0.6) / 0.4));
+  return <AbsoluteFill><AbsoluteFill style={{ transform: `scale(${0.93 + 0.07 * q})` }}>{children}</AbsoluteFill><AbsoluteFill style={{ background: m.color, opacity: 1 - q }} /></AbsoluteFill>;
+};
+const morph = (m: MorphProps): TransitionPresentation<MorphProps> => ({ component: MorphPres, props: m });
 /** one shot = its own WebGL canvas + HUD; animation clock = the parent scene (u), camera clock = this shot (us) */
 const ShotView: React.FC<{ span: ShotSpan; pa: number; pb: number; words: Word[] }> = ({ span, pa, pb, words }) => {
   const us = useCurrentFrame();
@@ -693,12 +772,12 @@ const ShotView: React.FC<{ span: ShotSpan; pa: number; pb: number; words: Word[]
   return (
     <AbsoluteFill style={{ background: N3.bg }}>
       <ThreeCanvas width={1080} height={1920} dpr={renderDpr()} linear flat shadows="soft" gl={{ antialias: false, stencil: false, powerPreference: "high-performance" }}>
-        <color attach="background" args={[N3.bg]} />
+        <color attach="background" args={[disp(DAY.skyHorizon)]} />
         <group>{v.world}</group>
         <ShadowSetup />
       </ThreeCanvas>
       <Grade t={f / FPS} />
-      <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.42) 30%, rgba(0,0,0,0) 52%)" }} />
+      <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(10,14,30,.55) 0%, rgba(10,14,30,.42) 26%, rgba(10,14,30,.2) 40%, rgba(10,14,30,0) 50%)" }} />
       {v.dim ? <AbsoluteFill style={{ background: "#000", opacity: v.dim }} /> : null}
       <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: "absolute", inset: 0 }}><NeonDefs />{v.hud || null}</svg>
       {v.black ? <AbsoluteFill style={{ background: "#000", opacity: v.black }} /> : null}
@@ -713,12 +792,12 @@ const Scene: React.FC<SceneProps> = ({ spans, words }) => {
   const out: React.ReactNode[] = [];
   spans.forEach((sp, i) => {
     const next = spans[i + 1];
-    const tr = next ? DEF[next.id].tr : undefined;
+    const tr = next && PLACE[DEF[next.id].parent] !== PLACE[DEF[sp.id].parent] ? morph({ ...(KEY_OBJ[sp.id] ?? KEY_CARD), color: BG[DEF[next.id].parent] }) : undefined;
     const [pa, pb] = range(parentOf(sp.id));
     out.push(<TransitionSeries.Sequence key={sp.id} durationInFrames={Math.max(1, sp.b - sp.a + (tr ? TR_FRAMES : 0))}>
       <ShotView span={sp} pa={pa} pb={pb} words={words} />
     </TransitionSeries.Sequence>);
-    if (tr) out.push(<TransitionSeries.Transition key={sp.id + "-tr"} presentation={presentation(tr)} timing={linearTiming({ durationInFrames: TR_FRAMES })} />);
+    if (tr) out.push(<TransitionSeries.Transition key={sp.id + "-tr"} presentation={tr} timing={linearTiming({ durationInFrames: TR_FRAMES })} />);
   });
   return <AbsoluteFill style={{ background: N3.bg }}><TransitionSeries>{out}</TransitionSeries></AbsoluteFill>;
 };

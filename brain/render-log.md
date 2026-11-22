@@ -331,3 +331,10 @@ contact sheet rebuilt (library/previews/whatif/wi-gta-leonida-stick3d.png).
 | 2026-11-22 16:34 | render-final | wi-gta-leonida | render (466-931) | 12 | 2415 | success (run 45038587691) |
 | 2026-11-22 16:34 | render-final | wi-gta-leonida | assemble | 3 | 2418 | success (run 45038587691) |
 | 2026-11-22 16:34 | render-final | wi-gta-leonida | log | 1 | 2419 | success (run 45038587691) |
+- 2026-11-22 What If 1 BRIGHT DAYLIGHT restyle (owner go + Motion Design rules): library/stick3d/daylight.tsx (DaySky +
+  haze fog + sun sprite, SunRig = one warm sun + sky fill, DayGround, CityBackdrop, Palms, Clouds, WindowWall,
+  SunPatch, disp() for `linear flat` colours). Every set re-done in daylight (sunny den with window onto a hazy city,
+  bright clinic, desert highway with mesas/cacti, red-curtain theatre, sunlit 1964 San Diego room, bright studio,
+  bright calendar set, dawn bedroom, outdoor plaza). Place changes = SHAPE MORPH (key object squashes 8 %, grows,
+  floods with the next scene colour, next shot 93 -> 100 %); HUD text word-by-word soft-to-sharp with rise; camera
+  fast-then-slow inside each shot. 6 new Blender models. Stills ~4.1 s avg (max ~7 s on morph frames: 2 canvases).
