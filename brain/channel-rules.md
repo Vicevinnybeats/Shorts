@@ -197,3 +197,7 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
 - 2026-11-22 owner picked Gemini voice ALGIEBA (default for every video; render-final: episode.json "tts" default
   "gemini", "gemini_voice" default "Algieba", Kokoro am_liam only as fallback). Some Gemini voices paused too long ->
   style prompt now asks for brief natural breaths only (pipeline/voice/gemini_tts.py STYLE).
+- 2026-11-22 owner: key that was pasted in chat was replaced by the owner (never paste keys in chat; secrets only in
+  GitHub / local config). What If 1 = built in the CLOUD (no owner computer, headless Blender) in the new BRIGHT
+  daylight big-3D-world look (owner reference stills) with Remy, Gemini Algieba voice. What If 2 = owner will test
+  live with Blender MCP + Claude Desktop on his PC (models exported as .glb into this repo -> same renderer).

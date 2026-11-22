@@ -2,6 +2,9 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
+0000000000. (2026-11-22 ~20:45) GO for What If 1 in the BRIGHT big-3D-world daylight look (cloud only), Gemini Algieba.
+   Builder agent re-styles episodes/wi-gta-nosleep (keep script, cuts, Remy, no double text). Then GO_FINAL, preview.
+   What If 2: owner tests Blender MCP locally first; wait for his models/feedback.
 000000000. (2026-11-22 20:20) GEMINI_API_KEY secret ADDED. Gemini samples OK; owner PICKED ALGIEBA, wired as render-final default (Kokoro fallback). Gemini = default voice for all videos (after owner picks a
    voice from the samples). Next build (on "go" only): What If 1 GTA story in the bright daylight big-3D-world look
    (owner reference stills) with Remy. Not started.
