@@ -2,7 +2,9 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
-0000000000. GO again (owner ~21:15): What If 1 bright restyle + motion skill rules (brain/motion-design.md) + Algieba.
+0000000000. RENDERED + SENT (run 45068163389, 84 s, Gemini Algieba confirmed in log, 213 words aligned,
+   1-5 kHz -21.8). Waiting for owner verdict. Known weak: dark couch, faint WHAT IF title, props near captions.
+   Was: GO again (owner ~21:15): What If 1 bright restyle + motion skill rules (brain/motion-design.md) + Algieba.
    Builder stopped; only done: 6 bright-look Blender scripts (city_block, desert_mesa, cloud_puff, cactus,
    window_frame, palm_tree_day; palm_tree.py restored for What If 2). daylight.tsx + story restyle NOT started.
    Was: (2026-11-22 ~20:45) GO for What If 1 in the BRIGHT big-3D-world daylight look (cloud only), Gemini Algieba.
