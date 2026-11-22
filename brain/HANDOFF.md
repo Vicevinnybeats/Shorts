@@ -4,7 +4,8 @@ Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on thi
 ## NOW (open items, in order)
 0000000. (owner 2026-11-22) slower voice + spaces between sentences -> flow "spaced" (speed 0.97, 0.38 s / 0.65 s).
    What If 1 slower DONE+SENT (run 45038579654, 90 s, 1-5 kHz -20.3; small issue: DAY 2 chapter overlaps the
-   SHE SELLS bubble for a moment). What If 2 slower render run 45038587691 in progress. Next topic = #3 wi-gta-physics (script ready, not built).
+   SHE SELLS bubble for a moment). What If 2 slower DONE+SENT (run 45038587691, 93 s, 1-5 kHz -20.3).
+   Both WAITING for owner verdict -> approved: Drive 'What if' folder (brain/drive.md). Next: #3 wi-gta-physics on 'go'. Next topic = #3 wi-gta-physics (script ready, not built).
 000000. (owner ~20:20) "make both videos for now" without picking a voice -> kept Kokoro am_liam (default).
    What If 1 (cuts + am_liam, run 44939643924, 68 s, 1-5 kHz -20.0) SENT. What If 2 RENDERED (run 44947593679, 69 s, 1-5 kHz -20.1) and SENT 21:18. Both waiting for owner verdict;
    approved -> Drive 'What if' folder via Zapier + drive-put (brain/drive.md).
