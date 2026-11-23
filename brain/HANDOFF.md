@@ -2,7 +2,9 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
-0000000000. CAPTION FIX re-render SENT (run 45074484655, 88 s, PLAY/SLEEP/REPEAT verified). Earlier: (run 45068163389, 84 s, Gemini Algieba confirmed in log, 213 words aligned,
+0000000000. WHAT IF 1 APPROVED + IN DRIVE 'What if' folder (2026-11-23, 68 MB mp4 + txt). Owner: do nothing else
+   until he asks. Next (only on request): What If 2 bright restyle (owner may test Blender MCP locally first).
+   History: CAPTION FIX re-render SENT (run 45074484655, 88 s, PLAY/SLEEP/REPEAT verified). Earlier: (run 45068163389, 84 s, Gemini Algieba confirmed in log, 213 words aligned,
    1-5 kHz -21.8). Waiting for owner verdict. Known weak: dark couch, faint WHAT IF title, props near captions.
    Was: GO again (owner ~21:15): What If 1 bright restyle + motion skill rules (brain/motion-design.md) + Algieba.
    Builder stopped; only done: 6 bright-look Blender scripts (city_block, desert_mesa, cloud_puff, cactus,
