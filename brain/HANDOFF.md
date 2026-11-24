@@ -2,6 +2,8 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
+* REMEMBER (owner 2026-11-24): after GTA What If #1-#3 -> a NEW THEME test video; more named camera moves per shot
+  (pull back, dolly zoom, crane + land, push-in, orbit, tracking, low angle, top-down). Details: channel-rules.md bottom.
 0000000000. WHAT IF 1 APPROVED + IN DRIVE 'What if' folder (2026-11-23, 68 MB mp4 + txt). Owner: do nothing else
    until he asks. Next (only on request): What If 2 bright restyle (owner may test Blender MCP locally first).
    History: CAPTION FIX re-render SENT (run 45074484655, 88 s, PLAY/SLEEP/REPEAT verified). Earlier: (run 45068163389, 84 s, Gemini Algieba confirmed in log, 213 words aligned,

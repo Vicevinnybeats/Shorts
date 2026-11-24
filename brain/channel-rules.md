@@ -205,3 +205,8 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   we apply it: brain/motion-design.md. Owner: don't make the video yet - What If 1 bright restyle PAUSED until he says go.
 - 2026-11-22 bug: caption "SLEEP." missing in "Play. Sleep. Repeat." (Gemini said it fast, aligner gave ~0 s). Fix:
   align_words.py now gives every word >= 0.18 s on screen with increasing starts. Check fast word lists in every video.
+- 2026-11-24 owner (REMEMBER, not started): after the 3 GTA What If videos (#1 nosleep, #2 leonida, #3 physics),
+  test ANOTHER THEME to see what works (A/B the topic, keep the look). Use MORE CAMERA SHOTS / named camera moves,
+  like his reference (a pixel-art lighthouse short, style only): 01 PULL BACK (reveal), 02 DOLLY ZOOM (vertigo),
+  03 CRANE + LAND (rise over, then settle). Also add: push-in, orbit, tracking/truck, low hero angle, top-down,
+  whip-to-match. Plan each video's shot list with a named move per shot (in the storyboard) and vary them.
