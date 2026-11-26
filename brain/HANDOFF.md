@@ -7,7 +7,8 @@ Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on thi
    wi-gta-physics (script fact-checked 2026-11-26, unchanged). Same look/rules as What If 1. Then GO_FINAL each,
    previews to owner; Drive only after approval.
    STATUS 2026-11-26 ~17:35: What If 2 restyled (673aa8f) render started; What If 3 built (9a223fd, 7 new models,
-   question card fixed to A-D) render queued after it. Check both, send previews.
+   question card fixed to A-D) render queued after it. What If 2 DONE + SENT (run 45868417105, 102 s, 1-5 kHz -22.5,
+   A-D captions verified). What If 3 pending.
 * REMEMBER (owner 2026-11-24): after GTA What If #1-#3 -> a NEW THEME test video; more named camera moves per shot
   (pull back, dolly zoom, crane + land, push-in, orbit, tracking, low angle, top-down). Details: channel-rules.md bottom.
 0000000000. WHAT IF 1 APPROVED + IN DRIVE 'What if' folder (2026-11-23, 68 MB mp4 + txt). Owner: do nothing else
