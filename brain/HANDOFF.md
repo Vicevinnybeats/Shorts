@@ -2,6 +2,10 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
+00. (owner 2026-11-26) "Make 2 and 3": two builder agents in separate worktrees on separate local branches
+   (lesson: never two builders on one checkout). What If 2 = bright restyle of wi-gta-leonida; What If 3 = build
+   wi-gta-physics (script fact-checked 2026-11-26, unchanged). Same look/rules as What If 1. Then GO_FINAL each,
+   previews to owner; Drive only after approval.
 * REMEMBER (owner 2026-11-24): after GTA What If #1-#3 -> a NEW THEME test video; more named camera moves per shot
   (pull back, dolly zoom, crane + land, push-in, orbit, tracking, low angle, top-down). Details: channel-rules.md bottom.
 0000000000. WHAT IF 1 APPROVED + IN DRIVE 'What if' folder (2026-11-23, 68 MB mp4 + txt). Owner: do nothing else
