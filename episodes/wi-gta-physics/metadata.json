@@ -1,0 +1,35 @@
+{
+  "episode": "wi-gta-physics",
+  "test": true,
+  "youtube": {
+    "title": "What If GTA Physics Worked in Real Life? #Shorts",
+    "description": "What if GTA physics worked in real life? Jump off a skyscraper, roll, and walk away. Remy runs three tests.\n\nTest 1, the fall: a skydiver reaches top speed after about 12 seconds of falling, around 200 km/h. That's terminal velocity, when air resistance pushes back as hard as gravity pulls. Parachutes exist for a reason. Remy takes the stairs.\nTest 2, the car: a crash at just 50 km/h hits your body like falling from the third floor of a building. Double the speed and the crash energy becomes four times bigger (kinetic energy grows with speed squared). Seat belts spread the stop across your hips and chest.\nTest 3, walking: more than 95% of pedestrians hit by a car at 30 km/h survive; at 50 km/h, about 85%. That's why many towns put 30 zones near schools.\n\nIn the game, you respawn. Out here, you get one save file. Which GTA move would hurt the most in real life?\n\nSources:\n- Terminal velocity of a skydiver (~53-56 m/s, about 190-200 km/h): The Physics Factbook: https://hypertextbook.com/facts/1998/JianHuang.shtml\n- Mathematics of skydiving (terminal velocity after roughly 12 s of free fall): EBSCO Research Starters: https://www.ebsco.com/research-starters/sports-and-leisure/mathematics-skydiving\n- A 50 km/h crash compared with falling from the third floor: Road to Zero (Victoria, Australia), Crash forces: https://www.roadtozero.vic.gov.au/__data/assets/pdf_file/0005/392477/Background-Crash-Forces-Elevator_v06.pdf\n- Pedestrian survival by impact speed (>95% at 30 km/h, ~85% at 50 km/h): SWOV: https://www.swov.nl/en/node/16371 and European Commission road safety: https://road-safety.transport.ec.europa.eu/statistics-and-analysis/statistics-and-analysis-archive/pedestrians/no-speed-no-mass-and-no-protection_en\n- Crash energy grows with the square of speed: kinetic energy = 1/2 m v^2 (basic physics).\n\nDon't try any of this. Always wear your seat belt and slow down near schools.\nRemy is fictional. Not affiliated with Rockstar Games or Take-Two. No game footage, art or logos are used.\nAI disclosure: made with AI assistance (script drafting, animation). Narration: AI voice (Google AI Studio, Gemini TTS).\n\n#Shorts #WhatIf #GTA #physics #science #TheLittleEpic",
+    "tags": [
+      "shorts",
+      "what if",
+      "GTA",
+      "GTA 6",
+      "physics",
+      "terminal velocity",
+      "seat belt",
+      "road safety",
+      "science",
+      "animation",
+      "TheLittleEpic"
+    ],
+    "category": "Education",
+    "made_for_kids": false,
+    "contains_synthetic_media": false
+  },
+  "instagram": {
+    "caption": "What if GTA physics worked in real life? 🏙️🚗\nA skydiver tops out around 200 km/h after about 12 seconds. A 50 km/h crash hits like a fall from the 3rd floor. Double the speed = 4x the crash energy. Hit at 30 km/h, more than 95% of people survive; at 50, about 85%.\nIn the game you respawn. Out here you get one save file.\n\nWhich GTA move would hurt the most in real life? 👇\n\nRemy is fictional. Not affiliated with Rockstar Games or Take-Two. No game footage.\nMade with AI assistance. Narration: AI voice (Google AI Studio, Gemini TTS). Sources on YouTube.\n\n#whatif #GTA #physics #science #roadsafety #shorts #reels #animation #TheLittleEpic"
+  },
+  "sources": [
+    { "fact": "Belly-to-earth skydiver terminal velocity ~53-56 m/s (~190-200 km/h, ~120 mph)", "url": "https://hypertextbook.com/facts/1998/JianHuang.shtml" },
+    { "fact": "Terminal velocity reached after roughly 12 s of free fall", "url": "https://www.ebsco.com/research-starters/sports-and-leisure/mathematics-skydiving" },
+    { "fact": "50 km/h crash ~ falling from the third floor (13.9 m/s ~ 10 m drop)", "url": "https://www.roadtozero.vic.gov.au/__data/assets/pdf_file/0005/392477/Background-Crash-Forces-Elevator_v06.pdf" },
+    { "fact": "Pedestrians: >95% survive at 30 km/h impact, ~85% at 50 km/h", "url": "https://www.swov.nl/en/node/16371" },
+    { "fact": "Pedestrians: no speed, no mass and no protection (EC road safety)", "url": "https://road-safety.transport.ec.europa.eu/statistics-and-analysis/statistics-and-analysis-archive/pedestrians/no-speed-no-mass-and-no-protection_en" },
+    { "fact": "Kinetic energy ~ v^2: double speed -> 4x energy", "url": "" }
+  ]
+}

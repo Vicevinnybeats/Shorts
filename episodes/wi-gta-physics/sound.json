@@ -1,0 +1,40 @@
+{
+ "music": {
+  "mood": "cinematic",
+  "bpm": 88,
+  "key": 55,
+  "level_lu": -16
+ },
+ "sfx": [
+  { "cue": "What if GTA", "fn": "breeze", "args": { "dur": 4.0, "level": 0.35 }, "level_lu": -23 },
+  { "cue": "Jump off a", "fn": "whoosh", "args": { "dur": 0.8, "peak": 0.08, "f_lo": 200, "f_hi": 1400 }, "gain_db": -10 },
+  { "cue": "roll, and", "fn": "push_thump", "args": {}, "gain_db": -10 },
+  { "cue": "Let's test that", "fn": "clink", "args": { "bright": 0.9 }, "gain_db": -12 },
+  { "cue": "Test one. Remy", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.08 }, "gain_db": -10 },
+  { "cue": "this is a shortcut", "fn": "clink", "args": { "bright": 0.7 }, "gain_db": -13 },
+  { "cue": "In real life, gravity", "fn": "breeze", "args": { "dur": 4.5, "level": 0.4 }, "level_lu": -22 },
+  { "cue": "After about twelve", "fn": "whoosh", "args": { "dur": 1.4, "peak": 0.07, "f_lo": 150, "f_hi": 900 }, "gain_db": -10 },
+  { "cue": "Around two hundred", "fn": "rattle", "args": { "dur": 1.2, "density": 12.0 }, "gain_db": -16 },
+  { "cue": "That's terminal velocity", "fn": "push_thump", "args": {}, "gain_db": -9 },
+  { "cue": "Parachutes exist for", "fn": "whoosh", "args": { "dur": 0.9, "peak": 0.09, "f_lo": 120, "f_hi": 700 }, "gain_db": -9 },
+  { "cue": "Remy takes the", "fn": "creak", "args": { "dur": 0.35 }, "gain_db": -13 },
+  { "cue": "Test two. A", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.08 }, "gain_db": -10 },
+  { "cue": "climb out,", "fn": "clink", "args": { "bright": 0.6 }, "gain_db": -13 },
+  { "cue": "Here's the real", "fn": "rattle", "args": { "dur": 1.0, "density": 14.0 }, "gain_db": -16 },
+  { "cue": "third floor", "fn": "push_thump", "args": {}, "gain_db": -8 },
+  { "cue": "Double the speed", "fn": "whoosh", "args": { "dur": 0.7, "peak": 0.08 }, "gain_db": -10 },
+  { "cue": "four times bigger", "fn": "push_thump", "args": {}, "gain_db": -8 },
+  { "cue": "It multiplies it", "fn": "clink", "args": { "bright": 1.0 }, "gain_db": -11 },
+  { "cue": "They spread the", "fn": "push_thump", "args": {}, "gain_db": -9 },
+  { "cue": "hips and chest", "fn": "clink", "args": { "bright": 0.7 }, "gain_db": -13 },
+  { "cue": "Test three. Walking", "fn": "bird_chirps", "args": { "dur": 3.0 }, "level_lu": -24 },
+  { "cue": "get right back", "fn": "clink", "args": { "bright": 0.8 }, "gain_db": -13 },
+  { "cue": "at thirty kilometers", "fn": "clink", "args": { "bright": 0.6 }, "gain_db": -13 },
+  { "cue": "At fifty, about", "fn": "clink", "args": { "bright": 0.5 }, "gain_db": -13 },
+  { "cue": "That's why many", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.07 }, "gain_db": -11 },
+  { "cue": "So, game rules", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.08 }, "gain_db": -10 },
+  { "cue": "you respawn", "fn": "rattle", "args": { "dur": 0.8, "density": 14.0 }, "gain_db": -16 },
+  { "cue": "one save file", "fn": "push_thump", "args": {}, "gain_db": -8 },
+  { "cue": "Which GTA move", "fn": "breeze", "args": { "dur": 3.0, "level": 0.3 }, "level_lu": -23 }
+ ]
+}
