@@ -417,3 +417,18 @@ Contact sheet library/previews/whatif/wi-gta-physics-stick3d.png. Next: GO_FINAL
 | 2026-11-26 18:33 | render-final | wi-gta-physics | render (447-893) | 11 | 3120 | success (run 45868954706) |
 | 2026-11-26 18:33 | render-final | wi-gta-physics | assemble | 2 | 3122 | success (run 45868954706) |
 | 2026-11-26 18:33 | render-final | wi-gta-physics | log | 1 | 3123 | success (run 45868954706) |
+2026-11-26 ~23:00 BUILD wi-gta-healing (What If #4, builder in its own worktree): episode.json/sound.json/metadata.json/story.tsx.
+Bright daylight Stick3D, Remy + beanie, motif = cyan GAME health bar (refills in a blink) vs gold REAL timeline bar.
+17 shots, one named move each: hook crane+land (WHAT IF #4), hookb push-in (chips, cyan bar jumps full, gold bar
+appears), test1 tracking (gold spark = small cut, cyan ghost, bar dips + snaps back), cut ORBIT (plaster finger insert,
+~1 WEEK), layers crane+land (skin cross-section, fibres knit, 12 month cells), scar low hero angle (100% vs ~80%), test2
+pull back (donor centre, cyan hologram burger), plasma push-in (stylised bag, ~1 DAY), cells tracking (red-cell discs
+pop up, 4-6 WEEKS), calendar DOLLY ZOOM (8-week calendar crosses off, 8+ WEEKS), test3 orbit (cast + sling, ghost jogs
+off the parked car), xray push-in (bone knits, 6-8 WEEKS), xrayb pull back (bad break, 3-6 MONTHS), rest top-down
+(burger crossed out, bed/apple/moon icons), realbar tracking (giant real bar on the lawn), outro crane up (cyan full vs
+gold creeping + day ticks), ask crane+land (A CUT / A BREAK / A SPRAIN / OTHER). 7 place-change shape morphs.
+8 new Blender models (burger, plaster, picnic_table, donation_chair, blood_bag_stand, xray_lightbox, arm_cast,
+hospital_bed; README table); arm_cast rebuilt once (sling strap crossed the face). Stills half scale, swangle, rough
+2.85 w/s: 2 fix rounds (framing of cut/layers/scar/plasma/xray/realbar, duplicate Remy in cells, red cells too dark,
+calendar HUD clutter, ghost off-screen, ask card text overflow). Contact sheet
+library/previews/whatif/wi-gta-healing-stick3d.png. Not rendered, no GO_FINAL: owner decides.

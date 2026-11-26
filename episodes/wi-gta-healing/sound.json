@@ -1,0 +1,34 @@
+{
+ "music": {
+  "mood": "cinematic",
+  "bpm": 84,
+  "key": 57,
+  "level_lu": -16
+ },
+ "sfx": [
+  { "cue": "What if you", "fn": "breeze", "args": { "dur": 4.0, "level": 0.35 }, "level_lu": -23 },
+  { "cue": "Eat a snack", "fn": "rattle", "args": { "dur": 0.5, "density": 14.0 }, "gain_db": -16 },
+  { "cue": "health bar is", "fn": "clink", "args": { "bright": 1.0 }, "gain_db": -11 },
+  { "cue": "Let's see how", "fn": "whoosh", "args": { "dur": 0.7, "peak": 0.07 }, "gain_db": -11 },
+  { "cue": "Test one.", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.08 }, "gain_db": -10 },
+  { "cue": "A small cut.", "fn": "clink", "args": { "bright": 0.5 }, "gain_db": -15 },
+  { "cue": "it's gone in", "fn": "clink", "args": { "bright": 1.0 }, "gain_db": -12 },
+  { "cue": "closes in about", "fn": "breeze", "args": { "dur": 3.5, "level": 0.3 }, "level_lu": -24 },
+  { "cue": "Underneath, your body", "fn": "whoosh", "args": { "dur": 0.9, "peak": 0.07, "f_lo": 150, "f_hi": 900 }, "gain_db": -11 },
+  { "cue": "eighty percent", "fn": "push_thump", "args": {}, "gain_db": -10 },
+  { "cue": "Test two.", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.08 }, "gain_db": -10 },
+  { "cue": "grab a burger", "fn": "clink", "args": { "bright": 0.9 }, "gain_db": -12 },
+  { "cue": "the liquid part", "fn": "clink", "args": { "bright": 0.6 }, "gain_db": -14 },
+  { "cue": "But the red", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.07 }, "gain_db": -11 },
+  { "cue": "at least eight", "fn": "push_thump", "args": {}, "gain_db": -9 },
+  { "cue": "Test three.", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.08 }, "gain_db": -10 },
+  { "cue": "keep running", "fn": "rattle", "args": { "dur": 0.8, "density": 12.0 }, "gain_db": -16 },
+  { "cue": "six to eight", "fn": "clink", "args": { "bright": 0.6 }, "gain_db": -13 },
+  { "cue": "A bad break", "fn": "push_thump", "args": {}, "gain_db": -10 },
+  { "cue": "No snack fixes", "fn": "whoosh", "args": { "dur": 0.7, "peak": 0.07 }, "gain_db": -11 },
+  { "cue": "and sleep help", "fn": "breeze", "args": { "dur": 3.0, "level": 0.3 }, "level_lu": -24 },
+  { "cue": "It refills.", "fn": "clink", "args": { "bright": 0.8 }, "gain_db": -13 },
+  { "cue": "every single day", "fn": "bird_chirps", "args": { "dur": 3.0 }, "level_lu": -24 },
+  { "cue": "What's the slowest", "fn": "breeze", "args": { "dur": 3.0, "level": 0.3 }, "level_lu": -23 }
+ ]
+}
