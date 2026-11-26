@@ -43,3 +43,4 @@ How a finished video gets into Drive (no rclone secrets needed):
 | 2026-11-21 | wi-gta-nosleep -> 'What if' folder (1C3YDZzPqlFhBQM_7rurN7XRCnhhyqT_o) as What If 1 | What If 1 - You Played GTA 6 for 30 Days Straight.mp4 (30.8 MB) + txt; repo made PUBLIC by owner (free Actions minutes) |
 | 2026-11-21 | wi-gta-leonida -> 'What if' folder as What If 2 | What If 2 - You Moved to the Real Leonida.mp4 (23.7 MB) + txt; natural-voice fix: 71 s vs 89 s for the same word count |
 | 2026-11-23 | wi-gta-nosleep (bright look, Gemini Algieba, run 45074484655) -> What if folder as What If 1 (APPROVED by owner) | What If 1 - You Played GTA 6 for 30 Days Straight.mp4 (68.1 MB) + What If 1 - title, description, tags, caption.txt |
+| 2026-11-26 | wi-gta-leonida + wi-gta-physics (bright look, Algieba) -> What if folder as What If 2 + 3 (owner: upload) | What If 2 - You Moved to the Real Leonida.mp4 (88.5 MB) + txt; What If 3 - GTA Physics in Real Life.mp4 (75.7 MB) + txt |

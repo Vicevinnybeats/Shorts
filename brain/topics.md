@@ -138,3 +138,12 @@ never copy their character, premises, layouts or text. Our own mascot + our own 
 | ...you dropped a coin from a skyscraper? | SPEED counter | terminal velocity of a coin; myth busting | idea |
 | ...you were the last person on Earth? | POWER GRID %, day 1/30/365 | grids fail fast without people (verify) | idea |
 | ...you lived 30 days in a GTA-style city? (our own fictional city) | WANTED-style meters, day 1/30 | risk perception / habit / time sense | idea |
+
+## WHAT IF #4-#6 (GTA 6) - proposed 2026-11-26, WAITING for owner approval (facts to verify before writing)
+4. What If You Healed Like a GTA 6 Character? - game: snack = full health in seconds. Real: bone ~6+ weeks, skin cuts
+   days-weeks, blood after donating: plasma ~1-2 days, red cells ~weeks. Remy in a hospital/clinic, health-bar HUD.
+5. What If You Had GTA 6 Money in Real Life? - game: millions in one heist. Real: $1 million in $100 bills weighs ~10 kg,
+   counting it by hand takes hours, banks report big cash deposits, taxes. Remy with a duffel bag, scale, counter.
+6. What If You Held Your Breath Like a GTA 6 Character? - game: swim underwater for ages. Real: most people ~30-90 s,
+   trained freedivers several minutes, cold-water shock. Remy at a pool/sea, breath meter HUD.
+After #4-#6: the NEW THEME test video (owner idea, see HANDOFF).
