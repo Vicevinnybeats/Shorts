@@ -646,7 +646,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       </>;
       const hud = <>
         <HudText f={u} x={540} y={420} size={60} color={CREAM} at={4} out={len + 30}>COMMENT</HudText>
-        <HudText f={u} x={540} y={505} size={76} color={GOLD} at={8} out={len + 30}>A, B OR C</HudText>
+        <HudText f={u} x={540} y={505} size={76} color={GOLD} at={8} out={len + 30}>A, B, C OR D</HudText>
         <ChoiceCards f={u} y={720} at={12} cw={440} ch={130} cards={[{ letter: "A", text: "ROOF JUMP" }, { letter: "B", text: "CAR CRASH" }, { letter: "C", text: "CAR BUMP" }, { letter: "D", text: "ALL OF THEM" }]} />
       </>;
       return { world, hud };
