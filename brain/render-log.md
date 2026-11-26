@@ -398,3 +398,4 @@ ask crane+land (COMMENT A, B OR C cards). 7 new Blender models (README table). S
 coral cones read badly -> removed block, gold cones; math crane now follows the car; zone kids lifted above captions).
 Contact sheet library/previews/whatif/wi-gta-physics-stick3d.png. Next: GO_FINAL only on the owner's word.
 | 2026-11-26 17:35 | render-stills | wi-gta-physics  | stills | 1 | 3003 | running (run 45868875332) |
+| 2026-11-26 17:38 | render-stills | wi-gta-physics  | stills | 4 | 3006 | running (run 45868954776) |
