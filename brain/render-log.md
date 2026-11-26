@@ -374,15 +374,15 @@ contact sheet rebuilt (library/previews/whatif/wi-gta-leonida-stick3d.png).
   swangle, rough 2.85 w/s timing): 32 frames, avg 5.4 s, max 10.4 s (morph frames). 2 fix rounds (HUD spacing,
   framing of golf low angle/orbit/crane up/death trophy, brighter tv room + house).
 | 2026-11-26 17:34 | render-stills | wi-gta-leonida  | stills | 4 | 2857 | running (run 45868340758) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | voice-and-mix | 4 | 2688 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (880-1319) | 20 | 2708 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (0-439) | 27 | 2735 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (2200-2637) | 17 | 2752 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (1320-1759) | 26 | 2778 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (1760-2199) | 19 | 2797 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (440-879) | 29 | 2826 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | assemble | 2 | 2828 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | log | 1 | 2829 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | voice-and-mix | 4 | 2861 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (880-1319) | 20 | 2881 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (0-439) | 27 | 2908 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (2200-2637) | 17 | 2925 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (1320-1759) | 26 | 2951 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (1760-2199) | 19 | 2970 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (440-879) | 29 | 2999 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | assemble | 2 | 3001 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | log | 1 | 3002 | success (run 45074484655) |
 
 ## 2026-11-26 wi-gta-physics (WHAT IF #3) built - bright daylight Stick3D, stills checked (not rendered final)
 episodes/wi-gta-physics/{episode.json, story.tsx, sound.json, metadata.json}; script.txt + RESEARCH.md unchanged.
@@ -397,3 +397,4 @@ ask crane+land (COMMENT A, B OR C cards). 7 new Blender models (README table). S
 2.85 w/s timing: 2 fix rounds (sky had a ground skyline behind the jumper; belt camera was behind the foam block +
 coral cones read badly -> removed block, gold cones; math crane now follows the car; zone kids lifted above captions).
 Contact sheet library/previews/whatif/wi-gta-physics-stick3d.png. Next: GO_FINAL only on the owner's word.
+| 2026-11-26 17:35 | render-stills | wi-gta-physics  | stills | 1 | 3003 | running (run 45868875332) |
