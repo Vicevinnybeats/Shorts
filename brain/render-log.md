@@ -399,3 +399,12 @@ coral cones read badly -> removed block, gold cones; math crane now follows the 
 Contact sheet library/previews/whatif/wi-gta-physics-stick3d.png. Next: GO_FINAL only on the owner's word.
 | 2026-11-26 17:35 | render-stills | wi-gta-physics  | stills | 1 | 3003 | running (run 45868875332) |
 | 2026-11-26 17:38 | render-stills | wi-gta-physics  | stills | 4 | 3006 | running (run 45868954776) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | voice-and-mix | 4 | 2857 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (1018-1526) | 18 | 2875 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (0-508) | 27 | 2902 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (509-1017) | 25 | 2927 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (1527-2035) | 29 | 2956 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (2545-3053) | 15 | 2971 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (2036-2544) | 15 | 2986 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | assemble | 2 | 2988 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | log | 1 | 2989 | success (run 45868417105) |
