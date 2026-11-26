@@ -433,3 +433,12 @@ hospital_bed; README table); arm_cast rebuilt once (sling strap crossed the face
 calendar HUD clutter, ghost off-screen, ask card text overflow). Contact sheet
 library/previews/whatif/wi-gta-healing-stick3d.png. Not rendered, no GO_FINAL: owner decides.
 | 2026-11-26 22:48 | render-stills | wi-gta-healing  | stills | 3 | 3267 | running (run 45906832749) |
+| 2026-11-26 23:15 | render-final | wi-gta-healing | voice-and-mix | 6 | 3270 | success (run 45906889106) |
+| 2026-11-26 23:15 | render-final | wi-gta-healing | render (1564-1954) | 22 | 3292 | success (run 45906889106) |
+| 2026-11-26 23:15 | render-final | wi-gta-healing | render (391-781) | 19 | 3311 | success (run 45906889106) |
+| 2026-11-26 23:15 | render-final | wi-gta-healing | render (1955-2344) | 18 | 3329 | success (run 45906889106) |
+| 2026-11-26 23:15 | render-final | wi-gta-healing | render (782-1172) | 16 | 3345 | success (run 45906889106) |
+| 2026-11-26 23:15 | render-final | wi-gta-healing | render (1173-1563) | 15 | 3360 | success (run 45906889106) |
+| 2026-11-26 23:15 | render-final | wi-gta-healing | render (0-390) | 16 | 3376 | success (run 45906889106) |
+| 2026-11-26 23:15 | render-final | wi-gta-healing | assemble | 2 | 3378 | success (run 45906889106) |
+| 2026-11-26 23:15 | render-final | wi-gta-healing | log | 1 | 3379 | success (run 45906889106) |
