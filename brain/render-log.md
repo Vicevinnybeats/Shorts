@@ -354,15 +354,15 @@ contact sheet rebuilt (library/previews/whatif/wi-gta-leonida-stick3d.png).
 | 2026-11-22 22:03 | health-check | - | drive | 1 | 2705 | success (run 45074484640) |
 | 2026-11-22 22:03 | health-check | - | audio-mix | 2 | 2707 | success (run 45074484640) |
 | 2026-11-22 22:03 | health-check | - | report | 1 | 2708 | running (run 45074484640) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | voice-and-mix | 4 | 2688 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (880-1319) | 20 | 2708 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (0-439) | 27 | 2735 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (2200-2637) | 17 | 2752 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (1320-1759) | 26 | 2778 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (1760-2199) | 19 | 2797 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (440-879) | 29 | 2826 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | assemble | 2 | 2828 | success (run 45074484655) |
-| 2026-11-22 22:25 | render-final | wi-gta-nosleep | log | 1 | 2829 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | voice-and-mix | 4 | 2712 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (880-1319) | 20 | 2732 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (0-439) | 27 | 2759 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (2200-2637) | 17 | 2776 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (1320-1759) | 26 | 2802 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (1760-2199) | 19 | 2821 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (440-879) | 29 | 2850 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | assemble | 2 | 2852 | success (run 45074484655) |
+| 2026-11-22 22:25 | render-final | wi-gta-nosleep | log | 1 | 2853 | success (run 45074484655) |
 - 2026-11-26 What If 2 (wi-gta-leonida) BRIGHT DAYLIGHT restyle (builder wt2-leonida, same look/rules as What If 1):
   sunny apartment with window, humid Miami street, wishlist boardwalk by the sea, golf course pond + gator, 3D Florida
   map on a table on a sea terrace (storm over it for lightning), beach noon -> 4 pm storm, Florida flat with storm-track
@@ -373,3 +373,4 @@ contact sheet rebuilt (library/previews/whatif/wi-gta-leonida-stick3d.png).
   window_frame, city_block, cloud_puff); navy couch replaced by a bright box couch. Local stills (half scale,
   swangle, rough 2.85 w/s timing): 32 frames, avg 5.4 s, max 10.4 s (morph frames). 2 fix rounds (HUD spacing,
   framing of golf low angle/orbit/crane up/death trophy, brighter tv room + house).
+| 2026-11-26 17:34 | render-stills | wi-gta-leonida  | stills | 4 | 2857 | running (run 45868340758) |
