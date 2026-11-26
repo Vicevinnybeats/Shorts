@@ -3,7 +3,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _lib import *  # noqa
 # Forearm CAST in a SLING (What If #4 broken arm, friendly). Origin = cast centre. The cast lies along X (0.7 long,
 # r 0.11) and is held in front of a puppet's chest (h 2.5: put it at about (0, 1.02, +0.12) in front of the puppet);
-# hand end at +X (skin fist + fingers), elbow end at -X. Navy sling cradle under it with a strap rising to the neck
+# hand end at +X (skin fist + fingers), elbow end at -X. Navy sling cradle under it with a short strap up to the shoulder edge
 # (+Z, toward -X shoulder). White cast with doodle signatures (coral heart, gold star, cyan zigzag).
 def build():
     cast, skin = mat("#fbfaf6", rough=0.9), mat("#f3d2b3", rough=0.75)
@@ -20,5 +20,5 @@ def build():
     sling = mat("#2e3658", rough=0.85)
     box("cradle", (0.72, 0.26, 0.05), (0, 0, -0.13), sling, 0.02)
     box("cradleFront", (0.72, 0.03, 0.16), (0, -0.13, -0.07), sling, 0.01)
-    box("strap", (0.07, 0.03, 0.75), (-0.18, -0.12, 0.3), sling, 0.01, rot=(0, -0.5, 0))
+    box("strap", (0.05, 0.03, 0.34), (-0.33, -0.12, 0.12), sling, 0.01, rot=(0, -0.25, 0))  # short strap up to the shoulder edge, never across the face
 run(build)
