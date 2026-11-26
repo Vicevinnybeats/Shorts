@@ -10,7 +10,8 @@ Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on thi
    question card fixed to A-D) render queued after it. What If 2 DONE + SENT (run 45868417105, 102 s, 1-5 kHz -22.5,
    A-D captions verified). What If 3 DONE + SENT (run 45868954706, 89 s, 1-5 kHz -22.0). Both WAITING for owner
    2026-11-26 owner: make #4-#6 ONE BY ONE. #4 wi-gta-healing: script + RESEARCH written (fact-checked) -> builder
-   STOPPED by the 5-hour usage limit before committing anything (resets 22:00 UTC). Resume: restart the builder
+   Builder resumed + DONE (860b2fd, 8 new models); GO_FINAL render started -> check, send preview.
+   (Earlier: stopped by the 5-hour usage limit; resume = SendMessage to the builder.) Restart the builder
    (same brief as What If 3, see channel-rules) after the reset.
    UPLOADED 2026-11-26: What If 2 + 3 in Drive 'What if' folder (mp4 + txt). Next: owner approves 3 new GTA titles
    (brain/topics.md #4-#6) -> fact-check -> scripts -> build one at a time. Then the new theme test.
