@@ -398,25 +398,25 @@ ask crane+land (COMMENT A, B OR C cards). 7 new Blender models (README table). S
 coral cones read badly -> removed block, gold cones; math crane now follows the car; zone kids lifted above captions).
 Contact sheet library/previews/whatif/wi-gta-physics-stick3d.png. Next: GO_FINAL only on the owner's word.
 | 2026-11-26 17:35 | render-stills | wi-gta-physics  | stills | 1 | 3003 | running (run 45868875332) |
-| 2026-11-26 17:38 | render-stills | wi-gta-physics  | stills | 4 | 3006 | running (run 45868954776) |
-| 2026-11-26 18:04 | render-final | wi-gta-leonida | voice-and-mix | 4 | 2857 | success (run 45868417105) |
-| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (1018-1526) | 18 | 2875 | success (run 45868417105) |
-| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (0-508) | 27 | 2902 | success (run 45868417105) |
-| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (509-1017) | 25 | 2927 | success (run 45868417105) |
-| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (1527-2035) | 29 | 2956 | success (run 45868417105) |
-| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (2545-3053) | 15 | 2971 | success (run 45868417105) |
-| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (2036-2544) | 15 | 2986 | success (run 45868417105) |
-| 2026-11-26 18:04 | render-final | wi-gta-leonida | assemble | 2 | 2988 | success (run 45868417105) |
-| 2026-11-26 18:04 | render-final | wi-gta-leonida | log | 1 | 2989 | success (run 45868417105) |
-| 2026-11-26 18:33 | render-final | wi-gta-physics | voice-and-mix | 4 | 3006 | success (run 45868954706) |
-| 2026-11-26 18:33 | render-final | wi-gta-physics | render (0-446) | 24 | 3030 | success (run 45868954706) |
-| 2026-11-26 18:33 | render-final | wi-gta-physics | render (2235-2680) | 24 | 3054 | success (run 45868954706) |
-| 2026-11-26 18:33 | render-final | wi-gta-physics | render (1341-1787) | 20 | 3074 | success (run 45868954706) |
-| 2026-11-26 18:33 | render-final | wi-gta-physics | render (894-1340) | 13 | 3087 | success (run 45868954706) |
-| 2026-11-26 18:33 | render-final | wi-gta-physics | render (1788-2234) | 22 | 3109 | success (run 45868954706) |
-| 2026-11-26 18:33 | render-final | wi-gta-physics | render (447-893) | 11 | 3120 | success (run 45868954706) |
-| 2026-11-26 18:33 | render-final | wi-gta-physics | assemble | 2 | 3122 | success (run 45868954706) |
-| 2026-11-26 18:33 | render-final | wi-gta-physics | log | 1 | 3123 | success (run 45868954706) |
+| 2026-11-26 17:38 | render-stills | wi-gta-physics  | stills | 4 | 3007 | running (run 45868954776) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | voice-and-mix | 4 | 3011 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (1018-1526) | 18 | 3029 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (0-508) | 27 | 3056 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (509-1017) | 25 | 3081 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (1527-2035) | 29 | 3110 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (2545-3053) | 15 | 3125 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | render (2036-2544) | 15 | 3140 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | assemble | 2 | 3142 | success (run 45868417105) |
+| 2026-11-26 18:04 | render-final | wi-gta-leonida | log | 1 | 3143 | success (run 45868417105) |
+| 2026-11-26 18:33 | render-final | wi-gta-physics | voice-and-mix | 4 | 3147 | success (run 45868954706) |
+| 2026-11-26 18:33 | render-final | wi-gta-physics | render (0-446) | 24 | 3171 | success (run 45868954706) |
+| 2026-11-26 18:33 | render-final | wi-gta-physics | render (2235-2680) | 24 | 3195 | success (run 45868954706) |
+| 2026-11-26 18:33 | render-final | wi-gta-physics | render (1341-1787) | 20 | 3215 | success (run 45868954706) |
+| 2026-11-26 18:33 | render-final | wi-gta-physics | render (894-1340) | 13 | 3228 | success (run 45868954706) |
+| 2026-11-26 18:33 | render-final | wi-gta-physics | render (1788-2234) | 22 | 3250 | success (run 45868954706) |
+| 2026-11-26 18:33 | render-final | wi-gta-physics | render (447-893) | 11 | 3261 | success (run 45868954706) |
+| 2026-11-26 18:33 | render-final | wi-gta-physics | assemble | 2 | 3263 | success (run 45868954706) |
+| 2026-11-26 18:33 | render-final | wi-gta-physics | log | 1 | 3264 | success (run 45868954706) |
 2026-11-26 ~23:00 BUILD wi-gta-healing (What If #4, builder in its own worktree): episode.json/sound.json/metadata.json/story.tsx.
 Bright daylight Stick3D, Remy + beanie, motif = cyan GAME health bar (refills in a blink) vs gold REAL timeline bar.
 17 shots, one named move each: hook crane+land (WHAT IF #4), hookb push-in (chips, cyan bar jumps full, gold bar
@@ -432,3 +432,4 @@ hospital_bed; README table); arm_cast rebuilt once (sling strap crossed the face
 2.85 w/s: 2 fix rounds (framing of cut/layers/scar/plasma/xray/realbar, duplicate Remy in cells, red cells too dark,
 calendar HUD clutter, ghost off-screen, ask card text overflow). Contact sheet
 library/previews/whatif/wi-gta-healing-stick3d.png. Not rendered, no GO_FINAL: owner decides.
+| 2026-11-26 22:48 | render-stills | wi-gta-healing  | stills | 3 | 3267 | running (run 45906832749) |
