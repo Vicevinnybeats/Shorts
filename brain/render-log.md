@@ -363,3 +363,13 @@ contact sheet rebuilt (library/previews/whatif/wi-gta-leonida-stick3d.png).
 | 2026-11-22 22:25 | render-final | wi-gta-nosleep | render (440-879) | 29 | 2826 | success (run 45074484655) |
 | 2026-11-22 22:25 | render-final | wi-gta-nosleep | assemble | 2 | 2828 | success (run 45074484655) |
 | 2026-11-22 22:25 | render-final | wi-gta-nosleep | log | 1 | 2829 | success (run 45074484655) |
+- 2026-11-26 What If 2 (wi-gta-leonida) BRIGHT DAYLIGHT restyle (builder wt2-leonida, same look/rules as What If 1):
+  sunny apartment with window, humid Miami street, wishlist boardwalk by the sea, golf course pond + gator, 3D Florida
+  map on a table on a sea terrace (storm over it for lightning), beach noon -> 4 pm storm, Florida flat with storm-track
+  TV, house in the storm (rulebook), game grid vs storm beach (respawn), sunset beach with A-D ICON cards (no double
+  text). 26 shots, hard cuts, 12 shape morphs (every place change), a NAMED camera move per shot (push-in, orbit,
+  tracking, dolly zoom x2, crane + land x3, crane up, pull back x3, low hero angle x4, top-down x2). No new Blender
+  models (reused palm_tree, suitcase, alligator, golf_flag, beach_umbrella, sports_car, flat_tv, game_controller,
+  window_frame, city_block, cloud_puff); navy couch replaced by a bright box couch. Local stills (half scale,
+  swangle, rough 2.85 w/s timing): 32 frames, avg 5.4 s, max 10.4 s (morph frames). 2 fix rounds (HUD spacing,
+  framing of golf low angle/orbit/crane up/death trophy, brighter tv room + house).
