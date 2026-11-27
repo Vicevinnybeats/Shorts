@@ -533,3 +533,22 @@ coupe crossed the frame in 3 frames -> slower; broom/steam; mum read as bearded)
 library/previews/whatif/wi-gta-npc-stick3d.png. Not rendered, no GO_FINAL: owner decides.
 | 2026-11-27 10:31 | render-stills | wi-gta-respawn  | stills | 2 | 3731 | running (run 45982636547) |
 | 2026-11-27 10:33 | render-stills | wi-gta-npc  | stills | 3 | 3732 | running (run 45982789054) |
+
+2026-11-27 BUILD wi-gta-snow (GTA 6 What If #7 "What If It Snowed in Vice City?", builder in its own worktree):
+episode.json/sound.json/metadata.json/story.tsx. Bright daylight Stick3D, Remy + beanie (flip flops = bare-foot look +
+coral 3D soles), Golden Neon HUD only, cold = sky/haze/sun lerp to grey + cool grade + flurries + snow dusting, never dark.
+21 shots, hard cuts, one named move each: hook crane+land (WHAT IF #7), hookb pull back (sunny beach -> grey, first
+flurries), hookc push-in (snowflake tile x1), date top-down (desk calendar JAN 19 1977 + blank folded paper, flakes land),
+dateb orbit (Remy + neighbour catching flakes, clock ~8 AM), trace push-in (flakes melt on the car hood, clock -> 9:30),
+traceb crane up (pastel deco street -> skyline, 1977 tile), imagine DOLLY ZOOM (world turns wintry, thermometer 26 -> 2 C),
+imagineb low hero angle (flip flops in snow, white breath), iguana tracking up the palm (3 frosty iguanas on fronds),
+iguanab slow wide push-in (they drop softly one by one, < 10 C), stunned push-in (belly-up iguana, heart + pulse),
+stunnedb orbit (sun returns, they climb back), manatee top-down (manatees under cool water, 15 C + gold 20 C mark),
+manateeb pull back (huddle in the glowing warm outflow, power plant + steam, > 20 C), shovel push-in (beach-store shelf,
+dashed missing-shovel outline in the empty slot, x 0), snowman orbit (#1 star), puddle truck (clock 9 -> 12, melts to
+a puddle with carrot/scarf/shades), rare crane up, rareb tracking (timeline 1977 -> 2026, one snowflake), ask crane+land
+(A SNOW IN MIAMI / B SUN IN WINTER / C BOTH / D NEITHER). 5 place-change shape morphs. 7 new Blender models (iguana,
+manatee (re-coloured lighter once: read too dark under water), snowman, power_plant, store_shelf, deco_hotel_pink/mint via
+_deco.py; README table). Stills half scale, swangle, rough 2.85 w/s, 2 fix rounds (framing: Remy cut / under captions in
+several shots, iguana drop too small, manatees invisible under water + plume hidden, flakes too faint then too big near
+the lens). Contact sheet library/previews/whatif/wi-gta-snow-stick3d.png. Not rendered, no GO_FINAL: owner decides.

@@ -1,0 +1,40 @@
+{
+ "music": {
+  "mood": "cinematic",
+  "bpm": 84,
+  "key": 57,
+  "level_lu": -16
+ },
+ "sfx": [
+  { "cue": "What if it", "fn": "water_bed", "args": { "dur": 4.0, "close": 0.4, "slosh_rate": 0.5 }, "level_lu": -25 },
+  { "cue": "What if it", "fn": "bird_chirps", "args": { "dur": 3.0 }, "level_lu": -26 },
+  { "cue": "suddenly, snow.", "fn": "breeze", "args": { "dur": 3.5, "level": 0.5, "bright": 1400 }, "level_lu": -23 },
+  { "cue": "happened once.", "fn": "clink", "args": { "bright": 1.0 }, "gain_db": -12 },
+  { "cue": "January nineteenth,", "fn": "whoosh", "args": { "dur": 0.7, "peak": 0.07 }, "gain_db": -11 },
+  { "cue": "snow flurries", "fn": "breeze", "args": { "dur": 3.0, "level": 0.4, "bright": 1400 }, "level_lu": -24 },
+  { "cue": "mid morning.", "fn": "clink", "args": { "bright": 0.5 }, "gain_db": -15 },
+  { "cue": "only snow", "fn": "clink", "args": { "bright": 1.0 }, "gain_db": -12 },
+  { "cue": "Now imagine it", "fn": "whoosh", "args": { "dur": 1.2, "peak": 0.06, "f_lo": 150, "f_hi": 900 }, "gain_db": -11 },
+  { "cue": "Now imagine it", "fn": "breeze", "args": { "dur": 5.0, "level": 0.6, "bright": 1400 }, "level_lu": -22 },
+  { "cue": "flip flops.", "fn": "stroll_step", "args": { "scuff": 0.8 }, "gain_db": -12 },
+  { "cue": "breath turns", "fn": "whoosh", "args": { "dur": 0.9, "peak": 0.05, "f_lo": 400, "f_hi": 2600 }, "gain_db": -15 },
+  { "cue": "First, the iguanas.", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.08 }, "gain_db": -10 },
+  { "cue": "freeze up", "fn": "clink", "args": { "bright": 1.2 }, "gain_db": -14 },
+  { "cue": "drop right", "fn": "push_thump", "args": {}, "gain_db": -13 },
+  { "cue": "not dead.", "fn": "push_thump", "args": {}, "gain_db": -15 },
+  { "cue": "sun warms", "fn": "bird_chirps", "args": { "dur": 3.0 }, "level_lu": -24 },
+  { "cue": "climb right", "fn": "rattle", "args": { "dur": 0.8, "density": 10.0 }, "gain_db": -18 },
+  { "cue": "Then the manatees.", "fn": "water_bed", "args": { "dur": 4.0, "close": 0.6, "slosh_rate": 0.6 }, "level_lu": -23 },
+  { "cue": "twenty degrees", "fn": "clink", "args": { "bright": 0.8 }, "gain_db": -13 },
+  { "cue": "So they crowd", "fn": "bubbles", "args": { "dur": 2.5, "rate": 4.0, "f_lo": 200, "f_hi": 1400 }, "gain_db": -16 },
+  { "cue": "And the people?", "fn": "whoosh", "args": { "dur": 0.7, "peak": 0.07 }, "gain_db": -11 },
+  { "cue": "snow shovel.", "fn": "clink", "args": { "bright": 0.4 }, "gain_db": -14 },
+  { "cue": "Remy builds the", "fn": "push_thump", "args": {}, "gain_db": -13 },
+  { "cue": "first snowman", "fn": "clink", "args": { "bright": 1.0 }, "gain_db": -11 },
+  { "cue": "By lunch,", "fn": "whoosh", "args": { "dur": 1.4, "peak": 0.06, "f_lo": 150, "f_hi": 900 }, "gain_db": -12 },
+  { "cue": "a puddle.", "fn": "splash_big", "args": {}, "gain_db": -19 },
+  { "cue": "So could it", "fn": "bird_chirps", "args": { "dur": 3.0 }, "level_lu": -24 },
+  { "cue": "very rare.", "fn": "clink", "args": { "bright": 1.0 }, "gain_db": -12 },
+  { "cue": "Would you rather", "fn": "water_bed", "args": { "dur": 3.0, "close": 0.4, "slosh_rate": 0.5 }, "level_lu": -26 }
+ ]
+}
