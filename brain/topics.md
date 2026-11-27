@@ -147,3 +147,11 @@ never copy their character, premises, layouts or text. Our own mascot + our own 
 6. What If You Held Your Breath Like a GTA 6 Character? - game: swim underwater for ages. Real: most people ~30-90 s,
    trained freedivers several minutes, cold-water shock. Remy at a pool/sea, breath meter HUD.
 After #4-#6: the NEW THEME test video (owner idea, see HANDOFF).
+
+## GTA 6 #7-#9 - NEW FORMATS (owner 2026-11-27: "not comparing this time"), proposed, WAITING for approval
+7. The Records GTA 6 Broke Before Release (record/stat explainer: trailer 1 views in 24 h, GTA V sales as the bar to beat)
+8. The Real Swamp Inside GTA 6: The Everglades (real-place story: only place where alligators AND crocodiles live
+   together, size, "river of grass") - travel/nature explainer with Remy as guide
+9. How Do You Build a Whole State in a Video Game? (behind-the-scenes tech explainer: draw distance, level of detail,
+   streaming the map as you move - general game-dev facts, no Rockstar internals/rumours)
+Rules: every number sourced before scripting; no leaks/rumours; "GTA 6" only as words, no footage/logos.
