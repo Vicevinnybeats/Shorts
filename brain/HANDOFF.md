@@ -4,7 +4,9 @@ Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on thi
 ## NOW (open items, in order)
 0. (2026-11-27) Owner approved GTA 6 #7-#9 (What if / Imagine, not game-vs-real): wi-gta-snow, wi-gta-npc,
    wi-gta-respawn - built (#7 c018803, #8 d9fe365, #9 a3722fd); all three GO_FINAL renders queued -> check, send
-   previews (watch #9 colour banding seen in its contact sheet). AFTER THAT:
+   previews. ALL THREE RENDERED + SENT: #9 respawn (run 45982716765, 78 s, clean colours), #7 snow (run
+   45984610895, 68 s), #8 NPC (run 45991415866, 72 s; first #8 run was cancelled by the queue). Waiting for verdicts.
+   AFTER THAT:
    owner wants NEW non-GTA "what if / imagine" suggestions about LIVE EVENTS - 5 ideas PROPOSED (topics.md), waiting.
    #5 money + #6 breath still waiting for owner verdict (Drive after approval).
 00. (owner 2026-11-26) "Make 2 and 3": two builder agents in separate worktrees on separate local branches
