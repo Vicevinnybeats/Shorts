@@ -13,6 +13,8 @@ Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on thi
    Builder resumed + DONE (860b2fd, 8 new models); RENDERED + SENT (run 45906889106, 78 s, 1-5 kHz -21.1).
    What If 4 APPROVED + in Drive (2026-11-27). Owner: "make 5 and 6" -> scripts + fact-check written
    (wi-gta-money, wi-gta-breath), two builders in separate worktrees, then GO_FINAL each, previews.
+   STATUS: #5 built (cbc7ecb, 8 models) render started; #6 built (666dc6d, 7 models + library/stick3d/water.tsx)
+   render queued. Check both, send previews; Drive only after approval.
    (Earlier: stopped by the 5-hour usage limit; resume = SendMessage to the builder.) Restart the builder
    (same brief as What If 3, see channel-rules) after the reset.
    UPLOADED 2026-11-26: What If 2 + 3 in Drive 'What if' folder (mp4 + txt). Next: owner approves 3 new GTA titles
