@@ -504,7 +504,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <Motes t={t} c={[0, dy, 1]} area={[5, 5, 3]} n={24} color="#e9fbff" size={0.04} o={0.6} />
         <Move us={us} ls={ls} at={() => ({ pos: [2.4, -1.2 - 4.6 * e, 9.6], look: [0, -2.4 - 4.6 * e, -0.4], fov: 46 })} />
       </>;
-      const hud = <BreathTimer f={u} y={380} at={6} fill={k(u, 10, len, 0.12, 0.42, Easing.out(Easing.cubic))} ticks={12} value="SEVERAL MIN" valueAt={SM + 14} />;
+      const hud = <BreathTimer f={u} y={380} at={6} fill={k(u, 10, len, 0.12, 0.42, Easing.out(Easing.cubic))} ticks={12} value="" valueAt={SM + 14} />;
       return { world, hud };
     }
     case "record": { // ORBIT: a slow arc around the freediver rising beside the line, the safety buddy coming down to meet him; the record clock counts to 11:35
@@ -621,8 +621,6 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const hud = <>
         <AirBar f={u} y={360} fill={real} kind="real" at={4} out={WW + 12} />
         <WarnSign f={u} x={540} y={560} at={WW + 16} s={1.1} />
-        <HudText f={u} x={540} y={770} size={92} color={CORAL} at={WW + 22} spacing={2}>BLACKOUT</HudText>
-        <HudText f={u} x={540} y={860} size={58} color={CREAM} at={WW + 28}>NO WARNING</HudText>
       </>;
       return { world, hud };
     }
