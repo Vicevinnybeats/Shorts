@@ -148,10 +148,18 @@ never copy their character, premises, layouts or text. Our own mascot + our own 
    trained freedivers several minutes, cold-water shock. Remy at a pool/sea, breath meter HUD.
 After #4-#6: the NEW THEME test video (owner idea, see HANDOFF).
 
-## GTA 6 #7-#9 - NEW FORMATS (owner 2026-11-27: "not comparing this time"), proposed, WAITING for approval
+## GTA 6 #7-#9 - REJECTED first set (owner: "I don't like them, should be interesting but still WHAT IF / IMAGINE")
 7. The Records GTA 6 Broke Before Release (record/stat explainer: trailer 1 views in 24 h, GTA V sales as the bar to beat)
 8. The Real Swamp Inside GTA 6: The Everglades (real-place story: only place where alligators AND crocodiles live
    together, size, "river of grass") - travel/nature explainer with Remy as guide
 9. How Do You Build a Whole State in a Video Game? (behind-the-scenes tech explainer: draw distance, level of detail,
    streaming the map as you move - general game-dev facts, no Rockstar internals/rumours)
 Rules: every number sourced before scripting; no leaks/rumours; "GTA 6" only as words, no footage/logos.
+
+## GTA 6 #7-#9 - second proposal 2026-11-27 (What if / Imagine, NOT game-vs-real), WAITING for approval
+7. What If Every GTA Player Moved to Leonida? (GTA V sold ~200M+ copies vs Florida ~23M people: imagine the traffic,
+   housing, water, power... sourced numbers)
+8. Imagine You Were an NPC in GTA 6 for One Day (a "normal" day by real US time-use stats: sleep, work, commute,
+   phone time, told as the life of a background character)
+9. What If a Category 5 Hurricane Hit Vice City? (real hurricane science: wind speeds, storm surge, Hurricane Andrew
+   1992 Miami as the real example; safety message)
