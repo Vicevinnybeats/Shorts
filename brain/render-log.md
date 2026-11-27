@@ -532,3 +532,4 @@ moved up; Remy hidden behind the desk -> stands at it; TV off-frame; loop camera
 coupe crossed the frame in 3 frames -> slower; broom/steam; mum read as bearded). Contact sheet
 library/previews/whatif/wi-gta-npc-stick3d.png. Not rendered, no GO_FINAL: owner decides.
 | 2026-11-27 10:31 | render-stills | wi-gta-respawn  | stills | 2 | 3731 | running (run 45982636547) |
+| 2026-11-27 10:33 | render-stills | wi-gta-npc  | stills | 3 | 3732 | running (run 45982789054) |
