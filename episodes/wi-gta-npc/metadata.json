@@ -1,0 +1,36 @@
+{
+  "episode": "wi-gta-npc",
+  "test": true,
+  "youtube": {
+    "title": "Imagine You Were an NPC in GTA 6 for One Day #Shorts",
+    "description": "Imagine you were an NPC in GTA 6 for one day. No missions, no heists, just a normal life in the background. Remy lives one average American day, slice by slice.\n\nSleep: Americans aged 15 and over sleep about 9 hours a day (9.04 h, naps included).\nCommute: the average one-way trip to work in the US takes about 27 minutes (26.8 min).\nWork: on days they work, employed people put in about 7.5 hours (7.60 h).\nChores: about 2 hours a day go to household activities like cooking and cleaning (2.01 h).\nFree time: about 5 hours of leisure a day (5.07 h), and the biggest part of it is watching TV, about 2.6 hours.\n\nThat's the real NPC loop: sleep, commute, work, chores, screen, repeat. Meanwhile the main character drives past at full speed. But here's the twist: to the people around you, you're the main character. In the game, NPCs follow a script. In real life, you can change yours any day.\nWhat's one thing you'd change in your daily loop?\n\nNote: the 24-hour ring in the video is an illustration of separate survey averages (different groups of people), not one person's diary.\n\nSources:\n- BLS American Time Use Survey 2024 results (population 15+, average per day: sleeping 9.04 h; employed persons on days worked 7.60 h; household activities 2.01 h; leisure and sports 5.07 h): https://www.bls.gov/news.release/archives/atus_06262025.htm\n- BLS, Time spent in leisure and sports in 2024 (watching TV 2.6 h, the largest leisure activity): https://www.bls.gov/opub/ted/2025/time-spent-in-leisure-and-sports-in-2024.htm\n- Mean one-way travel time to work 26.8 minutes (ACS 2023 1-year, Census data via NAHB): https://eyeonhousing.org/2024/10/travel-time-to-work-across-congressional-districts/ , https://www.census.gov/topics/employment/commuting/guidance/acs-1yr.html\n\nRemy is fictional. Not affiliated with Rockstar Games or Take-Two. No game footage, art or logos are used.\nAI disclosure: made with AI assistance (script drafting, animation). Narration: AI voice (Google AI Studio, Gemini TTS).\n\n#Shorts #WhatIf #GTA #GTA6 #NPC #dailyroutine #TheLittleEpic",
+    "tags": [
+      "shorts",
+      "what if",
+      "imagine",
+      "GTA",
+      "GTA 6",
+      "GTA 6 NPC",
+      "NPC",
+      "NPC life",
+      "main character",
+      "daily routine",
+      "time use",
+      "average day",
+      "animation",
+      "TheLittleEpic"
+    ],
+    "category": "Education",
+    "made_for_kids": false,
+    "contains_synthetic_media": false
+  },
+  "instagram": {
+    "caption": "Imagine you were an NPC in GTA 6 for one day 🎮🚶\nThe average US day: ~9 h sleep, ~27 min commute (one way), ~7.5 h work on work days, ~2 h chores, ~5 h free time, and about 2.6 h of it is TV.\nSleep, commute, work, chores, screen. Repeat. But to the people around you, you're the main character ⭐\n\nWhat's one thing you'd change in your daily loop? 👇\n\nRemy is fictional. Not affiliated with Rockstar Games or Take-Two. No game footage.\nMade with AI assistance. Narration: AI voice (Google AI Studio, Gemini TTS). Sources on YouTube.\n\n#whatif #GTA #GTA6 #NPC #maincharacter #dailyroutine #shorts #reels #animation #TheLittleEpic"
+  },
+  "sources": [
+    { "fact": "ATUS 2024, population 15+, per day: sleeping 9.04 h; employed on days worked 7.60 h; household activities 2.01 h; leisure and sports 5.07 h", "url": "https://www.bls.gov/news.release/archives/atus_06262025.htm" },
+    { "fact": "Watching TV 2.6 h per day, the largest leisure activity (2024)", "url": "https://www.bls.gov/opub/ted/2025/time-spent-in-leisure-and-sports-in-2024.htm" },
+    { "fact": "Mean one-way commute 26.8 min (ACS 2023 1-year)", "url": "https://eyeonhousing.org/2024/10/travel-time-to-work-across-congressional-districts/" },
+    { "fact": "ACS 1-year commuting guidance", "url": "https://www.census.gov/topics/employment/commuting/guidance/acs-1yr.html" }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+ "music": {
+  "mood": "cinematic",
+  "bpm": 92,
+  "key": 57,
+  "level_lu": -16
+ },
+ "sfx": [
+  { "cue": "Imagine you were", "fn": "breeze", "args": { "dur": 4.0, "level": 0.35 }, "level_lu": -23 },
+  { "cue": "No missions.", "fn": "whoosh", "args": { "dur": 0.5, "peak": 0.07 }, "gain_db": -11 },
+  { "cue": "No heists.", "fn": "whoosh", "args": { "dur": 0.5, "peak": 0.07 }, "gain_db": -11 },
+  { "cue": "Remy wakes up.", "fn": "rattle", "args": { "dur": 0.8, "density": 16.0 }, "gain_db": -15 },
+  { "cue": "nine hours", "fn": "clink", "args": { "bright": 0.8 }, "gain_db": -13 },
+  { "cue": "Then the commute.", "fn": "whoosh", "args": { "dur": 1.2, "peak": 0.06, "f_lo": 150, "f_hi": 900 }, "gain_db": -12 },
+  { "cue": "twenty seven minutes.", "fn": "clink", "args": { "bright": 0.8 }, "gain_db": -13 },
+  { "cue": "On days they", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.07 }, "gain_db": -11 },
+  { "cue": "seven and a", "fn": "clink", "args": { "bright": 0.8 }, "gain_db": -13 },
+  { "cue": "Somewhere in there,", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.07 }, "gain_db": -11 },
+  { "cue": "two hours go", "fn": "clink", "args": { "bright": 0.8 }, "gain_db": -13 },
+  { "cue": "Then free time.", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.07 }, "gain_db": -11 },
+  { "cue": "five hours", "fn": "clink", "args": { "bright": 0.8 }, "gain_db": -13 },
+  { "cue": "Watching TV,", "fn": "push_thump", "args": {}, "gain_db": -12 },
+  { "cue": "That's the real", "fn": "whoosh", "args": { "dur": 0.7, "peak": 0.07 }, "gain_db": -11 },
+  { "cue": "Sleep, commute,", "fn": "clink", "args": { "bright": 0.4 }, "gain_db": -17 },
+  { "cue": "Repeat.", "fn": "push_thump", "args": {}, "gain_db": -10 },
+  { "cue": "drives past", "fn": "whoosh", "args": { "dur": 0.9, "peak": 0.1 }, "gain_db": -8 },
+  { "cue": "But here's the", "fn": "creak", "args": { "dur": 0.35 }, "gain_db": -16 },
+  { "cue": "the twist.", "fn": "push_thump", "args": {}, "gain_db": -9 },
+  { "cue": "you're the main", "fn": "applause", "args": { "dur": 2.0 }, "level_lu": -26 },
+  { "cue": "In the game,", "fn": "breeze", "args": { "dur": 3.0, "level": 0.3 }, "level_lu": -24 },
+  { "cue": "change yours", "fn": "clink", "args": { "bright": 1.0 }, "gain_db": -12 },
+  { "cue": "What's one thing", "fn": "bird_chirps", "args": { "dur": 3.0 }, "level_lu": -24 }
+ ]
+}

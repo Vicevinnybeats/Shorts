@@ -514,3 +514,20 @@ library/previews/whatif/wi-gta-breath-stick3d.png. Not rendered, no GO_FINAL: ow
   (canvas-painted approximate continents). 3 new Blender models: swim_ring, map_pin, ice_floe. Stills half scale,
   swangle, rough 2.85 w/s, 2 fix rounds (globe too big/low, grey clouds, pin seen end-on, legs visible under the sea,
   bar icons cramped, camera ends). Contact sheet library/previews/whatif/wi-gta-respawn-stick3d.png. No GO_FINAL.
+2026-11-27 BUILD wi-gta-npc (GTA 6 What If #8, builder in its own worktree): episode.json/sound.json/metadata.json/story.tsx.
+Bright daylight Stick3D, Remy + beanie as a background NPC with a floating cyan NPC map-pin marker (icon, no letters).
+Motif = 24-hour DAY RING HUD filling slice by slice (sleep ~9 H, commute ~27 MIN, work ~7.5 H, chores ~2 H, leisure =
+the rest ~5 H, TV ~2.6 H inner coral arc; illustration of separate ATUS/ACS averages, noted in metadata). 15 shots, one
+named move each: hook crane+land (WHAT IF #8), hookb push-in (mission + heist icons struck red), wake pull back (alarm
+clock -> dawn bedroom, stretch), commute tracking/truck (bus pulls in behind him at the stop), work orbit (office desk,
+grey NPC coworkers), chores low hero angle (broom, steaming pot), leisure crane down (evening couch), leisureb DOLLY
+ZOOM (Remy + cartoon TV), loop top-down/high (ring path through his 5 places, cyan route chevrons, icon row + repeat
+tile), car low hero angle (cyan "main character" coupe whooshes past, Remy waves), twist orbit (spotlight swings on,
+marker flips into a gold star), twistb pull back (friend, mum, kid beaming, hearts), outro crane up over the loop
+(cyan script-page icon), outrob tracking (Remy steps off the ring onto a gold branch path, gold pen stroke), ask
+crane+land (A SLEEP / B WORK / C SCREEN TIME / D COMMUTE). 7 place-change shape morphs (the day ring is the key shape).
+6 new Blender models (bed_modern, bus_stop, city_bus, office_desk (monitor moved off-centre once), broom, cyan_coupe;
+README table). Stills half scale, swangle, rough 2.85 w/s, 2 fix rounds (HUD plate covered the NPC marker -> plate
+moved up; Remy hidden behind the desk -> stands at it; TV off-frame; loop camera too steep (billboards vanished);
+coupe crossed the frame in 3 frames -> slower; broom/steam; mum read as bearded). Contact sheet
+library/previews/whatif/wi-gta-npc-stick3d.png. Not rendered, no GO_FINAL: owner decides.

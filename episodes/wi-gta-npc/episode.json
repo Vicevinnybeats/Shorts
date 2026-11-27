@@ -1,0 +1,32 @@
+{
+  "id": "wi-gta-npc",
+  "title": "Imagine You Were an NPC in GTA 6 for One Day",
+  "series": "GTA 6 WHAT IF #8",
+  "style": "stick3d-bright",
+  "composition": "Ep-wi-gta-npc",
+  "stills": [
+    60,
+    180,
+    262,
+    420,
+    560,
+    760,
+    880,
+    1050,
+    1180,
+    1270,
+    1340,
+    1474,
+    1540,
+    1610,
+    1720,
+    1780,
+    1870,
+    1990
+  ],
+  "chunks": 6,
+  "status": "build-stick3d-bright",
+  "publish": false,
+  "clone": "none",
+  "gl": "swangle"
+}
