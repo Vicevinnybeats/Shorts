@@ -2,6 +2,10 @@
 Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on this branch). Repo is PUBLIC.
 
 ## NOW (open items, in order)
+0. (2026-11-27) Owner approved GTA 6 #7-#9 (What if / Imagine, not game-vs-real): wi-gta-snow, wi-gta-npc,
+   wi-gta-respawn - scripts + RESEARCH written & fact-checked. Builders -> GO_FINAL each -> previews. AFTER THAT:
+   owner wants NEW non-GTA "what if / imagine" suggestions about LIVE EVENTS (propose titles, wait for approval).
+   #5 money + #6 breath still waiting for owner verdict (Drive after approval).
 00. (owner 2026-11-26) "Make 2 and 3": two builder agents in separate worktrees on separate local branches
    (lesson: never two builders on one checkout). What If 2 = bright restyle of wi-gta-leonida; What If 3 = build
    wi-gta-physics (script fact-checked 2026-11-26, unchanged). Same look/rules as What If 1. Then GO_FINAL each,
