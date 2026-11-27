@@ -493,3 +493,12 @@ library/previews/whatif/wi-gta-breath-stick3d.png. Not rendered, no GO_FINAL: ow
 | 2026-11-27 02:01 | render-final | wi-gta-breath | assemble | 2 | 3619 | success (run 45920660937) |
 | 2026-11-27 02:01 | render-final | wi-gta-breath | log | 1 | 3620 | success (run 45920660937) |
 | 2026-11-27 02:15 | render-stills | wi-gta-breath  | stills | 3 | 3623 | running (run 45927056107) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | voice-and-mix | 3 | 3623 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | render (425-849) | 13 | 3636 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | render (0-424) | 20 | 3656 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | render (1700-2124) | 21 | 3677 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | render (2125-2548) | 24 | 3701 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | render (1275-1699) | 13 | 3714 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | render (850-1274) | 9 | 3723 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | assemble | 2 | 3725 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | log | 1 | 3726 | success (run 45927056138) |
