@@ -553,3 +553,12 @@ _deco.py; README table). Stills half scale, swangle, rough 2.85 w/s, 2 fix round
 several shots, iguana drop too small, manatees invisible under water + plume hidden, flakes too faint then too big near
 the lens). Contact sheet library/previews/whatif/wi-gta-snow-stick3d.png. Not rendered, no GO_FINAL: owner decides.
 | 2026-11-27 10:46 | render-stills | wi-gta-snow  | stills | 3 | 3737 | running (run 45984544339) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | voice-and-mix | 4 | 3733 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (1552-1939) | 12 | 3745 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (776-1163) | 10 | 3755 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (0-387) | 8 | 3763 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (1940-2323) | 11 | 3774 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (388-775) | 10 | 3784 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (1164-1551) | 11 | 3795 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | assemble | 3 | 3798 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | log | 1 | 3799 | success (run 45982716765) |
