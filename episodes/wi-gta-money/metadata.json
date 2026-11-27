@@ -1,0 +1,36 @@
+{
+  "episode": "wi-gta-money",
+  "test": true,
+  "youtube": {
+    "title": "What If You Had GTA 6 Money in Real Life? #Shorts",
+    "description": "What if you had GTA 6 money in real life? One heist, and you're a millionaire. Remy runs three tests on what a real million in cash is like.\n\nTest 1, carrying it: a US banknote weighs about 1 gram. A million dollars in $100 bills is 10,000 bills, about 10 kg (22 lb), like a big bag of potatoes. Stacked up, the bills would stand about a meter tall.\nTest 2, counting it: at one bill per second, 10,000 bills take 10,000 seconds, almost 3 hours (2.8 h).\nTest 3, the bank: US banks have to report cash transactions over $10,000 to the government (a Currency Transaction Report), and splitting the cash into smaller deposits to dodge that report (\"structuring\") is a crime too.\n\nSo a million in cash isn't freedom. It's a heavy bag, a tired thumb, and a lot of paperwork. In the game, money is just a number. In real life, it weighs something. What would you do first with a real million?\n\nSources:\n- A US banknote weighs about 1 gram, any denomination: U.S. Bureau of Engraving and Printing fun facts (archived): https://webarchive.library.unt.edu/web/20090114222615/http:/www.bep.treas.gov/document.cfm/18/106 , Wikipedia: https://en.wikipedia.org/wiki/United_States_one-hundred-dollar_bill\n- Note thickness 0.0043 in (0.11 mm), so 10,000 notes are about 1.1 m: BEP / MoneyFactory (archived): https://webharvest.gov/peth04/20041015012917/http://www.moneyfactory.com/section.cfm/19\n- Currency Transaction Report for cash over $10,000 in a business day (Bank Secrecy Act, 31 CFR 1010.311) and structuring is illegal (31 U.S.C. 5324): FinCEN: https://www.fincen.gov/sites/default/files/shared/CTRPamphlet.pdf , IRS: https://www.irs.gov/businesses/small-businesses-self-employed/bank-secrecy-act\n- Counting time: 10,000 bills at 1 per second = 10,000 s = 2.8 hours (arithmetic). A 10 kg bag of potatoes is a common retail size (comparison only).\n\nNot financial or legal advice.\nRemy is fictional. Not affiliated with Rockstar Games or Take-Two. No game footage, art or logos are used. The cash shown is stylised (no real banknote images).\nAI disclosure: made with AI assistance (script drafting, animation). Narration: AI voice (Google AI Studio, Gemini TTS).\n\n#Shorts #WhatIf #GTA #GTA6 #money #science #TheLittleEpic",
+    "tags": [
+      "shorts",
+      "what if",
+      "GTA",
+      "GTA 6",
+      "GTA 6 money",
+      "million dollars",
+      "how much does a million dollars weigh",
+      "money facts",
+      "cash",
+      "bank",
+      "science",
+      "animation",
+      "TheLittleEpic"
+    ],
+    "category": "Education",
+    "made_for_kids": false,
+    "contains_synthetic_media": false
+  },
+  "instagram": {
+    "caption": "What if you had GTA 6 money in real life? 💰🎒\nA US bill weighs about 1 g. A million in $100 bills = 10,000 bills = ~10 kg, a big bag of potatoes, and a stack about 1 m tall. Counting one bill per second takes almost 3 hours. And US banks must report cash over $10,000 (splitting it up to dodge that is a crime too).\nIn the game money is just a number. In real life it weighs something.\n\nWhat would you do first with a real million? 👇\n\nNot financial or legal advice. Remy is fictional. Not affiliated with Rockstar Games or Take-Two. No game footage.\nMade with AI assistance. Narration: AI voice (Google AI Studio, Gemini TTS). Sources on YouTube.\n\n#whatif #GTA #GTA6 #money #millionaire #science #shorts #reels #animation #TheLittleEpic"
+  },
+  "sources": [
+    { "fact": "A US banknote weighs about 1 gram, any denomination", "url": "https://webarchive.library.unt.edu/web/20090114222615/http:/www.bep.treas.gov/document.cfm/18/106" },
+    { "fact": "$100 bill weight ~1.0 g", "url": "https://en.wikipedia.org/wiki/United_States_one-hundred-dollar_bill" },
+    { "fact": "Note thickness 0.0043 in (0.11 mm) -> 10,000 notes ~1.1 m", "url": "https://webharvest.gov/peth04/20041015012917/http://www.moneyfactory.com/section.cfm/19" },
+    { "fact": "Currency Transaction Report (FinCEN Form 112) for cash over $10,000 in a business day; structuring is illegal", "url": "https://www.fincen.gov/sites/default/files/shared/CTRPamphlet.pdf" },
+    { "fact": "Bank Secrecy Act reporting (31 CFR 1010.311; 31 U.S.C. 5324)", "url": "https://www.irs.gov/businesses/small-businesses-self-employed/bank-secrecy-act" }
+  ]
+}
