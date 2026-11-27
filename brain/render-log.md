@@ -562,3 +562,12 @@ the lens). Contact sheet library/previews/whatif/wi-gta-snow-stick3d.png. Not re
 | 2026-11-27 10:47 | render-final | wi-gta-respawn | render (1164-1551) | 11 | 3795 | success (run 45982716765) |
 | 2026-11-27 10:47 | render-final | wi-gta-respawn | assemble | 3 | 3798 | success (run 45982716765) |
 | 2026-11-27 10:47 | render-final | wi-gta-respawn | log | 1 | 3799 | success (run 45982716765) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | voice-and-mix | 4 | 3738 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | render (1014-1351) | 20 | 3758 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | render (0-337) | 16 | 3774 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | render (1690-2027) | 12 | 3786 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | render (338-675) | 22 | 3808 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | render (676-1013) | 20 | 3828 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | render (1352-1689) | 21 | 3849 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | assemble | 2 | 3851 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | log | 1 | 3852 | success (run 45984610895) |
