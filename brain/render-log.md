@@ -532,7 +532,7 @@ moved up; Remy hidden behind the desk -> stands at it; TV off-frame; loop camera
 coupe crossed the frame in 3 frames -> slower; broom/steam; mum read as bearded). Contact sheet
 library/previews/whatif/wi-gta-npc-stick3d.png. Not rendered, no GO_FINAL: owner decides.
 | 2026-11-27 10:31 | render-stills | wi-gta-respawn  | stills | 2 | 3731 | running (run 45982636547) |
-| 2026-11-27 10:33 | render-stills | wi-gta-npc  | stills | 3 | 3732 | running (run 45982789054) |
+| 2026-11-27 10:33 | render-stills | wi-gta-npc  | stills | 3 | 3734 | running (run 45982789054) |
 
 2026-11-27 BUILD wi-gta-snow (GTA 6 What If #7 "What If It Snowed in Vice City?", builder in its own worktree):
 episode.json/sound.json/metadata.json/story.tsx. Bright daylight Stick3D, Remy + beanie (flip flops = bare-foot look +
@@ -552,3 +552,4 @@ manatee (re-coloured lighter once: read too dark under water), snowman, power_pl
 _deco.py; README table). Stills half scale, swangle, rough 2.85 w/s, 2 fix rounds (framing: Remy cut / under captions in
 several shots, iguana drop too small, manatees invisible under water + plume hidden, flakes too faint then too big near
 the lens). Contact sheet library/previews/whatif/wi-gta-snow-stick3d.png. Not rendered, no GO_FINAL: owner decides.
+| 2026-11-27 10:46 | render-stills | wi-gta-snow  | stills | 3 | 3737 | running (run 45984544339) |
