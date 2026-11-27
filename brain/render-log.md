@@ -442,3 +442,19 @@ library/previews/whatif/wi-gta-healing-stick3d.png. Not rendered, no GO_FINAL: o
 | 2026-11-26 23:15 | render-final | wi-gta-healing | render (0-390) | 16 | 3376 | success (run 45906889106) |
 | 2026-11-26 23:15 | render-final | wi-gta-healing | assemble | 2 | 3378 | success (run 45906889106) |
 | 2026-11-26 23:15 | render-final | wi-gta-healing | log | 1 | 3379 | success (run 45906889106) |
+2026-11-27 ~01:30 BUILD wi-gta-money (What If #5, builder in its own worktree): episode.json/sound.json/metadata.json/story.tsx.
+Bright daylight Stick3D, Remy + beanie, motif = cyan GAME "$" counter that JUMPS (no roll-up) vs real stylised cash
+(green bricks of 1,000 bills, no banknote images/portraits/serials) with weight, height and counting time.
+18 shots, one named move each: hook crane+land (WHAT IF #5), hookb push-in (counter $0 -> $1,000,000 + cyan coin),
+hookc low hero angle (Remy + duffel), test1 tracking (Remy hauls the bag, coin pops, counter jumps), bill push-in (one
+bill on the kitchen scale, ~1 G), tenk top-down (10 bricks land, x 10,000), weight ORBIT (duffel on floor scale 10.0 +
+potato sack, ~10 KG), tower crane up (10 bricks ~ Remy's height + tape, ~1 M), test2 pull back (park table, counter jumps),
+count truck (1 bill/s, clock + 0:00:01 timer), countb DOLLY ZOOM (time-lapse to 2:46:40, ~2.8 H, sweaty thumb), test3
+orbit (bank hall, deposit lands), bank push-in (form flies to the government icon, > $10,000), split top-down (pile
+splits into $9K piles, red X, ILLEGAL stamp), recap pull back (Remy hunched, counter), recapb tracking (bag / thumb /
+paperwork icons), outro crane up (cyan coin floats vs bag on the scale, ~10 KG), ask crane+land (SAVE IT / A HOUSE /
+A CAR / SHARE IT). 4 place-change shape morphs (plaza -> kitchen -> park -> bank -> plaza).
+8 new Blender models (cash_bill, cash_brick, duffel_bag, kitchen_scale, potato_sack, desk_clock, kitchen_counter,
+bank_counter; README table). Stills half scale, swangle, rough 2.85 w/s: 2 fix rounds (framing of hookc/bill/tenk/
+weight/tower/count/bank/split, piles hiding Remy, clock cut off). Contact sheet
+library/previews/whatif/wi-gta-money-stick3d.png. Not rendered, no GO_FINAL: owner decides.

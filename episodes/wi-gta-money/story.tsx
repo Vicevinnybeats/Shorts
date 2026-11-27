@@ -381,10 +381,10 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const R: V3 = [0, 0, 0.6];
       const world = <>
         <PlazaWorld t={t} hero={R} />
-        {sub === 2 && <Duffel p={[1.05, 0, 0.2]} rot={[0, -0.3, 0]} s={1.0} blob={0.8} />}
+        {sub === 2 && <Duffel p={[1.05, 0, -0.1]} rot={[0, -0.3, 0]} s={1.0} blob={0.8} />}
         <Hero p={R} look={REMY} pose={{ mood: sub === 2 ? "gulp" : sub ? (u > MI ? "laugh" : "grin") : "smile", arms: sub === 1 && u > MI ? "up" : sub === 2 ? "point" : "down", armK: sub === 2 ? 0.6 : 1, lookX: sub === 2 ? 0.6 : 0 }} f={f} rimO={0.4} />
         {sub === 1 && <HoloCoin p={[-1.5, 3.3, 0.2]} o={k(u, MI - 4, MI + 6, 0, 0.9)} f={f} s={0.7} />}
-        {sub === 2 ? <Move us={us} ls={ls} at={line({ pos: [0.45, 0.4, 8.6], look: [0.4, 2.2, 0.4], fov: 48 }, { pos: [0.5, 0.7, 7.7], look: [0.4, 2.1, 0.4], fov: 48 })} />
+        {sub === 2 ? <Move us={us} ls={ls} at={line({ pos: [0.45, 0.4, 8.8], look: [0.4, 1.75, 0.4], fov: 48 }, { pos: [0.5, 0.7, 7.9], look: [0.4, 1.65, 0.4], fov: 48 })} />
           : sub ? <Move us={us} ls={ls} at={line({ pos: [0.8, 2.5, 11.5], look: [0, 1.5, 0.6], fov: 44 }, { pos: [0.4, 2.1, 7.2], look: [0, 1.5, 0.6], fov: 44 })} />
             : <Move us={us} ls={ls} at={line({ pos: [0.4, 9.5, 15], look: [0, 1.0, 0.6], fov: 46 }, { pos: [0.6, 2.7, 10.2], look: [0, 1.6, 0.6], fov: 46 })} />}
       </>;
@@ -442,7 +442,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           if (i >= n) return null;
           const col = i % 5, row = Math.floor(i / 5), age = us - (4 + (i / 10.99) * (Math.max(16, TT - (len - ls) + 14) - 4));
           const drop = k(age, 0, 6, 0.6, 0, Easing.out(Easing.cubic));
-          return <Brick key={i} p={[-1.1 + col * 0.55, drop, 0.05 + row * 0.42]} rot={(i % 3 - 1) * 0.05} />;
+          return <Brick key={i} p={[-0.94 + col * 0.47, drop, 0.1 + row * 0.4]} rot={(i % 3 - 1) * 0.05} />;
         })}
         <Hero p={[2.3, 0, 0.6]} look={REMY} pose={{ mood: "shock", arms: "chest" }} f={f} rimO={0.3} shadow={false} />
         <Move us={us} ls={ls} at={line({ pos: [0, 7.4, 1.2], look: [0, 0, 0.3], fov: 46 }, { pos: [0, 5.7, 1.0], look: [0, 0, 0.3], fov: 46 })} />
@@ -528,11 +528,11 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <ParkWorld t={t} hero={[0, 1, -1.5]} warm={sub ? 0.35 * prog : 0} />
         <Hero p={R} look={REMY} pose={{ mood: sub ? (tired > 0.6 ? "tired" : "worry") : "smile", lids: tired * 0.55, bags: tired, arms: "hold", hunch: tired * 0.6, sweat: tired * 0.6 }} f={f} rimO={0.35} shadow={false} />
         {Array.from({ length: left }, (_, i) => <Brick key={"l" + i} p={[-0.95, TOP + i * BR_H, TABLE_Z + 0.05]} rot={0.04 * (i % 2)} />)}
-        {Array.from({ length: right }, (_, i) => <Brick key={"r" + i} p={[0.75, TOP + i * BR_H, TABLE_Z + 0.05]} rot={-0.04 * (i % 2)} />)}
-        {!sub && u > OB && <group position={[-0.95 + 1.7 * flick, TOP + 4 * BR_H * (1 - flick) + Math.sin(flick * Math.PI) * 0.35 + 0.02, TABLE_Z + 0.05]} rotation={[0, 0, -Math.sin(flick * Math.PI) * 0.5]}>
+        {Array.from({ length: right }, (_, i) => <Brick key={"r" + i} p={[0.65, TOP + i * BR_H, TABLE_Z + 0.05]} rot={-0.04 * (i % 2)} />)}
+        {!sub && u > OB && <group position={[-0.95 + 1.6 * flick, TOP + 4 * BR_H * (1 - flick) + Math.sin(flick * Math.PI) * 0.35 + 0.02, TABLE_Z + 0.05]} rotation={[0, 0, -Math.sin(flick * Math.PI) * 0.5]}>
           <Glb name="cash_bill" s={BR} line={1.5} />
         </group>}
-        <DeskClock p={[1.5, TOP, TABLE_Z + 0.05]} s={1.1} sec={sub ? secs : 600 + Math.max(0, (u - OB) / FPS)} />
+        <DeskClock p={[1.3, TOP, TABLE_Z + 0.05]} s={1.0} sec={sub ? secs : 600 + Math.max(0, (u - OB) / FPS)} />
         {sub ? <Move us={us} ls={ls} at={dollyZoom([0, 1.85, -2.0], [0.05, 0.12, 1], 11, 6.2, 28)} />
           : <Move us={us} ls={ls} at={line({ pos: [-1.2, 2.5, 5.6], look: [-0.15, 1.6, -1.6], fov: 44 }, { pos: [0.9, 2.5, 5.4], look: [0.2, 1.6, -1.6], fov: 44 })} />}
       </>;
@@ -574,9 +574,9 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const world = <>
         <BankWorld t={t} target={[1.25, 1.4, BCNT_Z]} />
         <Duffel p={[1.25, BTOP, BCNT_Z + 0.2]} s={0.62} rot={[0, -0.2, 0]} />
-        <Hero p={[-0.9, 0, -0.3]} look={REMY} pose={{ mood: u > GV ? "worry" : "smile", arms: "chest", lookX: 0.7 }} f={f} rimO={0.35} />
+        <Hero p={[-0.1, 0, -0.95]} look={REMY} pose={{ mood: u > GV ? "worry" : "smile", arms: "chest", lookX: 0.7 }} f={f} rimO={0.35} />
         <Halo p={[1.25, 2.55, BCNT_Z - 0.1]} r={0.8} color={N3.amber} o={0.35} />
-        <Move us={us} ls={ls} at={line({ pos: [0.2, 2.6, 6.8], look: [0.8, 1.7, BCNT_Z], fov: 46 }, { pos: [0.7, 2.3, 3.8], look: [0.6, 1.7, BCNT_Z], fov: 44 })} />
+        <Move us={us} ls={ls} at={line({ pos: [0.3, 2.7, 8.6], look: [0.6, 1.8, BCNT_Z], fov: 46 }, { pos: [0.6, 2.4, 4.9], look: [0.6, 1.8, BCNT_Z], fov: 44 })} />
       </>;
       const fly = k(u, GV, GV + 20, 0, 1, Easing.inOut(Easing.cubic));
       const hud = <>
@@ -601,7 +601,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
           const x1 = -0.84 + pile * 0.42, y1 = BTOP + lvl * BR_H, z1 = BCNT_Z + 0.08;
           return <Brick key={i} p={[x0 + (x1 - x0) * sp, y0 + (y1 - y0) * sp + Math.sin(sp * Math.PI) * 0.25, z0 + (z1 - z0) * sp]} rot={(1 - sp) * 0.02 * i + sp * Math.PI / 2} />;
         })}
-        <Move us={us} ls={ls} at={line({ pos: [0, 6.6, BCNT_Z + 1.2], look: [0, BTOP, BCNT_Z], fov: 46 }, { pos: [0, 5.0, BCNT_Z + 0.95], look: [0, BTOP, BCNT_Z], fov: 46 })} />
+        <Move us={us} ls={ls} at={line({ pos: [0, 7.8, BCNT_Z + 1.3], look: [0, BTOP, BCNT_Z], fov: 46 }, { pos: [0, 6.3, BCNT_Z + 1.05], look: [0, BTOP, BCNT_Z], fov: 46 })} />
       </>;
       const xs = k(u, CR - 4, CR + 8, 0, 1, Easing.out(Easing.cubic));
       const st = arrive(u, CR + 6, 10);
@@ -612,7 +612,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
             <HudText f={u} x={0} y={30} size={62} color={GOLD} at={SM + 6 + i * 3}>$9K</HudText>
           </g>)}
         </g>
-        {xs > 0 && <g transform="translate(540 760)">
+        {xs > 0 && <g transform="translate(540 760) scale(1.3)">
           <NeonPath d="M -170 -170 L 170 170" w={16} color={RED} p={xs} hot />
           <NeonPath d="M 170 -170 L -170 170" w={16} color={RED} p={k(u, CR + 2, CR + 12, 0, 1, Easing.out(Easing.cubic))} hot />
         </g>}
