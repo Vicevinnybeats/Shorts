@@ -1,0 +1,32 @@
+{
+ "music": {
+  "mood": "cinematic",
+  "bpm": 80,
+  "key": 55,
+  "level_lu": -16
+ },
+ "sfx": [
+  { "cue": "What if you", "fn": "water_bed", "args": { "dur": 4.5, "close": 0.6, "slosh_rate": 0.6 }, "level_lu": -24 },
+  { "cue": "Swim to the", "fn": "bubbles", "args": { "dur": 2.0, "rate": 5.0 }, "gain_db": -16 },
+  { "cue": "Let's test that.", "fn": "whoosh", "args": { "dur": 0.7, "peak": 0.07 }, "gain_db": -11 },
+  { "cue": "Test one.", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.08 }, "gain_db": -10 },
+  { "cue": "barely moves.", "fn": "clink", "args": { "bright": 0.7 }, "gain_db": -14 },
+  { "cue": "thirty to ninety", "fn": "clink", "args": { "bright": 1.0 }, "gain_db": -12 },
+  { "cue": "Trained freedivers", "fn": "bubbles", "args": { "dur": 3.0, "rate": 4.0, "f_lo": 200, "f_hi": 1400 }, "gain_db": -15 },
+  { "cue": "over eleven minutes", "fn": "push_thump", "args": {}, "gain_db": -10 },
+  { "cue": "Test two.", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.08 }, "gain_db": -10 },
+  { "cue": "warm bath.", "fn": "water_bed", "args": { "dur": 2.5, "close": 0.5, "slosh_rate": 0.5 }, "level_lu": -25 },
+  { "cue": "makes you gasp", "fn": "splash_big", "args": {}, "gain_db": -16 },
+  { "cue": "the one, ten,", "fn": "push_thump", "args": {}, "gain_db": -11 },
+  { "cue": "One minute to", "fn": "clink", "args": { "bright": 0.8 }, "gain_db": -13 },
+  { "cue": "About ten minutes", "fn": "clink", "args": { "bright": 0.6 }, "gain_db": -13 },
+  { "cue": "Around an hour", "fn": "clink", "args": { "bright": 0.5 }, "gain_db": -13 },
+  { "cue": "Test three.", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.08 }, "gain_db": -10 },
+  { "cue": "pushing a breath", "fn": "bubbles", "args": { "dur": 2.5, "rate": 3.0, "f_lo": 200, "f_hi": 1200 }, "gain_db": -16 },
+  { "cue": "without warning.", "fn": "push_thump", "args": {}, "gain_db": -10 },
+  { "cue": "That's why safety", "fn": "breeze", "args": { "dur": 3.0, "level": 0.3 }, "level_lu": -24 },
+  { "cue": "refills at the", "fn": "splash_big", "args": {}, "gain_db": -17 },
+  { "cue": "extra lives.", "fn": "clink", "args": { "bright": 1.0 }, "gain_db": -11 },
+  { "cue": "How long can", "fn": "bird_chirps", "args": { "dur": 3.0 }, "level_lu": -24 }
+ ]
+}

@@ -458,3 +458,18 @@ A CAR / SHARE IT). 4 place-change shape morphs (plaza -> kitchen -> park -> bank
 bank_counter; README table). Stills half scale, swangle, rough 2.85 w/s: 2 fix rounds (framing of hookc/bill/tenk/
 weight/tower/count/bank/split, piles hiding Remy, clock cut off). Contact sheet
 library/previews/whatif/wi-gta-money-stick3d.png. Not rendered, no GO_FINAL: owner decides.
+2026-11-27 BUILD wi-gta-breath (What If #6, builder in its own worktree): episode.json/sound.json/metadata.json/story.tsx +
+library/stick3d/water.tsx (new, cheap water: translucent planes, caustic nets, light shafts, bubbles, underwater fog dome).
+Motif = cyan GAME air bar (bubbles, barely moves) vs gold REAL breath timer (lungs/stopwatch). 16 shots, one named move
+each: hook crane+land (pier, WHAT IF #6), hookb top-down (cyan swimmer on the sea bottom), test1 tracking/lead (Remy
+walks the pier holding his breath), land push-in (stopwatch, 30-90 S), freediver crane down (silhouette + safety buddy,
+SEVERAL MIN), record orbit (11:35 clock), test2 pull back (grey-blue cold lake, cyan swimmer lounging, Remy on shore,
+lifeguard), gasp low angle (icy wave at his shoes, gasp icon), rule push-in (life jacket + lifeguard, 1-10-1), ruleb
+tracking (1 MIN / 10 MIN / ~1 H tiles), test3 crane+land (pool, lifeguard chair), blackout dolly zoom (EMPTY pool
+underwater, BLACKOUT / NO WARNING after the caption), safety low hero angle (Remy + buddy, never-alone + breathe icons),
+surface orbit (both surface in life jackets, cyan bar refills), surfaceb pull back (+1 +1 hearts), ask push-in (A UNDER
+30 S / B 30-60 S / C 60-90 S / D OVER 90 S). 6 place-change shape morphs. 7 new Blender models (pier, stopwatch,
+life_jacket, lifeguard_chair, pool_ladder, buoy, life_ring_post; chair + ladder rebuilt once). Stills half scale,
+swangle, rough 2.85 w/s, 2 fix rounds (life jacket covered faces, stopwatch too big, deep water showed a sand floor,
+pool hole covered by the grass ground, framing of test2/rule/safety/surface). Contact sheet
+library/previews/whatif/wi-gta-breath-stick3d.png. Not rendered, no GO_FINAL: owner decides.
