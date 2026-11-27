@@ -1,0 +1,38 @@
+{
+  "episode": "wi-gta-respawn",
+  "test": true,
+  "youtube": {
+    "title": "What If You Respawned at a Random Spot on Earth? #Shorts",
+    "description": "What if you respawned at a random spot on Earth, like a GTA 6 character with no hospital and no safe house? Remy spins the globe four times.\n\nRespawn 1: water. About 71% of Earth's surface is ocean, so most of the time you'd appear far from any shore.\nRespawn 2: land. Only about 29% of the planet is land.\nAbout a third of that land is desert.\nRespawn 3: ice. Roughly a tenth of all land is covered by glaciers and ice sheets, mostly in Antarctica and Greenland.\nRespawn 4: a city. Cities and towns cover only a few percent of the land (roughly 1-3%).\nPut it together: 0.29 x 0.03 = 0.009, so landing in a city is less than one chance in a hundred.\n\nIn the game you respawn somewhere safe. On the real Earth, you'd mostly respawn in the sea. Where do you think you'd land first?\n\nSources:\n- Earth's surface about 71% water, 29% land: https://en.wikipedia.org/wiki/Land\n- Deserts about a third of land (depends on the definition): https://www.universetoday.com/65639/what-percentage-of-the-earths-land-surface-is-desert/\n- Glaciers and ice sheets about 10% of land, mostly Antarctica and Greenland: https://en.wikipedia.org/wiki/Land , https://nsidc.org/learn/parts-cryosphere/glaciers\n- Urban / built-up land about 1-3% of land: https://rock.geosociety.org/gsatoday/archive/22/12/table/i1052-5173-22-12-4-T01.pdf\n\nThe globe in the video is stylised (approximate continents), not a real map.\nRemy is fictional. Not affiliated with Rockstar Games or Take-Two. No game footage, art or logos are used.\nAI disclosure: made with AI assistance (script drafting, animation). Narration: AI voice (Google AI Studio, Gemini TTS).\n\n#Shorts #WhatIf #GTA #GTA6 #geography #earth #science #TheLittleEpic",
+    "tags": [
+      "shorts",
+      "what if",
+      "GTA",
+      "GTA 6",
+      "respawn",
+      "random spot on Earth",
+      "geography",
+      "ocean",
+      "desert",
+      "ice sheet",
+      "cities",
+      "probability",
+      "earth facts",
+      "science",
+      "animation",
+      "TheLittleEpic"
+    ],
+    "category": "Education",
+    "made_for_kids": false,
+    "contains_synthetic_media": false
+  },
+  "instagram": {
+    "caption": "What if you respawned at a random spot on Earth? 🌍📍\n~71% of the surface is ocean, only ~29% is land. About a third of the land is desert, roughly a tenth is ice (mostly Antarctica + Greenland), and cities and towns cover only a few percent. Landing in a city: less than 1 chance in 100.\nIn the game you respawn somewhere safe. On the real Earth, you'd mostly respawn in the sea.\n\nWhere would you land first? A ocean, B desert, C ice or D city? 👇\n\nRemy is fictional. Not affiliated with Rockstar Games or Take-Two. No game footage.\nMade with AI assistance. Narration: AI voice (Google AI Studio, Gemini TTS). Sources on YouTube.\n\n#whatif #GTA #GTA6 #geography #earth #science #shorts #reels #animation #TheLittleEpic"
+  },
+  "sources": [
+    { "fact": "Earth's surface ~71% water, ~29% land", "url": "https://en.wikipedia.org/wiki/Land" },
+    { "fact": "Deserts ~1/3 of land (definition-dependent)", "url": "https://www.universetoday.com/65639/what-percentage-of-the-earths-land-surface-is-desert/" },
+    { "fact": "Glaciers and ice sheets ~10% of land, mostly Antarctica and Greenland", "url": "https://nsidc.org/learn/parts-cryosphere/glaciers" },
+    { "fact": "Urban / built-up land ~1-3% of land", "url": "https://rock.geosociety.org/gsatoday/archive/22/12/table/i1052-5173-22-12-4-T01.pdf" }
+  ]
+}

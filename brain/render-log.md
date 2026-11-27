@@ -502,3 +502,15 @@ library/previews/whatif/wi-gta-breath-stick3d.png. Not rendered, no GO_FINAL: ow
 | 2026-11-27 02:42 | render-final | wi-gta-breath | render (850-1274) | 9 | 3723 | success (run 45927056138) |
 | 2026-11-27 02:42 | render-final | wi-gta-breath | assemble | 2 | 3725 | success (run 45927056138) |
 | 2026-11-27 02:42 | render-final | wi-gta-breath | log | 1 | 3726 | success (run 45927056138) |
+- 2026-11-27 wi-gta-respawn (GTA 6 WHAT IF #9) BUILT (stick3d-bright, story.tsx, 19 shots): hook pull back (Remy on top
+  of a big stylised globe in the sky, WHAT IF #9), hookb orbit (hospital + safe-house icons struck, cyan pin appears),
+  r1 crane up (cyan dice tumbles, globe spins, pin drops in the Pacific), ocean low angle (splash, Remy pops up in a swim
+  ring), oceanb orbit (71% + odds bar), far crane up (tiny in open ocean), farb top-down (dashed range circle, land icon
+  struck), r2 orbit (pin on the Sahara, 29%), desert crane + land (~1/3 land disc), desertb dolly zoom (dune/rock/sun
+  icons, heat shimmer), r3 crane down (pin on Antarctica), ice tracking (slide, ~1/10), iceb push-in (mini globe, two
+  ice caps), r4 push-in (pin on a city light), city crane-up top-down reveal (1-3%), total dolly zoom (0.29 x 0.03,
+  < 1%, city sliver circled), game low hero angle (cyan respawn beam on a safe beach), sea pull back (pins keep landing
+  in the blue, x10), ask push-in (A OCEAN / B DESERT / C ICE / D CITY). 10 place-change shape morphs. Globe = code
+  (canvas-painted approximate continents). 3 new Blender models: swim_ring, map_pin, ice_floe. Stills half scale,
+  swangle, rough 2.85 w/s, 2 fix rounds (globe too big/low, grey clouds, pin seen end-on, legs visible under the sea,
+  bar icons cramped, camera ends). Contact sheet library/previews/whatif/wi-gta-respawn-stick3d.png. No GO_FINAL.

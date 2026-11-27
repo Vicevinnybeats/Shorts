@@ -75,15 +75,15 @@ const BG: Record<string, string> = {
   ice: "#e9f6fc", r4: "#bfe3fb", city: "#9fcf7a", total: "#bfe3fb", game: "#5fe3ff", sea: "#bfe3fb", ask: "#2a9fd6",
 };
 /** key object of the OUTGOING shot that becomes the transition shape (screen rect, radius) */
-const KEY_DEF = { cx: 540, cy: 1000, w: 220, h: 220, r: 110 };   // the landing pulse of the pin on the globe
+const KEY_DEF = { cx: 540, cy: 920, w: 220, h: 220, r: 110 };   // the landing pulse of the pin on the globe
 const KEY_OBJ: Record<string, typeof KEY_DEF> = {
   farb: { cx: 540, cy: 1000, w: 240, h: 240, r: 120 },              // the swim ring seen from above
   desertb: { cx: 540, cy: 470, w: 260, h: 260, r: 130 },            // the sun icon
   iceb: { cx: 540, cy: 520, w: 260, h: 260, r: 130 },               // the mini globe icon
   city: { cx: 540, cy: 960, w: 260, h: 260, r: 40 },                // the city block (top-down)
-  total: { cx: 540, cy: 1030, w: 300, h: 300, r: 150 },             // the globe centre
+  total: { cx: 540, cy: 1110, w: 300, h: 300, r: 150 },             // the globe centre
   game: { cx: 540, cy: 1000, w: 220, h: 400, r: 110 },              // the cyan respawn beam
-  sea: { cx: 540, cy: 1000, w: 300, h: 300, r: 150 },               // the globe (blue)
+  sea: { cx: 540, cy: 1060, w: 300, h: 300, r: 150 },               // the globe (blue)
 };
 
 // ---------------------------------------------------------------- helpers
@@ -203,9 +203,12 @@ const OddsBar: React.FC<{ f: number; y: number; at: Odds; out?: number; glow?: "
     <rect x={x0 + 4} y={y + 8} width={Math.max(0, tw * (ocean + land) - 8)} height={(h - 16) * 0.3} rx={5} fill="#ffffff" opacity={0.35} />
     {glow === "ocean" && <rect x={x0} y={y - 6} width={tw * PART.ocean} height={h + 12} rx={14} fill="none" stroke="#ffffff" strokeWidth={6} opacity={fl} />}
     {glow === "city" && <circle cx={L0 + tw * (PART.desert + PART.ice) + 4} cy={y + h / 2} r={30} fill="none" stroke={CORAL} strokeWidth={6} opacity={0.5 + 0.5 * fl} />}
-    {icons && ([["wave", x0 + tw * PART.ocean / 2, at.ocean, CYAN], ["dune", L0 + tw * PART.desert / 2, at.desert, AMBER], ["snow", L0 + tw * (PART.desert + PART.ice / 2) + 20, at.ice, CREAM], ["city", L0 + tw * (PART.desert + PART.ice + PART.city) + 64, at.city, CORAL], ["land", L0 + tw * 0.2 + 70, at.land, GOLD]] as const).map(([ic, x, a, c]) => {
+    {icons && ([["wave", x0 + tw * PART.ocean / 2, x0 + tw * PART.ocean / 2, at.ocean, CYAN], ["dune", L0 + 30, L0 + tw * PART.desert / 2, at.desert, AMBER], ["snow", L0 + 98, L0 + tw * (PART.desert + PART.ice / 2), at.ice, CREAM], ["city", L0 + 166, L0 + tw * (PART.desert + PART.ice + PART.city / 2), at.city, CORAL], ["land", L0 + 234, L0 + tw * 0.2, at.land, GOLD]] as const).map(([ic, x, sx, a, c]) => {
       const p = drawOn(f, a + 6, 12); if (p <= 0) return null;
-      return <g key={ic} transform={`translate(${x} ${y + h + 58}) scale(0.62)`} opacity={p}><circle r={52} fill="#0b0d1a" opacity={0.55} /><NeonPath d={ICON[ic]} w={6} color={c} hot /></g>;
+      return <g key={ic} opacity={p}>
+        <path d={`M ${sx} ${y + h + 2} L ${sx} ${y + h + 12} L ${x} ${y + h + 20}`} stroke={c} strokeWidth={3} fill="none" opacity={0.8} />
+        <g transform={`translate(${x} ${y + h + 52}) scale(0.58)`}><circle r={54} fill="#0b0d1a" opacity={0.6} /><NeonPath d={ICON[ic]} w={6} color={c} hot /></g>
+      </g>;
     })}
   </g>;
 };
@@ -304,10 +307,11 @@ const llDir = ([lon, lat]: LL): THREE.Vector3 => {
   const phi = ((lon + 180) / 360) * Math.PI * 2, th = ((90 - lat) / 180) * Math.PI;
   return new THREE.Vector3(-Math.cos(phi) * Math.sin(th), Math.cos(th), Math.sin(phi) * Math.sin(th));
 };
-/** globe rotation [x, y] that brings lon/lat to the front (+z); `tk` = how much of the latitude tilt to apply */
-const faceRot = (ll: LL, tk = 0.75): [number, number] => {
+/** globe rotation [x, y] that brings lon/lat to the front (+z), lifted ~0.55 rad up the face so the pin reads side-on;
+ *  `tk` = how much of the latitude tilt to apply, `el` = how far up (rad, + = up) the target ends on the face */
+const faceRot = (ll: LL, tk = 0.75, el = 0.35): [number, number] => {
   const d = llDir(ll); const beta = Math.atan2(d.x, d.z);
-  return [((ll[1] * Math.PI) / 180) * tk, -beta];
+  return [((ll[1] * Math.PI) / 180) * tk - el, -beta];
 };
 /** the RANDOM SPAWN PIN: cyan glowing teardrop on the globe surface at lon/lat; `lift` = height above the surface,
  *  `spin` = turn about its own axis; a cyan ring pulse spreads on the surface once it has landed (`land` frames ago) */
@@ -343,12 +347,12 @@ const SkyWorld: React.FC<{ t: number }> = ({ t }) => (<>
   <ambientLight intensity={0.5} />
   <hemisphereLight args={["#d8ecff", "#bcd6ee", 1.1]} />
   <directionalLight position={[9, 8, 12]} intensity={2.2} color="#fff1d8" />
-  <Clouds t={t} at={[[-16, -9, -10], [14, -10, -14], [-24, 4, -30], [22, 8, -36], [0, -14, -24], [-10, 14, -44]]} s={4} />
+  <Clouds t={t} at={[[-24, -13, -45], [22, -15, -55], [-36, 3, -75], [34, 7, -85], [2, -20, -65]]} s={4} />
 </>);
 /** a full respawn on the globe: the pin hovers + spins while the globe spins to bring the target to the front, then
  *  the pin DROPS at `drop` (gravity ease-in) and lands with a squash + ring pulse */
-const spawnRot = (u: number, ll: LL, until: number, turns: number, tk = 0.75): [number, number] => {
-  const [rx, ry] = faceRot(ll, tk), e = Easing.out(Easing.cubic)(clamp(u / Math.max(1, until)));
+const spawnRot = (u: number, ll: LL, until: number, turns: number, tk = 0.75, el = 0.35): [number, number] => {
+  const [rx, ry] = faceRot(ll, tk, el), e = Easing.out(Easing.cubic)(clamp(u / Math.max(1, until)));
   return [rx * e, ry - turns * Math.PI * 2 * (1 - e)];
 };
 const pinLift = (u: number, drop: number) => (u < drop ? 5 + 0.25 * Math.sin(u * 0.2) : Math.max(0, 5 * (1 - Math.pow(clamp((u - drop) / 12), 2))));
@@ -390,8 +394,8 @@ const Hero: React.FC<{ p: V3; look: Look; pose: Omit<Pose, "t">; f: number; h?: 
 const Floater: React.FC<{ p: V3; f: number; t: number; pose: Omit<Pose, "t">; rise?: number }> = ({ p, f, t, pose, rise = 1 }) => {
   const bob = Math.sin(t * 2.1) * 0.07, y = p[1] + bob - 1.2 * (1 - rise);
   return <group>
-    <Person p={[p[0], y - 1.08, p[2]]} look={REMY} pose={pose} f={f} shadow={false} />
-    <group position={[p[0], y + 0.02, p[2]]} rotation={[0.08 * Math.sin(t * 1.3), 0, 0.06 * Math.sin(t * 1.7)]}>
+    <Person p={[p[0], y - 0.8, p[2]]} look={REMY} pose={pose} f={f} shadow={false} />
+    <group position={[p[0], y + 0.12, p[2]]} rotation={[0.08 * Math.sin(t * 1.3), 0, 0.06 * Math.sin(t * 1.7)]}>
       <Glb name="swim_ring" line={2} fallback={<mesh rotation={[Math.PI / 2, 0, 0]}><torusGeometry args={[0.62, 0.2, 10, 32]} /><meshLambertMaterial color={disp(CORAL)} /></mesh>} />
     </group>
     <Ripples p={[p[0], 0, p[2]]} t={t} r={2.2} o={0.5} />
@@ -441,7 +445,7 @@ const Ghost: React.FC<{ p: V3; h?: number; o?: number; f: number; pose?: Omit<Po
 const OceanWorld: React.FC<{ t: number; target?: V3 }> = ({ t, target = [0, 0, 0] }) => (<>
   <DaySky fogNear={40} fogFar={190} />
   <SunRig target={target} dir={[6, 10, 5]} />
-  <mesh position={[0, -6, -60]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[500, 500]} /><meshLambertMaterial color={disp("#0f5d9c")} /></mesh>
+  <mesh position={[0, -0.06, -60]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[500, 500]} /><meshLambertMaterial color={disp("#1d86c4")} /></mesh>
   <WaterSurface t={t} p={[0, 0, -40]} s={[420, 420]} color="#2a9fd6" o={0.86} glint={0.34} rep={80} />
   {[[-14, -30, 9], [20, -48, 12], [-36, -70, 14], [44, -90, 16], [4, -110, 18]].map(([x, z, r], i) => <mesh key={i} position={[x, 0.03, z]} rotation={[-Math.PI / 2, 0, i]}><ringGeometry args={[r, r + 0.5, 48, 1, 0, 2.2]} /><meshBasicMaterial color="#ffffff" transparent opacity={0.25} depthWrite={false} toneMapped={false} /></mesh>)}
   <Clouds t={t} at={[[-30, 26, -120], [24, 32, -140], [55, 22, -100], [-60, 20, -90], [0, 30, -170]]} s={5} />
@@ -486,8 +490,8 @@ const CityWorld: React.FC<{ t: number; target?: V3 }> = ({ t, target = [0, 0, 0]
   {Array.from({ length: 26 }, (_, i) => <Ball key={i} p={[60 + (i % 6) * 5 + Math.sin(i) * 2, 1.5, 20 + Math.floor(i / 6) * 5]} r={2.4} color={disp(i % 2 ? "#4e9a43" : "#5aa64a")} ink={0.02} />)}
   {/* roads out of town */}
   {[[0, 0, 4, 600, 0], [0, 0, 4, 600, Math.PI / 2], [0, 0, 3, 500, 0.7]].map(([x, z, w, l, r], i) => <mesh key={i} position={[x, 0.06 + i * 0.002, z]} rotation={[-Math.PI / 2, 0, r]}><planeGeometry args={[w, l]} /><meshLambertMaterial color={disp("#8f939b")} /></mesh>)}
-  <mesh position={[0, 0.08, 0]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[34, 30]} /><meshLambertMaterial color={disp("#d8d2c4")} /></mesh>
-  {[[-9, -8, 0.55, 0], [9, -9, 0.6, 1.2], [-10, 9, 0.5, 2.4], [10, 8, 0.62, 3.1], [0, -12, 0.45, 0.6], [-13, 0, 0.4, 1.8], [13, 0, 0.45, 2.7]].map(([x, z, s, r], i) => <Glb key={i} name="city_block" p={[x, 0.08, z]} s={s} rot={[0, r, 0]} line={2} />)}
+  <mesh position={[0, 0.08, 0]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[30, 28]} /><meshLambertMaterial color={disp("#d8d2c4")} /></mesh>
+  {[[-9, -8, 0.55, 0], [9, -9, 0.6, 1.2], [-10, 9, 0.5, 2.4], [10, 8, 0.62, 3.1], [0, -12, 0.45, 0.6], [-13, 0, 0.4, 1.8], [13, 0, 0.45, 2.7]].map(([x, z, s, r], i) => <Glb key={i} name="city_block" p={[x, 0.08, z]} s={s * 1.5} rot={[0, r, 0]} line={2} />)}
   <Clouds t={t} at={[[-40, 60, -60], [50, 70, 40], [10, 80, -120]]} s={6} />
 </>);
 /** GAME safe respawn spot: sunny beach with umbrella + palms (the game always puts you somewhere safe) */
@@ -510,7 +514,7 @@ const ODDS0: Odds = { ocean: LATER, land: LATER, desert: LATER, ice: LATER, city
 type View = { world: React.ReactNode; hud?: React.ReactNode };
 const OCEAN_LL: LL = [-150, -12], SAHARA_LL: LL = [14, 22], ANT_LL: LL = [70, -80], CITY_LL: LL = [2.3, 48.8];
 /** default globe camera: the globe sits low in frame, HUD room on top */
-const GCAM = (z = 31, y = 4.5, ly = 3.2, fov = 44): CamPose => ({ pos: [0, y, z], look: [0, ly, 0], fov });
+const GCAM = (z = 40, y = 4.0, ly = 2.0, fov = 44): CamPose => ({ pos: [0, y, z], look: [0, ly, 0], fov });
 const build = (id: string, f: number, u: number, len: number, C: (p: string, fb: number) => number, sub: number, us: number, ls: number): View => {
   const t = f / FPS;
   switch (id) {
@@ -524,12 +528,12 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <Earth rot={[0.12, -0.6 - t * 0.12]} />
         <Halo p={[0, GR + 1.2, 0.2]} r={2.4} color="#ffffff" o={0.35} />
         <Person p={R} look={REMY} pose={{ mood: sub ? "worry" : "grin", arms: sub ? "shrug" : "down", lookX: 0.2 }} f={f} shadow={false} />
-        {sub === 1 && u > JR - 4 ? <group position={[2.6, GR + 3.2 + 0.3 * Math.sin(u * 0.15), 1.5]} rotation={[0, u * 0.25, 0]} scale={0.9 * k(u, JR - 4, JR + 6, 0.2, 1)}>
+        {sub === 1 && u > JR - 4 ? <group position={[3.4, GR + 1.6 + 0.3 * Math.sin(u * 0.15), 2.5]} rotation={[0, u * 0.25, 0]} scale={1.5 * k(u, JR - 4, JR + 6, 0.2, 1)}>
           <Glb name="map_pin" line={2} fallback={<mesh position={[0, 1, 0]}><sphereGeometry args={[0.5, 16, 12]} /><meshBasicMaterial color={disp(CYAN)} toneMapped={false} /></mesh>} />
           <Halo p={[0, 1.4, 0]} r={1.7} color={CYAN} o={0.45} />
         </group> : null}
-        {!sub ? <Move us={us} ls={ls} at={line({ pos: [0.6, GR + 2.6, 7.2], look: [0, GR + 1.3, 0.4], fov: 46 }, { pos: [0, 5.5, 30], look: [0, 2.6, 0], fov: 44 })} />
-          : <Move us={us} ls={ls} at={orbit([0, 2.6, 0], 30, 2.6, -0.32, 0.22, 44)} />}
+        {!sub ? <Move us={us} ls={ls} at={line({ pos: [0.6, GR + 2.6, 7.2], look: [0, GR + 1.3, 0.4], fov: 46 }, { pos: [0, 7.0, 40], look: [0, 4.4, 0], fov: 44 })} />
+          : <Move us={us} ls={ls} at={orbit([0, 3.4, 0], 40, 3.0, -0.32, 0.22, 44)} />}
       </>;
       if (!sub) {
         const wp = k(u, 0, 34, 0.42, 1, EASE.arrive);
@@ -540,17 +544,17 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <IconTile f={u} x={700} y={470} at={NS - 4} icon="house" strike={k(u, NS + 4, NS + 16, 0, 1)} />
       </> };
     }
-    case "r1": { // TOP-DOWN CRANE: the cyan dice tumbles over the globe, the globe spins, the camera rises and looks down as the pin drops into the open Pacific on "Respawn one."
+    case "r1": { // CRANE UP (rise + tilt down): the cyan dice tumbles over the globe, the globe spins, the camera rises to look down on the Pacific as the pin drops into it on "Respawn one."
       const R1 = C("Respawn one.", 30);
       const drop = Math.max(10, Math.min(len - 22, R1 + 4));
       const rot = spawnRot(u, OCEAN_LL, drop - 2, 2.2);
       const land = u >= drop + 12 ? u - drop - 12 : -1;
-      const dq = clamp(u / 30), dice: V3 = [-5 + 9 * dq, GR + 1.5 + 3.2 * Math.sin(dq * Math.PI), 3.5];
+      const dq = clamp(u / 30), dice: V3 = [-6 + 11 * dq, GR + 1.5 + 3.6 * Math.sin(dq * Math.PI), 5];
       const world = <>
         <SkyWorld t={t} />
         <Earth rot={rot}><Pin ll={OCEAN_LL} lift={pinLift(u, drop)} spin={u * 0.35} land={land} /></Earth>
         {dq < 1 && <><Dice p={dice} rot={[u * 0.3, u * 0.42, u * 0.2]} s={0.9} /><Halo p={dice} r={1.6} color={CYAN} o={0.5} /></>}
-        <Move us={us} ls={ls} at={line(GCAM(30, 6, 3.0), { pos: [0, 15, 17], look: [0, 2.2, 3], fov: 44 })} />
+        <Move us={us} ls={ls} at={line(GCAM(40, 6, 2.6), { pos: [2.5, 11, 27], look: [0, 2.0, 3.6], fov: 44 })} />
       </>;
       return { world, hud: <SpawnTracker f={u} at={u < R1 ? 4 : NOW} active={u < R1 - 6 ? -1 : 0} /> };
     }
@@ -582,7 +586,7 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <OceanWorld t={t} target={R} />
         <Floater p={R} f={f} t={t} pose={sub ? { mood: "worry", arms: "shrug" } : { mood: "deadpan", arms: "down", lookX: -0.4 }} />
         {sub ? <Move us={us} ls={ls} at={line({ pos: [0, 34, 1.2], look: [0, 0, 0], fov: 46 }, { pos: [0, 22, 0.9], look: [0, 0, 0], fov: 46 })} />
-          : <Move us={us} ls={ls} at={line({ pos: [0.4, 2.6, 7.5], look: [0, 1.0, 0], fov: 46 }, { pos: [0, 30, 26], look: [0, 0, -2], fov: 46 })} />}
+          : <Move us={us} ls={ls} at={line({ pos: [0.4, 2.6, 7.5], look: [0, 1.0, 0], fov: 46 }, { pos: [0, 15, 21], look: [0, 0, -12], fov: 46 })} />}
       </>;
       const rr = k(u, FA, FA + 30, 60, 360, Easing.out(Easing.cubic));
       const hud = sub ? <>
@@ -599,12 +603,12 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const world = <>
         <SkyWorld t={t} />
         <Earth rot={rot}><Pin ll={SAHARA_LL} lift={pinLift(u, drop)} spin={u * 0.35} land={land} /></Earth>
-        <Move us={us} ls={ls} at={orbit([0, 2.8, 0], 30, 2.6, 0.3, -0.2, 44)} />
+        <Move us={us} ls={ls} at={orbit([0, 1.6, 0], 40, 2.2, 0.3, -0.2, 44)} />
       </>;
       const hud = <>
         <SpawnTracker f={u} at={NOW} active={1} />
-        <OddsBar f={u} y={500} at={{ ...ODDS0, ocean: NOW, land: TN - 4 }} />
-        <HudText f={u} x={540} y={790} size={120} color={GOLD} at={TN + 4} spacing={4}>29%</HudText>
+        <OddsBar f={u} y={440} at={{ ...ODDS0, ocean: NOW, land: TN - 4 }} />
+        <HudText f={u} x={540} y={720} size={120} color={GOLD} at={TN + 4} spacing={4}>29%</HudText>
       </>;
       return { world, hud };
     }
@@ -629,14 +633,14 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
     }
     case "r3": { // CRANE DOWN (under): the camera sinks below the globe as it tips Antarctica toward us; the pin drops on the white ice
       const drop = Math.min(len - 24, 20);
-      const rot = spawnRot(u, ANT_LL, drop - 2, 0.9, 0.85);
+      const rot = spawnRot(u, ANT_LL, drop - 2, 0.9, 1, -0.4);
       const land = u >= drop + 12 ? u - drop - 12 : -1;
       const world = <>
         <SkyWorld t={t} />
         <Earth rot={rot}><Pin ll={ANT_LL} lift={pinLift(u, drop)} spin={u * 0.35} land={land} /></Earth>
-        <Move us={us} ls={ls} at={line(GCAM(30, 5, 3.0), { pos: [0, -3, 25], look: [0, 1.4, 0], fov: 44 })} />
+        <Move us={us} ls={ls} at={line(GCAM(40, 6, 1.8), { pos: [0, -4, 34], look: [0, 1.2, 0], fov: 44 })} />
       </>;
-      return { world, hud: <><SpawnTracker f={u} at={NOW} active={2} /><OddsBar f={u} y={500} at={{ ...ODDS0, ocean: NOW, land: NOW, desert: NOW }} /></> };
+      return { world, hud: <><SpawnTracker f={u} at={NOW} active={2} /><OddsBar f={u} y={440} at={{ ...ODDS0, ocean: NOW, land: NOW, desert: NOW }} /></> };
     }
     case "ice": {
       // sub 0 = TRACKING (truck): the camera trucks sideways with Remy sliding across the flat ice sheet, arms out
@@ -676,9 +680,9 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <Earth rot={rot}>
           <Pin ll={CITY_LL} lift={pinLift(u, drop)} spin={u * 0.35} land={land} s={0.75} color={CYAN} />
         </Earth>
-        <Move us={us} ls={ls} at={line(GCAM(31, 5, 3.0), { pos: [0, 7.5, 19], look: [0, 4.2, 2.5], fov: 44 })} />
+        <Move us={us} ls={ls} at={line(GCAM(40, 4.5, 1.8), { pos: [0, 5.5, 29], look: [0, 2.4, 2.5], fov: 44 })} />
       </>;
-      return { world, hud: <><SpawnTracker f={u} at={NOW} active={3} /><OddsBar f={u} y={500} at={{ ...ODDS0, ocean: NOW, land: NOW, desert: NOW, ice: NOW }} /></> };
+      return { world, hud: <><SpawnTracker f={u} at={NOW} active={3} /><OddsBar f={u} y={440} at={{ ...ODDS0, ocean: NOW, land: NOW, desert: NOW, ice: NOW }} /></> };
     }
     case "city": { // CRANE UP (top-down reveal): from Remy waving on a small plaza straight up until the whole town is a tiny grey patch in a huge countryside
       const CT = C("Cities and towns", 0), FP = C("a few percent", 70);
@@ -699,13 +703,13 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
       const world = <>
         <SkyWorld t={t} />
         <Earth rot={[0.25, -1.9 - t * 0.12]} />
-        <Move us={us} ls={ls} at={dollyZoom([0, 2.0, 0], [0, 0.08, 1], 44, 22, 30)} />
+        <Move us={us} ls={ls} at={dollyZoom([0, 3.2, 0], [0, 0.06, 1], 62, 30, 30)} />
       </>;
       const hud = <>
         <OddsBar f={u} y={360} at={{ ocean: NOW, land: NOW, desert: NOW, ice: NOW, city: NOW }} glow={u > LC ? "city" : undefined} />
-        <Plate x={150} y={560} w={780} h={300} o={arrive(u, LC - 6, 10)} r={34} />
-        <HudText f={u} x={540} y={660} size={64} color={CREAM} at={LC - 2} spacing={1}>0.29 × 0.03</HudText>
-        <HudText f={u} x={540} y={810} size={140} color={CORAL} at={LO + 4} spacing={4}>{"< 1%"}</HudText>
+        <Plate x={210} y={540} w={660} h={270} o={arrive(u, LC - 6, 10)} r={34} />
+        <HudText f={u} x={540} y={625} size={60} color={CREAM} at={LC - 2} spacing={1}>0.29 × 0.03</HudText>
+        <HudText f={u} x={540} y={770} size={130} color={CORAL} at={LO + 4} spacing={4}>{"< 1%"}</HudText>
       </>;
       return { world, hud };
     }
@@ -717,18 +721,18 @@ const build = (id: string, f: number, u: number, len: number, C: (p: string, fb:
         <Beam p={R} h={9} r={1.1} o={1 - 0.6 * ap} />
         <Ghost p={R} f={f} o={0.85 * (1 - ap)} />
         {ap > 0.05 && <Hero p={R} look={REMY} pose={{ mood: "grin", arms: "up", armK: 0.7 }} f={f} rimO={0.45 * ap} />}
-        <Move us={us} ls={ls} at={line({ pos: [0.6, 0.5, 10.5], look: [0.3, 2.6, 0], fov: 48 }, { pos: [0.4, 0.6, 9.0], look: [0.3, 2.6, 0], fov: 48 })} />
+        <Move us={us} ls={ls} at={line({ pos: [0.6, 0.5, 10.5], look: [0.3, 1.9, 0], fov: 48 }, { pos: [0.4, 0.6, 9.0], look: [0.3, 1.9, 0], fov: 48 })} />
       </>;
       return { world, hud: <IconTile f={u} x={540} y={470} at={18} icon="check" color={CYAN} /> };
     }
     case "sea": { // PULL BACK: from close on the globe back to the full planet while pin after pin keeps landing in the blue
-      const DROPS: [LL, number][] = [[[-140, 10], 4], [[-30, -20], 14], [[70, -30], 22], [[160, 20], 30], [[-40, 30], 38], [[-160, -40], 44], [[90, -10], 50], [[-120, -55], 56], [[20, -45], 62], [[-60, 5], 68]];
+      const DROPS: [LL, number][] = [[[-150, 10], 4], [[-170, -25], 12], [[-130, -10], 19], [[170, 15], 26], [[-140, 35], 32], [[-175, 2], 38], [[-120, -35], 44], [[160, -20], 50], [[-155, -45], 56], [[-125, 18], 62]];
       const world = <>
         <SkyWorld t={t} />
-        <Earth rot={[0.18, -2.6 - t * 0.35]}>
+        <Earth rot={[faceRot([-150, 0])[0] + 0.3, faceRot([-150, 0])[1] + 0.5 - k(us, 0, ls, 0, 0.8, Easing.linear)]}>
           {DROPS.map(([ll, at], i) => u >= at ? <Pin key={i} ll={ll} lift={Math.max(0, 4 * (1 - Math.pow(clamp((u - at) / 10), 2)))} spin={u * 0.3} land={u - at - 10} s={0.6} /> : null)}
         </Earth>
-        <Move us={us} ls={ls} at={line({ pos: [0, 4.0, 19], look: [0, 2.6, 0], fov: 44 }, GCAM(32, 4.5, 3.0))} />
+        <Move us={us} ls={ls} at={line({ pos: [0, 4.0, 24], look: [0, 2.2, 0], fov: 44 }, GCAM(42, 4.5, 2.0))} />
       </>;
       const ocean = DROPS.filter(([, at]) => u >= at + 10).length;
       const hud = <>

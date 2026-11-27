@@ -1,0 +1,32 @@
+{
+ "music": {
+  "mood": "cinematic",
+  "bpm": 84,
+  "key": 57,
+  "level_lu": -16
+ },
+ "sfx": [
+  { "cue": "What if you", "fn": "breeze", "args": { "dur": 4.0, "level": 0.3 }, "level_lu": -25 },
+  { "cue": "No hospital,", "fn": "clink", "args": { "bright": 0.6 }, "gain_db": -14 },
+  { "cue": "no safe house.", "fn": "clink", "args": { "bright": 0.7 }, "gain_db": -14 },
+  { "cue": "Let's spin.", "fn": "rattle", "args": { "dur": 1.0, "density": 12.0 }, "gain_db": -14 },
+  { "cue": "Respawn one.", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.08 }, "gain_db": -10 },
+  { "cue": "Splash.", "fn": "splash_big", "args": {}, "gain_db": -14 },
+  { "cue": "That's the most", "fn": "water_bed", "args": { "dur": 4.0, "close": 0.5, "slosh_rate": 0.5 }, "level_lu": -25 },
+  { "cue": "seventy one percent", "fn": "clink", "args": { "bright": 1.0 }, "gain_db": -12 },
+  { "cue": "Far from any", "fn": "water_bed", "args": { "dur": 2.0, "close": 0.4, "slosh_rate": 0.4 }, "level_lu": -26 },
+  { "cue": "Respawn two.", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.08 }, "gain_db": -10 },
+  { "cue": "Finally, land.", "fn": "push_thump", "args": {}, "gain_db": -11 },
+  { "cue": "twenty nine percent", "fn": "clink", "args": { "bright": 0.9 }, "gain_db": -12 },
+  { "cue": "And about a third", "fn": "breeze", "args": { "dur": 3.0, "level": 0.35 }, "level_lu": -24 },
+  { "cue": "Respawn three.", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.08 }, "gain_db": -10 },
+  { "cue": "Ice.", "fn": "push_thump", "args": {}, "gain_db": -11 },
+  { "cue": "Roughly a tenth", "fn": "breeze", "args": { "dur": 3.0, "level": 0.4 }, "level_lu": -24 },
+  { "cue": "Respawn four.", "fn": "whoosh", "args": { "dur": 0.6, "peak": 0.08 }, "gain_db": -10 },
+  { "cue": "Cities and towns", "fn": "crowd", "args": { "dur": 3.0 }, "level_lu": -28 },
+  { "cue": "less than one", "fn": "clink", "args": { "bright": 1.0 }, "gain_db": -11 },
+  { "cue": "you respawn somewhere", "fn": "clink", "args": { "bright": 0.8 }, "gain_db": -13 },
+  { "cue": "On the real", "fn": "splash_big", "args": {}, "gain_db": -18 },
+  { "cue": "Where do you", "fn": "water_bed", "args": { "dur": 3.0, "close": 0.5, "slosh_rate": 0.5 }, "level_lu": -26 }
+ ]
+}
