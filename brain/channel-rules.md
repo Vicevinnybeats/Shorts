@@ -212,3 +212,5 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   whip-to-match. Plan each video's shot list with a named move per shot (in the storyboard) and vary them.
 - 2026-11-27 caught in What If 6 render: HUD "SEVERAL MIN" and "BLACKOUT / NO WARNING" appeared while the caption said
   the same words -> removed. Builders still slip on NO DOUBLE TEXT: always check the final render frame sheet for it.
+- 2026-11-27 lesson: render-final has a concurrency group per branch -> GitHub keeps only ONE pending run; a third
+  GO_FINAL push cancels the one that was waiting (#8 NPC got cancelled). Max 2 renders at a time: one running + one waiting.
