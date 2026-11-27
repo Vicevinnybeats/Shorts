@@ -553,21 +553,30 @@ _deco.py; README table). Stills half scale, swangle, rough 2.85 w/s, 2 fix round
 several shots, iguana drop too small, manatees invisible under water + plume hidden, flakes too faint then too big near
 the lens). Contact sheet library/previews/whatif/wi-gta-snow-stick3d.png. Not rendered, no GO_FINAL: owner decides.
 | 2026-11-27 10:46 | render-stills | wi-gta-snow  | stills | 3 | 3737 | running (run 45984544339) |
-| 2026-11-27 10:47 | render-final | wi-gta-respawn | voice-and-mix | 4 | 3733 | success (run 45982716765) |
-| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (1552-1939) | 12 | 3745 | success (run 45982716765) |
-| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (776-1163) | 10 | 3755 | success (run 45982716765) |
-| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (0-387) | 8 | 3763 | success (run 45982716765) |
-| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (1940-2323) | 11 | 3774 | success (run 45982716765) |
-| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (388-775) | 10 | 3784 | success (run 45982716765) |
-| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (1164-1551) | 11 | 3795 | success (run 45982716765) |
-| 2026-11-27 10:47 | render-final | wi-gta-respawn | assemble | 3 | 3798 | success (run 45982716765) |
-| 2026-11-27 10:47 | render-final | wi-gta-respawn | log | 1 | 3799 | success (run 45982716765) |
-| 2026-11-27 11:14 | render-final | wi-gta-snow | voice-and-mix | 4 | 3738 | success (run 45984610895) |
-| 2026-11-27 11:14 | render-final | wi-gta-snow | render (1014-1351) | 20 | 3758 | success (run 45984610895) |
-| 2026-11-27 11:14 | render-final | wi-gta-snow | render (0-337) | 16 | 3774 | success (run 45984610895) |
-| 2026-11-27 11:14 | render-final | wi-gta-snow | render (1690-2027) | 12 | 3786 | success (run 45984610895) |
-| 2026-11-27 11:14 | render-final | wi-gta-snow | render (338-675) | 22 | 3808 | success (run 45984610895) |
-| 2026-11-27 11:14 | render-final | wi-gta-snow | render (676-1013) | 20 | 3828 | success (run 45984610895) |
-| 2026-11-27 11:14 | render-final | wi-gta-snow | render (1352-1689) | 21 | 3849 | success (run 45984610895) |
-| 2026-11-27 11:14 | render-final | wi-gta-snow | assemble | 2 | 3851 | success (run 45984610895) |
-| 2026-11-27 11:14 | render-final | wi-gta-snow | log | 1 | 3852 | success (run 45984610895) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | voice-and-mix | 4 | 3741 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (1552-1939) | 12 | 3753 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (776-1163) | 10 | 3763 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (0-387) | 8 | 3771 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (1940-2323) | 11 | 3782 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (388-775) | 10 | 3792 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | render (1164-1551) | 11 | 3803 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | assemble | 3 | 3806 | success (run 45982716765) |
+| 2026-11-27 10:47 | render-final | wi-gta-respawn | log | 1 | 3807 | success (run 45982716765) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | voice-and-mix | 4 | 3811 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | render (1014-1351) | 20 | 3831 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | render (0-337) | 16 | 3847 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | render (1690-2027) | 12 | 3859 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | render (338-675) | 22 | 3881 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | render (676-1013) | 20 | 3901 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | render (1352-1689) | 21 | 3922 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | assemble | 2 | 3924 | success (run 45984610895) |
+| 2026-11-27 11:14 | render-final | wi-gta-snow | log | 1 | 3925 | success (run 45984610895) |
+| 2026-11-27 11:55 | render-final | wi-gta-npc | voice-and-mix | 3 | 3928 | success (run 45991415866) |
+| 2026-11-27 11:55 | render-final | wi-gta-npc | render (0-358) | 15 | 3943 | success (run 45991415866) |
+| 2026-11-27 11:55 | render-final | wi-gta-npc | render (1077-1435) | 13 | 3956 | success (run 45991415866) |
+| 2026-11-27 11:55 | render-final | wi-gta-npc | render (1436-1794) | 11 | 3967 | success (run 45991415866) |
+| 2026-11-27 11:55 | render-final | wi-gta-npc | render (359-717) | 11 | 3978 | success (run 45991415866) |
+| 2026-11-27 11:55 | render-final | wi-gta-npc | render (718-1076) | 19 | 3997 | success (run 45991415866) |
+| 2026-11-27 11:55 | render-final | wi-gta-npc | render (1795-2150) | 10 | 4007 | success (run 45991415866) |
+| 2026-11-27 11:55 | render-final | wi-gta-npc | assemble | 2 | 4009 | success (run 45991415866) |
+| 2026-11-27 11:55 | render-final | wi-gta-npc | log | 1 | 4010 | success (run 45991415866) |
