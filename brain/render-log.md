@@ -474,21 +474,22 @@ swangle, rough 2.85 w/s, 2 fix rounds (life jacket covered faces, stopwatch too 
 pool hole covered by the grass ground, framing of test2/rule/safety/surface). Contact sheet
 library/previews/whatif/wi-gta-breath-stick3d.png. Not rendered, no GO_FINAL: owner decides.
 | 2026-11-27 01:09 | render-stills | wi-gta-breath  | stills | 4 | 3386 | running (run 45920610754) |
-| 2026-11-27 01:36 | render-final | wi-gta-money | voice-and-mix | 4 | 3386 | success (run 45920511178) |
-| 2026-11-27 01:36 | render-final | wi-gta-money | render (0-408) | 12 | 3398 | success (run 45920511178) |
-| 2026-11-27 01:36 | render-final | wi-gta-money | render (818-1226) | 25 | 3423 | success (run 45920511178) |
-| 2026-11-27 01:36 | render-final | wi-gta-money | render (1636-2044) | 21 | 3444 | success (run 45920511178) |
-| 2026-11-27 01:36 | render-final | wi-gta-money | render (1227-1635) | 26 | 3470 | success (run 45920511178) |
-| 2026-11-27 01:36 | render-final | wi-gta-money | render (2045-2453) | 16 | 3486 | success (run 45920511178) |
-| 2026-11-27 01:36 | render-final | wi-gta-money | render (409-817) | 19 | 3505 | success (run 45920511178) |
-| 2026-11-27 01:36 | render-final | wi-gta-money | assemble | 3 | 3508 | success (run 45920511178) |
-| 2026-11-27 01:36 | render-final | wi-gta-money | log | 1 | 3509 | success (run 45920511178) |
-| 2026-11-27 02:01 | render-final | wi-gta-breath | voice-and-mix | 3 | 3385 | success (run 45920660937) |
-| 2026-11-27 02:01 | render-final | wi-gta-breath | render (2215-2656) | 19 | 3404 | success (run 45920660937) |
-| 2026-11-27 02:01 | render-final | wi-gta-breath | render (0-442) | 15 | 3419 | success (run 45920660937) |
-| 2026-11-27 02:01 | render-final | wi-gta-breath | render (886-1328) | 17 | 3436 | success (run 45920660937) |
-| 2026-11-27 02:01 | render-final | wi-gta-breath | render (443-885) | 9 | 3445 | success (run 45920660937) |
-| 2026-11-27 02:01 | render-final | wi-gta-breath | render (1772-2214) | 21 | 3466 | success (run 45920660937) |
-| 2026-11-27 02:01 | render-final | wi-gta-breath | render (1329-1771) | 20 | 3486 | success (run 45920660937) |
-| 2026-11-27 02:01 | render-final | wi-gta-breath | assemble | 2 | 3488 | success (run 45920660937) |
-| 2026-11-27 02:01 | render-final | wi-gta-breath | log | 1 | 3489 | success (run 45920660937) |
+| 2026-11-27 01:36 | render-final | wi-gta-money | voice-and-mix | 4 | 3390 | success (run 45920511178) |
+| 2026-11-27 01:36 | render-final | wi-gta-money | render (0-408) | 12 | 3402 | success (run 45920511178) |
+| 2026-11-27 01:36 | render-final | wi-gta-money | render (818-1226) | 25 | 3427 | success (run 45920511178) |
+| 2026-11-27 01:36 | render-final | wi-gta-money | render (1636-2044) | 21 | 3448 | success (run 45920511178) |
+| 2026-11-27 01:36 | render-final | wi-gta-money | render (1227-1635) | 26 | 3474 | success (run 45920511178) |
+| 2026-11-27 01:36 | render-final | wi-gta-money | render (2045-2453) | 16 | 3490 | success (run 45920511178) |
+| 2026-11-27 01:36 | render-final | wi-gta-money | render (409-817) | 19 | 3509 | success (run 45920511178) |
+| 2026-11-27 01:36 | render-final | wi-gta-money | assemble | 3 | 3512 | success (run 45920511178) |
+| 2026-11-27 01:36 | render-final | wi-gta-money | log | 1 | 3513 | success (run 45920511178) |
+| 2026-11-27 02:01 | render-final | wi-gta-breath | voice-and-mix | 3 | 3516 | success (run 45920660937) |
+| 2026-11-27 02:01 | render-final | wi-gta-breath | render (2215-2656) | 19 | 3535 | success (run 45920660937) |
+| 2026-11-27 02:01 | render-final | wi-gta-breath | render (0-442) | 15 | 3550 | success (run 45920660937) |
+| 2026-11-27 02:01 | render-final | wi-gta-breath | render (886-1328) | 17 | 3567 | success (run 45920660937) |
+| 2026-11-27 02:01 | render-final | wi-gta-breath | render (443-885) | 9 | 3576 | success (run 45920660937) |
+| 2026-11-27 02:01 | render-final | wi-gta-breath | render (1772-2214) | 21 | 3597 | success (run 45920660937) |
+| 2026-11-27 02:01 | render-final | wi-gta-breath | render (1329-1771) | 20 | 3617 | success (run 45920660937) |
+| 2026-11-27 02:01 | render-final | wi-gta-breath | assemble | 2 | 3619 | success (run 45920660937) |
+| 2026-11-27 02:01 | render-final | wi-gta-breath | log | 1 | 3620 | success (run 45920660937) |
+| 2026-11-27 02:15 | render-stills | wi-gta-breath  | stills | 3 | 3623 | running (run 45927056107) |
