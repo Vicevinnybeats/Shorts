@@ -493,15 +493,15 @@ library/previews/whatif/wi-gta-breath-stick3d.png. Not rendered, no GO_FINAL: ow
 | 2026-11-27 02:01 | render-final | wi-gta-breath | assemble | 2 | 3619 | success (run 45920660937) |
 | 2026-11-27 02:01 | render-final | wi-gta-breath | log | 1 | 3620 | success (run 45920660937) |
 | 2026-11-27 02:15 | render-stills | wi-gta-breath  | stills | 3 | 3623 | running (run 45927056107) |
-| 2026-11-27 02:42 | render-final | wi-gta-breath | voice-and-mix | 3 | 3623 | success (run 45927056138) |
-| 2026-11-27 02:42 | render-final | wi-gta-breath | render (425-849) | 13 | 3636 | success (run 45927056138) |
-| 2026-11-27 02:42 | render-final | wi-gta-breath | render (0-424) | 20 | 3656 | success (run 45927056138) |
-| 2026-11-27 02:42 | render-final | wi-gta-breath | render (1700-2124) | 21 | 3677 | success (run 45927056138) |
-| 2026-11-27 02:42 | render-final | wi-gta-breath | render (2125-2548) | 24 | 3701 | success (run 45927056138) |
-| 2026-11-27 02:42 | render-final | wi-gta-breath | render (1275-1699) | 13 | 3714 | success (run 45927056138) |
-| 2026-11-27 02:42 | render-final | wi-gta-breath | render (850-1274) | 9 | 3723 | success (run 45927056138) |
-| 2026-11-27 02:42 | render-final | wi-gta-breath | assemble | 2 | 3725 | success (run 45927056138) |
-| 2026-11-27 02:42 | render-final | wi-gta-breath | log | 1 | 3726 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | voice-and-mix | 3 | 3626 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | render (425-849) | 13 | 3639 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | render (0-424) | 20 | 3659 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | render (1700-2124) | 21 | 3680 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | render (2125-2548) | 24 | 3704 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | render (1275-1699) | 13 | 3717 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | render (850-1274) | 9 | 3726 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | assemble | 2 | 3728 | success (run 45927056138) |
+| 2026-11-27 02:42 | render-final | wi-gta-breath | log | 1 | 3729 | success (run 45927056138) |
 - 2026-11-27 wi-gta-respawn (GTA 6 WHAT IF #9) BUILT (stick3d-bright, story.tsx, 19 shots): hook pull back (Remy on top
   of a big stylised globe in the sky, WHAT IF #9), hookb orbit (hospital + safe-house icons struck, cyan pin appears),
   r1 crane up (cyan dice tumbles, globe spins, pin drops in the Pacific), ocean low angle (splash, Remy pops up in a swim
@@ -531,3 +531,4 @@ README table). Stills half scale, swangle, rough 2.85 w/s, 2 fix rounds (HUD pla
 moved up; Remy hidden behind the desk -> stands at it; TV off-frame; loop camera too steep (billboards vanished);
 coupe crossed the frame in 3 frames -> slower; broom/steam; mum read as bearded). Contact sheet
 library/previews/whatif/wi-gta-npc-stick3d.png. Not rendered, no GO_FINAL: owner decides.
+| 2026-11-27 10:31 | render-stills | wi-gta-respawn  | stills | 2 | 3731 | running (run 45982636547) |
