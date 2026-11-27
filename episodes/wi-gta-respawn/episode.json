@@ -1,0 +1,13 @@
+{
+  "id": "wi-gta-respawn",
+  "title": "What If You Respawned at a Random Spot on Earth?",
+  "series": "GTA 6 WHAT IF #9",
+  "style": "stick3d-bright",
+  "composition": "Ep-wi-gta-respawn",
+  "stills": [0],
+  "chunks": 6,
+  "status": "build-stick3d-bright",
+  "publish": false,
+  "clone": "none",
+  "gl": "swangle"
+}
