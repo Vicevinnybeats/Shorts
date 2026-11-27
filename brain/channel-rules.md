@@ -210,3 +210,5 @@ STOP for stills approval -> render-final -> metadata -> Drive /Shorts/Review -> 
   like his reference (a pixel-art lighthouse short, style only): 01 PULL BACK (reveal), 02 DOLLY ZOOM (vertigo),
   03 CRANE + LAND (rise over, then settle). Also add: push-in, orbit, tracking/truck, low hero angle, top-down,
   whip-to-match. Plan each video's shot list with a named move per shot (in the storyboard) and vary them.
+- 2026-11-27 caught in What If 6 render: HUD "SEVERAL MIN" and "BLACKOUT / NO WARNING" appeared while the caption said
+  the same words -> removed. Builders still slip on NO DOUBLE TEXT: always check the final render frame sheet for it.

@@ -14,7 +14,8 @@ Work branch: claude/determined-feynman-hahwfr (NOT merged to main; render on thi
    What If 4 APPROVED + in Drive (2026-11-27). Owner: "make 5 and 6" -> scripts + fact-check written
    (wi-gta-money, wi-gta-breath), two builders in separate worktrees, then GO_FINAL each, previews.
    STATUS: #5 built (cbc7ecb, 8 models) render started; #6 built (666dc6d, 7 models + library/stick3d/water.tsx)
-   render queued. #5 DONE + SENT (run 45920511178, 82 s, 1-5 kHz -22.5). #6 pending. Drive only after approval.
+   render queued. #5 DONE + SENT (run 45920511178, 82 s, 1-5 kHz -22.5). #6 rendered (run 45920660937) but had 2 double-text
+   labels -> fixed (e303789), re-render running. Drive only after approval.
    (Earlier: stopped by the 5-hour usage limit; resume = SendMessage to the builder.) Restart the builder
    (same brief as What If 3, see channel-rules) after the reset.
    UPLOADED 2026-11-26: What If 2 + 3 in Drive 'What if' folder (mp4 + txt). Next: owner approves 3 new GTA titles
