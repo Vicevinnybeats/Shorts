@@ -168,3 +168,11 @@ Rules: every number sourced before scripting; no leaks/rumours; "GTA 6" only as 
      trees below ~10 C; palms, crops, people unprepared - sourced)
   9. What If You Respawned at a Random Spot on Earth? (~71% water, deserts, Antarctica, chance of landing in a city -
      sourced probabilities, Remy respawns again and again)
+
+## NEW THEME (non-GTA) "what if / imagine" about LIVE EVENTS - proposed 2026-11-27, WAITING for approval
+- Imagine You Were Under a Total Solar Eclipse (next long one 2 Aug 2027: temperature drop, birds go quiet, minutes of darkness)
+- What If You Watched the Moon Landing Live in 1969? (huge TV audience, the delay, the grainy picture)
+- Imagine Standing Next to a Rocket Launch (how loud, how far spectators stand, the shockwave)
+- What If You Played in a World Cup Final? (crowd size, how far players run, the pressure)
+- Imagine Being at Woodstock in 1969 (crowd size, rain, traffic jam)
+All facts to be verified before scripting. Same look (Remy, bright 3D), Algieba voice, named camera moves.
