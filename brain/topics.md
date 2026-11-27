@@ -163,3 +163,8 @@ Rules: every number sourced before scripting; no leaks/rumours; "GTA 6" only as 
    phone time, told as the life of a background character)
 9. What If a Category 5 Hurricane Hit Vice City? (real hurricane science: wind speeds, storm surge, Hurricane Andrew
    1992 Miami as the real example; safety message)
+- 2026-11-27 owner: keep #8 (NPC for one day); change #7 and #9. New proposals:
+  7. What If It Snowed in Vice City? (Miami's only recorded snow flurries 19 Jan 1977; cold-stunned iguanas falling from
+     trees below ~10 C; palms, crops, people unprepared - sourced)
+  9. What If You Respawned at a Random Spot on Earth? (~71% water, deserts, Antarctica, chance of landing in a city -
+     sourced probabilities, Remy respawns again and again)
